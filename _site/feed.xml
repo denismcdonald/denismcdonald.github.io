@@ -5,8 +5,8 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 27 Sep 2019 16:35:09 +1000</pubDate>
-    <lastBuildDate>Fri, 27 Sep 2019 16:35:09 +1000</lastBuildDate>
+    <pubDate>Fri, 27 Sep 2019 16:37:02 +1000</pubDate>
+    <lastBuildDate>Fri, 27 Sep 2019 16:37:02 +1000</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
@@ -24,9 +24,9 @@
   &lt;li&gt;Bruce Lee&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Thu, 18 Jul 2019 00:00:00 +1000</pubDate>
-        <link>http://0.0.0.0:4000/c64/2019/07/18/hello-world.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/c64/2019/07/18/hello-world.html</guid>
+        <pubDate>Thu, 26 Sep 2019 00:00:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/c64/2019/09/26/hello-world.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/c64/2019/09/26/hello-world.html</guid>
         
         
         <category>c64</category>

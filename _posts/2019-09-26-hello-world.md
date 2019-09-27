@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "A top 10"
-date:   2019-07-18
 categories: c64
 ---
 
