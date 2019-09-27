@@ -3,7 +3,7 @@
 ---
 @charset "utf-8";
 
-// Our variables
+// Variables
 $base-font-family: 'cbmmedium', monospace, sans-serif;
 $base-font-size: 16px;
 
@@ -15,7 +15,7 @@ $width-small: 700px;
 $width-tiny: 400px;
 $width-large: 1000px;
 
-// Import partials from `sass_dir` (defaults to `_sass`)
+// Import partials from `_sass`
 @import
         "base"
 ;
