@@ -5,8 +5,8 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 24 Apr 2020 17:55:53 +1000</pubDate>
-    <lastBuildDate>Fri, 24 Apr 2020 17:55:53 +1000</lastBuildDate>
+    <pubDate>Fri, 24 Apr 2020 18:10:28 +1000</pubDate>
+    <lastBuildDate>Fri, 24 Apr 2020 18:10:28 +1000</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
@@ -20,7 +20,7 @@
         <guid isPermaLink="true">http://0.0.0.0:4000/c64/2020/04/23/test.html</guid>
         
         
-        <category>c64</category>
+        <category>C64</category>
         
       </item>
     
@@ -44,7 +44,7 @@
         <guid isPermaLink="true">http://0.0.0.0:4000/c64/testing/2019/09/27/top-10.html</guid>
         
         
-        <category>c64</category>
+        <category>C64</category>
         
         <category>testing</category>
         

@@ -2,7 +2,19 @@
 layout: default
 ---
 
-<div class="post">
+
+<!-- <div class="post"> -->
+  <h1 class="post-title">Topic: {{ page.category }}</h1>
+  {% for post in site.categories[page.category] %}
+  
+    <a href="{{ site.baseurl }}{{ post.url }}">[{{ post.title }}]</a>
+      <p>{{ post.date | date: "%d %B %Y" }}</p>  
+  {% endfor %}
+  <!-- </div> -->
+
+
+
+<!--<div class="post">
 
   <header class="post-header">
     <h1 class="post-title">{{ page.title }}</h1>
@@ -17,4 +29,4 @@ layout: default
 
   <a class="edit" href="{{ site.github.repository_url }}/blob/master/{{ page.path }}">Edit<span id="cursor">&nbsp;</span></a>
   
-</div>
+</div> -->
