@@ -7,10 +7,17 @@ layout: default
 <!-- <h1>{{ site.posts.last.title }}</h1> -->
 <!-- {{ site.posts.last.content }} -->
 
-<h1 class="page-heading">Blog archive</h1>
+<h1 class="page-heading">Archive</h1>
+
+<!-- <div class="underlined"> -->
+<h2 class="topics-heading">Topics:</h2>
+{% for category in site.categories %}
+    <a class="topics" href="/topic/{{ category[0] }}/" style="text-decoration: none;">[{% if category[0] == 'aws' %}{{ category[0] | upcase }}{% else %}{{ category[0] | capitalize }}{% endif %}]</a>
+{% endfor %}
+<!-- </div> -->
 
 <div class="post-list">
-  {% for post in site.posts limit:1 %}
+  {% for post in site.posts limit:5 %}
   <div class="post-list-item">
     <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
     <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
@@ -18,25 +25,3 @@ layout: default
   {% endfor %}
 </div> 
 
-
-<!-- 
-
-
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
-  </header>
-
-  <article class="post-content">
-    {{ content }}
-  </article>
-
-  <div class="post-list">
-    {% for post in site.posts %}
-    <div class="post-list-item">
-      <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-    <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
-    </div>
-    {% endfor %}
-  </div>
-
-</div> -->

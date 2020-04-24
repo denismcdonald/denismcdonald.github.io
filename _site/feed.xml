@@ -5,8 +5,8 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 24 Apr 2020 15:04:09 +1000</pubDate>
-    <lastBuildDate>Fri, 24 Apr 2020 15:04:09 +1000</lastBuildDate>
+    <pubDate>Fri, 24 Apr 2020 17:35:16 +1000</pubDate>
+    <lastBuildDate>Fri, 24 Apr 2020 17:35:16 +1000</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
@@ -36,15 +36,17 @@
   &lt;li&gt;The Last Ninja&lt;/li&gt;
   &lt;li&gt;Paradroid&lt;/li&gt;
   &lt;li&gt;IK+&lt;/li&gt;
-  &lt;li&gt;Winter/California/Summer/World Games&lt;/li&gt;
+  &lt;li&gt;Winter/Summer/World Games&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 27 Sep 2019 00:00:00 +1000</pubDate>
-        <link>http://0.0.0.0:4000/c64/2019/09/27/top-10.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/c64/2019/09/27/top-10.html</guid>
+        <link>http://0.0.0.0:4000/c64/testing/2019/09/27/top-10.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/c64/testing/2019/09/27/top-10.html</guid>
         
         
         <category>c64</category>
+        
+        <category>testing</category>
         
       </item>
     

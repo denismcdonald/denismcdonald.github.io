@@ -28,14 +28,18 @@ html {
     background-color: $background-color;
 } 
 
-#post-link:hover span #cursor {
-    background-color: $background-color;
-} 
-
-.super {
-    // display: inline-block;
-    vertical-align: super;
+#portrait {
+    border: 20px solid $text-color;
+    display: block;
+    max-width: 80%;
+    margin: -1rem auto 0;
 }
+
+.post-meta {
+    margin-top: 1.2rem;
+    text-align: center;
+}
+
 
 @media only screen and (max-width: 200px) {
     html {
@@ -108,6 +112,28 @@ h1 {
     color: $background-color;
     display: block;
     margin: 2rem 0 2rem 0;
+    text-align: center;
+}
+
+.topics {
+    display: inline;
+}
+
+.topics-heading {
+    display: inline;
+}
+
+.underlined {
+    border-top: 2rem;
+    border-bottom: 2rem;
+    display: inline;
+    margin-top: 2rem;
+}
+
+.underlined:after {
+    content: "------";
+    clear: both;
+    display: block;
 }
 
 // h1 {
@@ -247,8 +273,11 @@ p.intro {
     margin-top: 2rem;
 }
 
+.post-list {
+    margin-top: 1.2rem;
+}
+
 #post-list {
-    // color: black;
     visibility: hidden;
 }
 
