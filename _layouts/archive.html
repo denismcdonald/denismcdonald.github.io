@@ -7,7 +7,7 @@ layout: default
 
 <h2 class="topics-heading">Topics:</h2>
 {% for category in site.categories %}
-    <a class="topics" href="/topic/{{ category[0] }}/" style="text-decoration: none;">[{% if category[0] == 'aws' %}{{ category[0] | upcase }}{% else %}{{ category[0] | capitalize }}{% endif %}]</a>
+    <a class="topics" href="{{ site.baseurl }}/topic/{{ category[0] }}/" style="text-decoration: none;">[{% if category[0] == 'aws' %}{{ category[0] | upcase }}{% else %}{{ category[0] | capitalize }}{% endif %}]</a>
 {% endfor %}
 
 <div class="post-list">
