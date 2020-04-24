@@ -5,8 +5,8 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 24 Apr 2020 18:10:28 +1000</pubDate>
-    <lastBuildDate>Fri, 24 Apr 2020 18:10:28 +1000</lastBuildDate>
+    <pubDate>Fri, 24 Apr 2020 18:18:07 +1000</pubDate>
+    <lastBuildDate>Fri, 24 Apr 2020 18:18:07 +1000</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
@@ -16,11 +16,11 @@
 &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut sem libero. Phasellus sollicitudin nibh malesuada erat dignissim aliquet. Aliquam scelerisque maximus nunc sit amet eleifend. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi sollicitudin arcu mauris, a luctus eros vehicula in. Etiam eu libero sed odio aliquet mollis. Phasellus ac erat vel nisl elementum ullamcorper nec non ex. Nullam turpis sapien, venenatis ac turpis imperdiet, congue sodales quam. Pellentesque venenatis libero eu odio pulvinar, vitae sagittis nibh convallis. Aliquam malesuada neque sit amet sapien tempus, venenatis varius est egestas.&lt;/p&gt;
 </description>
         <pubDate>Thu, 23 Apr 2020 00:00:00 +1000</pubDate>
-        <link>http://0.0.0.0:4000/c64/2020/04/23/test.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/c64/2020/04/23/test.html</guid>
-        
+        <link>http://0.0.0.0:4000/2020/04/23/test.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2020/04/23/test.html</guid>
         
         <category>C64</category>
+        
         
       </item>
     
@@ -40,13 +40,13 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 27 Sep 2019 00:00:00 +1000</pubDate>
-        <link>http://0.0.0.0:4000/c64/testing/2019/09/27/top-10.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/c64/testing/2019/09/27/top-10.html</guid>
-        
+        <link>http://0.0.0.0:4000/2019/09/27/top-10.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2019/09/27/top-10.html</guid>
         
         <category>C64</category>
         
         <category>testing</category>
+        
         
       </item>
     

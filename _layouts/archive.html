@@ -6,9 +6,25 @@ layout: default
 <h1 class="page-heading">Archive</h1>
 
 <h2 class="topics-heading">Topics:</h2>
+
+<!-- <section> -->
+  {% capture tags %}
+    {% for tag in site.tags %}
+      {{ tag[0] }}
+    {% endfor %}
+  {% endcapture %}
+  {% assign sortedtags = tags | split:' ' | sort %}
+  
+  {% for tag in sortedtags %}
+  <a href="{{ site.baseurl}}/tag/{{ tag }}">[{{ tag | capitalize }}]</a>
+  {% endfor %}
+<!-- </section> -->
+
+
+<!-- <h2 class="topics-heading">Topics:</h2>
 {% for category in site.categories %}
     <a class="topics" href="{{ site.baseurl }}/topic/{{ category[0] }}/" style="text-decoration: none;">[{% if category[0] == 'aws' %}{{ category[0] | upcase }}{% else %}{{ category[0] | capitalize }}{% endif %}]</a>
-{% endfor %}
+{% endfor %} -->
 
 <div class="post-list">
   {% for post in site.posts limit:5 %}
