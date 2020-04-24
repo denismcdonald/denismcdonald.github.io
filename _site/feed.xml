@@ -5,8 +5,8 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 24 Apr 2020 18:32:31 +1000</pubDate>
-    <lastBuildDate>Fri, 24 Apr 2020 18:32:31 +1000</lastBuildDate>
+    <pubDate>Fri, 24 Apr 2020 19:45:31 +1000</pubDate>
+    <lastBuildDate>Fri, 24 Apr 2020 19:45:31 +1000</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
@@ -20,6 +20,21 @@
         <guid isPermaLink="true">http://0.0.0.0:4000/2020/04/23/test.html</guid>
         
         <category>libraries</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>I've got two tags</title>
+        <description>&lt;p&gt;Yada yada yada!&lt;/p&gt;
+</description>
+        <pubDate>Wed, 22 Apr 2020 00:00:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2020/04/22/two-tags.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2020/04/22/two-tags.html</guid>
+        
+        <category>libraries</category>
+        
+        <category>testing</category>
         
         
       </item>

@@ -136,19 +136,6 @@ h1 {
     display: block;
 }
 
-// h1 {
-//     border-top: 2rem;
-//     border-bottom: 2rem;
-//     display: block;
-//     margin-top: 2rem;
-// }
-
-// h1:after {
-//     content: "------------";
-//     clear: both;
-//     display: block;
-// }
-
 h2, h3 {
     margin-top: 2rem;
 }
@@ -232,7 +219,6 @@ footer:before {
 }
 
 #page-heading {
-    // margin-top: 2rem;
     margin-top: 1rem;
     visibility: hidden;
 }
@@ -243,7 +229,6 @@ p.intro {
 
 @media only screen and (min-width: $width-small) {
     p.intro {
-    // max-width: 90%;
     max-width: 60%;
     margin: 0 auto;
     }
