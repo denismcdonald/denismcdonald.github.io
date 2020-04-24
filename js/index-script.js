@@ -18,7 +18,7 @@ setTimeout(function() {
 }, 600)
 
 setTimeout(function() {
-    printLetterByLetter("list", "List", 150);
+    printLetterByLetter("list", "List", 140);
 }, 600);
 
 setTimeout(function() {
