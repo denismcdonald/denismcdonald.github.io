@@ -6,12 +6,32 @@ layout: default
 
 <!-- <p class="intro">{{ site.description }}</p> -->
 
-<p class="page-heading">SEARCHING FOR $<br>LOADING<br>READY.</br><span class="cursor">&nbsp;</span></p>
+<p>READY.</p>
+<div id="load"></div>
+<!-- <br>LOAD "$",8</p> -->
+
+<p id="page-heading">SEARCHING FOR $<br>LOADING<br>READY.<div id="list"></div></p>
+
+<div id="post-list">
+  <h1 class="page-heading">Latest Entry</h1>
+  {% for post in site.posts limit:1 %}
+  <div class="post-list-item">
+    <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+    <h2><a id="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
+  </div>
+  {% endfor %}
+  <!-- <span id="cursor">&nbsp;</span> -->
+  <br>
+  <a class="edit" href="{{ site.github.repository_url }}/blob/master/{{ page.path }}">Edit<span id="cursor">&nbsp;</span></a>
+</div>
+
 <!-- 
 <h1>{{ site.posts.last.title }}</h1>
 {{ site.posts.last.content }} -->
 
-<!-- <div class="post-list">
+<!-- <h1 class="page-heading">Latest Posts</h1>
+
+<div class="post-list">
   {% for post in site.posts limit:5 %}
   <div class="post-list-item">
     <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>

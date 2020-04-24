@@ -1,6 +1,6 @@
 ---
-layout: readme
-title: Readme
-permalink: /readme/
+layout: blog
+title: Blog
+permalink: /blog/
 ---
 
