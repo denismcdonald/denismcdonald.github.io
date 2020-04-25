@@ -251,7 +251,8 @@ p.intro {
         content: "";
     }
     li:after {
-        content: "/";
+        content: " /";
+        // margin: 0 -15px;
     }
     li:last-child:after {
         content: none;
