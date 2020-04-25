@@ -35,6 +35,10 @@ html {
     margin: -1rem auto 0;
 }
 
+#post-link:hover ~ #cursor {
+    visibility: hidden;
+}
+
 .post-meta {
     margin-top: 1.2rem;
     text-align: center;

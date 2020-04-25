@@ -10,16 +10,16 @@ function printLetterByLetter(destination, message, speed){
 }
 
 setTimeout(function() {
-    printLetterByLetter("load", "Load \"$\",8", 50);
-}, 50);
+    printLetterByLetter("load", "Load\"$\",8", 50);
+}, 100);
 
 setTimeout(function() {
     document.querySelector("#page-heading").style.visibility = "visible";
-}, 600)
+}, 700)
 
 setTimeout(function() {
     printLetterByLetter("list", "List", 140);
-}, 600);
+}, 700);
 
 setTimeout(function() {
     setInterval(function() {
