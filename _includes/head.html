@@ -11,8 +11,8 @@
   {% if page.layout == "post" %}
     <script src="/js/post-script.js"></script>
   {% endif %}
-  {% if page.layout == "archive" %}
-  <script src="/js/archive-script.js"></script>
+  {% if page.layout == "archive" or "page" %}
+  <script src="/js/page-script.js"></script>
   {% endif %}
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
