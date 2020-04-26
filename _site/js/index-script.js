@@ -1,3 +1,5 @@
+console.log("c64 design by Reg Tait: regmtait.co.uk");
+
 function printLetterByLetter(destination, message, speed){
     var i = 0;
     var interval = setInterval(function(){
