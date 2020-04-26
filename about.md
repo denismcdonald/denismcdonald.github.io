@@ -6,7 +6,7 @@ permalink: /about/
 
 <img alt="A pixellated photo of the author" id="portrait" src="{{ site.baseurl }}/images\fujipixel.jpg">
 <br><br>
-Dearest netscape navigators,<br><br>
+Dear netscape navigators,<br><br>
 Denis is my name, and uppercase endurance is my game.<br>
 You are welcome to engage me in correspondence.<br>
 
