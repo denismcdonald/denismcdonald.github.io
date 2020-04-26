@@ -5,60 +5,30 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 25 Apr 2020 12:08:37 +1000</pubDate>
-    <lastBuildDate>Sat, 25 Apr 2020 12:08:37 +1000</lastBuildDate>
+    <pubDate>Sun, 26 Apr 2020 12:23:49 +1000</pubDate>
+    <lastBuildDate>Sun, 26 Apr 2020 12:23:49 +1000</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
-        <title>Testing 1, 2, 3</title>
-        <description>&lt;h2 id=&quot;lorum&quot;&gt;Lorum!&lt;/h2&gt;
-
-&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut sem libero. Phasellus sollicitudin nibh malesuada erat dignissim aliquet. Aliquam scelerisque maximus nunc sit amet eleifend. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi sollicitudin arcu mauris, a luctus eros vehicula in. Etiam eu libero sed odio aliquet mollis. Phasellus ac erat vel nisl elementum ullamcorper nec non ex. Nullam turpis sapien, venenatis ac turpis imperdiet, congue sodales quam. Pellentesque venenatis libero eu odio pulvinar, vitae sagittis nibh convallis. Aliquam malesuada neque sit amet sapien tempus, venenatis varius est egestas.&lt;/p&gt;
-</description>
-        <pubDate>Thu, 23 Apr 2020 00:00:00 +1000</pubDate>
-        <link>http://0.0.0.0:4000/2020/04/23/test.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/2020/04/23/test.html</guid>
-        
-        <category>libraries</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>I've got two tags</title>
-        <description>&lt;p&gt;Yada yada yada!&lt;/p&gt;
-</description>
-        <pubDate>Wed, 22 Apr 2020 00:00:00 +1000</pubDate>
-        <link>http://0.0.0.0:4000/2020/04/22/two-tags.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/2020/04/22/two-tags.html</guid>
-        
-        <category>libraries</category>
-        
-        <category>testing</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>A top 10</title>
+        <title>A debatable top 10</title>
         <description>&lt;ul&gt;
-  &lt;li&gt;Beach Head II&lt;/li&gt;
-  &lt;li&gt;Wizball&lt;/li&gt;
-  &lt;li&gt;Law of the West&lt;/li&gt;
-  &lt;li&gt;Skate or Die&lt;/li&gt;
-  &lt;li&gt;Archon&lt;/li&gt;
-  &lt;li&gt;Defender of the Crown&lt;/li&gt;
-  &lt;li&gt;The Last Ninja&lt;/li&gt;
-  &lt;li&gt;Paradroid&lt;/li&gt;
-  &lt;li&gt;IK+&lt;/li&gt;
-  &lt;li&gt;Winter/Summer/World Games&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/Defender_of_the_Crown&quot;&gt;Defender of the Crown&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/The_Last_Ninja&quot;&gt;The Last Ninja&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/Skate_or_Die!&quot;&gt;Skate or Die&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/Archon&quot;&gt;Archon&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Beach_Head_II:_The_Dictator_Strikes_Back&quot;&gt;Beach Head II&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/wizball&quot;&gt;Wizball&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/Law_of_the_West&quot;&gt;Law of the West&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/Paradroid&quot;&gt;Paradroid&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/IK%2B&quot;&gt;IK+&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/Winter_Games&quot;&gt;Winter&lt;/a&gt; or &lt;a href=&quot;https://www.c64-wiki.com/wiki/Summer_Games&quot;&gt;Summer&lt;/a&gt; or &lt;a href=&quot;https://www.c64-wiki.com/wiki/World_Games&quot;&gt;World&lt;/a&gt; or &lt;a href=&quot;https://www.c64-wiki.com/wiki/California_Games&quot;&gt;California&lt;/a&gt; Games&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Fri, 27 Sep 2019 00:00:00 +1000</pubDate>
-        <link>http://0.0.0.0:4000/2019/09/27/top-10.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/2019/09/27/top-10.html</guid>
+        <pubDate>Sun, 26 Apr 2020 00:00:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2020/04/26/top-10.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2020/04/26/top-10.html</guid>
         
-        <category>testing</category>
+        <category>dopamine</category>
         
         
       </item>
