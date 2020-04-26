@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About
+title: Let's do this
 permalink: /about/
 ---
 
@@ -8,7 +8,7 @@ permalink: /about/
 <br><br>
 Dearest netscape navigators,<br><br>
 Denis is my name, and uppercase endurance is my game.<br>
-You are welcome to engage me in correspondence.
+You are welcome to engage me in correspondence.<br>
 
 * <a href="mailto:{{ site.email }}">Email</a><br>
 * <a href="https://www.linkedin.com/in/denismcdonald/">LinkedIn</a><br>
