@@ -5,12 +5,32 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 29 Apr 2020 16:52:34 +1000</pubDate>
-    <lastBuildDate>Wed, 29 Apr 2020 16:52:34 +1000</lastBuildDate>
+    <pubDate>Sat, 02 May 2020 12:48:22 +1000</pubDate>
+    <lastBuildDate>Sat, 02 May 2020 12:48:22 +1000</lastBuildDate>
     <generator>Jekyll v3.8.6</generator>
     
       <item>
-        <title>A debatable top 10</title>
+        <title>Down and Out in the New Economy</title>
+        <description>&lt;p&gt;Hear ye. The University of Chicago Press is giving away a timely e-book this month:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://press.uchicago.edu/books/freeEbook.html&quot;&gt;&quot;Down and Out in the New Economy:
+How People Find (or Don't Find) Work Today&quot;&lt;/a&gt;, by Ilana Gershon.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 02 May 2020 00:00:00 +1000</pubDate>
+        <link>http://0.0.0.0:4000/2020/05/02/down-and-out.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/2020/05/02/down-and-out.html</guid>
+        
+        <category>employment</category>
+        
+        <category>books</category>
+        
+        <category>COVID-19</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>A tentative top 10</title>
         <description>&lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/Defender_of_the_Crown&quot;&gt;Defender of the Crown&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.c64-wiki.com/wiki/The_Last_Ninja&quot;&gt;The Last Ninja&lt;/a&gt;&lt;/li&gt;
