@@ -6,5 +6,5 @@ layout: default
   {% for post in site.tags[page.tag] %}
   
     <a href="{{ site.baseurl }}{{ post.url }}">[{{ post.title }}]</a>
-      <p>{{ post.date | date: "%d %B %Y" }}</p>  
+      <p>{{ post.date | date: "%-d %b, %Y" }}</p>  
   {% endfor %}
