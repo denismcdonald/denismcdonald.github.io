@@ -6,7 +6,7 @@ permalink: /about/
 
 <img alt="A pixellated photo of the author" id="portrait" src="{{ site.baseurl }}/images\fujipixel.jpg">
 <br><br>
-Dear visitor,<br><br>
+Dear Reader,<br><br>
 Denis is my name, and uppercase endurance is my game.<br><br>
 I am otherwise in the final year of a [Master of Information Studies](https://study.csu.edu.au/courses/library-information-studies/master-information-studies) and hail from [Hamilton, VIC, AU](https://en.wikipedia.org/wiki/Hamilton,_Victoria).<br>
 
