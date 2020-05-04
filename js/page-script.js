@@ -1,1 +1,1 @@
-console.log("c64 design by Reg Tait: regmtait.co.uk");
+console.log("c64jekyll theme by Reg Tait: regmtait.co.uk");
