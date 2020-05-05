@@ -12,27 +12,26 @@ function printLetterByLetter(destination, message, speed){
 }
 
 function loadList() {
-
     setTimeout(function() {
         printLetterByLetter("load", "Load\"$\",8", 50);
-    }, 100)
+    }, 200)
 
     setTimeout(function() {
         document.querySelector("#page-heading").style.visibility = "visible";
         printLetterByLetter("list", "List", 140);
-    }, 700)
+    }, 800)
 
     setTimeout(function() {
         setInterval(function() {
             document.querySelector("#post-list").style.visibility = "visible";
             document.getElementById("cursor").classList.toggle("blink");
         }, 600);
-    }, 800);
+    }, 900);
     loaded = true;
 }
 
 if (!document.hidden && loaded == false) {
-    loadList();
+    window.onload = loadList();
 }
 
 document.addEventListener("visibilitychange", function() {
