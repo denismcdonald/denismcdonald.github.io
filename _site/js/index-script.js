@@ -1,10 +1,8 @@
-// console.log("c64jekyll theme by Reg Tait: regmtait.co.uk");
+// var loaded = false;
 
-var loaded = false;
+// window.onfocus = function () { 
 
-window.onfocus = function () { 
-
-    if(!loaded) {
+//     if(!loaded) {
 
         function printLetterByLetter(destination, message, speed){
             var i = 0;
@@ -36,8 +34,8 @@ window.onfocus = function () {
             }, 600);
         }, 800)
 
-    loaded = true;
+//     loaded = true;
     
-    }
+//     }
 
-}
+// }
