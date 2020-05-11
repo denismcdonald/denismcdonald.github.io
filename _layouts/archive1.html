@@ -1,0 +1,28 @@
+---
+layout: default
+---
+<div class="blog">
+
+<h1 class="page-heading">Archive</h1>
+
+<h2 class="topics-heading">Topics:</h2>
+
+  {% capture tags %}
+    {% for tag in site.tags %}
+      {{ tag[0] }}
+    {% endfor %}
+  {% endcapture %}
+  {% assign sortedtags = tags | split:' ' | sort %}
+  
+  {% for tag in sortedtags %}
+  <a href="{{ site.baseurl}}/tag/{{ tag }}">[{{ tag }}]</a>
+  {% endfor %}
+
+<div class="post-list">
+  {% for post in site.posts limit:5 %}
+  <div class="post-list-item">
+    <span class="post-meta">{{ post.date | date: "%-d %b, %Y" }}</span>
+    <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
+  </div>
+  {% endfor %}
+</div> 

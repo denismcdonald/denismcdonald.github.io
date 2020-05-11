@@ -1,3 +1,5 @@
+console.log("Hit me!");
+
 var loaded = false;
 
 function printLetterByLetter(destination, message, speed){
@@ -13,7 +15,7 @@ function printLetterByLetter(destination, message, speed){
 
 function loadList() {
     setTimeout(function() {
-        printLetterByLetter("load", "Load\"*\",8", 50);
+        printLetterByLetter("load", "Load\"?\",8", 50);
     }, 200)
 
     setTimeout(function() {

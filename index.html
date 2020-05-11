@@ -9,14 +9,14 @@ layout: default
 <p>READY.</p>
 <div id="load"></div>
 
-<p id="page-heading">SEARCHING FOR $<br>LOADING<br>READY.<div id="list"></div></p>
+<p id="page-heading">SEARCHING FOR *<br>LOADING<br>READY.<div id="list"></div></p>
 
 <div id="post-list">
   <h1 class="page-heading">Latest Entry</h1>
   {% for post in site.posts limit:1 %}
   <div class="post-list-item">
     <span class="post-meta">{{ post.date | date: "%-d %b, %Y" }}</span>
-    <h2><a id="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><span id="cursor">&nbsp;</span></h2>
+    <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><span id="cursor">&nbsp;</span></h2>
   </div>
   {% endfor %}
   <br>

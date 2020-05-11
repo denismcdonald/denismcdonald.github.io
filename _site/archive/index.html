@@ -10,8 +10,10 @@
   <meta name="description" content="">
   
   
+    <script src="/js/archive-script.js" defer></script>
   
-  <script src="/js/page-script.js" defer></script>
+  
+  
   
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="http://0.0.0.0:4000/archive/">
@@ -72,38 +74,39 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="blog">
+        <div class="home page-content">
 
-<h1 class="page-heading">Archive</h1>
+    <!-- <p class="intro"></p> -->
+    <br>
+    <p>READY.</p>
+    <div id="load"></div>
+    
+    <p id="page-heading">SEARCHING FOR $<br>LOADING<br>READY.<div id="list"></div></p>
+    
+    <div id="post-list">
+      <h1 class="page-heading">Archive</h1>
+      
+        
+      <div class="post-list-item">
+        <span class="post-meta">2 May, 2020</span>
+        <h2><a class="post-link" href="/2020/05/02/down-and-out.html">Down and Out in the New Economy</a></h2>
+      </div>
+      
+      
+        
+          <div class="post-list-item">
+            <span class="post-meta">26 Apr, 2020</span>
+            <h2><a class="post-link" href="/2020/04/26/top-10.html">A tentative top 10</a><span id="cursor">&nbsp;</span></h2>
+          </div>
+        
+      
+      <!-- <br> -->
+      <!-- <span id="cursor">&nbsp;</span> -->
+    </div>
+        
+    <!-- <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p> -->
 
-<h2 class="topics-heading">Topics:</h2>
-
-  
-  
-  
-  
-  <a href="/tag/COVID-19">[COVID-19]</a>
-  
-  <a href="/tag/books">[books]</a>
-  
-  <a href="/tag/dopamine">[dopamine]</a>
-  
-  <a href="/tag/employment">[employment]</a>
-  
-
-<div class="post-list">
-  
-  <div class="post-list-item">
-    <span class="post-meta">2 May, 2020</span>
-    <h2><a class="post-link" href="/2020/05/02/down-and-out.html">Down and Out in the New Economy</a></h2>
-  </div>
-  
-  <div class="post-list-item">
-    <span class="post-meta">26 Apr, 2020</span>
-    <h2><a class="post-link" href="/2020/04/26/top-10.html">A tentative top 10</a></h2>
-  </div>
-  
-</div> 
+</div>
       </div>
     </div>
 
@@ -123,7 +126,7 @@
         /* statement_text: "Our Accessibility Statement", */
         /* statement_url: "http://www.example.com/accessibility", */
         /* uncomment the following line to override support on mobile devices*/
-        /* mobile: true, */
+        mobile: false, 
         account: '5FNotYbkmN'
       };
     </script>

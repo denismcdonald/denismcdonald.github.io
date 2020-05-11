@@ -1,28 +1,35 @@
 ---
 layout: default
 ---
-<div class="blog">
 
-<h1 class="page-heading">Archive</h1>
+<div class="home page-content">
 
-<h2 class="topics-heading">Topics:</h2>
+    <!-- <p class="intro">{{ site.description }}</p> -->
+    <br>
+    <p>READY.</p>
+    <div id="load"></div>
+    
+    <p id="page-heading">SEARCHING FOR $<br>LOADING<br>READY.<div id="list"></div></p>
+    
+    <div id="post-list">
+      <h1 class="page-heading">Archive</h1>
+      {% for post in site.posts %}
+        {% if forloop.last == true %}
+          <div class="post-list-item">
+            <span class="post-meta">{{ post.date | date: "%-d %b, %Y" }}</span>
+            <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><span id="cursor">&nbsp;</span></h2>
+          </div>
+        {% else %}
+      <div class="post-list-item">
+        <span class="post-meta">{{ post.date | date: "%-d %b, %Y" }}</span>
+        <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
+      </div>
+      {% endif %}
+      {% endfor %}
+      <!-- <br> -->
+      <!-- <span id="cursor">&nbsp;</span> -->
+    </div>
+        
+    <!-- <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p> -->
 
-  {% capture tags %}
-    {% for tag in site.tags %}
-      {{ tag[0] }}
-    {% endfor %}
-  {% endcapture %}
-  {% assign sortedtags = tags | split:' ' | sort %}
-  
-  {% for tag in sortedtags %}
-  <a href="{{ site.baseurl}}/tag/{{ tag }}">[{{ tag }}]</a>
-  {% endfor %}
-
-<div class="post-list">
-  {% for post in site.posts limit:5 %}
-  <div class="post-list-item">
-    <span class="post-meta">{{ post.date | date: "%-d %b, %Y" }}</span>
-    <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
-  </div>
-  {% endfor %}
-</div> 
+</div>

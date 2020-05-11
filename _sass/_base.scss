@@ -35,7 +35,11 @@ html {
     margin: -1rem auto 0;
 }
 
-#post-link:hover ~ #cursor {
+// #post-link:hover ~ #cursor {
+//     visibility: hidden;
+// }
+
+.post-link:hover ~ #cursor {
     visibility: hidden;
 }
 

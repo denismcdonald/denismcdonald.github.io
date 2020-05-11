@@ -8,10 +8,16 @@
   {% if page.url == "/" %}
     <script src="/js/index-script.js" defer></script>
   {% endif %}
+  {% if page.layout == "archive" %}
+    <script src="/js/archive-script.js" defer></script>
+  {% endif %}
+  {% if page.layout == "about" %}
+    <script src="/js/about-script.js" defer></script>
+  {% endif %}
   {% if page.layout == "post" %}
     <script src="/js/post-script.js" defer></script>
   {% endif %}
-  {% if page.layout == "archive" or "page" %}
+  {% if page.layout == "page" %}
   <script src="/js/page-script.js" defer></script>
   {% endif %}
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
