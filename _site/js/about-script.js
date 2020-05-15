@@ -1,5 +1,3 @@
-console.log("Hit me!");
-
 var loaded = false;
 
 function printLetterByLetter(destination, message, speed){
@@ -20,7 +18,7 @@ function loadList() {
 
     setTimeout(function() {
         document.querySelector("#page-heading").style.visibility = "visible";
-        printLetterByLetter("list", "List", 100);
+        printLetterByLetter("list", "RUN", 100);
     }, 800)
 
     setTimeout(function() {
