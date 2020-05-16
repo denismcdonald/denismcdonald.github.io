@@ -16,9 +16,18 @@ layout: default
   {% for post in site.posts limit:1 %}
   <div class="post-list-item">
     <span class="post-meta">{{ post.date | date: "%-d %b, %Y" }}</span>
-    <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a><span id="cursor">&nbsp;</span></h2>
+    <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
   </div>
   {% endfor %}
+  <span id="text"> </span><span id="cursor">&nbsp;</span>
+  <div id="secret">
+    <a href="#" onclick="commando();">- Go Commando</a>
+    <a href="#" onclick="thing();">- Earworm alert</a>
+    <a href="#" onclick="ninja();">- Last, not least</a>
+    <a href="{{ site.github.repository_url }}/blob/master/{{ page.path }}">- Claim typo bounty</a>
+    <a id="close" href="#">X close</a>
+  </div>
+  <iframe id="frame" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe>
   <br>
 </div>
     

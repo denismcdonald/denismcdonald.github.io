@@ -17,8 +17,27 @@ html {
   background: #b4b7ff;
   display: inline; }
 
+#close {
+  color: #545eec;
+  background: #b4b7ff; }
+
+#cursor:hover {
+  cursor: pointer;
+  background-image: url(/images/smile.png);
+  background-size: cover;
+  background-repeat: no-repeat; }
+
 .edit:hover #cursor {
   background-color: #545eec; }
+
+iframe {
+  background-color: #b4b7ff;
+  border: 20px solid #b4b7ff;
+  display: none;
+  margin-bottom: 3px;
+  width: 340px;
+  height: 195px;
+  max-width: 85.5%; }
 
 #portrait {
   border: 20px solid #b4b7ff;
@@ -32,6 +51,22 @@ html {
 .post-meta {
   margin-top: 1.2rem;
   text-align: center; }
+
+#secret {
+  display: table;
+  margin-bottom: 3px;
+  visibility: hidden; }
+
+#secret a {
+  display: block; }
+
+#text {
+  background-color: #b4b7ff;
+  color: #545eec;
+  display: none; }
+
+#text:hover {
+  cursor: pointer; }
 
 @media only screen and (max-width: 200px) {
   html {
@@ -99,8 +134,7 @@ h1 {
 .underlined {
   border-top: 2rem;
   border-bottom: 2rem;
-  display: inline;
-  margin-top: 2rem; }
+  display: inline; }
 
 .underlined:after {
   content: "------";

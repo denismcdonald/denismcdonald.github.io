@@ -24,9 +24,35 @@ html {
     display: inline;
 }
 
+#close {
+    color: $background-color;
+    background: $text-color;
+}
+
+#cursor:hover {
+    cursor: pointer;
+    // background-image: url(/favicon-32x32.png);
+    background-image: url(/images/smile.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .edit:hover #cursor {
     background-color: $background-color;
 } 
+
+iframe {
+    background-color: $text-color;
+    border: 20px solid $text-color;
+    display: none;
+    // visibility: hidden;
+    margin-bottom: 3px;
+    width: 340px;
+    height: 195px;
+    max-width: 85.5%;
+    // width: 0;
+    // height: 0;
+}
 
 #portrait {
     border: 20px solid $text-color;
@@ -35,10 +61,6 @@ html {
     margin: -1rem auto 0;
 }
 
-// #post-link:hover ~ #cursor {
-//     visibility: hidden;
-// }
-
 .post-link:hover ~ #cursor {
     visibility: hidden;
 }
@@ -46,6 +68,26 @@ html {
 .post-meta {
     margin-top: 1.2rem;
     text-align: center;
+}
+
+#secret {
+    display: table;
+    margin-bottom: 3px;
+    visibility: hidden;
+}
+
+#secret a {
+    display: block;
+}
+
+#text {
+    background-color: $text-color;
+    color: $background-color;
+    display: none;
+}
+
+#text:hover {
+    cursor: pointer;
 }
 
 
@@ -135,7 +177,7 @@ h1 {
     border-top: 2rem;
     border-bottom: 2rem;
     display: inline;
-    margin-top: 2rem;
+    // margin-top: 2rem;
 }
 
 .underlined:after {
