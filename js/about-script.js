@@ -13,10 +13,14 @@ function printLetterByLetter(destination, message, speed){
 
 function loadList() {
     setTimeout(function() {
+        document.querySelector("#load").innerText = "";
+        document.querySelector("#load").style.visibility = "visible";
         printLetterByLetter("load", "Load\"?\",8", 50);
     }, 200)
 
     setTimeout(function() {
+        document.querySelector("#list").innerText = "";
+        document.querySelector("#list").style.visibility = "visible";
         document.querySelector("#page-heading").style.visibility = "visible";
         printLetterByLetter("list", "RUN", 100);
     }, 800)

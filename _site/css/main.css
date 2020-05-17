@@ -176,10 +176,12 @@ ul {
     content: "* "; }
 
 #list {
-  margin-top: -1.2rem; }
+  margin-top: -1.2rem;
+  visibility: hidden; }
 
 #load {
-  margin-top: -1.2rem; }
+  margin-top: -1.2rem;
+  visibility: hidden; }
 
 ol {
   margin-left: 2rem;

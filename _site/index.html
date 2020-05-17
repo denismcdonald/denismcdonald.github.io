@@ -79,9 +79,9 @@
 <!-- <p class="intro"></p> -->
 <br>
 <p>READY.</p>
-<div id="load"></div>
+<div id="load">LOAD"*",8,1</div>
 
-<p id="page-heading">SEARCHING FOR *<br>LOADING<br>READY.<div id="list"></div></p>
+<p id="page-heading">SEARCHING FOR *<br>LOADING<br>READY.<div id="list">RUN</div></p>
 
 <div id="post-list">
   <h1 class="page-heading">Latest Entry</h1>
@@ -131,6 +131,15 @@
       };
     </script>
     <script type="text/javascript" src="https://cdn.userway.org/widget.js"></script>
+    <noscript>
+      <style>
+        #cursor {display: none;}
+        #page-heading,
+        #post-list, 
+        #list, 
+        #load {visibility: visible;}
+      </style>
+    </noscript>
   </body>
 
 </html>

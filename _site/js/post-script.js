@@ -4,7 +4,6 @@ setInterval(function() {
     document.getElementById("cursor").classList.toggle("blink");
 }, 600);
 
-
 function printLetterByLetter(destination, message, speed){
     var i = 0;
     var interval = setInterval(function(){
@@ -15,8 +14,6 @@ function printLetterByLetter(destination, message, speed){
         }
     }, speed);
 }
-
-
 
 var c = document.getElementById("cursor");
 var text = document.getElementById("text");
