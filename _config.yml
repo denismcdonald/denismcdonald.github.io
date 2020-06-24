@@ -1,0 +1,15 @@
+# Site settings
+title: Denis McDonald
+email: 
+description:
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://denismcdonald.github.io" # the base hostname & protocol for your site
+twitter_username: 
+github_username: denismcdonald
+
+# Build settings
+markdown: kramdown
+
+# Turn off smart quotes
+kramdown:
+    smart_quotes: ["apos", "apos", "quot", "quot"]
