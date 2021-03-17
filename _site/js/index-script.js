@@ -15,7 +15,7 @@ function loadList() {
     setTimeout(function() {
         document.querySelector("#load").innerText = "";
         document.querySelector("#load").style.visibility = "visible";
-        printLetterByLetter("load", "Load\"*\",8,1", 50);
+        printLetterByLetter("load", "Load\"*\",8,1", 40);
     }, 200)
 
     setTimeout(function() {
@@ -43,7 +43,6 @@ document.addEventListener("visibilitychange", function() {
         loadList();
     }
 });
-
 
 var c = document.getElementById("cursor");
 var text = document.getElementById("text");
@@ -89,14 +88,4 @@ close.addEventListener("mousedown", function() {
 function commando() {
     frame.style.display = "block";
     frame.src = "https://www.youtube.com/embed/qrQuR1LHAVI";
-}
-
-function thing() {
-    frame.style.display = "block";
-    frame.src = "https://www.youtube.com/embed/mmmEBO2lDVI";
-}
-
-function ninja() {
-    frame.style.display = "block";
-    frame.src = "https://www.youtube.com/embed/1ok1ChTtWQI";
 }

@@ -243,6 +243,8 @@ p.intro {
   margin-top: 0; }
 
 .site-title {
+  color: #b4b7ff;
+  background-color: #545eec;
   text-align: center;
   display: block;
   margin-top: 1.2rem;
