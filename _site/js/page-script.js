@@ -1,1 +1,0 @@
-console.log("c64jekyll theme by Reg Tait: regmtait.co.uk");
