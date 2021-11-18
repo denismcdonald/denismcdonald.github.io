@@ -1,0 +1,21 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+// Variables
+$base-font-family: 'cbmmedium', monospace, sans-serif;
+$base-font-size: 16px;
+
+$text-color: #b4b7ff;
+$background-color: #545eec;
+$main-color: $text-color;
+
+$width-small: 700px;
+$width-tiny: 400px;
+$width-large: 1000px;
+
+// Import partials from `_sass`
+@import
+        "base"
+;
