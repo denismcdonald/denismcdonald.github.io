@@ -107,13 +107,12 @@ close.addEventListener("mousedown", function() {
         text.style.color = "#b4b7ff";
         text.innerHTML = event.key;
         text.style.display = "inline-block";
-        console.log(text.innerText);
-    }
+    } 
 
     if(event.key == "Backspace") {
         text.innerHTML = "";
     }
-
+   
     if(event.key == "Enter" && text.innerHTML == 1 ) { 
     window.location.replace("https://www.denismcdonald.com/blog");
     }
