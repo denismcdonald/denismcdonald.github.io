@@ -102,7 +102,14 @@ close.addEventListener("mousedown", function() {
     var name = event.key;
     var code = event.code;
 
-    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3 || expanded == false && event.key == 4 || expanded == false && event.key == 5) {
+    // if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3 || expanded == false && event.key == 4 || expanded == false && event.key == 5) {
+    //     text.style.backgroundColor = "#545eec";
+    //     text.style.color = "#b4b7ff";
+    //     text.innerHTML = event.key;
+    //     text.style.display = "inline-block";
+    // } 
+
+    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3) {
         text.style.backgroundColor = "#545eec";
         text.style.color = "#b4b7ff";
         text.innerHTML = event.key;
@@ -113,19 +120,19 @@ close.addEventListener("mousedown", function() {
         text.innerHTML = "";
     }
    
+    // if(event.key == "Enter" && text.innerHTML == 1 ) { 
+    // window.location.replace("https://www.denismcdonald.com/blog");
+    // }
+    // if(event.key == "Enter" && text.innerHTML == 2 ) { 
+    // window.location.replace("https://docs.denismcdonald.com");
+    // }
     if(event.key == "Enter" && text.innerHTML == 1 ) { 
-    window.location.replace("https://www.denismcdonald.com/blog");
-    }
-    if(event.key == "Enter" && text.innerHTML == 2 ) { 
-    window.location.replace("https://docs.denismcdonald.com");
-    }
-    if(event.key == "Enter" && text.innerHTML == 3 ) { 
     window.location.replace("https://github.com/denismcdonald");
     }
-    if(event.key == "Enter" && text.innerHTML == 4 ) { 
+    if(event.key == "Enter" && text.innerHTML == 2 ) { 
     window.location.replace("https://www.linkedin.com/in/denismcdonald/");
     }
-    if(event.key == "Enter" && text.innerHTML == 5 ) { 
+    if(event.key == "Enter" && text.innerHTML == 3 ) { 
     window.location.replace("mailto:hello@denismcdonald.com");
     }
 
