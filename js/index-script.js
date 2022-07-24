@@ -109,7 +109,7 @@ close.addEventListener("mousedown", function() {
     //     text.style.display = "inline-block";
     // } 
 
-    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3 || expanded == false && event.key == 4 || expanded == false && event.key == 5) {
+    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3 || expanded == false && event.key == 4) {
         text.style.backgroundColor = "#545eec";
         text.style.color = "#b4b7ff";
         text.innerHTML = event.key;
