@@ -157,6 +157,33 @@ h2, h3 {
 img {
   clear: both; }
 
+.folio {
+  text-align: center; }
+
+.img-folio {
+  border-bottom: 2rem;
+  border: 1rem solid #b4b7ff;
+  color: #545eec;
+  margin-bottom: 1rem;
+  width: 75%;
+  height: auto; }
+
+.img-folio-small {
+  border-bottom: 2rem;
+  border: 1rem solid #b4b7ff;
+  color: #545eec;
+  margin-bottom: 1rem;
+  width: 50%;
+  height: auto; }
+
+.img-folio-wide {
+  border-bottom: 2rem;
+  border: 1rem solid #b4b7ff;
+  color: #545eec;
+  margin-bottom: 1rem;
+  width: 90%;
+  height: auto; }
+
 figure > img {
   display: block; }
 
@@ -167,6 +194,22 @@ figure > img {
 ::selection {
   color: #545eec;
   background: #b4b7ff; }
+
+.toc {
+  border-bottom: 1rem solid #b4b7ff;
+  margin-bottom: 2rem; }
+
+.toc ol {
+  margin-left: 4rem; }
+
+.toc ol li a:before {
+  content: ""; }
+
+.toc ol li a:after {
+  content: ""; }
+
+.toc a:last-child {
+  margin-bottom: 1.5rem; }
 
 code {
   color: #545eec;

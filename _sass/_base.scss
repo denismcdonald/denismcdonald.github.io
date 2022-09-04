@@ -207,6 +207,37 @@ img {
     clear: both;
 }
 
+.folio {
+    text-align: center;
+}
+
+.img-folio {
+    border-bottom: 2rem;
+    border: 1rem solid $text-color;
+    color: $background-color;
+    margin-bottom: 1rem;
+    width: 75%;
+    height: auto;
+}
+
+.img-folio-small {
+    border-bottom: 2rem;
+    border: 1rem solid $text-color;
+    color: $background-color;
+    margin-bottom: 1rem;
+    width: 50%;
+    height: auto;
+}
+
+.img-folio-wide {
+    border-bottom: 2rem;
+    border: 1rem solid $text-color;
+    color: $background-color;
+    margin-bottom: 1rem;
+    width: 90%;
+    height: auto;
+}
+
 figure > img {
     display: block;
 }
@@ -219,6 +250,31 @@ figure > img {
 ::selection {
     color: $background-color;
     background: $main-color;
+}
+
+.toc {
+    border-bottom: 1rem solid $text-color;
+    margin-bottom: 2rem;
+}
+
+.toc ol {
+    margin-left: 4rem;
+}
+
+// .toc ol {
+//     text-align: justify;
+// }
+
+.toc ol li {
+    a:before {content: ""}
+}
+
+.toc ol li {
+    a:after {content: ""}
+}
+
+.toc a:last-child {
+    margin-bottom: 1.5rem;
 }
 
 code {
