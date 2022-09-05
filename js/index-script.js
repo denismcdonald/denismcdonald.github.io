@@ -101,7 +101,7 @@ close.addEventListener("mousedown", function() {
     var name = event.key;
     var code = event.code;
 
-    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3) {
+    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3 || expanded == false && event.key == 4) {
         text.style.backgroundColor = "#545eec";
         text.style.color = "#b4b7ff";
         text.innerHTML = event.key;
@@ -111,14 +111,16 @@ close.addEventListener("mousedown", function() {
     if(event.key == "Backspace") {
         text.innerHTML = "";
     }
-   
     if(event.key == "Enter" && text.innerHTML == 1 ) { 
+    window.location.replace("https://www.denismcdonald.com/folio/");
+    }   
+    if(event.key == "Enter" && text.innerHTML == 2 ) { 
     window.location.replace("https://www.linkedin.com/in/denismcdonald/");
     }
-    if(event.key == "Enter" && text.innerHTML == 2 ) { 
+    if(event.key == "Enter" && text.innerHTML == 3 ) { 
     window.location.replace("https://github.com/denismcdonald");
     }
-    if(event.key == "Enter" && text.innerHTML == 3 ) { 
+    if(event.key == "Enter" && text.innerHTML == 4 ) { 
     window.location.replace("mailto:hello@denismcdonald.com");
     }
 
