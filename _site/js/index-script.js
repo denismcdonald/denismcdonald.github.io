@@ -101,7 +101,7 @@ close.addEventListener("mousedown", function() {
     var name = event.key;
     var code = event.code;
 
-    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3 || expanded == false && event.key == 4) {
+    if(expanded == false && event.key == 1 || expanded == false && event.key == 2 || expanded == false && event.key == 3 || expanded == false && event.key == 4 || expanded == false && event.key == 5) {
         text.style.backgroundColor = "#545eec";
         text.style.color = "#b4b7ff";
         text.innerHTML = event.key;
@@ -121,6 +121,9 @@ close.addEventListener("mousedown", function() {
     window.location.replace("https://github.com/denismcdonald");
     }
     if(event.key == "Enter" && text.innerHTML == 4 ) { 
+    window.location.replace("https://www.denismcdonald.com/blog");
+    }
+    if(event.key == "Enter" && text.innerHTML == 5 ) { 
     window.location.replace("mailto:hello@denismcdonald.com");
     }
 
