@@ -112,7 +112,7 @@ close.addEventListener("mousedown", function() {
         text.innerHTML = "";
     }
     if(event.key == "Enter" && text.innerHTML == 1 ) { 
-    window.location.replace("https://www.denismcdonald.com/folio/");
+    window.location.replace("https://www.denismcdonald.com/folio");
     }   
     if(event.key == "Enter" && text.innerHTML == 2 ) { 
     window.location.replace("https://www.linkedin.com/in/denismcdonald/");
