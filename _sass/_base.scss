@@ -24,6 +24,19 @@ html {
     display: inline;
 }
 
+.bordered {
+    border: 0.5rem solid $text-color;
+}
+
+.profile {
+    // margin: 0 0.4rem 0.35rem 0.15rem;
+    margin: 0 1rem 0.35rem 0.15rem;
+}
+
+#smile {
+    width: 1rem;
+}
+
 #close {
     color: $background-color;
     background: $text-color;
@@ -175,6 +188,26 @@ h1 {
     color: $background-color;
     display: block;
     margin: 2rem 0 2rem 0;
+    text-align: center;
+}
+
+.latest {
+    background-color: $text-color;
+    border-bottom: 2rem;
+    color: $background-color;
+    display: block;
+    margin: 2rem 0 2rem 0;
+    padding: 0;
+    text-align: center;
+}
+
+.blank {
+    background-color: $text-color;
+    border-bottom: 2rem;
+    color: $background-color;
+    display: block;
+    margin: 2rem 0 2rem 0;
+    padding: 0;
     text-align: center;
 }
 
