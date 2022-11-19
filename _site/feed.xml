@@ -5,24 +5,26 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 19 Nov 2022 20:38:59 +1100</pubDate>
-    <lastBuildDate>Sat, 19 Nov 2022 20:38:59 +1100</lastBuildDate>
+    <pubDate>Sat, 19 Nov 2022 20:50:12 +1100</pubDate>
+    <lastBuildDate>Sat, 19 Nov 2022 20:50:12 +1100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
         <title>Use LinkedIn Learning for free with a library card</title>
         <description>&lt;p&gt;First post!&lt;/p&gt;
 
-&lt;p&gt;And first tech tip:  many public libraries provide access to &lt;a href=&quot;https://www.linkedin.com/learning/&quot;&gt;LinkedIn Learning&lt;/a&gt; for free, and some of these libraries can be joined online.  For example:&lt;/p&gt;
+&lt;p&gt;And first tech tip:  many public libraries provide access to &lt;a href=&quot;https://www.linkedin.com/learning/&quot;&gt;LinkedIn Learning&lt;/a&gt; for free, and some of these libraries can be joined online.  For example, in Australia:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;In Victoria: &lt;a href=&quot;https://www.yprl.vic.gov.au/&quot;&gt;Yarra Plenty Regional Library&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;In South Australia: &lt;a href=&quot;https://www.libraries.sa.gov.au/custom/web/selfreg.html&quot;&gt;Libraries SA&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;In New South Wales: &lt;a href=&quot;https://www.wollongong.nsw.gov.au/library&quot;&gt;Wollongong City Libraries&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;In Queensland: &lt;a href=&quot;https://www.slq.qld.gov.au&quot;&gt;State Library&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Victoria: &lt;a href=&quot;https://www.yprl.vic.gov.au/&quot;&gt;Yarra Plenty Regional Library&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;South Australia: &lt;a href=&quot;https://www.libraries.sa.gov.au/custom/web/selfreg.html&quot;&gt;Libraries SA&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;New South Wales: &lt;a href=&quot;https://www.wollongong.nsw.gov.au/library&quot;&gt;Wollongong City Libraries&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Queensland: &lt;a href=&quot;https://www.slq.qld.gov.au&quot;&gt;State Library&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;No such luck, though (as best I can tell), if you're in Tasmania, the Australian Capital Territory or the Northern Territory.&lt;/p&gt;
+&lt;p&gt;No such luck, though (as best I can tell), for Tasmania, the ACT and NT.&lt;/p&gt;
+
+&lt;p&gt;Great resource.&lt;/p&gt;
 </description>
         <pubDate>Sat, 19 Nov 2022 07:00:00 +1100</pubDate>
         <link>http://0.0.0.0:4000/libraries/resources/2022/11/19/linkedin-learning.html</link>
