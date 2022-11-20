@@ -15,5 +15,3 @@ And first tech tip:  many public libraries provide access to [LinkedIn Learning]
 - Queensland: [State Library](https://www.slq.qld.gov.au)
 
 No such luck, though (as best I can tell), for Tasmania, the ACT and NT.
-
-Great resource.
