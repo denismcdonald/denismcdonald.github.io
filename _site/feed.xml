@@ -5,15 +5,41 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 26 Nov 2022 20:24:12 +1100</pubDate>
-    <lastBuildDate>Sat, 26 Nov 2022 20:24:12 +1100</lastBuildDate>
+    <pubDate>Sun, 27 Nov 2022 15:39:20 +1100</pubDate>
+    <lastBuildDate>Sun, 27 Nov 2022 15:39:20 +1100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
-        <title>Use LinkedIn Learning for free with a library card</title>
-        <description>&lt;p&gt;First post!&lt;/p&gt;
+        <title>PowerToys: Batman utility belt for Windows</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://aka.ms/getPowertoys&quot;&gt;Microsoft PowerToys&lt;/a&gt; is a collection of supremely handy utilities for Windows, where &quot;supremely handy&quot; means &quot;baffling why they don't come with Windows by default&quot;.&lt;/p&gt;
 
-&lt;p&gt;And first tech tip:  many public libraries provide access to &lt;a href=&quot;https://www.linkedin.com/learning/&quot;&gt;LinkedIn Learning&lt;/a&gt; for free, and some of these libraries can be joined online.  For example, in Australia:&lt;/p&gt;
+&lt;p&gt;These are some of my favourite PowerToys:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/image-resizer&quot;&gt;Image Resizer&lt;/a&gt;: Supremely handy!&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/powerrename&quot;&gt;PowerRename&lt;/a&gt;: rename files easily. Life-changing!&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/color-picker&quot;&gt;Color Picker&lt;/a&gt;: like Digital Colour Meter on MacOS&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/run&quot;&gt;PowerToys Run&lt;/a&gt;: app launcher like Spotlight on MacOS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Microsoft says these are &lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/&quot;&gt;&quot;utilities to customize Windows&quot;&lt;/a&gt;. I would suggest they are utilities to ameliorate suffering.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 27 Nov 2022 13:00:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/libraries/resources/2022/11/27/microsoft-powertoys.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/libraries/resources/2022/11/27/microsoft-powertoys.html</guid>
+        
+        
+        <category>libraries</category>
+        
+        <category>resources</category>
+        
+      </item>
+    
+      <item>
+        <title>LinkedIn Learning: often free with a library card</title>
+        <description>&lt;p&gt;Hello world!&lt;/p&gt;
+
+&lt;p&gt;First tech tip:  many public libraries provide access to &lt;a href=&quot;https://www.linkedin.com/learning/&quot;&gt;LinkedIn Learning&lt;/a&gt; for free, and some of these libraries can be joined online.  For example, in Australia:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Victoria: &lt;a href=&quot;https://www.yprl.vic.gov.au/&quot;&gt;Yarra Plenty Regional Library&lt;/a&gt;&lt;/li&gt;
