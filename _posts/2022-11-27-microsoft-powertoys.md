@@ -14,4 +14,4 @@ These are some of my favourite PowerToys:
 - [Color Picker](https://learn.microsoft.com/en-us/windows/powertoys/color-picker): like Digital Colour Meter on MacOS
 - [PowerToys Run](https://learn.microsoft.com/en-us/windows/powertoys/run): app launcher like Spotlight on MacOS
 
-Microsoft says these are ["utilities to customize Windows"](https://learn.microsoft.com/en-us/windows/powertoys/). I would suggest they are utilities to ameliorate suffering.
+Tellingly, Microsoft says these are ["utilities to customize Windows"](https://learn.microsoft.com/en-us/windows/powertoys/). I'd suggest they're the sorts of utilities one often feels are missing from Windows.
