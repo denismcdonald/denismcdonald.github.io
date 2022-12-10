@@ -5,13 +5,13 @@ date:   2022-11-27 12:00:00 +1000
 categories: libraries resources
 ---
 
-[Microsoft PowerToys](https://aka.ms/getPowertoys) is a collection of supremely handy utilities for Windows, where "supremely handy" means "baffling why they don't come with Windows by default". 
+[Microsoft PowerToys](https://aka.ms/getPowertoys) is a collection of very handy utilities for Windows, where "very handy" means "Grrr why don't these come with Windows by default?". 
 
 These are some of my favourite PowerToys: 
 
-- [Image Resizer](https://learn.microsoft.com/en-us/windows/powertoys/image-resizer): Supremely handy!
-- [PowerRename](https://learn.microsoft.com/en-us/windows/powertoys/powerrename): rename files easily. Life-changing! 
-- [Color Picker](https://learn.microsoft.com/en-us/windows/powertoys/color-picker): like Digital Colour Meter on MacOS
+- [Image Resizer](https://learn.microsoft.com/en-us/windows/powertoys/image-resizer): Via a right click in File Explorer.
+- [PowerRename](https://learn.microsoft.com/en-us/windows/powertoys/powerrename): Via a right click in File Explorer. 
+- [Color Picker](https://learn.microsoft.com/en-us/windows/powertoys/color-picker): Like Digital Colour Meter on MacOS
 - [PowerToys Run](https://learn.microsoft.com/en-us/windows/powertoys/run): app launcher like Spotlight on MacOS
 
-Tellingly, Microsoft says these are ["utilities to customize Windows"](https://learn.microsoft.com/en-us/windows/powertoys/). I'd suggest they're the sorts of utilities one often feels are missing from Windows.
+It's a mystery why Microsoft regards these as ["utilities to customize Windows"](https://learn.microsoft.com/en-us/windows/powertoys/) instead of utilities that put the operation in an operating system.

@@ -5,24 +5,24 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 28 Nov 2022 17:12:53 +1100</pubDate>
-    <lastBuildDate>Mon, 28 Nov 2022 17:12:53 +1100</lastBuildDate>
+    <pubDate>Sat, 10 Dec 2022 15:52:11 +1100</pubDate>
+    <lastBuildDate>Sat, 10 Dec 2022 15:52:11 +1100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
         <title>PowerToys: Batman utility belt for Windows</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://aka.ms/getPowertoys&quot;&gt;Microsoft PowerToys&lt;/a&gt; is a collection of supremely handy utilities for Windows, where &quot;supremely handy&quot; means &quot;baffling why they don't come with Windows by default&quot;.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;a href=&quot;https://aka.ms/getPowertoys&quot;&gt;Microsoft PowerToys&lt;/a&gt; is a collection of very handy utilities for Windows, where &quot;very handy&quot; means &quot;Grrr why don't these come with Windows by default?&quot;.&lt;/p&gt;
 
 &lt;p&gt;These are some of my favourite PowerToys:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/image-resizer&quot;&gt;Image Resizer&lt;/a&gt;: Supremely handy!&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/powerrename&quot;&gt;PowerRename&lt;/a&gt;: rename files easily. Life-changing!&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/color-picker&quot;&gt;Color Picker&lt;/a&gt;: like Digital Colour Meter on MacOS&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/image-resizer&quot;&gt;Image Resizer&lt;/a&gt;: Via a right click in File Explorer.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/powerrename&quot;&gt;PowerRename&lt;/a&gt;: Via a right click in File Explorer.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/color-picker&quot;&gt;Color Picker&lt;/a&gt;: Like Digital Colour Meter on MacOS&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/run&quot;&gt;PowerToys Run&lt;/a&gt;: app launcher like Spotlight on MacOS&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Tellingly, Microsoft says these are &lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/&quot;&gt;&quot;utilities to customize Windows&quot;&lt;/a&gt;. I'd suggest they're the sorts of utilities one often feels are missing from Windows.&lt;/p&gt;
+&lt;p&gt;It's a mystery why Microsoft regards these as &lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/&quot;&gt;&quot;utilities to customize Windows&quot;&lt;/a&gt; instead of utilities that put the operation in an operating system.&lt;/p&gt;
 </description>
         <pubDate>Sun, 27 Nov 2022 13:00:00 +1100</pubDate>
         <link>http://0.0.0.0:4000/libraries/resources/2022/11/27/microsoft-powertoys.html</link>
