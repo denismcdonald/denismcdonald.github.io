@@ -2,7 +2,7 @@
 layout: post
 title:  "PowerToys: Batman utility belt for Windows"
 date:   2022-11-27 12:00:00 +1000
-categories: libraries resources
+categories: Windows software
 ---
 
 [Microsoft PowerToys](https://aka.ms/getPowertoys) is a collection of very handy utilities for Windows, where "very handy" means "Grrr why don't these come with Windows by default?". 

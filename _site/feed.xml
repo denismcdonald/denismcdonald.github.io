@@ -5,9 +5,28 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 10 Dec 2022 16:32:53 +1100</pubDate>
-    <lastBuildDate>Sat, 10 Dec 2022 16:32:53 +1100</lastBuildDate>
+    <pubDate>Sat, 10 Dec 2022 17:39:25 +1100</pubDate>
+    <lastBuildDate>Sat, 10 Dec 2022 17:39:25 +1100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
+    
+      <item>
+        <title>Windows Clipboard Time Machine</title>
+        <description>&lt;p&gt;On Windows, you can view the history of what you've copied to your clipboard by pressing the Windows key plus the V key. You can then recopy anything from that history.&lt;/p&gt;
+
+&lt;p&gt;This is a handy feature that I only just learned about.&lt;/p&gt;
+
+&lt;p&gt;You might need to enable the feature, though, in Settings &amp;gt; System &amp;gt; Clipboard.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 10 Dec 2022 13:00:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/windows/tips/2022/12/10/clipboard-time-machine.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/windows/tips/2022/12/10/clipboard-time-machine.html</guid>
+        
+        
+        <category>windows</category>
+        
+        <category>tips</category>
+        
+      </item>
     
       <item>
         <title>PowerToys: Batman utility belt for Windows</title>
@@ -25,13 +44,13 @@
 &lt;p&gt;Highly recommended.&lt;/p&gt;
 </description>
         <pubDate>Sun, 27 Nov 2022 13:00:00 +1100</pubDate>
-        <link>http://0.0.0.0:4000/libraries/resources/2022/11/27/microsoft-powertoys.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/libraries/resources/2022/11/27/microsoft-powertoys.html</guid>
+        <link>http://0.0.0.0:4000/windows/software/2022/11/27/microsoft-powertoys.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/windows/software/2022/11/27/microsoft-powertoys.html</guid>
         
         
-        <category>libraries</category>
+        <category>Windows</category>
         
-        <category>resources</category>
+        <category>software</category>
         
       </item>
     
