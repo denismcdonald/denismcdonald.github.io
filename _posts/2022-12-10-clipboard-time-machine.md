@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Windows Clipboard Time Machine"
-date:   2022-12-10 12:00:00 +1000
+date:  2022-12-10 12:00:00 +1000
 categories: windows tips
 ---
 

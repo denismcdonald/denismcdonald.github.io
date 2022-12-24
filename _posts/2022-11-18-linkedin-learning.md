@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "LinkedIn Learning: often free with a library card"
-date:   2022-11-18 20:00:00
+date:  2022-11-18 20:00:00 +1000
 categories: libraries resources
 ---
 

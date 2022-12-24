@@ -5,9 +5,30 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 24 Dec 2022 20:38:17 +1100</pubDate>
-    <lastBuildDate>Sat, 24 Dec 2022 20:38:17 +1100</lastBuildDate>
+    <pubDate>Sat, 24 Dec 2022 21:02:50 +1100</pubDate>
+    <lastBuildDate>Sat, 24 Dec 2022 21:02:50 +1100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
+    
+      <item>
+        <title>Making private notes in a Microsoft Environment</title>
+        <description>&lt;p&gt;If your workplace uses Microsoft 365 and doesn't let you install software for storing encrypted notes or passwords, here's a tip:  &lt;a href=&quot;https://support.microsoft.com/en-us/office/password-protect-your-notes-e5ffd8fd-e811-441a-aa02-e13f0f445933#PASSWORDS=Newer_versions&quot;&gt;use OneNote to password-protect sensitive information&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;OneNote keyboard shortcuts make it convenient, too, to lock and unlock notes very quickly.&lt;/p&gt;
+
+&lt;p&gt;But &lt;em&gt;remember&lt;/em&gt;: if you forget your password, you'll lose your information.  The same goes for protecting Excel or Word documents with passwords.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 24 Dec 2022 13:00:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/windows/tips/passwords/2022/12/24/onenote-passwords.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/windows/tips/passwords/2022/12/24/onenote-passwords.html</guid>
+        
+        
+        <category>windows</category>
+        
+        <category>tips</category>
+        
+        <category>passwords</category>
+        
+      </item>
     
       <item>
         <title>Windows Clipboard Time Machine</title>
@@ -66,9 +87,9 @@
 
 &lt;p&gt;Still, a saving of AUD$50 per month.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 19 Nov 2022 07:00:00 +1100</pubDate>
-        <link>http://0.0.0.0:4000/libraries/resources/2022/11/19/linkedin-learning.html</link>
-        <guid isPermaLink="true">http://0.0.0.0:4000/libraries/resources/2022/11/19/linkedin-learning.html</guid>
+        <pubDate>Fri, 18 Nov 2022 21:00:00 +1100</pubDate>
+        <link>http://0.0.0.0:4000/libraries/resources/2022/11/18/linkedin-learning.html</link>
+        <guid isPermaLink="true">http://0.0.0.0:4000/libraries/resources/2022/11/18/linkedin-learning.html</guid>
         
         
         <category>libraries</category>
