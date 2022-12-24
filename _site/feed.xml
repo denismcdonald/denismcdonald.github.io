@@ -5,15 +5,13 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 10 Dec 2022 17:40:47 +1100</pubDate>
-    <lastBuildDate>Sat, 10 Dec 2022 17:40:47 +1100</lastBuildDate>
+    <pubDate>Sat, 24 Dec 2022 20:38:17 +1100</pubDate>
+    <lastBuildDate>Sat, 24 Dec 2022 20:38:17 +1100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
         <title>Windows Clipboard Time Machine</title>
         <description>&lt;p&gt;On Windows, you can view the history of what you've copied to your clipboard by pressing the Windows key plus the V key. You can then recopy anything from that history.&lt;/p&gt;
-
-&lt;p&gt;This is a handy feature that I only just learned about.&lt;/p&gt;
 
 &lt;p&gt;You might need to enable the feature, though, in Settings &amp;gt; System &amp;gt; Clipboard.&lt;/p&gt;
 </description>
@@ -30,18 +28,17 @@
     
       <item>
         <title>PowerToys: Batman utility belt for Windows</title>
-        <description>&lt;p&gt;&lt;a href=&quot;https://aka.ms/getPowertoys&quot;&gt;Microsoft PowerToys&lt;/a&gt; is a collection of very handy utilities for Windows, where &quot;very handy&quot; means &quot;Grrr why don't these come with Windows by default?&quot;.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;a href=&quot;https://aka.ms/getPowertoys&quot;&gt;Microsoft PowerToys&lt;/a&gt; is a collection of super handy utilities for Windows, where &quot;super handy&quot; means &quot;Why don't these come with Windows by default?&quot;.&lt;/p&gt;
 
 &lt;p&gt;These are some of my favourite PowerToys:&lt;/p&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/image-resizer&quot;&gt;Image Resizer&lt;/a&gt;: Via a right click in File Explorer.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/powerrename&quot;&gt;PowerRename&lt;/a&gt;: Easy batch file renaming, again via a right click in File Explorer.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/color-picker&quot;&gt;Color Picker&lt;/a&gt;: Like Digital Colour Meter on MacOS&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/run&quot;&gt;PowerToys Run&lt;/a&gt;: app launcher like Spotlight on MacOS&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;-&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/image-resizer&quot;&gt;Image Resizer&lt;/a&gt;: Via a right click in File Explorer.&lt;/p&gt;
 
-&lt;p&gt;Highly recommended.&lt;/p&gt;
+&lt;p&gt;-&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/powerrename&quot;&gt;PowerRename&lt;/a&gt;: Easy file renaming via File Explorer.&lt;/p&gt;
+
+&lt;p&gt;-&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/color-picker&quot;&gt;Color Picker&lt;/a&gt;: Like Digital Colour Meter on MacOS&lt;/p&gt;
+
+&lt;p&gt;-&lt;a href=&quot;https://learn.microsoft.com/en-us/windows/powertoys/keyboard-manager&quot;&gt;Keyboard Manager&lt;/a&gt;: Create your own system-wide shortcuts; eg, for volume and media playback on keyboards that lack dedicated buttons.&lt;/p&gt;
 </description>
         <pubDate>Sun, 27 Nov 2022 13:00:00 +1100</pubDate>
         <link>http://0.0.0.0:4000/windows/software/2022/11/27/microsoft-powertoys.html</link>
@@ -56,9 +53,7 @@
     
       <item>
         <title>LinkedIn Learning: often free with a library card</title>
-        <description>&lt;p&gt;Hello world!&lt;/p&gt;
-
-&lt;p&gt;First tech tip:  many public libraries provide access to &lt;a href=&quot;https://www.linkedin.com/learning/&quot;&gt;LinkedIn Learning&lt;/a&gt; for free, and some of these libraries can be joined online.  For example, in Australia:&lt;/p&gt;
+        <description>&lt;p&gt;First tech tip: Many public libraries provide access to &lt;a href=&quot;https://www.linkedin.com/learning/&quot;&gt;LinkedIn Learning&lt;/a&gt; for free, and some of these libraries can be joined online.  For example, in Australia:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Victoria: &lt;a href=&quot;https://www.yprl.vic.gov.au/&quot;&gt;Yarra Plenty Regional Library&lt;/a&gt;&lt;/li&gt;
@@ -67,7 +62,9 @@
   &lt;li&gt;Queensland: &lt;a href=&quot;https://www.slq.qld.gov.au&quot;&gt;State Library&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;No such luck, though (as best I can tell), for Tasmania, the ACT and NT.&lt;/p&gt;
+&lt;p&gt;A downside is that you don't get certificates with your name on them.&lt;/p&gt;
+
+&lt;p&gt;Still, a saving of AUD$50 per month.&lt;/p&gt;
 </description>
         <pubDate>Sat, 19 Nov 2022 07:00:00 +1100</pubDate>
         <link>http://0.0.0.0:4000/libraries/resources/2022/11/19/linkedin-learning.html</link>
