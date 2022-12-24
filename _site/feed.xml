@@ -5,12 +5,12 @@
     <description></description>
     <link>http://0.0.0.0:4000/</link>
     <atom:link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 24 Dec 2022 21:02:50 +1100</pubDate>
-    <lastBuildDate>Sat, 24 Dec 2022 21:02:50 +1100</lastBuildDate>
+    <pubDate>Sat, 24 Dec 2022 21:04:28 +1100</pubDate>
+    <lastBuildDate>Sat, 24 Dec 2022 21:04:28 +1100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
-        <title>Making private notes in a Microsoft Environment</title>
+        <title>Private notes in a Microsoft work environment</title>
         <description>&lt;p&gt;If your workplace uses Microsoft 365 and doesn't let you install software for storing encrypted notes or passwords, here's a tip:  &lt;a href=&quot;https://support.microsoft.com/en-us/office/password-protect-your-notes-e5ffd8fd-e811-441a-aa02-e13f0f445933#PASSWORDS=Newer_versions&quot;&gt;use OneNote to password-protect sensitive information&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;OneNote keyboard shortcuts make it convenient, too, to lock and unlock notes very quickly.&lt;/p&gt;

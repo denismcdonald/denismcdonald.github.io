@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Making private notes in a Microsoft Environment"
+title:  "Private notes in a Microsoft work environment"
 date:  2022-12-24 12:00:00 +1000
 categories: windows tips passwords
 ---
