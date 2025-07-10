@@ -3421,6 +3421,9 @@
                 // Update just this specific row instead of refreshing entire table
                 await updateWeedingRowTracking(barcode);
                 updateTrackSelectedButton();
+
+                // Show success notification
+                showStatus(`Item tracked for ${reason}`, 'success');
             } catch (error) {
                 console.error('Error tracking item:', error);
                 showStatus('Error tracking item: ' + error.message, 'error');
@@ -3442,6 +3445,9 @@
                 // Update just this specific row instead of refreshing entire table
                 await updateWeedingRowTracking(barcode);
                 updateTrackSelectedButton();
+
+                // Show success notification
+                showStatus('Item untracked successfully', 'success');
             } catch (error) {
                 console.error('Error untracking item:', error);
                 showStatus('Error untracking item: ' + error.message, 'error');
@@ -3764,7 +3770,7 @@
         }
 
         //===========================================================================
-        // bulkTrackWeedingSelected() - Track all selected items (without notifications)
+        // bulkTrackWeedingSelected() - Track all selected items with notifications
         //===========================================================================
         async function bulkTrackWeedingSelected() {
             const selectedCheckboxes = document.querySelectorAll('.weeding-item-checkbox:checked');
@@ -3803,9 +3809,11 @@
                     }
                 }
 
-                // Only show notification if there were errors
+                // Show appropriate notification based on results
                 if (errorCount > 0) {
                     showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
+                } else if (successCount > 0) {
+                    showStatus(`Successfully tracked ${successCount} items`, 'success');
                 }
 
                 // Force tracking cache to refresh
@@ -3863,9 +3871,11 @@
                     }
                 }
 
-                // Only show notification if there were errors
+                // Show appropriate notification based on results
                 if (errorCount > 0) {
                     showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
+                } else if (successCount > 0) {
+                    showStatus(`Successfully tracked ${successCount} items`, 'success');
                 }
 
                 // Force tracking cache to refresh
@@ -3914,9 +3924,11 @@
                     }
                 }
 
-                // Only show notification if there were errors
+                // Show appropriate notification based on results
                 if (errorCount > 0) {
-                    showStatus(`Untracked ${successCount} items with ${errorCount} errors`, 'error');
+                    showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
+                } else if (successCount > 0) {
+                    showStatus(`Successfully tracked ${successCount} items`, 'success');
                 }
 
                 // Force tracking cache to refresh
@@ -3965,9 +3977,11 @@
                     }
                 }
 
-                // Only show notification if there were errors
+                // Show appropriate notification based on results
                 if (errorCount > 0) {
-                    showStatus(`Untracked ${successCount} items with ${errorCount} errors`, 'error');
+                    showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
+                } else if (successCount > 0) {
+                    showStatus(`Successfully tracked ${successCount} items`, 'success');
                 }
 
                 // Force tracking cache to refresh
