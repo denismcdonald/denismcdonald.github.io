@@ -2119,8 +2119,7 @@
                 </div>
 
                 <div class="analysis-section">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <div style="display: flex; align-items: center; gap: 1rem;">
                             <h3>Weeding Candidates</h3>
                             <button id="clearWeedingSortBtn" class="btn btn-secondary clear-sort-btn"
@@ -2128,22 +2127,24 @@
                                 Clear Sort
                             </button>
                         </div>
-
-                    <!-- Add this before your existing weeding table -->
-                    <div class="bulk-actions" id="weedingBulkActions" style="display: none;">
-                        <label>
-                            <input type="checkbox" id="selectAllWeeding" class="select-all-checkbox" onchange="toggleAllWeedingItems(this)">
-                            Select All Visible
-                        </label>
+                    </div>
+                
+                    <!-- Mode Selector (now properly outside the header div) -->
+                    <div id="weedingTrackingModeSelector" class="tracking-mode-selector" style="margin-bottom: 1rem; display: block;">
+                        <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                        <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
+                            <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
+                            <button class="mode-btn" data-mode="send-to-portland">Portland</button>
+                            <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
+                            <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
+                            <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                            <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                        </div>
+                    </div>
                     
-                        <label for="bulkTrackingReason">Tracking Reason:</label>
-                        <select id="bulkWeedingTrackingReason">
-                            <option value="weeding-candidate">Weeding Candidate</option>
-                            <option value="replacement-candidate">Replacement Candidate</option>
-                            <option value="monitor-performance">Monitor Performance</option>
-                            <option value="general-monitoring">General Monitoring</option>
-                        </select>
-                    
+                    <!-- Bulk Actions (separate div) -->
+                    <div class="bulk-actions" id="weedingBulkActions">
                         <button class="bulk-track-btn" id="trackSelectedBtn" onclick="bulkTrackWeedingSelected()" disabled>
                             Track Selected (0)
                         </button>
@@ -2160,12 +2161,17 @@
                         <button class="bulk-track-btn" onclick="bulkUntrackAllWeeding()" style="background: #dc2626;">
                             Untrack All Visible
                         </button>
-                    </div>
-
-                        <button id="exportWeedingBtn" class="btn btn-secondary">
-                            📊 Export to Excel
+                    
+                        <!-- Export Buttons -->
+                        <button id="exportAllWeedingBtn" class="btn btn-secondary" onclick="exportWeedingCandidates()">
+                            📊 Export All
+                        </button>
+                    
+                        <button id="exportTrackedWeedingBtn" class="btn btn-secondary" onclick="exportTrackedWeedingCandidates()">
+                            📌 Export Tracked
                         </button>
                     </div>
+
                     <table class="analysis-table sortable-table" id="weedingTable">
                         <thead>
                             <tr>
@@ -3100,8 +3106,6 @@
         </button>
     </div>
 
-
-
         <div id="trackingTableContainer">
             <p style="text-align: center; color: #6b7280; padding: 2rem;">
                 Loading tracking data...
@@ -3579,10 +3583,14 @@
                 async function renderWeedingPage() {
                     const tableBody = document.getElementById('weedingTableBody');
 
-                    // Show bulk actions if we have items
+                   // Show bulk actions and mode selector if we have items
                     const bulkActions = document.getElementById('weedingBulkActions');
+                    const modeSelector = document.getElementById('weedingTrackingModeSelector');
                     if (weedingCandidates.length > 0) {
                         bulkActions.style.display = 'flex';
+                        if (modeSelector) {
+                            modeSelector.style.display = 'block';
+                        }
                     }
 
                     // On first run, clear out any old rows
@@ -3760,7 +3768,13 @@
         //===========================================================================
         async function bulkTrackWeedingSelected() {
             const selectedCheckboxes = document.querySelectorAll('.weeding-item-checkbox:checked');
-            const reason = document.getElementById('bulkWeedingTrackingReason').value;
+            // Get the selected mode from the mode selector
+            const activeMode = document.querySelector('#weedingTrackingModeSelector .mode-btn.active');
+            if (!activeMode) {
+                showStatus('Please select a tracking mode first', 'error');
+                return;
+            }
+            const reason = activeMode.getAttribute('data-mode');
 
             if (selectedCheckboxes.length === 0) {
                 // Keep this error notification since it's important feedback
@@ -3813,11 +3827,17 @@
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // bulkTrackAllWeeding() - Track all visible items (fixed version)
         //===========================================================================
         async function bulkTrackAllWeeding() {
-            const reason = document.getElementById('bulkWeedingTrackingReason').value;
+            // Get the selected mode from the mode selector
+            const activeMode = document.querySelector('#weedingTrackingModeSelector .mode-btn.active');
+            if (!activeMode) {
+                showStatus('Please select a tracking mode first', 'error');
+                return;
+            }
+            const reason = activeMode.getAttribute('data-mode');
             const confirmMessage = `Track all ${weedingCandidates.length} weeding candidates with reason "${reason}"?`;
 
             if (!confirm(confirmMessage)) {
@@ -4127,7 +4147,7 @@
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // setupSearchModeSelector() - Make mode selector buttons work
         //===========================================================================
         function setupSearchModeSelector() {
@@ -4155,6 +4175,34 @@
                 }
             }
         }
+
+        //===========================================================================
+        // setupWeedingModeSelector() - Make weeding mode selector buttons work
+        //===========================================================================
+        function setupWeedingModeSelector() {
+            const modeButtons = document.querySelectorAll('#weedingTrackingModeSelector .mode-btn');
+
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons
+                    modeButtons.forEach(btn => btn.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    // Store the selected mode
+                    localStorage.setItem('weedingTrackingMode', this.getAttribute('data-mode'));
+                });
+            });
+
+            // Restore previously selected mode or default to 'weeding-candidate'
+            const savedMode = localStorage.getItem('weedingTrackingMode') || 'weeding-candidate';
+            const savedButton = document.querySelector(`#weedingTrackingModeSelector .mode-btn[data-mode="${savedMode}"]`);
+            if (savedButton) {
+                savedButton.classList.add('active');
+            }
+        }
+        //===========================================================================
 
         //===========================================================================
         // Enhanced Sorting Functions for All Tables
@@ -8077,8 +8125,6 @@
             }
 
             // Hide all tab contents
-
-            // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');
             tabContents.forEach(tab => {
                 tab.classList.remove('active');
@@ -8890,6 +8936,12 @@
             setTimeout(() => {
                 setupTableSortEventListeners();
             }, 100);
+
+            // Setup weeding mode selector
+            setTimeout(() => {
+                setupWeedingModeSelector();
+            }, 150);
+
         }
 
         //===========================================================================
@@ -9786,6 +9838,67 @@
 
             // Setup disclosure arrows
             setupDisclosureArrows();
+        }
+
+        //===========================================================================
+        // exportTrackedWeedingCandidates() - Export only tracked items from weeding candidates
+        //===========================================================================
+        async function exportTrackedWeedingCandidates() {
+            if (!window.currentWeedingCandidates || window.currentWeedingCandidates.length === 0) {
+                alert('No weeding candidates to export');
+                return;
+            }
+
+            // Filter for only tracked items
+            const trackedItems = [];
+            for (const item of window.currentWeedingCandidates) {
+                const isTracked = await isItemTracked(item.barcode);
+                if (isTracked) {
+                    const trackingData = await getTrackingData(item.barcode);
+                    trackedItems.push({ ...item, trackingReason: trackingData.reason });
+                }
+            }
+
+            if (trackedItems.length === 0) {
+                alert('No tracked items found in weeding candidates');
+                return;
+            }
+
+            const headers = ['Title', 'Author', 'Year', 'Call Number', 'Collection', 'Circulation', 'Age (Years)', 'Branch', 'Tracking Reason'];
+
+            // Create data rows including tracking reason
+            const data = trackedItems.map(item => {
+                const age = getItemAge(item.year);
+                const ageDisplay = age > 0 ? age.toString() : 'Unknown';
+                const yearDisplay = item.year || 'Unknown';
+
+                return [
+                    item.title || '',
+                    item.author || '',
+                    yearDisplay,
+                    item.callNumber || '',
+                    item.collection || '',
+                    item.circulation || 0,
+                    ageDisplay,
+                    item.branch || '',
+                    item.trackingReason || ''
+                ];
+            });
+
+            // Generate filename with tracking info
+            const today = new Date().toISOString().split('T')[0];
+            const collectionFilter = document.getElementById('weedingCollectionFilter').value;
+
+            let filename = `tracked-weeding-candidates-${today}`;
+            if (collectionFilter && collectionFilter !== 'all') {
+                filename += `-${collectionFilter.toLowerCase().replace(/\s+/g, '-')}`;
+            }
+            filename += `.xlsx`;
+
+            createExcelFile(data, headers, filename, 'Tracked Weeding Candidates');
+
+            // Show success message with count
+            showStatus(`Exported ${trackedItems.length} tracked items to Excel`, 'success');
         }
 
         //===========================================================================
@@ -12138,7 +12251,7 @@
             document.getElementById('globalBranchFilter').addEventListener('change', handleBranchFilterChange);
 
             // Export button listener
-            document.getElementById('exportWeedingBtn').addEventListener('click', exportWeedingCandidates);
+            // Export button listeners are now handled by onclick attributes in HTML
 
             // Scroll to top button functionality
             const throttledToggleScrollButton = throttle(toggleScrollButton, 100);
