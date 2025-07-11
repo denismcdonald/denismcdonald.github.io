@@ -3658,7 +3658,7 @@
                 // Add timestamp to database name to avoid conflicts between different instances
                 const dbName = 'CollectionSnapshots_' + (window.dbInstance || 'main');
 
-                const request = indexedDB.open(dbName, 1);
+                const request = indexedDB.open(dbName, 3);
 
                 request.onerror = () => {
                     console.error('Error opening IndexedDB:', request.error);
@@ -3671,7 +3671,7 @@
                         deleteRequest.onsuccess = () => {
                             console.log('Corrupted database deleted, trying again...');
                             // Try again with a fresh database
-                            const retryRequest = indexedDB.open(dbName, 1);
+                            const retryRequest = indexedDB.open(dbName, 3);
 
                             retryRequest.onsuccess = () => {
                                 db = retryRequest.result;
