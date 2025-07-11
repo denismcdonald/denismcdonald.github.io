@@ -1627,7 +1627,7 @@
                                             </svg>
                                         </th>
                                         <th class="sortable" data-sort="year" data-type="number">
-                                            Year
+                                            Date Added
                                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                 style="width: 1rem; height: 1rem;">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
@@ -1804,7 +1804,7 @@
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="year" data-type="number">
-                                        Year
+                                        Date Added
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M5 15l7-7 7 7">
@@ -1899,7 +1899,7 @@
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="year" data-type="number">
-                                Year
+                                Date Added
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5 15l7-7 7 7"></path>
@@ -1937,7 +1937,7 @@
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>Age Filter</label>
+                        <label>Time in Collection Filter</label>
                         <select id="ageFilter">
                             <option value="none" selected>All ages</option>
                             <option value="5">5+ years old</option>
@@ -2080,7 +2080,7 @@
                                     </svg>
                                 </th>
                                 <th class="sortable" data-sort="year" data-type="number">
-                                    Year
+                                    Date Added
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 15l7-7 7 7"></path>
@@ -2192,7 +2192,7 @@
                                     </svg>
                                 </th>
                                 <th class="sortable" data-sort="year" data-type="number">
-                                    Year
+                                    Date Added
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                                     </svg>
@@ -2604,7 +2604,7 @@
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="year" data-type="number">
-                                        Year
+                                        Date Added
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M5 15l7-7 7 7">
@@ -2689,7 +2689,7 @@
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="year" data-type="number">
-                                        Year
+                                        Date Added
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M5 15l7-7 7 7"></path>
@@ -2847,7 +2847,7 @@
                             </svg>
                         </th>
                         <th class="sortable" data-sort="year" data-type="number">
-                            Year
+                            Date Added
                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                 </path>
@@ -2920,7 +2920,7 @@
                         </svg>
                     </th>
                     <th class="sortable" data-sort="year" data-type="number">
-                        Year
+                        Date Added
                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                             </path>
@@ -3000,7 +3000,7 @@
                             </svg>
                         </th>
                         <th class="sortable" data-sort="year" data-type="number">
-                            Year
+                            Date Added
                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                 </path>
@@ -3612,8 +3612,8 @@
                     const slice = weedingCandidates.slice(weedingOffset, weedingOffset + WEEDING_PAGE_SIZE);
 
                     for (const item of slice) {
-                        const age = getItemAge(item.year);
-                        const yearDisplay = item.year || 'Unknown';
+                        const age = getItemAge(item.itemCreated);
+                        const yearDisplay = item.itemCreated || 'Unknown';
                         const ageDisplay = age > 0 ? `${age} years` : 'Unknown';
 
                         // Check if item is tracked
@@ -6068,7 +6068,7 @@
                 // Populate table
                 const tableBody = document.getElementById('collectionChangesDetailTableBody');
                 tableBody.innerHTML = allChanges.map(item => {
-                    const age = getItemAge(item.year);
+                    const age = getItemAge(item.itemCreated);
                     const ageDisplay = age > 0 ? `${age} years` : 'Unknown';
 
                     return `
@@ -6135,7 +6135,7 @@
             const headers = ['Title', 'Author', 'Year', 'Age (Years)', 'Circulation', 'Change Type', 'Call Number', 'Branch'];
 
             const data = items.map(item => {
-                const age = getItemAge(item.year);
+                const age = getItemAge(item.itemCreated);
                 return [
                     item.title || '',
                     item.author || '',
@@ -6227,7 +6227,7 @@
             if (field === 'age') {
                 // Sort by calculated age
                 window.currentCollectionChangesDetail.items.forEach(item => {
-                    item.age = getItemAge(item.year);
+                    item.age = getItemAge(item.itemCreated);
                 });
                 sortField = 'age';
             }
@@ -6236,7 +6236,7 @@
 
             const tableBody = document.getElementById('collectionChangesDetailTableBody');
             tableBody.innerHTML = sortedData.map(item => {
-                const age = getItemAge(item.year);
+                const age = getItemAge(item.itemCreated);
                 const ageDisplay = age > 0 ? `${age} years` : 'Unknown';
 
                 return `
@@ -7000,19 +7000,38 @@
         }
 
         //===========================================================================
-        // getItemAge() - Calculate age of item in years with better error handling
+        // getItemAge() - Calculate age of item in years since it was added to collection
         //===========================================================================
-        function getItemAge(yearString) {
-            if (!yearString || yearString.trim() === '') {
-                return 0; // Return 0 for items with no year (treated as new)
+        function getItemAge(itemCreatedDate) {
+            if (!itemCreatedDate || itemCreatedDate.trim() === '') {
+                return 0; // Return 0 for items with no creation date (treated as new)
             }
-
-            const year = parseInt(yearString);
-            if (isNaN(year) || year < 1800 || year > new Date().getFullYear()) {
-                return 0; // Return 0 for invalid years
+        
+            // Parse the date - expecting DD/MM/YYYY format like "16/10/2017"
+            const dateParts = itemCreatedDate.trim().split('/');
+            if (dateParts.length !== 3) {
+                return 0; // Return 0 for invalid date format
             }
-
-            return new Date().getFullYear() - year;
+        
+            const day = parseInt(dateParts[0]);
+            const month = parseInt(dateParts[1]) - 1; // JavaScript months are 0-based
+            const year = parseInt(dateParts[2]);
+        
+            // Validate the date components
+            if (isNaN(day) || isNaN(month) || isNaN(year) || 
+                day < 1 || day > 31 || month < 0 || month > 11 || 
+                year < 2000 || year > new Date().getFullYear()) {
+                return 0; // Return 0 for invalid dates
+            }
+        
+            const createdDate = new Date(year, month, day);
+            const today = new Date();
+            
+            // Calculate the difference in years
+            const ageInMilliseconds = today - createdDate;
+            const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+            
+            return Math.floor(ageInYears);
         }
 
         //===========================================================================
@@ -8740,7 +8759,7 @@
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="year" data-type="number">
-                                Year
+                                Date Added
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                                 </svg>
@@ -9149,41 +9168,41 @@
             console.log(`Items matching collection filter:`, collectionMatchItems.length);
 
             // Check age distribution with detailed year analysis
-            const itemsWithValidYears = filteredData.filter(item => getItemAge(item.year) > 0);
-            console.log(`Items with valid years:`, itemsWithValidYears.length);
-            console.log(`Items without valid years:`, filteredData.length - itemsWithValidYears.length);
+            const itemsWithValidDates = filteredData.filter(item => getItemAge(item.itemCreated) > 0);
+            console.log(`Items with valid creation dates:`, itemsWithValidDates.length);
+            console.log(`Items without valid creation dates:`, filteredData.length - itemsWithValidDates.length);
 
             // Sample the first 10 items to see what year data looks like
-            console.log('=== YEAR DATA SAMPLE ===');
+            console.log('=== CREATION DATE SAMPLE ===');
             filteredData.slice(0, 10).forEach((item, index) => {
-                const age = getItemAge(item.year);
-                console.log(`Item ${index + 1}: Title="${item.title.substring(0, 30)}..." Year="${item.year}" Age=${age}`);
+                const age = getItemAge(item.itemCreated);
+                console.log(`Item ${index + 1}: Title="${item.title.substring(0, 30)}..." Created="${item.itemCreated}" Age=${age}`);
             });
 
             // Count items by age ranges
             const ageRanges = {
-                '0-5 years': 0,
-                '6-10 years': 0,
-                '11-15 years': 0,
-                '16-20 years': 0,
-                '21+ years': 0,
-                'No valid year': 0
+                '0-5 years in collection': 0,
+                '6-10 years in collection': 0,
+                '11-15 years in collection': 0,
+                '16-20 years in collection': 0,
+                '21+ years in collection': 0,
+                'No valid creation date': 0
             };
 
             filteredData.forEach(item => {
-                const age = getItemAge(item.year);
+                const age = getItemAge(item.itemCreated);
                 if (age === 0) {
-                    ageRanges['No valid year']++;
+                    ageRanges['No valid creation date']++;
                 } else if (age <= 5) {
-                    ageRanges['0-5 years']++;
+                    ageRanges['0-5 years in collection']++;
                 } else if (age <= 10) {
-                    ageRanges['6-10 years']++;
+                    ageRanges['6-10 years in collection']++;
                 } else if (age <= 15) {
-                    ageRanges['11-15 years']++;
+                    ageRanges['11-15 years in collection']++;
                 } else if (age <= 20) {
-                    ageRanges['16-20 years']++;
+                    ageRanges['16-20 years in collection']++;
                 } else {
-                    ageRanges['21+ years']++;
+                    ageRanges['21+ years in collection']++;
                 }
             });
 
@@ -9202,7 +9221,7 @@
                 let meetsAgeFilter = true;
                 if (ageFilter !== 'none') {
                     const requiredAge = parseInt(ageFilter);
-                    const itemAge = getItemAge(item.year);
+                    const itemAge = getItemAge(item.itemCreated);
                     meetsAgeFilter = itemAge >= requiredAge;
                 }
 
@@ -9236,7 +9255,7 @@
                 <div class="metric-card">
                     <div class="metric-title">Very Old Items</div>
                     <div class="metric-value">${veryOld.toLocaleString()}</div>
-                    <div class="metric-subtitle">Published 15+ years ago</div>
+                    <div class="metric-subtitle">Added to collection 15+ years ago</div>
                 </div>
                 
                 <div class="metric-card">
@@ -9525,7 +9544,7 @@
 
             // Prepare data points with categories
             const dataPoints = chartData.map(item => {
-                const age = getItemAge(item.year);
+                const age = getItemAge(item.itemCreated);
                 const circulation = item.circulation;
 
                 // Determine category
@@ -9634,7 +9653,7 @@
                         x: {
                             title: {
                                 display: true,
-                                text: 'Age (Years Since Publication)',
+                                text: 'Age (Years Since Added to Collection)',
                                 font: { size: 11 }
                             },
                             ticks: { font: { size: 9 } },
@@ -9749,7 +9768,7 @@
                 const ageFilter = document.getElementById('ageFilter').value;
 
                 const data = visibleDataPoints.map(item => {
-                    const age = getItemAge(item.year);
+                    const age = getItemAge(item.itemCreated);
                     const circulation = item.circulation;
 
                     // Determine category (same logic as chart)
@@ -9839,7 +9858,7 @@
 
             // Create data rows
             const data = candidates.map(item => {
-                const age = getItemAge(item.year);
+                const age = getItemAge(item.itemCreated);
                 const ageDisplay = age > 0 ? age : '';
                 return [
                     item.title || '',
@@ -9907,7 +9926,7 @@
 
             // Create data rows including tracking reason
             const data = trackedItems.map(item => {
-                const age = getItemAge(item.year);
+                const age = getItemAge(item.itemCreated);
                 const ageDisplay = age > 0 ? age.toString() : 'Unknown';
                 const yearDisplay = item.year || 'Unknown';
 
