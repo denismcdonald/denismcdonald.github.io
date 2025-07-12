@@ -7481,6 +7481,14 @@
                     document.getElementById('uploadSection').style.display = 'block';
                     document.getElementById('searchTab').classList.remove('hidden');
 
+                    // Refresh overview tab if currently active
+                    const activeTab = document.querySelector('.tab-content.active');
+                    if (activeTab && activeTab.id === 'overviewTab') {
+                        setTimeout(() => {
+                            loadOverviewData();
+                        }, 100);
+                    }
+
                 } else {
                     throw new Error('No valid data found in CSV file');
                 }
@@ -10015,15 +10023,31 @@
         }
 
         //===========================================================================
-        // createHighPerformersDistributionChart() - Create visual chart of high-performing items by collection
-        //===========================================================================
-        function createHighPerformersDistributionChart(data) {
-            const ctx = document.getElementById('highPerformersChart');
-            if (!ctx) return;
+            // createHighPerformersDistributionChart() - Create visual chart of high-performing items by collection
+            //===========================================================================
+            function createHighPerformersDistributionChart(data) {
+                console.log('=== HIGH PERFORMERS CHART DEBUG ===');
+                console.log('Data length:', data ? data.length : 'NO DATA');
 
-            // Check if Chart.js is available
-            if (typeof Chart === 'undefined') {
-                ctx.parentElement.innerHTML = `
+                const ctx = document.getElementById('highPerformersChart');
+                console.log('Canvas element found:', !!ctx);
+
+                if (!ctx) {
+                    console.log('ERROR: Canvas element not found!');
+                    return;
+                }
+
+                // Hide any "no performers" message and show canvas
+                ctx.style.display = 'block';
+                const messageDiv = ctx.parentElement.querySelector('.no-performers-message');
+                if (messageDiv) {
+                    messageDiv.style.display = 'none';
+                }
+
+                // Check if Chart.js is available
+                if (typeof Chart === 'undefined') {
+                    console.log('Chart.js not available, showing fallback');
+                    ctx.parentElement.innerHTML = `
             <h4 style="margin-bottom: 1rem; color: #374151;">High Performers by Collection</h4>
             <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; border: 1px solid #e5e7eb;">
                 <p style="margin-bottom: 0.5rem; color: #6b7280; font-size: 0.875rem;">
@@ -10034,112 +10058,125 @@
                 </p>
             </div>
         `;
-                return;
-            }
+                    return;
+                }
 
-            // Destroy existing chart if it exists
-            if (window.highPerformersChartInstance) {
-                window.highPerformersChartInstance.destroy();
-            }
+                // Destroy existing chart if it exists
+                if (window.highPerformersChartInstance) {
+                    console.log('Destroying existing chart');
+                    window.highPerformersChartInstance.destroy();
+                }
 
-            // Get high performers using the same threshold as the metric card
-            const threshold = getHighPerformanceThreshold();
-            const highPerformers = data.filter(item => item.circulation >= threshold);
+                // Get high performers using the same threshold as the metric card
+                const threshold = getHighPerformanceThreshold();
+                console.log('Threshold:', threshold);
+                const highPerformers = data.filter(item => item.circulation >= threshold);
+                console.log('High performers found:', highPerformers.length);
 
-            if (highPerformers.length === 0) {
-                ctx.parentElement.innerHTML = `
-            <h4 style="margin-bottom: 1rem; color: #374151;">High Performers by Collection</h4>
-            <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; border: 1px solid #e5e7eb; text-align: center;">
-                <p style="color: #6b7280; margin: 0;">No high-performing items found</p>
-            </div>
-        `;
-                return;
-            }
+                if (highPerformers.length === 0) {
+                    console.log('No high performers, showing fallback message');
+                    // Hide canvas and show message, but don't destroy the canvas element
+                    ctx.style.display = 'none';
+                    let messageDiv = ctx.parentElement.querySelector('.no-performers-message');
+                    if (!messageDiv) {
+                        messageDiv = document.createElement('div');
+                        messageDiv.className = 'no-performers-message';
+                        messageDiv.style.cssText = 'background: #f8fafc; padding: 1rem; border-radius: 0.5rem; border: 1px solid #e5e7eb; text-align: center;';
+                        messageDiv.innerHTML = '<p style="color: #6b7280; margin: 0;">No high-performing items found</p>';
+                        ctx.parentElement.appendChild(messageDiv);
+                    }
+                    messageDiv.style.display = 'block';
+                    return;
+                }
 
-            // Group high performers by collection
-            const collections = groupBy(highPerformers, 'collection');
+                console.log('=== END HIGH PERFORMERS CHART DEBUG ===');
 
-            // Prepare data - top 8 collections by high performer count
-            const sortedCollections = Object.entries(collections)
-                .sort(([, a], [, b]) => b.length - a.length)
-                .slice(0, 8);
+                // Group high performers by collection
+                const collections = groupBy(highPerformers, 'collection');
 
-            const labels = sortedCollections.map(([name]) =>
-                name.length > 15 ? name.substring(0, 12) + '...' : name
-            );
-            const data_values = sortedCollections.map(([, items]) => items.length);
+                // Prepare data - top 8 collections by high performer count
+                const sortedCollections = Object.entries(collections)
+                    .sort(([, a], [, b]) => b.length - a.length)
+                    .slice(0, 8);
 
-            // Use a complementary color palette to the main collection chart
-            const backgroundColors = [
-                '#16a34a', '#22c55e', '#4ade80', '#86efac',
-                '#bbf7d0', '#dcfce7', '#f0fdf4', '#ecfdf5'
-            ];
+                const labels = sortedCollections.map(([name]) =>
+                    name.length > 15 ? name.substring(0, 12) + '...' : name
+                );
+                const data_values = sortedCollections.map(([, items]) => items.length);
 
-            window.highPerformersChartInstance = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data_values,
-                        backgroundColor: backgroundColors,
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 15,
-                                usePointStyle: true,
-                                font: {
-                                    size: 11
+                // Use a complementary color palette to the main collection chart
+                const backgroundColors = [
+                    '#16a34a', '#22c55e', '#4ade80', '#86efac',
+                    '#bbf7d0', '#dcfce7', '#f0fdf4', '#ecfdf5'
+                ];
+
+                window.highPerformersChartInstance = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: data_values,
+                            backgroundColor: backgroundColors,
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 15,
+                                    usePointStyle: true,
+                                    font: {
+                                        size: 11
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const label = sortedCollections[context.dataIndex][0];
+                                        const value = context.parsed;
+                                        const total = data_values.reduce((a, b) => a + b, 0);
+                                        const percentage = Math.round((value / total) * 100);
+                                        const totalHighPerformers = highPerformers.length;
+                                        const collectionPercentage = Math.round((value / totalHighPerformers) * 100);
+                                        return `${label}: ${value.toLocaleString()} high performers (${percentage}% of top collections, ${collectionPercentage}% of all high performers)`;
+                                    }
                                 }
                             }
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function (context) {
-                                    const label = sortedCollections[context.dataIndex][0];
-                                    const value = context.parsed;
-                                    const total = data_values.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total) * 100);
-                                    const totalHighPerformers = highPerformers.length;
-                                    const collectionPercentage = Math.round((value / totalHighPerformers) * 100);
-                                    return `${label}: ${value.toLocaleString()} high performers (${percentage}% of top collections, ${collectionPercentage}% of all high performers)`;
-                                }
+                        onClick: (event, elements) => {
+                            console.log('Chart clicked!', elements);
+                            if (elements.length > 0) {
+                                const elementIndex = elements[0].index;
+                                console.log('Element index:', elementIndex);
+                                console.log('Available collections:', sortedCollections);
+                                const collectionName = sortedCollections[elementIndex][0]; // Get the full collection name
+                                console.log('Clicking on collection:', collectionName);
+                                showHighPerformersForCollection(collectionName);
+                            } else {
+                                console.log('No elements found in click');
                             }
+                        },
+                        onHover: (event, elements) => {
+                            event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
                         }
-                    },
-                    onClick: (event, elements) => {
-                        console.log('Chart clicked!', elements);
-                        if (elements.length > 0) {
-                            const elementIndex = elements[0].index;
-                            console.log('Element index:', elementIndex);
-                            console.log('Available collections:', sortedCollections);
-                            const collectionName = sortedCollections[elementIndex][0]; // Get the full collection name
-                            console.log('Clicking on collection:', collectionName);
-                            showHighPerformersForCollection(collectionName);
-                        } else {
-                            console.log('No elements found in click');
-                        }
-                    },
-                    onHover: (event, elements) => {
-                        event.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
                     }
-                }
-            });
-            // Debug: Check if chart was created
-            console.log('High performers chart created:', window.highPerformersChartInstance);
-            console.log('Chart canvas element:', ctx);
-            // Test click detection on the canvas directly
-            ctx.addEventListener('click', function (e) {
-                console.log('Canvas clicked directly!', e);
-            });
-        }
+                });
+
+                // Debug: Check if chart was created
+                console.log('High performers chart created:', window.highPerformersChartInstance);
+                console.log('Chart canvas element:', ctx);
+
+                // Test click detection on the canvas directly
+                ctx.addEventListener('click', function (e) {
+                    console.log('Canvas clicked directly!', e);
+                });
+            }
 
         //===========================================================================
         // updateWeedingAnalysis() - FIXED VERSION with better error handling
@@ -12561,9 +12598,15 @@
         }
 
         function selectBookFromTable(barcode) {
-            showTab('search');
-            setTimeout(() => selectBook(barcode), 100);
-        }
+                // Check if we're in the chart modal and close it
+                const chartModal = document.getElementById('chartItemsModal');
+                if (chartModal && !chartModal.classList.contains('hidden')) {
+                    closeChartItemsModal();
+                }
+
+                showTab('search');
+                setTimeout(() => selectBook(barcode), 100);
+            }
 
         function handleFile(file) {
             if (!file.name.toLowerCase().endsWith('.csv')) {
@@ -12614,10 +12657,14 @@
                         // ─── Also update snapshot metrics if we're on the snapshots tab ───
                         updateSnapshotMetrics();
 
-                        // ─── If user is currently on snapshots tab, refresh the snapshots list too ───
+                        // ─── If user is currently on overview tab, refresh the overview data too ───
                         const activeTab = document.querySelector('.tab-content.active');
                         if (activeTab && activeTab.id === 'snapshotsTab') {
                             refreshSnapshotsList();
+                        } else if (activeTab && activeTab.id === 'overviewTab') {
+                            setTimeout(() => {
+                                loadOverviewData();
+                            }, 200); // Longer delay for file uploads since they do more DOM work
                         }
 
                         // Make sure upload section is visible so parsing results show
