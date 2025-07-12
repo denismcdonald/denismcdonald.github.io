@@ -380,42 +380,48 @@
         }
 
         /* Title + Author */
-        .search-results-table th:nth-child(2),
-        .search-results-table td:nth-child(2) {
-            width: 40%;
-        }
+.search-results-table th:nth-child(2),
+.search-results-table td:nth-child(2) {
+    width: 37%;
+}
 
-        /* Year */
-        .search-results-table th:nth-child(3),
-        .search-results-table td:nth-child(3) {
-            width: 8%;
-        }
+/* Year */
+.search-results-table th:nth-child(3),
+.search-results-table td:nth-child(3) {
+    width: 7%;
+}
 
-        /* Circulation */
-        .search-results-table th:nth-child(4),
-        .search-results-table td:nth-child(4) {
-            width: 10%;
-        }
+/* Age */
+.search-results-table th:nth-child(4),
+.search-results-table td:nth-child(4) {
+    width: 8%;
+}
 
-        /* Collection */
-        .search-results-table th:nth-child(5),
-        .search-results-table td:nth-child(5) {
-            width: 13%;
-        }
+/* Circulation */
+.search-results-table th:nth-child(5),
+.search-results-table td:nth-child(5) {
+    width: 9%;
+}
 
-        /* Branch */
-        .search-results-table th:nth-child(6),
-        .search-results-table td:nth-child(6) {
-            width: 15%;
-            text-align: center;
-        }
+/* Collection */
+.search-results-table th:nth-child(6),
+.search-results-table td:nth-child(6) {
+    width: 12%;
+}
 
-        /* Track button column */
-        .search-results-table th:nth-child(7),
-        .search-results-table td:nth-child(7) {
-            width: 100px;
-            text-align: center;
-        }
+/* Branch */
+.search-results-table th:nth-child(7),
+.search-results-table td:nth-child(7) {
+    width: 13%;
+    text-align: center;
+}
+
+/* Track button column */
+.search-results-table th:nth-child(8),
+.search-results-table td:nth-child(8) {
+    width: 100px;
+    text-align: center;
+}
 
         /* Track button */
 
@@ -531,41 +537,41 @@
         }
 
         /* Author Other Titles Table Column Widths */
-        #authorOtherTitlesTable th:nth-child(1),
-        #authorOtherTitlesTable td:nth-child(1) {
-            width: 40%;
-            /* Title */
-        }
+#authorOtherTitlesTable th:nth-child(1),
+#authorOtherTitlesTable td:nth-child(1) {
+    width: 42%;
+    /* Title */
+}
 
-        #authorOtherTitlesTable th:nth-child(2),
-        #authorOtherTitlesTable td:nth-child(2) {
-            width: 15%;
-            /* Author */
-        }
+#authorOtherTitlesTable th:nth-child(2),
+#authorOtherTitlesTable td:nth-child(2) {
+    width: 10%;
+    /* Year */
+}
 
-        #authorOtherTitlesTable th:nth-child(3),
-        #authorOtherTitlesTable td:nth-child(3) {
-            width: 12%;
-            /* Date Added */
-        }
+#authorOtherTitlesTable th:nth-child(3),
+#authorOtherTitlesTable td:nth-child(3) {
+    width: 10%;
+    /* Age */
+}
 
-        #authorOtherTitlesTable th:nth-child(4),
-        #authorOtherTitlesTable td:nth-child(4) {
-            width: 10%;
-            /* Circulation */
-        }
+#authorOtherTitlesTable th:nth-child(4),
+#authorOtherTitlesTable td:nth-child(4) {
+    width: 10%;
+    /* Circulation */
+}
 
-        #authorOtherTitlesTable th:nth-child(5),
-        #authorOtherTitlesTable td:nth-child(5) {
-            width: 15%;
-            /* Collection */
-        }
+#authorOtherTitlesTable th:nth-child(5),
+#authorOtherTitlesTable td:nth-child(5) {
+    width: 16%;
+    /* Collection */
+}
 
-        #authorOtherTitlesTable th:nth-child(6),
-        #authorOtherTitlesTable td:nth-child(6) {
-            width: 8%;
-            /* Branch */
-        }
+#authorOtherTitlesTable th:nth-child(6),
+#authorOtherTitlesTable td:nth-child(6) {
+    width: 12%;
+    /* Branch */
+}
 
         .copy-btn {
             padding: 0.15rem;
@@ -1957,6 +1963,13 @@
                                             </path>
                                         </svg>
                                     </th>
+                                    <th class="sortable" data-sort="age">
+                                        Age
+                                        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
+                                            </path>
+                                        </svg>
+                                    </th>
                                     <th class="sortable" data-sort="circulation">
                                         Circulation
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -2027,8 +2040,8 @@
                                                 </path>
                                             </svg>
                                         </th>
-                                        <th class="sortable" data-sort="author" data-type="text">
-                                            Author
+                                        <th class="sortable" data-sort="year" data-type="number">
+                                            Year
                                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                 style="width: 1rem; height: 1rem;">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -2036,12 +2049,10 @@
                                                 </path>
                                             </svg>
                                         </th>
-                                        <th class="sortable" data-sort="year" data-type="number">
-                                            Year
-                                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                style="width: 1rem; height: 1rem;">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5 15l7-7 7 7">
+                                        <th class="sortable" data-sort="age" data-type="number">
+                                            Age
+                                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 1rem; height: 1rem;">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                                 </path>
                                             </svg>
                                         </th>
@@ -5072,7 +5083,7 @@
             });
         }
 
-        //===========================================================================
+    //===========================================================================
         // sortResults() - Sort search results by specified field and direction
         //===========================================================================
         function sortResults(field, direction = 'asc') {
@@ -5080,22 +5091,57 @@
 
             console.log(`Sorting ${allSearchResults.length} results by ${field} (${direction})`);
 
-            allSearchResults.sort((a, b) => {
-                let valueA = a[field];
-                let valueB = b[field];
+            // Get existing table rows (avoid rebuilding the table)
+            const tableBody = document.querySelector('#searchResultsTable tbody');
+            const rows = Array.from(tableBody.querySelectorAll('tr[data-barcode]')); // Only data rows
+
+            if (rows.length === 0) return;
+
+            // Extract data from existing rows for sorting
+            const data = rows.map(row => {
+                const cells = row.querySelectorAll('td');
+                const barcode = row.getAttribute('data-barcode');
+                const book = allSearchResults.find(b => b.barcode === barcode);
+
+                return {
+                    element: row,
+                    book: book,
+                    title: cells[1]?.textContent?.trim() || '',
+                    year: parseInt(cells[2]?.textContent?.trim()) || 0,
+                    age: cells[3]?.textContent?.includes('< 1 year') ? 0 : parseInt(cells[3]?.textContent?.replace(' years', '')) || 0,
+                    circulation: parseInt(cells[4]?.textContent?.trim()) || 0,
+                    collection: cells[5]?.textContent?.trim() || '',
+                    branch: cells[6]?.textContent?.trim() || ''
+                };
+            });
+
+            // Sort the data
+            data.sort((a, b) => {
+                let valueA, valueB;
 
                 // Handle different data types
                 switch (field) {
                     case 'year':
                     case 'circulation':
-                        // Convert to numbers for numeric comparison
-                        valueA = parseInt(valueA) || 0;
-                        valueB = parseInt(valueB) || 0;
+                    case 'age':
+                        valueA = a[field];
+                        valueB = b[field];
+                        break;
+                    case 'title':
+                        valueA = a.title.toLowerCase();
+                        valueB = b.title.toLowerCase();
+                        break;
+                    case 'collection':
+                        valueA = a.collection.toLowerCase();
+                        valueB = b.collection.toLowerCase();
+                        break;
+                    case 'branch':
+                        valueA = a.branch.toLowerCase();
+                        valueB = b.branch.toLowerCase();
                         break;
                     default:
-                        // String comparison - case insensitive
-                        valueA = (valueA || '').toString().toLowerCase();
-                        valueB = (valueB || '').toString().toLowerCase();
+                        valueA = (a[field] || '').toString().toLowerCase();
+                        valueB = (b[field] || '').toString().toLowerCase();
                 }
 
                 let comparison = 0;
@@ -5109,12 +5155,27 @@
                 return direction === 'desc' ? comparison * -1 : comparison;
             });
 
+            // Update the allSearchResults array to match the new order
+            allSearchResults = data.map(item => item.book);
+
+            // Store non-data rows (like load more button) 
+            const nonDataRows = Array.from(tableBody.querySelectorAll('tr:not([data-barcode])'));
+
+            // Clear table body
+            tableBody.innerHTML = '';
+
+            // Re-append sorted data rows
+            data.forEach(item => {
+                tableBody.appendChild(item.element);
+            });
+
+            // Re-append non-data rows at the end
+            nonDataRows.forEach(row => {
+                tableBody.appendChild(row);
+            });
+
             // Update current sort state
             tableSortStates.search = { field, direction };
-
-            // Reset pagination and re-render
-            displayedResultsCount = 0;
-            displaySearchResults(allSearchResults);
             updateSortIcons('search');
         }
 
@@ -5607,6 +5668,10 @@
                     ${isTracked ? `<br><span class="tracking-reason">${trackingData.reason}</span>` : ''}
                 </td>
                 <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.year || 'Unknown Year')}</td>
+                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${(() => {
+                        const age = getItemAge(book.itemCreated);
+                        return age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+                    })()}</td>
                 <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${book.circulation}</td>
                 <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.collection || 'Unknown Collection')}</td>
                 <td style="color: #2563eb;" onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</td>
@@ -8824,6 +8889,12 @@
                         if (collectionDetailsSection && collectionDetailsSection.style.display !== 'none' && window.currentCollectionDetails) {
                             // Re-show the collection details with the new branch filter
                             showCollectionDetails(window.currentCollectionDetails.name);
+                        }
+                        // Also refresh high performers for collection if they're currently displayed
+                        const highPerformersSection = document.getElementById('highPerformersSection');
+                        if (highPerformersSection && highPerformersSection.style.display !== 'none' && window.currentHighPerformersCollection) {
+                            // Re-show the high performers for the specific collection with the new branch filter
+                            showHighPerformersForCollection(window.currentHighPerformersCollection, false);
                         }
                         break;
                     case 'weedingTab':
@@ -12415,10 +12486,19 @@
             tableSortStates.authorOtherTitles = { field, direction };
 
             // Determine data type based on field
-            const dataType = ['year', 'circulation'].includes(field) ? 'number' : 'text';
+            const dataType = ['year', 'circulation', 'age'].includes(field) ? 'number' : 'text';
+
+            // Add age property for sorting if needed
+            let booksToSort = window.currentAuthorOtherTitles;
+            if (field === 'age') {
+                booksToSort = window.currentAuthorOtherTitles.map(book => ({
+                    ...book,
+                    age: getItemAge(book.itemCreated)
+                }));
+            }
 
             // Sort the books
-            const sortedBooks = sortTableData(window.currentAuthorOtherTitles, field, direction, dataType);
+            const sortedBooks = sortTableData(booksToSort, field, direction, dataType);
 
             // Re-render the table
             const tableBody = document.getElementById('authorOtherTitlesBody');
@@ -12430,10 +12510,11 @@
                         </div>
                         <div class="result-meta">${escapeHtml(book.callNumber)}</div>
                     </td>
-                    <td>
-                        <div class="result-author">${escapeHtml(book.author)}</div>
-                    </td>
                     <td>${escapeHtml(book.year || 'Unknown')}</td>
+                                <td>${(() => {
+                    const age = getItemAge(book.itemCreated);
+                    return age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+                })()}</td>
                     <td><strong>${book.circulation}</strong></td>
                     <td>
                         <div style="font-size: 0.75rem;">${escapeHtml(book.collection)}</div>
@@ -12815,10 +12896,11 @@
                         </div>
                         <div class="result-meta">${escapeHtml(book.callNumber)}</div>
                     </td>
-                    <td>
-                        <div class="result-author">${escapeHtml(book.author)}</div>
-                    </td>
                     <td>${escapeHtml(book.year || 'Unknown')}</td>
+                    <td>${(() => {
+                    const age = getItemAge(book.itemCreated);
+                    return age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+                })()}</td>
                     <td><strong>${book.circulation}</strong></td>
                     <td>
                         <div style="font-size: 0.75rem;">${escapeHtml(book.collection)}</div>
@@ -13812,7 +13894,7 @@
         //===========================================================================
         // showHighPerformersForCollection() - Display high-performing items for specific collection
         //===========================================================================
-        function showHighPerformersForCollection(collectionName) {
+        function showHighPerformersForCollection(collectionName, shouldScroll = true) {
             const filteredData = getFilteredData();
             const threshold = getHighPerformanceThreshold();
 
@@ -13868,8 +13950,10 @@
             // Setup sorting
             setupHighPerformersTableSorting();
 
-            // Scroll to the section
-            scrollToSection('highPerformersSection');
+            // Scroll to the section only if requested
+            if (shouldScroll) {
+                scrollToSection('highPerformersSection');
+            }
         }
 
         //===========================================================================
