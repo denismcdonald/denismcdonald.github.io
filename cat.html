@@ -227,12 +227,12 @@
         }
 
         .results-container {
-    max-height: 24rem;
-    overflow-y: auto;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    background: white;
-}
+            max-height: 24rem;
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            background: white;
+        }
 
         /* ── Hide border on the empty tracking-results box ───────────────────────── */
         #trackingSearchResults:empty {
@@ -362,6 +362,8 @@
             border-bottom-color: #bfdbfe;
         }
 
+
+
         /* Search Results Table Styles */
         .search-results-table {
             width: 100%;
@@ -369,46 +371,51 @@
             font-size: 0.875rem;
             background: white;
             table-layout: fixed;
-            /* Add this line if missing */
         }
 
+        /* Checkbox column */
         .search-results-table th:nth-child(1),
         .search-results-table td:nth-child(1) {
-            width: 35%;
+            width: 40px;
         }
 
         /* Title + Author */
         .search-results-table th:nth-child(2),
         .search-results-table td:nth-child(2) {
-            width: 10%;
+            width: 40%;
         }
 
         /* Year */
         .search-results-table th:nth-child(3),
         .search-results-table td:nth-child(3) {
-            width: 10%;
+            width: 8%;
         }
 
         /* Circulation */
         .search-results-table th:nth-child(4),
         .search-results-table td:nth-child(4) {
-            width: 20%;
+            width: 10%;
         }
 
         /* Collection */
         .search-results-table th:nth-child(5),
         .search-results-table td:nth-child(5) {
-            width: 20%;
+            width: 13%;
         }
 
         /* Branch */
         .search-results-table th:nth-child(6),
-.search-results-table td:nth-child(6) {
-    width: 10%;
-    text-align: center;
-}
+        .search-results-table td:nth-child(6) {
+            width: 15%;
+            text-align: center;
+        }
 
-/* Track button column */
+        /* Track button column */
+        .search-results-table th:nth-child(7),
+        .search-results-table td:nth-child(7) {
+            width: 100px;
+            text-align: center;
+        }
 
         /* Track button */
 
@@ -506,59 +513,113 @@
             color: #9ca3af;
         }
 
-        .copy-btn {
-    padding: 0.15rem;
-    margin-left: 0.25rem;
-    border: none;
-    background: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    opacity: 0.6;
-}
+        /* Fix sticky headers and borders for author other titles - match search results table exactly */
+        #authorOtherTitlesTable.analysis-table.sortable-table th {
+            position: sticky !important;
+            top: 0;
+            z-index: 10;
+            background-color: #f9fafb !important;
+            border: none !important;
+            border-bottom: 1px solid #e5e7eb !important;
+            padding: 0.75rem 0.5rem !important;
+        }
 
-       .copy-btn:hover {
-    /* background-color: #f3f4f6; */
-    opacity: 1;
-}
+        #authorOtherTitlesTable.analysis-table td {
+            border: none !important;
+            border-bottom: 1px solid #f3f4f6 !important;
+            padding: 0.75rem 0.5rem !important;
+        }
+
+        /* Author Other Titles Table Column Widths */
+        #authorOtherTitlesTable th:nth-child(1),
+        #authorOtherTitlesTable td:nth-child(1) {
+            width: 40%;
+            /* Title */
+        }
+
+        #authorOtherTitlesTable th:nth-child(2),
+        #authorOtherTitlesTable td:nth-child(2) {
+            width: 15%;
+            /* Author */
+        }
+
+        #authorOtherTitlesTable th:nth-child(3),
+        #authorOtherTitlesTable td:nth-child(3) {
+            width: 12%;
+            /* Date Added */
+        }
+
+        #authorOtherTitlesTable th:nth-child(4),
+        #authorOtherTitlesTable td:nth-child(4) {
+            width: 10%;
+            /* Circulation */
+        }
+
+        #authorOtherTitlesTable th:nth-child(5),
+        #authorOtherTitlesTable td:nth-child(5) {
+            width: 15%;
+            /* Collection */
+        }
+
+        #authorOtherTitlesTable th:nth-child(6),
+        #authorOtherTitlesTable td:nth-child(6) {
+            width: 8%;
+            /* Branch */
+        }
+
+        .copy-btn {
+            padding: 0.15rem;
+            margin-left: 0.25rem;
+            border: none;
+            background: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            opacity: 0.6;
+        }
+
+        .copy-btn:hover {
+            /* background-color: #f3f4f6; */
+            opacity: 1;
+        }
 
         .copy-icon {
-        padding-right: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    color: #6b7280;
-}
+            padding-right: 0.5rem;
+            width: 2rem;
+            height: 2rem;
+            color: #6b7280;
+        }
 
         .copy-icon.success {
             color: #16a34a;
         }
 
-         .copy-icon-small.success {
+        .copy-icon-small.success {
             color: #16a34a;
         }
 
-.copy-btn-small {
-    padding: 0.1rem;
-    padding-top: 0.5rem;
-    margin-left: 0.25rem;
-    border: none;
-    background: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    opacity: 0.6;
-}
+        .copy-btn-small {
+            padding: 0.1rem;
+            padding-top: 0.5rem;
+            margin-left: 0.25rem;
+            border: none;
+            background: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            opacity: 0.6;
+        }
 
-.copy-btn-small:hover {
-    /* background-color: #f3f4f6; */
-    opacity: 1;
-}
+        .copy-btn-small:hover {
+            /* background-color: #f3f4f6; */
+            opacity: 1;
+        }
 
-.copy-icon-small {
-    width: 1rem;
-    height: 1rem;
-    color: #6b7280;
-}
+        .copy-icon-small {
+            width: 1rem;
+            height: 1rem;
+            color: #6b7280;
+        }
 
         #currentCollectionStatus:hover {
             border-color: #666 !important;
@@ -576,56 +637,56 @@
             gap: 1.5rem;
         }
 
-       .book-detail {
-    display: grid;
-    grid-template-columns: auto 1fr 1fr 1fr;
-    gap: 1rem;
-    height: 100%;
-    align-items: start;
-    /* margin-right: 1rem; */
-}
+        .book-detail {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr 1fr;
+            gap: 1rem;
+            height: 100%;
+            align-items: start;
+            /* margin-right: 1rem; */
+        }
 
-   .book-details-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    height: 100%;
-    justify-content: space-evenly;
-}
+        .book-details-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            height: 100%;
+            justify-content: space-evenly;
+        }
 
-/* Force spacing between book cover and title column */
-div#bookDetails.book-detail .book-cover-section {
-    margin-right: 1.5rem !important;
-}
+        /* Force spacing between book cover and title column */
+        div#bookDetails.book-detail .book-cover-section {
+            margin-right: 1.5rem !important;
+        }
 
-    .book-cover {
-    /* width: 5.5rem;
+        .book-cover {
+            /* width: 5.5rem;
     height: 8.5rem; */
-    width: 6rem;
-    height: 9.25rem;
-    background-color: #e5e7eb;
-    border-radius: 0.375rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
+            width: 6rem;
+            height: 9.25rem;
+            background-color: #e5e7eb;
+            border-radius: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
 
-.book-cover-section {
-    display: flex;
-    align-items: flex-start;
-}
+        .book-cover-section {
+            display: flex;
+            align-items: flex-start;
+        }
 
-.book-main-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-right: 3rem;
-    height: 100%;
-    justify-content: flex-start;
-}
+        .book-main-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-right: 3rem;
+            height: 100%;
+            justify-content: flex-start;
+        }
 
         .book-cover img {
             width: 100%;
@@ -640,17 +701,17 @@ div#bookDetails.book-detail .book-cover-section {
             margin-bottom: 0.5rem;
         }
 
-    .book-title h2 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #111827;
-    margin: 0;
-    line-height: 1.2;
-    max-height: 3.8rem;
-    overflow: hidden;
-    word-wrap: break-word;
-    hyphens: auto;
-}
+        .book-title h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0;
+            line-height: 1.2;
+            max-height: 3.8rem;
+            overflow: hidden;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
 
         .book-author {
             display: flex;
@@ -658,80 +719,82 @@ div#bookDetails.book-detail .book-cover-section {
             margin-bottom: 0.5rem;
         }
 
-      
-.book-author p {
-    font-size: 1rem;
-    color: #374151;
-    margin: 0;
-    font-weight: 500;
-    line-height: 1.2;
-}
 
-.book-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    margin-left: 2.5rem;
-    font-size: 0.85rem;
-    color: #6b7280;
-    font-weight: 500;
-}
+        .book-author p {
+            font-size: 1rem;
+            color: #374151;
+            margin: 0;
+            font-weight: 500;
+            line-height: 1.2;
+        }
 
-.detail-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-}
+        .book-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-left: 2.5rem;
+            font-size: 0.85rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
 
-.detail-field label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #374151;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    line-height: 1;
-}
-
-.detail-field span {
-    font-size: 0.85rem;
-    color: #111827;
-    font-weight: 500;
-    line-height: 1.2;
-}
-
-.call-number, .barcode-field {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.call-number span, .barcode-field span {
-    font-family: 'Courier New', monospace;
-    background-color: #f3f4f6;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid #e5e7eb;
-    font-size: 0.8rem;
-    font-weight: 600;
-    line-height: 1;
-}
-
-    .book-cover-section {
-        display: flex;
-        gap: 1.5rem;
-        align-items: start;
-    }
+        .book-meta label {
+            color: #374151;
+            font-weight: 600;
+        }
 
         .detail-field {
             display: flex;
             flex-direction: column;
+            gap: 0.15rem;
         }
 
         .detail-field label {
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            line-height: 1;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             color: #374151;
             margin-bottom: 0.25rem;
+        }
+
+        .detail-field span {
+            font-size: 0.85rem;
+            color: #111827;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .call-number,
+        .barcode-field {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .call-number span,
+        .barcode-field span {
+            font-family: 'Courier New', monospace;
+            background-color: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            border: 1px solid #e5e7eb;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .book-cover-section {
+            display: flex;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .detail-field {
+            display: flex;
+            flex-direction: column;
         }
 
         .status-badge {
@@ -821,7 +884,7 @@ div#bookDetails.book-detail .book-cover-section {
             width: 100%;
             border-collapse: collapse;
             font-size: 0.875rem;
-            margin-top: 1rem;
+            /* margin-top: 1rem; */
         }
 
         .analysis-table th {
@@ -929,7 +992,7 @@ div#bookDetails.book-detail .book-cover-section {
             gap: 0.5rem;
             padding: 0.5rem 1rem;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 0.25rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -945,21 +1008,12 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         .btn-secondary {
-            background-color: #6b7280;
+            background-color: #329740;
             color: white;
         }
 
         .btn-secondary:hover {
-            background-color: #4b5563;
-        }
-
-        .btn-danger {
-            background-color: #dc2626;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #b91c1c;
+            background-color: #2a7e35;
         }
 
         .mode-btn {
@@ -979,25 +1033,25 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         .mode-btn.active {
-    background: #2563eb;
-    color: white;
-    border-color: #2563eb;
-}
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
 
-.tracking-mode-selector {
-    padding: 1rem;
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-}
+        .tracking-mode-selector {
+            padding: 1rem;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
 
-.mode-buttons {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    align-items: center;
-}
+        .mode-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
 
         .mode-btn.active {
             background: #2563eb;
@@ -1346,7 +1400,6 @@ div#bookDetails.book-detail .book-cover-section {
 
         .select-all-checkbox {
             transform: scale(1.2);
-            margin-right: 0.5rem;
         }
 
         .item-checkbox {
@@ -1429,29 +1482,123 @@ div#bookDetails.book-detail .book-cover-section {
             line-height: 1;
             margin-left: 0.5rem;
         }
-        
-/* Simple 4-column fix */
-#bookDetails.book-detail {
-    display: flex;
-    gap: 1rem;
-    height: 160px;
-    align-items: stretch;
-}
 
-#bookDetails .book-cover-section,
-#bookDetails .book-main-info,
-#bookDetails .book-details-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+        /* Simple 4-column fix */
+        #bookDetails.book-detail {
+            display: flex;
+            gap: 1rem;
+            height: 160px;
+            align-items: stretch;
+        }
 
-#bookDetails .book-cover-section {
-    flex: 0 0 auto;
-    width: 5rem;
-}
+        #bookDetails .book-cover-section,
+        #bookDetails .book-main-info,
+        #bookDetails .book-details-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
+        #bookDetails .book-cover-section {
+            flex: 0 0 auto;
+            width: 5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.hidden {
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            padding: 0;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: #374151;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        #untrackSearchSelectedBtn,
+        #untrackSelectedBtn,
+        #chartModalUntrackSelectedBtn,
+        #untrackAllSearchBtn,
+        #untrackAllWeedingBtn,
+        #untrackAllChartModalBtn,
+        .btn-danger {
+            background-color: #d34949;
+            color: white;
+        }
+
+        .btn-danger:hover,
+        #untrackSearchSelectedBtn:hover,
+        #untrackSelectedBtn:hover,
+        #chartModalUntrackSelectedBtn:hover,
+        #untrackAllChartModalBtn:hover,
+        #untrackAllWeedingBtn:hover,
+        #untrackAllSearchBtn:hover {
+            background-color: #ad3c3c;
+        }
+
+        .btn-danger:disabled,
+        #untrackSearchSelectedBtn:disabled,
+        #untrackSelectedBtn:disabled,
+        #chartModalUntrackSelectedBtn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        #weedingTab>div:nth-child(3)>h3:nth-child(1) {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -1609,7 +1756,7 @@ div#bookDetails.book-detail .book-cover-section {
 
             <!-- Search Tab -->
             <div id="searchTab" class="tab-content active hidden">
-                
+
                 <div class="book-details-full-width">
                     <!-- Empty State -->
                     <div id="emptyState" class="empty-state">
@@ -1623,62 +1770,64 @@ div#bookDetails.book-detail .book-cover-section {
                             <p>Search and click on any book to see detailed information here</p>
                         </div>
                     </div>
-                
+
                     <!-- Book Details -->
                     <div id="bookDetails" class="book-detail" style="display: none;">
                         <!-- Column 1: Book Cover -->
                         <div class="book-cover-section">
                             <div id="bookCover" class="book-cover"></div>
                         </div>
-                    
+
                         <!-- Column 2: Title & Author -->
                         <div class="book-main-info">
                             <div class="book-title">
-                            <button class="copy-btn" title="Copy title">
-                                <svg class="copy-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                            </button>
+                                <button class="copy-btn" title="Copy title">
+                                    <svg class="copy-icon" width="16" height="16" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </button>
                                 <h2 id="detailTitle"></h2>
                             </div>
-                    
+
                             <div class="book-author">
-                            <button class="copy-btn" title="Copy author">
-                                <svg class="copy-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                            </button>
+                                <button class="copy-btn" title="Copy author">
+                                    <svg class="copy-icon" width="16" height="16" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </button>
                                 <p id="detailAuthor"></p>
                             </div>
-                    
-                             <div class="book-meta">
-                            <label>COLLECTION</label>
+
+                            <div class="book-meta">
+                                <label>COLLECTION</label>
                                 <div id="detailCollection"></div>
-                            </div> 
+                            </div>
                         </div>
-                    
+
                         <!-- Column 3: First Details -->
                         <div class="book-details-column">
                             <div class="detail-field">
                                 <label>Call Number</label>
                                 <span id="detailCallNumber"></span>
                             </div>
-                    
-                        <div class="detail-field">
-                            <label>Published</label>
-                            <span id="detailYear"></span>
-                        </div>
+
+                            <div class="detail-field">
+                                <label>Published</label>
+                                <span id="detailYear"></span>
+                            </div>
 
                             <div class="detail-field">
                                 <label>Circulation</label>
                                 <span id="detailCirculation"></span>
                             </div>
                         </div>
-                    
+
                         <!-- Column 4: Second Details -->
                         <div class="book-details-column">
                             <div class="detail-field">
@@ -1686,7 +1835,8 @@ div#bookDetails.book-detail .book-cover-section {
                                 <div>
                                     <span id="detailBarcode"></span>
                                     <button class="copy-btn-small" title="Copy barcode">
-                                        <svg class="copy-icon-small" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="copy-icon-small" width="16" height="16" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
                                             </path>
@@ -1694,12 +1844,12 @@ div#bookDetails.book-detail .book-cover-section {
                                     </button>
                                 </div>
                             </div>
-                    
+
                             <div class="detail-field">
                                 <label>Branch</label>
                                 <span id="detailBranch"></span>
                             </div>
-                    
+
                             <div class="detail-field">
                                 <label>Added to Collection</label>
                                 <span id="detailItemCreated"></span>
@@ -1715,98 +1865,140 @@ div#bookDetails.book-detail .book-cover-section {
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
-                        <input type="text" id="searchInput" placeholder="Search titles, authors, call numbers, or barcodes...">
+                        <input type="text" id="searchInput"
+                            placeholder="Search titles, authors, call numbers, or barcodes...">
                     </div>
                 </div>
 
-                
 
-            <div id="searchResults" style="display: none;">
-                <div class="results-header">
-                    <span>Search Results (<span id="resultCount">0</span>)</span>
-                    <button id="clearSortBtn" class="btn btn-secondary clear-sort-btn" onclick="clearSort()">
-                        Clear Sort
-                    </button>
-                </div>
 
-                <div id="noResults" style="display: none; padding: 2rem; text-align: center; color: #6b7280;">
-                    <p>No results found. Try different search terms.</p>
-                </div>
-            
-                <!-- Mode Selector for Search Results -->
-                <div id="searchTrackingModeSelector" class="tracking-mode-selector" style="margin-bottom: 1rem; display: none;">
-                    <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                    <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
-                        <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
-                        <button class="mode-btn" data-mode="send-to-portland">Portland</button>
-                        <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
-                        <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
-                        <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
-                    </div>
-                </div>
-            
-                <div class="results-container" id="resultsContainer">
-                    <div id="searchInfo" class="search-info" style="display: none;"></div>
-                    <table class="search-results-table" id="searchResultsTable">
-                        <thead>
-                            <tr>
-                                <th class="sortable" data-sort="title">
-                                    Title
-                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        style="width: 1rem; height: 1rem;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
-                                        </path>
-                                    </svg>
-                                </th>
-                                <th class="sortable" data-sort="year">
-                                    Year
-                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        style="width: 1rem; height: 1rem;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
-                                        </path>
-                                    </svg>
-                                </th>
-                                <th class="sortable" data-sort="circulation">
-                                    Circ
-                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        style="width: 1rem; height: 1rem;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
-                                        </path>
-                                    </svg>
-                                </th>
-                                <th class="sortable" data-sort="collection">
-                                    Collection
-                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        style="width: 1rem; height: 1rem;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
-                                        </path>
-                                    </svg>
-                                </th>
-                                <th class="sortable" data-sort="branch">
-                                    Branch
-                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        style="width: 1rem; height: 1rem;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
-                                        </path>
-                                    </svg>
-                                </th>
-                                <th style="width: 100px; text-align: center;">
-                                    Track
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="searchResultsBody">
-                        </tbody>
-                    </table>
-                    <div id="loadMoreContainer" class="load-more-container" style="display: none;">
-                        <button id="loadMoreBtn" class="load-more-btn" onclick="loadMoreResults()">
-                            Load More Results
+                <div id="searchResults" style="display: none;">
+                    <div class="results-header">
+                        <span>Search Results (<span id="resultCount">0</span>)</span>
+                        <button id="clearSortBtn" class="btn btn-secondary clear-sort-btn" onclick="clearSort()">
+                            Clear Sort
                         </button>
                     </div>
+
+                    <div id="noResults" style="display: none; padding: 2rem; text-align: center; color: #6b7280;">
+                        <p>No results found. Try different search terms.</p>
+                    </div>
+
+                    <!-- Mode Selector for Search Results -->
+                    <div id="searchTrackingModeSelector" class="tracking-mode-selector"
+                        style="margin-bottom: 1rem; display: none;">
+                        <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                        <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
+                            <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
+                            <button class="mode-btn" data-mode="send-to-portland">Portland</button>
+                            <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
+                            <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
+                            <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                            <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Actions for Search Results -->
+                    <div class="bulk-actions" id="searchBulkActions" style="display: none;">
+                        <button class="bulk-track-btn" id="trackSearchSelectedBtn" onclick="bulkTrackSelected('search')"
+                            disabled>
+                            Track Selected (0)
+                        </button>
+
+                        <button class="bulk-track-btn" onclick="bulkTrackAll('search')">
+                            Track All Visible
+                        </button>
+
+                        <button class="bulk-track-btn" id="untrackSearchSelectedBtn"
+                            onclick="bulkUntrackSelected('search')" disabled>
+                            Untrack Selected (0)
+                        </button>
+
+                        <button class="bulk-track-btn" id="untrackAllSearchBtn" onclick="bulkUntrackAll('search')">
+                            Untrack All Visible
+                        </button>
+
+                        <!-- Export Buttons -->
+                        <button id="exportAllSearchBtn" class="btn btn-secondary" onclick="exportSearchResults()">
+                            📊 Export All
+                        </button>
+
+                        <button id="exportTrackedSearchBtn" class="btn btn-secondary"
+                            onclick="exportTrackedSearchResults()">
+                            📈 Export Tracked
+                        </button>
+                    </div>
+
+                    <div class="results-container" id="resultsContainer">
+                        <div id="searchInfo" class="search-info" style="display: none;"></div>
+                        <table class="search-results-table" id="searchResultsTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px; text-align: center;">
+                                        <input type="checkbox" id="selectAllSearchHeader" class="select-all-checkbox"
+                                            onchange="toggleAllItems(this, 'search')">
+                                    </th>
+                                    <th class="sortable" data-sort="title">
+                                        Title
+                                        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            style="width: 1rem; height: 1rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7">
+                                            </path>
+                                        </svg>
+                                    </th>
+                                    <th class="sortable" data-sort="year">
+                                        Year
+                                        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            style="width: 1rem; height: 1rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7">
+                                            </path>
+                                        </svg>
+                                    </th>
+                                    <th class="sortable" data-sort="circulation">
+                                        Circulation
+                                        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            style="width: 1rem; height: 1rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7">
+                                            </path>
+                                        </svg>
+                                    </th>
+                                    <th class="sortable" data-sort="collection">
+                                        Collection
+                                        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            style="width: 1rem; height: 1rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7">
+                                            </path>
+                                        </svg>
+                                    </th>
+                                    <th class="sortable" data-sort="branch">
+                                        Branch
+                                        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            style="width: 1rem; height: 1rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7">
+                                            </path>
+                                        </svg>
+                                    </th>
+                                    <th style="width: 100px; text-align: center;">
+                                        Track
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="searchResultsBody">
+                            </tbody>
+                        </table>
+                        <div id="loadMoreContainer" class="load-more-container" style="display: none;">
+                            <button id="loadMoreBtn" class="load-more-btn" onclick="loadMoreResults()">
+                                Load More Results
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
                 <!-- Author's Other Titles Section -->
                 <div id="authorOtherTitlesSection"
@@ -1821,11 +2013,8 @@ div#bookDetails.book-detail .book-cover-section {
                                     style="font-size: 0.75rem; padding: 0.25rem 0.75rem; margin-left: 1rem;">📊 View
                                     Performance</button>
                             </div>
-                            <button class="btn btn-secondary" id="toggleAuthorTitlesBtn"
-                                onclick="toggleAuthorOtherTitles()"
-                                style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">▼ Collapse</button>
                         </div>
-                        <div class="results-container" style="max-height: 20rem;">
+                        <div class="results-container" style="max-height: 24rem;">
                             <table class="analysis-table sortable-table" id="authorOtherTitlesTable">
                                 <thead>
                                     <tr>
@@ -1848,7 +2037,7 @@ div#bookDetails.book-detail .book-cover-section {
                                             </svg>
                                         </th>
                                         <th class="sortable" data-sort="year" data-type="number">
-                                            Date Added
+                                            Year
                                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                 style="width: 1rem; height: 1rem;">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -1867,11 +2056,10 @@ div#bookDetails.book-detail .book-cover-section {
                                         </th>
                                         <th class="sortable" data-sort="collection" data-type="text">
                                             Collection
-                                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                style="width: 1rem; height: 1rem;">
+                                            <svg class="sort-icon" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5 15l7-7 7 7">
-                                                </path>
+                                                    d="M5 15l7-7 7 7"></path>
                                             </svg>
                                         </th>
                                         <th class="sortable" data-sort="branch" data-type="text">
@@ -1940,6 +2128,13 @@ div#bookDetails.book-detail .book-cover-section {
                                             d="M5 15l7-7 7 7"></path>
                                     </svg>
                                 </th>
+                                <th class="sortable" data-sort="performanceLevel" data-type="text">
+                                    Performance
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
                                 <th class="sortable" data-sort="items" data-type="number">
                                     Items
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1962,14 +2157,14 @@ div#bookDetails.book-detail .book-cover-section {
                                     </svg>
                                 </th>
                                 <th class="sortable" data-sort="highPerformers" data-type="number">
-                                    High Performers (35+)
+                                    High Performers
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 15l7-7 7 7"></path>
                                     </svg>
                                 </th>
                                 <th class="sortable" data-sort="lowCirculation" data-type="number">
-                                    Low Circulation (&lt;5)
+                                    Low Circulation
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 15l7-7 7 7"></path>
@@ -2374,32 +2569,26 @@ div#bookDetails.book-detail .book-cover-section {
 
                     <!-- Bulk Actions (separate div) -->
                     <div class="bulk-actions" id="weedingBulkActions">
-                        <button class="bulk-track-btn" id="trackSelectedBtn" onclick="bulkTrackWeedingSelected()"
+                        <button class="bulk-track-btn" id="trackSelectedBtn" onclick="bulkTrackSelected('weeding')"
                             disabled>
                             Track Selected (0)
                         </button>
-
-                        <button class="bulk-track-btn" onclick="bulkTrackAllWeeding()">
+                        <button class="bulk-track-btn" onclick="bulkTrackAll('weeding')">
                             Track All Visible
                         </button>
-
-                        <button class="bulk-track-btn" id="untrackSelectedBtn" onclick="bulkUntrackWeedingSelected()"
-                            disabled style="background: #dc2626;">
+                        <button class="bulk-track-btn" id="untrackSelectedBtn" onclick="bulkUntrackSelected('weeding')">
                             Untrack Selected (0)
                         </button>
-
-                        <button class="bulk-track-btn" onclick="bulkUntrackAllWeeding()" style="background: #dc2626;">
+                        <button class="bulk-track-btn" id="untrackAllWeedingBtn" onclick="bulkUntrackAll('weeding')">
                             Untrack All Visible
                         </button>
-
                         <!-- Export Buttons -->
                         <button id="exportAllWeedingBtn" class="btn btn-secondary" onclick="exportWeedingCandidates()">
                             📊 Export All
                         </button>
-
                         <button id="exportTrackedWeedingBtn" class="btn btn-secondary"
                             onclick="exportTrackedWeedingCandidates()">
-                            📌 Export Tracked
+                            📈 Export Tracked
                         </button>
                     </div>
 
@@ -3523,14 +3712,14 @@ div#bookDetails.book-detail .book-cover-section {
                 dateAdded: new Date().toISOString(),
                 status: 'active',
                 notes: notes,
-                location: location || item.branch || 'Unknown',
+                location: location || formatBranchName(item.branch || 'Unknown'),
                 history: [{
                     date: new Date().toISOString(),
                     action: 'added',
                     details: `Added for tracking: ${reason}`,
                     snapshotId: currentSnapshotId || 'current',
                     circulation: item.circulation || 0,
-                    location: location || item.branch || 'Unknown'
+                    location: location || formatBranchName(item.branch || 'Unknown')
                 }]
             };
 
@@ -3649,23 +3838,65 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         //===========================================================================
-        // handleTrackItem() - Handle track button clicks (no scrolling)
+        // handleTrackItem() - Handle track button clicks (generic for any table)
         //===========================================================================
-        async function handleTrackItem(barcode, reason, event) {
+        async function handleTrackItem(barcode, tableType, event) {
             event.stopPropagation(); // Prevent row selection
 
-            try {
-                await trackItem(barcode, reason, `Tracked from weeding analysis`);
+            // Get the current tracking mode for this table type
+            let modeSelectorId, reason;
 
-                // Force tracking cache to refresh next time tab is loaded
+            if (tableType === 'search') {
+                modeSelectorId = '#searchTrackingModeSelector';
+            } else if (tableType === 'weeding') {
+                modeSelectorId = '#weedingTrackingModeSelector';
+                reason = 'weeding-candidate'; // Default for weeding
+            } else if (tableType === 'chartModal') {
+                modeSelectorId = '#chartItemsModal .tracking-mode-selector';
+            }
+
+            // Get reason from mode selector
+            if (tableType === 'search') {
+                const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
+                if (!activeMode) {
+                    showStatus('Please select a tracking mode first', 'error');
+                    return;
+                }
+                reason = activeMode.getAttribute('data-mode');
+            } else if (tableType === 'weeding') {
+                const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
+                if (activeMode) {
+                    reason = activeMode.getAttribute('data-mode');
+                }
+                // If no mode selected for weeding, use the default 'weeding-candidate'
+            } else if (tableType === 'chartModal') {
+                const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
+                if (!activeMode) {
+                    showStatus('Please select a tracking mode first', 'error');
+                    return;
+                }
+                reason = activeMode.getAttribute('data-mode');
+            }
+
+            try {
+                await trackItem(barcode, reason, `Tracked from ${tableType} analysis`);
+
+                // Force tracking cache to refresh
                 trackingDataLoaded = false;
 
-                // Update just this specific row instead of refreshing entire table
-                await updateWeedingRowTracking(barcode);
-                updateTrackSelectedButton();
+                // Update just this specific row
+                if (tableType === 'search') {
+                    await updateSearchRowTracking(barcode);
+                } else if (tableType === 'weeding') {
+                    await updateWeedingRowTracking(barcode);
+                } else if (tableType === 'chartModal') {
+                    await updateChartModalRowTracking(barcode);
+                }
+
+                updateTrackSelectedButton(tableType);
 
                 // Show success notification
-                showStatus(`Item tracked for ${reason}`, 'success');
+                showStatus(`Item tracked for ${reason.replace(/-/g, ' ')}`, 'success');
             } catch (error) {
                 console.error('Error tracking item:', error);
                 showStatus('Error tracking item: ' + error.message, 'error');
@@ -3673,20 +3904,288 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         //===========================================================================
-        // handleUntrackItem() - Handle untrack button clicks (no scrolling)
+        // updateChartModalRowTracking() - Update tracking status for a specific chart modal row
+        //===========================================================================
+        async function updateChartModalRowTracking(barcode) {
+            const row = document.querySelector(`#chartItemsModal tr[data-barcode="${barcode}"]`);
+            if (!row) return; // Row not currently visible
+
+            // Find the item data
+            const item = window.chartModalItems.find(item => item.barcode === barcode);
+            if (!item) return;
+
+            // Check current tracking status
+            const isTracked = await isItemTracked(barcode);
+            const trackingData = isTracked ? await getTrackingData(barcode) : null;
+
+            // Update the title cell (second cell, after checkbox)
+            const titleCell = row.children[1];
+            titleCell.innerHTML = `
+        ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+        <strong>${escapeHtml(item.title)}</strong>
+        ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+    `;
+
+            // Update the actions cell (last cell)
+            const actionsCell = row.children[row.children.length - 1];
+            actionsCell.innerHTML = isTracked ?
+                `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
+                `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'chartModal', event)">Track</button>`;
+
+            // Update row styling
+            if (isTracked) {
+                row.classList.add('tracked-row');
+            } else {
+                row.classList.remove('tracked-row');
+            }
+        }
+
+        //===========================================================================
+        // refreshChartModalDisplay() - Refresh the chart modal display after tracking changes
+        //===========================================================================
+        async function refreshChartModalDisplay() {
+            if (!window.chartModalItems) return;
+
+            // Re-populate the modal with updated tracking data
+            await showChartItemsModal(window.chartModalItems);
+        }
+
+        //===========================================================================
+        // setupChartModalTableSorting() - Setup sorting for chart modal table
+        //===========================================================================
+        function setupChartModalTableSorting() {
+            const headers = document.querySelectorAll('#chartItemsTable th.sortable');
+
+            headers.forEach(header => {
+                // Remove existing listeners by cloning
+                const newHeader = header.cloneNode(true);
+                header.parentNode.replaceChild(newHeader, header);
+
+                // Add new click listener
+                newHeader.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const field = this.getAttribute('data-sort');
+                    const dataType = this.getAttribute('data-type') || 'text';
+                    handleHeaderClick(field, 'chartModal');
+                });
+
+                newHeader.style.cursor = 'pointer';
+            });
+        }
+
+        //===========================================================================
+        // sortChartModalTable() - Sort chart modal table
+        //===========================================================================
+        async function sortChartModalTable(field, direction) {
+            if (!window.chartModalItems) return;
+
+            // Update sort state
+            if (!tableSortStates.chartModal) {
+                tableSortStates.chartModal = {};
+            }
+            tableSortStates.chartModal = { field, direction };
+
+            // Determine data type for sorting
+            const dataType = ['circulation', 'itemCreated', 'age'].includes(field) ? 'number' : 'text';
+
+            // Sort the data
+            const sortedItems = [...window.chartModalItems].sort((a, b) => {
+                let aValue, bValue;
+
+                if (field === 'age') {
+                    aValue = getItemAge(a.itemCreated);
+                    bValue = getItemAge(b.itemCreated);
+                } else if (field === 'itemCreated') {
+                    aValue = parseInt(a.itemCreated) || 0;
+                    bValue = parseInt(b.itemCreated) || 0;
+                } else {
+                    aValue = a[field] || '';
+                    bValue = b[field] || '';
+                }
+
+                let comparison = 0;
+                if (dataType === 'number') {
+                    comparison = (parseFloat(aValue) || 0) - (parseFloat(bValue) || 0);
+                } else {
+                    comparison = String(aValue).localeCompare(String(bValue));
+                }
+
+                return direction === 'desc' ? -comparison : comparison;
+            });
+
+            // Update the global array and re-populate just the table body
+            window.chartModalItems = sortedItems;
+            await repopulateChartModalTable(sortedItems);
+
+            // Update sort icons
+            updateSortIcons('chartModal');
+            console.log('Calling updateSortIcons for chartModal'); // Debug
+            updateSortIcons('chartModal');
+        }
+
+        //===========================================================================
+        // repopulateChartModalTable() - Update just the table content without rebuilding modal
+        //===========================================================================
+        async function repopulateChartModalTable(items) {
+            const tableBody = document.getElementById('chartItemsTableBody');
+
+            // Build new content in memory first (don't clear the table yet)
+            const newRows = [];
+
+            // Populate table (same logic as in showChartItemsModal)
+            for (const item of items) {
+                const age = getItemAge(item.itemCreated);
+                const yearDisplay = item.itemCreated || 'Unknown';
+                const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+
+                // Check if item is tracked
+                const isTracked = await isItemTracked(item.barcode);
+                const trackingData = isTracked ? await getTrackingData(item.barcode) : null;
+
+                const row = document.createElement('tr');
+                row.setAttribute('data-barcode', item.barcode);
+                row.style.cursor = 'pointer';
+
+                if (isTracked) {
+                    row.classList.add('tracked-row');
+                }
+
+                row.innerHTML = `
+            <td style="text-align: center;">
+                <input type="checkbox" class="item-checkbox chart-modal-item-checkbox" 
+                       value="${item.barcode}" onchange="updateTrackSelectedButton('chartModal')">
+            </td>
+            <td onclick="selectBookFromTable('${item.barcode}')">
+                ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+                <strong>${escapeHtml(item.title)}</strong>
+                ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+            </td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.author)}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(yearDisplay)}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')"><code>${escapeHtml(item.callNumber)}</code></td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.collection)}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${item.circulation}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${ageDisplay}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+            <td class="actions-column">
+                ${isTracked ?
+                        `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
+                        `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'chartModal', event)">Track</button>`
+                    }
+            </td>
+        `;
+
+                newRows.push(row);
+            }
+
+            // Replace all content at once (no flicker)
+            tableBody.innerHTML = '';
+            newRows.forEach(row => tableBody.appendChild(row));
+
+            // Update checkbox states
+            updateTrackSelectedButton('chartModal');
+        }
+
+        //===========================================================================
+        // updateSearchRowTracking() - Update tracking status for a specific search row
+        //===========================================================================
+        async function updateSearchRowTracking(barcode) {
+            console.log('updateSearchRowTracking called for barcode:', barcode);
+
+            const row = document.querySelector(`tr[data-barcode="${barcode}"]`);
+            console.log('Found row:', row);
+
+            if (!row) {
+                console.log('Row not found, returning');
+                return; // Row not currently visible
+            }
+
+            // Find the item data
+            const item = allSearchResults.find(item => item.barcode === barcode);
+            console.log('Found item data:', item);
+
+            if (!item) {
+                console.log('Item data not found, returning');
+                return;
+            }
+
+            // Check current tracking status
+            const isTracked = await isItemTracked(barcode);
+            console.log('isTracked:', isTracked);
+
+            const trackingData = isTracked ? await getTrackingData(barcode) : null;
+            console.log('trackingData:', trackingData);
+
+            // Update the title cell (second cell, after checkbox)
+            const titleCell = row.children[1];
+            titleCell.innerHTML = `
+        ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+        <strong>${escapeHtml(item.title)}</strong>
+        <br><span style="font-size: 0.8em; color: #6b7280;">${escapeHtml(item.author || 'Unknown Author')}</span>
+        ${isTracked ? `<br><span class="tracking-reason">${trackingData.reason}</span>` : ''}
+    `;
+
+            // Update the actions cell (last cell)
+            const actionsCell = row.children[row.children.length - 1];
+            console.log('Actions cell found:', actionsCell);
+            console.log('Current actions cell HTML:', actionsCell.innerHTML);
+
+            const newButtonHTML = isTracked ?
+                `<button class="untrack-btn" onclick="handleUntrackItem('${barcode}', event)">Untrack</button>` :
+                `<button class="track-btn" onclick="handleTrackItem('${barcode}', 'search', event)">Track</button>`;
+
+            console.log('New button HTML:', newButtonHTML);
+            actionsCell.innerHTML = newButtonHTML;
+            console.log('Updated actions cell HTML:', actionsCell.innerHTML);
+
+            // Update row styling
+            if (isTracked) {
+                row.classList.add('tracked-row');
+            } else {
+                row.classList.remove('tracked-row');
+            }
+
+            console.log('updateSearchRowTracking completed');
+        }
+
+        //===========================================================================
+        // handleUntrackItem() - Handle untrack button clicks (generic for any table)
         //===========================================================================
         async function handleUntrackItem(barcode, event) {
             event.stopPropagation(); // Prevent row selection
 
+            // Detect which table this is from by checking which tab is active or which table contains this row
+            let tableType = 'weeding'; // Default to weeding
+
+            // Check if we're in search results
+            const searchRow = document.querySelector(`#searchResultsTable tr[data-barcode="${barcode}"]`);
+            if (searchRow) {
+                tableType = 'search';
+            }
+
+            // Check if we're in chart modal
+            const chartModalRow = document.querySelector(`#chartItemsModal tr[data-barcode="${barcode}"]`);
+            if (chartModalRow) {
+                tableType = 'chartModal';
+            }
+
             try {
                 await untrackItem(barcode);
 
-                // Force tracking cache to refresh next time tab is loaded
+                // Force tracking cache to refresh
                 trackingDataLoaded = false;
 
-                // Update just this specific row instead of refreshing entire table
-                await updateWeedingRowTracking(barcode);
-                updateTrackSelectedButton();
+                // Update just this specific row (same as tracking does)
+                if (tableType === 'search') {
+                    await updateSearchRowTracking(barcode);
+                } else if (tableType === 'weeding') {
+                    await updateWeedingRowTracking(barcode);
+                } else if (tableType === 'chartModal') {
+                    await updateChartModalRowTracking(barcode);
+                }
+
+                updateTrackSelectedButton(tableType);
 
                 // Show success notification
                 showStatus('Item untracked successfully', 'success');
@@ -3847,7 +4346,7 @@ div#bookDetails.book-detail .book-cover-section {
                 // Reset checkboxes
                 const selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
                 selectAllCheckboxes.forEach(cb => cb.checked = false);
-                updateTrackSelectedButton();
+                updateTrackSelectedButton('weeding');
             }
 
             // Grab the next slice
@@ -3856,7 +4355,7 @@ div#bookDetails.book-detail .book-cover-section {
             for (const item of slice) {
                 const age = getItemAge(item.itemCreated);
                 const yearDisplay = item.itemCreated || 'Unknown';
-                const ageDisplay = age > 0 ? `${age} years` : 'Unknown';
+                const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
 
                 // Check if item is tracked
                 const isTracked = await isItemTracked(item.barcode);
@@ -3874,7 +4373,7 @@ div#bookDetails.book-detail .book-cover-section {
                 row.innerHTML = `
             <td style="text-align: center;">
                 <input type="checkbox" class="item-checkbox weeding-item-checkbox" 
-                       value="${item.barcode}" onchange="updateTrackSelectedButton()">
+                       value="${item.barcode}" onchange="updateTrackSelectedButton('weeding')">
             </td>
             <td onclick="selectBookFromTable('${item.barcode}')">
                 ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
@@ -3887,11 +4386,11 @@ div#bookDetails.book-detail .book-cover-section {
             <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.collection)}</td>
             <td onclick="selectBookFromTable('${item.barcode}')">${item.circulation}</td>
             <td onclick="selectBookFromTable('${item.barcode}')">${ageDisplay}</td>
-            <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
             <td class="actions-column">
                 ${isTracked ?
                         `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
-                        `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding-candidate', event)">Track</button>`
+                        `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding', event)">Track</button>`
                     }
             </td>
         `;
@@ -3901,7 +4400,7 @@ div#bookDetails.book-detail .book-cover-section {
 
             weedingOffset += slice.length;
             updateWeedingLoadMoreButton();
-            updateTrackSelectedButton();
+            updateTrackSelectedButton('weeding');
         }
 
         // Updates the “Load more” button text & visibility
@@ -3926,32 +4425,81 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         //===========================================================================
-        // toggleAllWeedingItems() - Toggle all checkboxes on/off
+        // toggleAllItems() - Toggle all checkboxes on/off for any table
         //===========================================================================
-        function toggleAllWeedingItems(sourceCheckbox) {
-            const checkboxes = document.querySelectorAll('.weeding-item-checkbox');
+        function toggleAllItems(sourceCheckbox, tableType) {
+            let checkboxSelector, selectAllSelectors;
+
+            if (tableType === 'search') {
+                checkboxSelector = '.search-item-checkbox';
+                selectAllSelectors = '#selectAllSearchHeader';
+            } else if (tableType === 'weeding') {
+                checkboxSelector = '.weeding-item-checkbox';
+                selectAllSelectors = '#selectAllWeeding, #selectAllWeedingHeader';
+            } else if (tableType === 'chartModal') {
+                checkboxSelector = '.chart-modal-item-checkbox';
+                selectAllSelectors = '#selectAllChartModal';
+            }
+
+            const checkboxes = document.querySelectorAll(checkboxSelector);
             checkboxes.forEach(cb => {
                 cb.checked = sourceCheckbox.checked;
             });
 
-            // Sync both "select all" checkboxes
-            const selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
-            selectAllCheckboxes.forEach(cb => {
-                if (cb !== sourceCheckbox) {
-                    cb.checked = sourceCheckbox.checked;
-                }
-            });
+            // Sync "select all" checkboxes for weeding (which has two)
+            if (tableType === 'weeding') {
+                const selectAllCheckboxes = document.querySelectorAll(selectAllSelectors);
+                selectAllCheckboxes.forEach(cb => {
+                    if (cb !== sourceCheckbox) {
+                        cb.checked = sourceCheckbox.checked;
+                    }
+                });
+            }
 
-            updateTrackSelectedButton();
+            updateTrackSelectedButton(tableType);
         }
 
         //===========================================================================
-        // updateTrackSelectedButton() - Update the bulk action button states
+        // updateTrackSelectedButton() - Update the bulk action button states for any table
         //===========================================================================
-        function updateTrackSelectedButton() {
-            const selectedCheckboxes = document.querySelectorAll('.weeding-item-checkbox:checked');
-            const trackSelectedBtn = document.getElementById('trackSelectedBtn');
-            const untrackSelectedBtn = document.getElementById('untrackSelectedBtn');
+        function updateTrackSelectedButton(tableType) {
+            // If no tableType provided, try to detect it
+            if (!tableType) {
+                // Check which checkboxes exist to determine table type
+                const searchCheckboxes = document.querySelectorAll('.search-item-checkbox');
+                const weedingCheckboxes = document.querySelectorAll('.weeding-item-checkbox');
+
+                if (searchCheckboxes.length > 0) {
+                    tableType = 'search';
+                } else if (weedingCheckboxes.length > 0) {
+                    tableType = 'weeding';
+                } else {
+                    return; // No checkboxes found, exit gracefully
+                }
+            }
+
+            let checkboxSelector, trackBtnId, untrackBtnId, selectAllSelectors;
+
+            if (tableType === 'search') {
+                checkboxSelector = '.search-item-checkbox:checked';
+                trackBtnId = 'trackSearchSelectedBtn';
+                untrackBtnId = 'untrackSearchSelectedBtn';
+                selectAllSelectors = '#selectAllSearchHeader';
+            } else if (tableType === 'weeding') {
+                checkboxSelector = '.weeding-item-checkbox:checked';
+                trackBtnId = 'trackSelectedBtn';
+                untrackBtnId = 'untrackSelectedBtn';
+                selectAllSelectors = '#selectAllWeeding, #selectAllWeedingHeader';
+            } else if (tableType === 'chartModal') {
+                checkboxSelector = '.chart-modal-item-checkbox:checked';
+                trackBtnId = 'chartModalTrackSelectedBtn';
+                untrackBtnId = 'chartModalUntrackSelectedBtn';
+                selectAllSelectors = '#selectAllChartModal';
+            }
+
+            const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
+            const trackSelectedBtn = document.getElementById(trackBtnId);
+            const untrackSelectedBtn = document.getElementById(untrackBtnId);
 
             if (trackSelectedBtn && untrackSelectedBtn) {
                 const count = selectedCheckboxes.length;
@@ -3963,11 +4511,11 @@ div#bookDetails.book-detail .book-cover-section {
             }
 
             // Update "select all" checkbox states
-            const allCheckboxes = document.querySelectorAll('.weeding-item-checkbox');
+            const allCheckboxes = document.querySelectorAll(checkboxSelector.replace(':checked', ''));
             const checkedCount = selectedCheckboxes.length;
             const totalCount = allCheckboxes.length;
 
-            const selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
+            const selectAllCheckboxes = document.querySelectorAll(selectAllSelectors);
             selectAllCheckboxes.forEach(cb => {
                 cb.checked = checkedCount === totalCount && totalCount > 0;
                 cb.indeterminate = checkedCount > 0 && checkedCount < totalCount;
@@ -4001,7 +4549,7 @@ div#bookDetails.book-detail .book-cover-section {
             const actionsCell = row.children[row.children.length - 1];
             actionsCell.innerHTML = isTracked ?
                 `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
-                `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding-candidate', event)">Track</button>`;
+                `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding', event)">Track</button>`;
 
             // Update row styling
             if (isTracked) {
@@ -4012,232 +4560,257 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         //===========================================================================
-        // bulkTrackWeedingSelected() - Track all selected items with notifications
+        // bulkTrackSelected() - Track all selected items for any table
         //===========================================================================
-        async function bulkTrackWeedingSelected() {
-            const selectedCheckboxes = document.querySelectorAll('.weeding-item-checkbox:checked');
-            // Get the selected mode from the mode selector
-            const activeMode = document.querySelector('#weedingTrackingModeSelector .mode-btn.active');
+        async function bulkTrackSelected(tableType) {
+            let checkboxSelector, modeSelectorId;
+
+            if (tableType === 'search') {
+                checkboxSelector = '.search-item-checkbox:checked';
+                modeSelectorId = '#searchTrackingModeSelector';
+            } else if (tableType === 'weeding') {
+                checkboxSelector = '.weeding-item-checkbox:checked';
+                modeSelectorId = '#weedingTrackingModeSelector';
+            } else if (tableType === 'chartModal') {
+                checkboxSelector = '.chart-modal-item-checkbox:checked';
+                modeSelectorId = '#chartItemsModal .tracking-mode-selector';
+            }
+
+            const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
+            const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
+
             if (!activeMode) {
                 showStatus('Please select a tracking mode first', 'error');
                 return;
             }
-            const reason = activeMode.getAttribute('data-mode');
-
-            if (selectedCheckboxes.length === 0) {
-                // Keep this error notification since it's important feedback
-                showStatus('No items selected', 'error');
-                return;
-            }
-
-            const barcodes = Array.from(selectedCheckboxes).map(cb => cb.value);
-
-            try {
-                let successCount = 0;
-                let errorCount = 0;
-
-                for (const barcode of barcodes) {
-                    try {
-                        const isAlreadyTracked = await isItemTracked(barcode);
-                        if (!isAlreadyTracked) {
-                            await trackItem(barcode, reason, 'Bulk tracked from weeding analysis');
-                            successCount++;
-                        } else {
-                            console.log(`Item ${barcode} already tracked, skipping`);
-                        }
-                    } catch (error) {
-                        console.error(`Error tracking item ${barcode}:`, error);
-                        errorCount++;
-                    }
-                }
-
-                // Show appropriate notification based on results
-                if (errorCount > 0) {
-                    showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
-                } else if (successCount > 0) {
-                    showStatus(`Successfully tracked ${successCount} items`, 'success');
-                }
-
-                // Force tracking cache to refresh
-                trackingDataLoaded = false;
-
-                // Update all visible rows individually instead of refreshing entire table
-                for (const item of weedingCandidates.slice(0, weedingOffset)) {
-                    await updateWeedingRowTracking(item.barcode);
-                }
-
-                // Clear checkboxes
-                const selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
-                selectAllCheckboxes.forEach(cb => cb.checked = false);
-                updateTrackSelectedButton();
-
-            } catch (error) {
-                console.error('Error in bulk tracking:', error);
-                showStatus('Error tracking items: ' + error.message, 'error');
-            }
-        }
-
-        //===========================================================================
-        // bulkTrackAllWeeding() - Track all visible items (fixed version)
-        //===========================================================================
-        async function bulkTrackAllWeeding() {
-            // Get the selected mode from the mode selector
-            const activeMode = document.querySelector('#weedingTrackingModeSelector .mode-btn.active');
-            if (!activeMode) {
-                showStatus('Please select a tracking mode first', 'error');
-                return;
-            }
-            const reason = activeMode.getAttribute('data-mode');
-            const confirmMessage = `Track all ${weedingCandidates.length} weeding candidates with reason "${reason}"?`;
-
-            if (!confirm(confirmMessage)) {
-                return;
-            }
-
-            try {
-                let successCount = 0;
-                let errorCount = 0;
-
-                for (const item of weedingCandidates) {
-                    try {
-                        const isAlreadyTracked = await isItemTracked(item.barcode);
-                        if (!isAlreadyTracked) {
-                            await trackItem(item.barcode, reason, 'Bulk tracked all weeding candidates');
-                            successCount++;
-                        } else {
-                            console.log(`Item ${item.barcode} already tracked, skipping`);
-                        }
-                    } catch (error) {
-                        console.error(`Error tracking item ${item.barcode}:`, error);
-                        errorCount++;
-                    }
-                }
-
-                // Show appropriate notification based on results
-                if (errorCount > 0) {
-                    showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
-                } else if (successCount > 0) {
-                    showStatus(`Successfully tracked ${successCount} items`, 'success');
-                }
-
-                // Force tracking cache to refresh
-                trackingDataLoaded = false;
-
-                // Update all visible rows individually instead of refreshing entire table
-                for (const item of weedingCandidates.slice(0, weedingOffset)) {
-                    await updateWeedingRowTracking(item.barcode);
-                }
-
-            } catch (error) {
-                console.error('Error in bulk tracking all:', error);
-                showStatus('Error tracking items: ' + error.message, 'error');
-            }
-        }
-
-        //===========================================================================
-        // bulkUntrackWeedingSelected() - Untrack all selected items
-        //===========================================================================
-        async function bulkUntrackWeedingSelected() {
-            const selectedCheckboxes = document.querySelectorAll('.weeding-item-checkbox:checked');
 
             if (selectedCheckboxes.length === 0) {
                 showStatus('No items selected', 'error');
                 return;
             }
 
+            const reason = activeMode.getAttribute('data-mode');
             const barcodes = Array.from(selectedCheckboxes).map(cb => cb.value);
 
-            try {
-                let successCount = 0;
-                let errorCount = 0;
-
-                for (const barcode of barcodes) {
-                    try {
-                        const isCurrentlyTracked = await isItemTracked(barcode);
-                        if (isCurrentlyTracked) {
-                            await untrackItem(barcode);
-                            successCount++;
-                        } else {
-                            console.log(`Item ${barcode} not tracked, skipping`);
-                        }
-                    } catch (error) {
-                        console.error(`Error untracking item ${barcode}:`, error);
-                        errorCount++;
+            let successCount = 0;
+            for (const barcode of barcodes) {
+                try {
+                    const isAlreadyTracked = await isItemTracked(barcode);
+                    if (!isAlreadyTracked) {
+                        await trackItem(barcode, reason, `Tracked from ${tableType} analysis`);
+                        successCount++;
                     }
+                } catch (error) {
+                    console.error(`Error tracking item ${barcode}:`, error);
                 }
+            }
 
-                // Show appropriate notification based on results
-                if (errorCount > 0) {
-                    showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
-                } else if (successCount > 0) {
-                    showStatus(`Successfully tracked ${successCount} items`, 'success');
+            // Show result and refresh display
+            if (successCount > 0) {
+                showStatus(`Successfully tracked ${successCount} items for ${reason.replace(/-/g, ' ')}`, 'success');
+
+                if (tableType === 'search') {
+                    await refreshSearchResultsDisplay();
+                } else if (tableType === 'weeding') {
+                    await refreshWeedingTable();
+                } else if (tableType === 'chartModal') {
+                    // Refresh the modal display
+                    await refreshChartModalDisplay();
                 }
+            }
 
-                // Force tracking cache to refresh
-                trackingDataLoaded = false;
+            // Clear checkboxes
+            let selectAllCheckboxes;
+            if (tableType === 'search') {
+                selectAllCheckboxes = document.querySelectorAll('#selectAllSearchHeader');
+            } else if (tableType === 'weeding') {
+                selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
+            } else if (tableType === 'chartModal') {
+                selectAllCheckboxes = document.querySelectorAll('#selectAllChartModal');
+            }
 
-                // Refresh the table and clear selections
-                await refreshWeedingTable();
+            selectAllCheckboxes.forEach(cb => cb.checked = false);
+            updateTrackSelectedButton(tableType);
+        }
 
-                // Clear checkboxes
-                const selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
-                selectAllCheckboxes.forEach(cb => cb.checked = false);
-                updateTrackSelectedButton();
+        //===========================================================================
+        // bulkTrackAll() - Track all visible items for any table
+        //===========================================================================
+        async function bulkTrackAll(tableType) {
+            let modeSelectorId, dataArray;
 
-            } catch (error) {
-                console.error('Error in bulk untracking:', error);
-                showStatus('Error untracking items: ' + error.message, 'error');
+            if (tableType === 'search') {
+                modeSelectorId = '#searchTrackingModeSelector';
+                dataArray = allSearchResults;
+            } else if (tableType === 'weeding') {
+                modeSelectorId = '#weedingTrackingModeSelector';
+                dataArray = weedingCandidates;
+            } else if (tableType === 'chartModal') {
+                modeSelectorId = '#chartItemsModal .tracking-mode-selector';
+                dataArray = window.chartModalItems;
+            }
+
+            if (!dataArray || dataArray.length === 0) {
+                showStatus(`No ${tableType} results to track`, 'error');
+                return;
+            }
+
+            const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
+            if (!activeMode) {
+                showStatus('Please select a tracking mode first', 'error');
+                return;
+            }
+
+            const reason = activeMode.getAttribute('data-mode');
+
+            let successCount = 0;
+            for (const item of dataArray) {
+                try {
+                    const isAlreadyTracked = await isItemTracked(item.barcode);
+                    if (!isAlreadyTracked) {
+                        await trackItem(item.barcode, reason, `Tracked from ${tableType} analysis`);
+                        successCount++;
+                    }
+                } catch (error) {
+                    console.error(`Error tracking item ${item.barcode}:`, error);
+                }
+            }
+
+            // Show result and refresh display
+            if (successCount > 0) {
+                showStatus(`Successfully tracked ${successCount} items for ${reason.replace(/-/g, ' ')}`, 'success');
+
+                if (tableType === 'search') {
+                    await refreshSearchResultsDisplay();
+                } else if (tableType === 'weeding') {
+                    await refreshWeedingTable();
+                } else if (tableType === 'chartModal') {
+                    await refreshChartModalDisplay();
+                }
             }
         }
 
         //===========================================================================
-        // bulkUntrackAllWeeding() - Untrack all visible items
+        // bulkUntrackSelected() - Untrack all selected items for any table
         //===========================================================================
-        async function bulkUntrackAllWeeding() {
-            const confirmMessage = `Untrack all visible weeding candidates? This will remove tracking from ${weedingCandidates.length} items.`;
+        async function bulkUntrackSelected(tableType) {
+            let checkboxSelector;
 
-            if (!confirm(confirmMessage)) {
+            if (tableType === 'search') {
+                checkboxSelector = '.search-item-checkbox:checked';
+            } else if (tableType === 'weeding') {
+                checkboxSelector = '.weeding-item-checkbox:checked';
+            } else if (tableType === 'chartModal') {
+                checkboxSelector = '.chart-modal-item-checkbox:checked';
+            }
+
+            const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
+
+            if (selectedCheckboxes.length === 0) {
+                showStatus('No items selected', 'error');
                 return;
             }
 
-            try {
-                let successCount = 0;
-                let errorCount = 0;
+            const barcodes = Array.from(selectedCheckboxes).map(cb => cb.value);
 
-                for (const item of weedingCandidates) {
-                    try {
-                        const isCurrentlyTracked = await isItemTracked(item.barcode);
-                        if (isCurrentlyTracked) {
-                            await untrackItem(item.barcode);
-                            successCount++;
-                        } else {
-                            console.log(`Item ${item.barcode} not tracked, skipping`);
-                        }
-                    } catch (error) {
-                        console.error(`Error untracking item ${item.barcode}:`, error);
-                        errorCount++;
+            let successCount = 0;
+            for (const barcode of barcodes) {
+                try {
+                    const isTracked = await isItemTracked(barcode);
+                    if (isTracked) {
+                        await untrackItem(barcode);
+                        successCount++;
                     }
+                } catch (error) {
+                    console.error(`Error untracking item ${barcode}:`, error);
                 }
-
-                // Show appropriate notification based on results
-                if (errorCount > 0) {
-                    showStatus(`Tracked ${successCount} items with ${errorCount} errors`, 'error');
-                } else if (successCount > 0) {
-                    showStatus(`Successfully tracked ${successCount} items`, 'success');
-                }
-
-                // Force tracking cache to refresh
-                trackingDataLoaded = false;
-
-                // Update all visible rows individually instead of refreshing entire table
-                for (const item of weedingCandidates.slice(0, weedingOffset)) {
-                    await updateWeedingRowTracking(item.barcode);
-                }
-
-            } catch (error) {
-                console.error('Error in bulk untracking all:', error);
-                showStatus('Error untracking items: ' + error.message, 'error');
             }
+
+            // Show result and refresh display
+            if (successCount > 0) {
+                showStatus(`${successCount} items untracked`, 'success');
+
+                if (tableType === 'search') {
+                    await refreshSearchResultsDisplay();
+                } else if (tableType === 'weeding') {
+                    await refreshWeedingTable();
+                } else if (tableType === 'chartModal') {
+                    await refreshChartModalDisplay();
+                }
+            }
+
+            // Clear checkboxes
+            const selectAllCheckboxes = document.querySelectorAll(
+                tableType === 'search' ? '#selectAllSearchHeader' : '#selectAllWeeding, #selectAllWeedingHeader'
+            );
+            selectAllCheckboxes.forEach(cb => cb.checked = false);
+            updateTrackSelectedButton(tableType);
+        }
+
+        //===========================================================================
+        // bulkUntrackAll() - Untrack all visible items for any table
+        //===========================================================================
+        async function bulkUntrackAll(tableType) {
+            let dataArray, confirmMessage;
+
+            if (tableType === 'search') {
+                dataArray = allSearchResults;
+                confirmMessage = `Untrack all visible search results?`;
+            } else if (tableType === 'weeding') {
+                dataArray = weedingCandidates;
+                confirmMessage = `Untrack all visible weeding candidates?`;
+            } else if (tableType === 'chartModal') {
+                dataArray = window.chartModalItems;
+                confirmMessage = `Untrack all items in this window?`;
+            }
+
+            if (!dataArray || dataArray.length === 0) {
+                showStatus(`No ${tableType} results to untrack`, 'error');
+                return;
+            }
+
+
+
+            let successCount = 0;
+            for (const item of dataArray) {
+                try {
+                    const isTracked = await isItemTracked(item.barcode);
+                    if (isTracked) {
+                        await untrackItem(item.barcode);
+                        successCount++;
+                    }
+                } catch (error) {
+                    console.error(`Error untracking item ${item.barcode}:`, error);
+                }
+            }
+
+            // Show result and refresh display
+            if (successCount > 0) {
+                showStatus(`${successCount} items untracked`, 'success');
+
+                if (tableType === 'search') {
+                    await refreshSearchResultsDisplay();
+                } else if (tableType === 'weeding') {
+                    await refreshWeedingTable();
+                } else if (tableType === 'chartModal') {
+                    await refreshChartModalDisplay();
+                }
+            }
+        }
+
+        //===========================================================================
+        // refreshSearchResultsDisplay() - Refresh the search results display after tracking changes
+        //===========================================================================
+        async function refreshSearchResultsDisplay() {
+            console.log('refreshSearchResultsDisplay called');
+            console.log('allSearchResults before refresh:', allSearchResults);
+
+            // Reset displayed count and re-render current results
+            displayedResultsCount = 0;
+            await displaySearchResults(allSearchResults);
+            updateTrackSelectedButton('search');
+
+            console.log('refreshSearchResultsDisplay completed');
         }
 
         //===========================================================================
@@ -4583,6 +5156,10 @@ div#bookDetails.book-detail .book-cover-section {
                     selector = '#grubbyTable th';
                     clearBtnId = 'clearGrubbySortBtn';
                     break;
+                case 'chartModal':
+                    selector = '#chartItemsTable th';
+                    clearBtnId = ''; // No clear button needed for modal
+                    break;
                 case 'newItems':
                     selector = '#newItemsTable th';
                     clearBtnId = 'clearNewItemsSortBtn';
@@ -4605,15 +5182,19 @@ div#bookDetails.book-detail .book-cover-section {
                 }
 
                 // Show clear sort button
-                const clearBtn = document.getElementById(clearBtnId);
-                if (clearBtn) {
-                    clearBtn.style.display = 'inline-flex';
+                if (clearBtnId) {
+                    const clearBtn = document.getElementById(clearBtnId);
+                    if (clearBtn) {
+                        clearBtn.style.display = 'inline-flex';
+                    }
                 }
             } else {
                 // Hide clear sort button
-                const clearBtn = document.getElementById(clearBtnId);
-                if (clearBtn) {
-                    clearBtn.style.display = 'none';
+                if (clearBtnId) {
+                    const clearBtn = document.getElementById(clearBtnId);
+                    if (clearBtn) {
+                        clearBtn.style.display = 'none';
+                    }
                 }
             }
         }
@@ -4671,6 +5252,11 @@ div#bookDetails.book-detail .book-cover-section {
         function handleHeaderClick(field, tableType = 'search') {
             let newDirection = 'asc';
 
+            // Initialize table sort state if it doesn't exist
+            if (!tableSortStates[tableType]) {
+                tableSortStates[tableType] = { field: null, direction: 'asc' };
+            }
+
             // If clicking the same field, toggle direction
             if (tableSortStates[tableType].field === field) {
                 newDirection = tableSortStates[tableType].direction === 'asc' ? 'desc' : 'asc';
@@ -4702,6 +5288,9 @@ div#bookDetails.book-detail .book-cover-section {
                 case 'grubby':
                     sortGrubbyTable(field, newDirection);
                     break;
+                case 'chartModal':
+                    sortChartModalTable(field, newDirection);
+                    break;
                 case 'newItems':
                     sortNewItemsTable(field, newDirection);
                     break;
@@ -4727,16 +5316,17 @@ div#bookDetails.book-detail .book-cover-section {
                 return {
                     element: row,
                     collection: cells[0]?.textContent?.trim() || '',
-                    items: parseInt(cells[1]?.textContent?.replace(/,/g, '') || '0'),
-                    totalCirculation: parseInt(cells[2]?.textContent?.replace(/,/g, '') || '0'),
-                    avgCirculation: parseInt(cells[3]?.textContent || '0'),
-                    highPerformers: parseInt(cells[4]?.textContent || '0'),
-                    lowCirculation: parseInt(cells[5]?.textContent || '0')
+                    performanceLevel: parseInt(row.getAttribute('data-performance-value')) || 0,
+                    items: parseInt(cells[2]?.textContent?.replace(/,/g, '') || '0'),
+                    totalCirculation: parseInt(cells[3]?.textContent?.replace(/,/g, '') || '0'),
+                    avgCirculation: parseInt(cells[4]?.textContent || '0'),
+                    highPerformers: parseInt(cells[5]?.textContent || '0'),
+                    lowCirculation: parseInt(cells[6]?.textContent || '0')
                 };
             });
 
             // Determine data type based on field
-            const dataType = ['items', 'totalCirculation', 'avgCirculation', 'highPerformers', 'lowCirculation'].includes(field) ? 'number' : 'text';
+            const dataType = ['items', 'totalCirculation', 'avgCirculation', 'highPerformers', 'lowCirculation', 'performanceLevel'].includes(field) ? 'number' : 'text';
 
             // Sort the data
             const sortedData = sortTableData(data, field, direction, dataType);
@@ -5005,25 +5595,28 @@ div#bookDetails.book-detail .book-cover-section {
                 const trackingData = isTracked ? await getTrackingData(book.barcode) : null;
 
                 return `
-        <tr data-barcode="${escapeHtml(book.barcode)}" onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')" style="cursor: pointer;" ${isTracked ? 'class="tracked-row"' : ''}>
-            <td>
-                ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
-                <strong>${escapeHtml(book.title)}</strong>
-                <br><span style="font-size: 0.8em; color: #6b7280;">${escapeHtml(book.author || 'Unknown Author')}</span>
-                ${isTracked ? `<br><span class="tracking-reason">${trackingData.reason}</span>` : ''}
-            </td>
-            <td>${escapeHtml(book.year || 'Unknown Year')}</td>
-            <td>${book.circulation}</td>
-            <td>${escapeHtml(book.collection || 'Unknown Collection')}</td>
-            <td>${escapeHtml(book.branch || 'Unknown')}</td>
-            <td>
-                ${isTracked ?
-                        `<button class="untrack-btn" onclick="event.stopPropagation(); handleUntrackFromSearch('${book.barcode}', this)">Untrack</button>` :
-                        `<button class="track-btn" onclick="event.stopPropagation(); handleTrackFromSearch('${book.barcode}', this)">Track</button>`
+            <tr data-barcode="${escapeHtml(book.barcode)}" style="cursor: pointer;" ${isTracked ? 'class="tracked-row"' : ''}>
+                <td style="text-align: center;">
+                    <input type="checkbox" class="item-checkbox search-item-checkbox" 
+                        value="${book.barcode}" onchange="updateTrackSelectedButton('search')">
+                </td>
+                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">
+                    ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+                    <strong>${escapeHtml(book.title)}</strong>
+                    <br><span style="font-size: 0.8em; color: #6b7280;">${book.author ? escapeHtml(book.author) : '<em>No Author Found</em>'}</span>
+                    ${isTracked ? `<br><span class="tracking-reason">${trackingData.reason}</span>` : ''}
+                </td>
+                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.year || 'Unknown Year')}</td>
+                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${book.circulation}</td>
+                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.collection || 'Unknown Collection')}</td>
+                <td style="color: #2563eb;" onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</td>
+                <td class="actions-column">
+                    ${isTracked ?
+                        `<button class="untrack-btn" onclick="handleUntrackItem('${book.barcode}', event)">Untrack</button>` :
+                        `<button class="track-btn" onclick="handleTrackItem('${book.barcode}', 'search', event)">Track</button>`
                     }
-            </td>
-        </tr>
-        `;
+                </td>
+            </tr>`;
             }));
 
             resultsBody.insertAdjacentHTML('beforeend', newRows.join(''));
@@ -6327,7 +6920,7 @@ div#bookDetails.book-detail .book-cover-section {
                                 </span>
                             </td>
                             <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                         </tr>
                     `;
                 }).join('');
@@ -6479,7 +7072,7 @@ div#bookDetails.book-detail .book-cover-section {
             const tableBody = document.getElementById('collectionChangesDetailTableBody');
             tableBody.innerHTML = sortedData.map(item => {
                 const age = getItemAge(item.itemCreated);
-                const ageDisplay = age > 0 ? `${age} years` : 'Unknown';
+                const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
 
                 return `
                     <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromCollectionChanges('${item.barcode}')" 
@@ -6495,7 +7088,7 @@ div#bookDetails.book-detail .book-cover-section {
                             </span>
                         </td>
                         <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                        <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                        <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                     </tr>
                 `;
             }).join('');
@@ -7053,6 +7646,19 @@ div#bookDetails.book-detail .book-cover-section {
         // createBookFromFields() - Convert CSV fields to book object
         //===========================================================================
         function createBookFromFields(fields, mappings, rowIndex) {
+            // Temporary debugging for the author field issue  
+            if (rowIndex <= 5 || fields[0] === 'A2692945B') {
+                console.log(`=== DEBUG ROW ${rowIndex} ===`);
+                console.log('Raw fields:', fields);
+                console.log('Author mapping index:', mappings.author);
+                console.log('Author field value:', `"${getColumnValue(fields, mappings.author)}"`);
+                console.log('Collection mapping index:', mappings.collection);
+                console.log('Collection field value:', `"${getColumnValue(fields, mappings.collection)}"`);
+                console.log('Title field value:', `"${getColumnValue(fields, mappings.title)}"`);
+                console.log('Is multimedia collection?:', isMultimediaCollection(getColumnValue(fields, mappings.collection)));
+                console.log('===');
+            }
+
             const book = {
                 barcode: getColumnValue(fields, mappings.barcode) || `unknown-${rowIndex}`,
                 author: cleanText(getColumnValue(fields, mappings.author) || ''),
@@ -7060,12 +7666,9 @@ div#bookDetails.book-detail .book-cover-section {
                 year: getColumnValue(fields, mappings.year) || '',
                 collection: getColumnValue(fields, mappings.collection) || 'Unknown',
                 callNumber: getColumnValue(fields, mappings.callNumber) || '',
-
                 circulation: (() => {
                     const rawValue = getColumnValue(fields, mappings.circulation);
                     const parsedValue = parseInt(rawValue);
-
-                    // Debug first 10 items to see what's happening
                     if (rowIndex <= 10) {
                         console.log(`Row ${rowIndex} circulation debug:`, {
                             mappings_circulation: mappings.circulation,
@@ -7075,15 +7678,23 @@ div#bookDetails.book-detail .book-cover-section {
                             finalValue: parsedValue || 0
                         });
                     }
-
                     return parsedValue || 0;
                 })(),
-
                 status: getColumnValue(fields, mappings.status) || '',
                 itemCreated: getColumnValue(fields, mappings.itemCreated) || '',
                 lastActivity: getColumnValue(fields, mappings.lastActivity) || '',
                 itemType: getColumnValue(fields, mappings.itemType) || ''
             };
+
+            // Debug book object after creation
+            if (rowIndex <= 5 || fields[0] === 'A2692945B') {
+                console.log('Book object after creation:', {
+                    barcode: book.barcode,
+                    author: `"${book.author}"`,
+                    title: `"${book.title}"`,
+                    collection: `"${book.collection}"`
+                });
+            }
 
             // Debug: Log first few items with their itemType
             if (rowIndex <= 5) {
@@ -7091,6 +7702,16 @@ div#bookDetails.book-detail .book-cover-section {
                 if (mappings.itemType !== undefined) {
                     console.log(`Raw field value:`, fields[mappings.itemType]);
                 }
+            }
+
+            // Debug final book object before return
+            if (rowIndex <= 5 || fields[0] === 'A2692945B') {
+                console.log('Final book object before return:', {
+                    barcode: book.barcode,
+                    author: `"${book.author}"`,
+                    title: `"${book.title}"`,
+                    collection: `"${book.collection}"`
+                });
             }
 
             return book;
@@ -7385,6 +8006,22 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         //===========================================================================
+        // formatBranchName() - Shorten branch names for table display
+        //===========================================================================
+        function formatBranchName(branchName) {
+            if (!branchName || branchName === 'Unknown') {
+                return branchName;
+            }
+
+            // Clean up branch names for table display
+            return branchName
+                .replace('Casterton Library', 'Casterton')
+                .replace('Heywood Library', 'Heywood')
+                .replace('Portland Library', 'Portland')
+                .replace('Glenelg Mobile Library', 'Mobile Library');
+        }
+
+        //===========================================================================
         // Simple CSV parser - handles quoted fields properly for your format
         //===========================================================================
         function parseCSV(csvText) {
@@ -7468,6 +8105,11 @@ div#bookDetails.book-detail .book-cover-section {
 
                 // If we have column mappings and this looks like data (starts with quote and has commas)
                 if (columnMappings && line.startsWith('"') && line.includes(',')) {
+                    // Debug early rows
+                    if (i <= 20) {
+                        console.log(`=== PARSING ROW ${i} ===`);
+                        console.log('Line:', line.substring(0, 100) + '...');
+                    }
                     exclusionStats.totalRows++;
 
                     // Preprocess line to handle escaped quotes in standard CSV format
@@ -7478,8 +8120,16 @@ div#bookDetails.book-detail .book-cover-section {
                         processedLine = line.replace(/""/g, '"');
                     }
                     const fields = parseCSVLine(processedLine);
+                    // Debug parsed fields for early rows
+                    if (i <= 20) {
+                        console.log('Parsed fields:', fields);
+                        console.log('Fields count:', fields.length);
+                    }
                     const book = createBookFromFields(fields, columnMappings, i);
-
+                    // Debug before book creation
+                    if (i <= 20) {
+                        console.log(`About to create book from row ${i}`);
+                    }
                     // Add branch information
                     if (book) {
                         book.branch = currentBranch;
@@ -7516,7 +8166,7 @@ div#bookDetails.book-detail .book-cover-section {
                             });
                         }
                     } else {
-                        if (!book.author) {
+                        if (!book.author && !isMultimediaCollection(book.collection)) {
                             book.author = book.collection || 'Unknown';
                         }
                         // Clean up obviously incorrect collection values
@@ -7665,7 +8315,7 @@ div#bookDetails.book-detail .book-cover-section {
             return {
                 // For collection/author average performance
                 collection: {
-                    high: 35,
+                    high: 20,
                     medium: 10
                 },
                 // For individual item performance  
@@ -8008,15 +8658,21 @@ div#bookDetails.book-detail .book-cover-section {
                     `${cleanTitle} ${cleanAuthor}`
                 ];
 
-                for (const query of searchQueries) {
+                // Make all API calls in parallel for speed
+                const apiPromises = searchQueries.map(query => {
                     const encodedQuery = encodeURIComponent(query);
-                    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodedQuery}&maxResults=5`);
-                    const data = await response.json();
+                    return fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodedQuery}&maxResults=5`)
+                        .then(response => response.json())
+                        .catch(error => ({ error, query }));
+                });
 
+                const results = await Promise.all(apiPromises);
+
+                // Process results in order of preference
+                for (let i = 0; i < results.length; i++) {
+                    const data = results[i];
                     if (data.items && data.items.length > 0) {
-                        // Look for the best match among results
                         const bestMatch = findBestBookMatch(data.items, cleanTitle, cleanAuthor);
-
                         if (bestMatch && bestMatch.volumeInfo.imageLinks) {
                             const imageUrl = bestMatch.volumeInfo.imageLinks.thumbnail?.replace('http:', 'https:');
                             if (imageUrl) {
@@ -8060,9 +8716,18 @@ div#bookDetails.book-detail .book-cover-section {
                 const combinedScore = (titleScore * 0.7) + (authorScore * 0.3);
 
                 // Only consider if both title and author have reasonable similarity
-                if (titleScore > 0.6 && authorScore > 0.4 && combinedScore > bestScore) {
-                    bestScore = combinedScore;
-                    bestMatch = item;
+                if (titleScore > 0.3 && authorScore > 0.3) {
+                    // Bonus points for having cover images
+                    let finalScore = combinedScore;
+                    const hasCover = volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail;
+                    if (hasCover) {
+                        finalScore += 0.1; // Small bonus for having a cover
+                    }
+
+                    if (finalScore > bestScore) {
+                        bestScore = finalScore;
+                        bestMatch = item;
+                    }
                 }
             }
 
@@ -8146,6 +8811,12 @@ div#bookDetails.book-detail .book-cover-section {
                 switch (tabId) {
                     case 'overviewTab':
                         loadOverviewData();
+                        // Also refresh collection details if they're currently displayed
+                        const collectionDetailsSection = document.getElementById('collectionDetailsSection');
+                        if (collectionDetailsSection && collectionDetailsSection.style.display !== 'none' && window.currentCollectionDetails) {
+                            // Re-show the collection details with the new branch filter
+                            showCollectionDetails(window.currentCollectionDetails.name);
+                        }
                         break;
                     case 'weedingTab':
                         updateWeedingAnalysis();
@@ -8266,6 +8937,10 @@ div#bookDetails.book-detail .book-cover-section {
             if (results.length === 0) {
                 searchResultsDiv.style.display = 'none';
                 document.getElementById('searchTrackingModeSelector').style.display = 'none';
+                const bulkActions = document.getElementById('searchBulkActions');
+                if (bulkActions) {
+                    bulkActions.style.display = 'none';
+                }
                 noResults.style.display = 'block';
                 return;
             }
@@ -8280,6 +8955,13 @@ div#bookDetails.book-detail .book-cover-section {
             noResults.style.display = 'none';
             searchResultsDiv.style.display = 'block';
             document.getElementById('searchTrackingModeSelector').style.display = 'block';
+
+            // Show bulk actions if we have results
+            const bulkActions = document.getElementById('searchBulkActions');
+            if (bulkActions) {
+                bulkActions.style.display = 'flex';
+            }
+
             setupSearchModeSelector();
             resultCount.textContent = results.length;
 
@@ -8303,7 +8985,18 @@ div#bookDetails.book-detail .book-cover-section {
 
             // Display book details immediately
             document.getElementById('detailTitle').textContent = currentBook.title;
-            document.getElementById('detailAuthor').textContent = currentBook.author;
+
+            // Handle author display and copy button visibility
+            const authorElement = document.getElementById('detailAuthor');
+            const authorCopyBtn = document.querySelector('.book-author .copy-btn');
+
+            if (currentBook.author && currentBook.author.trim()) {
+                authorElement.textContent = currentBook.author;
+                authorCopyBtn.style.display = 'block';
+            } else {
+                authorElement.innerHTML = '<em style="margin-left: 2.5rem;">No Author Found</em>';
+                authorCopyBtn.style.display = 'none';
+            }
             document.getElementById('detailYear').textContent = currentBook.year;
             document.getElementById('detailCollection').textContent = currentBook.collection;
             document.getElementById('detailCallNumber').textContent = currentBook.callNumber;
@@ -8315,8 +9008,13 @@ div#bookDetails.book-detail .book-cover-section {
             // Setup copy button event listeners immediately
             setupDetailCopyButtons();
 
-            // Show other titles by this author
-            showAuthorOtherTitles(currentBook.author, currentBook.barcode);
+            // Show other titles by this author (only if author exists)
+            if (currentBook.author && currentBook.author.trim()) {
+                showAuthorOtherTitles(currentBook.author, currentBook.barcode);
+            } else {
+                // Hide the "Other titles by" section if no author
+                document.getElementById('authorOtherTitlesSection').style.display = 'none';
+            }
 
             // Show placeholder book icon immediately
             const coverElement = document.getElementById('bookCover');
@@ -8411,38 +9109,38 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         function updateCopyButtonState(field, success) {
-                // Map field names to specific selectors
-                const selectorMap = {
-                    'detailTitle': '.book-title .copy-btn',
-                    'detailAuthor': '.book-author .copy-btn',
-                    'callNumber': '.call-number .copy-btn',
-                    'detailBarcode': '.copy-btn-small[title="Copy barcode"]'  // Add this line
-                };
+            // Map field names to specific selectors
+            const selectorMap = {
+                'detailTitle': '.book-title .copy-btn',
+                'detailAuthor': '.book-author .copy-btn',
+                'callNumber': '.call-number .copy-btn',
+                'detailBarcode': '.copy-btn-small[title="Copy barcode"]'  // Add this line
+            };
 
-                const selector = selectorMap[field];
-                if (!selector) return;
+            const selector = selectorMap[field];
+            if (!selector) return;
 
-                const buttons = document.querySelectorAll(selector);
-                buttons.forEach(button => {
-                    // Look for both regular and small icons
-                    const icon = button.querySelector('.copy-icon') || button.querySelector('.copy-icon-small');
-                    if (icon) {
-                        if (success) {
-                            // Change to checkmark icon
-                            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
-                            icon.classList.add('success');
-                            icon.setAttribute('width', '16');
-                            icon.setAttribute('height', '16');
-                        } else {
-                            // Change back to copy icon
-                            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>';
-                            icon.classList.remove('success');
-                            icon.setAttribute('width', '16');
-                            icon.setAttribute('height', '16');
-                        }
+            const buttons = document.querySelectorAll(selector);
+            buttons.forEach(button => {
+                // Look for both regular and small icons
+                const icon = button.querySelector('.copy-icon') || button.querySelector('.copy-icon-small');
+                if (icon) {
+                    if (success) {
+                        // Change to checkmark icon
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
+                        icon.classList.add('success');
+                        icon.setAttribute('width', '16');
+                        icon.setAttribute('height', '16');
+                    } else {
+                        // Change back to copy icon
+                        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>';
+                        icon.classList.remove('success');
+                        icon.setAttribute('width', '16');
+                        icon.setAttribute('height', '16');
                     }
-                });
-            }
+                }
+            });
+        }
 
         // Tab navigation
         function showTab(tabName) {
@@ -8846,6 +9544,26 @@ div#bookDetails.book-detail .book-cover-section {
 
         // Analysis functions
         function loadOverviewData() {
+
+            // Update dynamic column headers with current thresholds
+            const thresholds = getPerformanceThresholds();
+            const highPerformersHeader = document.querySelector('th[data-sort="highPerformers"]');
+            const lowCirculationHeader = document.querySelector('th[data-sort="lowCirculation"]');
+
+            if (highPerformersHeader) {
+                highPerformersHeader.innerHTML = `High Performers (${thresholds.item.high}+)
+        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>`;
+            }
+
+            if (lowCirculationHeader) {
+                lowCirculationHeader.innerHTML = `Low Circulation (&lt;${thresholds.item.fair})
+        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+        </svg>`;
+            }
+
             const filteredData = getFilteredData();
             const collections = groupBy(filteredData, 'collection');
             const totalItems = filteredData.length;
@@ -8916,40 +9634,50 @@ div#bookDetails.book-detail .book-cover-section {
             // Collection breakdown table
             const tableBody = document.getElementById('collectionTableBody');
             const sortedCollections = Object.entries(collections)
-                .sort(([, a], [, b]) => b.reduce((sum, item) => sum + item.circulation, 0) - a.reduce((sum, item) => sum + item.circulation, 0));
+                .sort(([, a], [, b]) => {
+                    const avgA = a.reduce((sum, item) => sum + item.circulation, 0) / a.length;
+                    const avgB = b.reduce((sum, item) => sum + item.circulation, 0) / b.length;
+                    return avgB - avgA; // High to low
+                });
 
             tableBody.innerHTML = sortedCollections.map(([collection, items]) => {
                 const totalCirc = items.reduce((sum, item) => sum + item.circulation, 0);
                 const avgCirc = Math.round(totalCirc / items.length);
-                const highPerf = items.filter(i => i.circulation >= 50).length;
-                const lowCirc = items.filter(i => i.circulation < 5).length;
+                const highPerf = items.filter(i => i.circulation >= getPerformanceThresholds().item.high).length;
+                const lowCirc = items.filter(i => i.circulation < getPerformanceThresholds().item.fair).length;
 
                 // Calculate performance level and color using centralized function
                 const performance = getCollectionPerformanceLevel(avgCirc);
 
                 return `
-            <tr onclick="showCollectionDetails('${escapeHtml(collection)}')" style="cursor: pointer;" 
-                onmouseover="this.style.backgroundColor='#f9fafb'" 
-                onmouseout="this.style.backgroundColor=''">
-                <td>
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <strong>${collection}</strong>
-                        <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
-                            ${performance.label}
-                        </span>
-                    </div>
-                </td>
-                <td>${items.length.toLocaleString()}</td>
-                <td>${totalCirc.toLocaleString()}</td>
-                <td>
-                    <span style="color: ${performance.color}; font-weight: 600;">
-                        ${avgCirc}
-                    </span>
-                </td>
-                <td>${highPerf}</td>
-                <td>${lowCirc}</td>
-            </tr>
-        `;
+    <tr onclick="showCollectionDetails('${escapeHtml(collection)}')" style="cursor: pointer;"
+        onmouseover="this.style.backgroundColor='#f9fafb'"
+        onmouseout="this.style.backgroundColor=''"
+        data-collection="${escapeHtml(collection)}"
+        data-performance="${performance.label}"
+        data-performance-value="${performance.level === 'high' ? 3 : performance.level === 'medium' ? 2 : 1}"
+        data-items="${items.length}"
+        data-total-circulation="${totalCirc}"
+        data-avg-circulation="${avgCirc}"
+        data-high-performers="${highPerf}"
+        data-low-circulation="${lowCirc}">
+        <td><strong>${collection}</strong></td>
+        <td>
+            <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
+                ${performance.label}
+            </span>
+        </td>
+        <td>${items.length.toLocaleString()}</td>
+        <td>${totalCirc.toLocaleString()}</td>
+        <td>
+            <span style="color: ${performance.color}; font-weight: 600;">
+                ${avgCirc}
+            </span>
+        </td>
+        <td>${highPerf}</td>
+        <td>${lowCirc}</td>
+    </tr>
+`;
             }).join('');
 
             // Setup sorting for collection table
@@ -9083,7 +9811,7 @@ div#bookDetails.book-detail .book-cover-section {
                                 <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
                                 <td>${escapeHtml(item.collection)}</td>
                                 <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                                <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                                <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                             </tr>
                         `).join('')}
                     </tbody>
@@ -9520,7 +10248,7 @@ div#bookDetails.book-detail .book-cover-section {
             const grubbyThreshold = parseInt(document.getElementById('grubbyThreshold').value);
             const grubbyItems = filteredData.filter(item => item.circulation >= grubbyThreshold);
             const grubbyCount = grubbyItems.length;
-            const veryOld = candidates.filter(c => getItemAge(c.year) >= 15).length;
+            const veryOld = candidates.filter(c => getItemAge(c.itemCreated) >= 15).length;
 
             // Update metrics display
             document.getElementById('weedingMetrics').innerHTML = `
@@ -9741,7 +10469,7 @@ div#bookDetails.book-detail .book-cover-section {
             <td>${escapeHtml(yearDisplay)}</td>
             <td>${escapeHtml(item.collection)}</td>
             <td><code>${escapeHtml(item.callNumber)}</code></td>
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
         `;
 
                 row.addEventListener('click', () => selectBookFromTable(item.barcode));
@@ -9957,21 +10685,40 @@ div#bookDetails.book-detail .book-cover-section {
                         if (elements.length > 0) {
                             const datasetIndex = elements[0].datasetIndex;
                             const dataIndex = elements[0].index;
-                            const point = datasets[datasetIndex].data[dataIndex];
-                            if (point.barcode) {
-                                // Switch to search tab and show book details
+                            const clickedPoint = datasets[datasetIndex].data[dataIndex];
+
+                            // Find all items at the same coordinates across all datasets
+                            const sameCoordinateItems = [];
+                            datasets.forEach(dataset => {
+                                dataset.data.forEach(point => {
+                                    if (Math.abs(point.x - clickedPoint.x) < 0.1 &&
+                                        Math.abs(point.y - clickedPoint.y) < 0.1) {
+                                        // Find the full item data
+                                        const fullItem = libraryData.find(item => item.barcode === point.barcode);
+                                        if (fullItem) {
+                                            sameCoordinateItems.push(fullItem);
+                                        }
+                                    }
+                                });
+                            });
+
+                            console.log(`Found ${sameCoordinateItems.length} items at coordinates`); // Debug
+
+                            if (sameCoordinateItems.length > 1) {
+                                // Multiple items - show modal (we'll add this function next)
+                                showChartItemsModal(sameCoordinateItems);
+                            } else if (sameCoordinateItems.length === 1) {
+                                // Single item - use existing behavior
+                                const item = sameCoordinateItems[0];
                                 showTab('search');
                                 setTimeout(() => {
-                                    selectBook(point.barcode);
-
-                                    // Search for the book to make it visible
+                                    selectBook(item.barcode);
                                     const searchInput = document.getElementById('searchInput');
-                                    searchInput.value = point.title;
-                                    const results = performSearch(point.title);
+                                    searchInput.value = item.title;
+                                    const results = performSearch(item.title);
                                     displaySearchResults(results);
-
                                     setTimeout(() => {
-                                        selectBookFromSearchResults(point.barcode);
+                                        selectBookFromSearchResults(item.barcode);
                                     }, 100);
                                 }, 100);
                             }
@@ -10143,7 +10890,7 @@ div#bookDetails.book-detail .book-cover-section {
             // Create data rows
             const data = candidates.map(item => {
                 const age = getItemAge(item.itemCreated);
-                const ageDisplay = age > 0 ? age : '';
+                const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : age) : '';
                 return [
                     item.title || '',
                     item.author || '',
@@ -10211,7 +10958,7 @@ div#bookDetails.book-detail .book-cover-section {
             // Create data rows including tracking reason
             const data = trackedItems.map(item => {
                 const age = getItemAge(item.itemCreated);
-                const ageDisplay = age > 0 ? age.toString() : 'Unknown';
+                const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : age.toString()) : 'Unknown';
                 const yearDisplay = item.year || 'Unknown';
 
                 return [
@@ -10244,6 +10991,102 @@ div#bookDetails.book-detail .book-cover-section {
         }
 
         //===========================================================================
+        // exportSearchResults() - Export all search results to Excel
+        //===========================================================================
+        function exportSearchResults() {
+            if (!allSearchResults || allSearchResults.length === 0) {
+                alert('No search results to export');
+                return;
+            }
+
+            const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Branch'];
+
+            // Create data rows
+            const data = allSearchResults.map(item => [
+                item.title || '',
+                item.author || '',
+                item.year || '',
+                item.collection || '',
+                item.callNumber || '',
+                item.circulation || 0,
+                item.branch || ''
+            ]);
+
+            // Generate filename
+            const searchTerm = document.getElementById('searchInput').value;
+            const today = new Date().toISOString().split('T')[0];
+
+            let filename = `search-results-${today}`;
+            if (searchTerm && searchTerm.length > 0) {
+                // Clean the search term for filename
+                const cleanSearchTerm = searchTerm.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+                filename += `-${cleanSearchTerm}`;
+            }
+            filename += '.xlsx';
+
+            createExcelFile(data, headers, filename, 'Search Results');
+
+            // Show success message with count
+            showStatus(`Exported ${allSearchResults.length} search results to Excel`, 'success');
+        }
+
+        //===========================================================================
+        // exportTrackedSearchResults() - Export only tracked items from search results
+        //===========================================================================
+        async function exportTrackedSearchResults() {
+            if (!allSearchResults || allSearchResults.length === 0) {
+                alert('No search results to export');
+                return;
+            }
+
+            // Filter for only tracked items
+            const trackedItems = [];
+            for (const item of allSearchResults) {
+                const isTracked = await isItemTracked(item.barcode);
+                if (isTracked) {
+                    const trackingData = await getTrackingData(item.barcode);
+                    trackedItems.push({ ...item, trackingReason: trackingData.reason });
+                }
+            }
+
+            if (trackedItems.length === 0) {
+                alert('No tracked items found in search results');
+                return;
+            }
+
+            const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Branch', 'Tracking Reason'];
+
+            // Create data rows including tracking reason
+            const data = trackedItems.map(item => [
+                item.title || '',
+                item.author || '',
+                item.year || '',
+                item.collection || '',
+                item.callNumber || '',
+                item.circulation || 0,
+                item.branch || '',
+                item.trackingReason || ''
+            ]);
+
+            // Generate filename with tracking info
+            const searchTerm = document.getElementById('searchInput').value;
+            const today = new Date().toISOString().split('T')[0];
+
+            let filename = `tracked-search-results-${today}`;
+            if (searchTerm && searchTerm.length > 0) {
+                // Clean the search term for filename
+                const cleanSearchTerm = searchTerm.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+                filename += `-${cleanSearchTerm}`;
+            }
+            filename += '.xlsx';
+
+            createExcelFile(data, headers, filename, 'Tracked Search Results');
+
+            // Show success message with count
+            showStatus(`Exported ${trackedItems.length} tracked items from search results to Excel`, 'success');
+        }
+
+        //===========================================================================
         // updateAuthorAnalysis() - Enhanced author analysis with performance indicators
         //===========================================================================
         function updateAuthorAnalysis() {
@@ -10266,10 +11109,15 @@ div#bookDetails.book-detail .book-cover-section {
                 });
             }
 
-            // Build author statistics - exclude collection types (all caps entries)
+            // Build author statistics - exclude collection types (all caps entries) and items with no author
             filteredData.forEach(book => {
                 // Skip if this "author" is actually a collection type (all caps)
                 if (isCollectionTypeNotAuthor(book.author)) {
+                    return;
+                }
+
+                // Skip items with no valid author
+                if (!book.author || !book.author.trim()) {
                     return;
                 }
 
@@ -11437,17 +12285,9 @@ div#bookDetails.book-detail .book-cover-section {
                 return direction === 'desc' ? comparison * -1 : comparison;
             });
 
-            // Re-render the table
-            const getPerformanceLevel = (circulation) => {
-                if (circulation >= 50) return { level: 'HIGH', color: '#16a34a' };
-                if (circulation >= 20) return { level: 'GOOD', color: '#d97706' };
-                if (circulation >= 5) return { level: 'FAIR', color: '#6b7280' };
-                return { level: 'LOW', color: '#dc2626' };
-            };
-
             const titlesBody = document.getElementById('authorTitlesBody');
             titlesBody.innerHTML = sortedBooks.map(book => {
-                const performance = getPerformanceLevel(book.circulation);
+                const performance = getItemPerformanceLevel(book.circulation);
                 return `
                     <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.year || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}">
                         <td onclick="event.stopPropagation(); viewBookDetails('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
@@ -11458,7 +12298,7 @@ div#bookDetails.book-detail .book-cover-section {
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;"><strong>${book.circulation}</strong></td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">
                             <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
-                                ${performance.level}
+                                ${performance.label}
                             </span>
                         </td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(book.callNumber)}</code></td>
@@ -11503,16 +12343,9 @@ div#bookDetails.book-detail .book-cover-section {
                 // Re-sort by circulation (default)
                 const sortedBooks = [...window.currentAuthorBooks].sort((a, b) => b.circulation - a.circulation);
 
-                const getPerformanceLevel = (circulation) => {
-                    if (circulation >= 50) return { level: 'HIGH', color: '#16a34a' };
-                    if (circulation >= 20) return { level: 'GOOD', color: '#d97706' };
-                    if (circulation >= 5) return { level: 'FAIR', color: '#6b7280' };
-                    return { level: 'LOW', color: '#dc2626' };
-                };
-
                 const titlesBody = document.getElementById('authorTitlesBody');
                 titlesBody.innerHTML = sortedBooks.map(book => {
-                    const performance = getPerformanceLevel(book.circulation);
+                    const performance = getItemPerformanceLevel(book.circulation);
                     return `
                         <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.year || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}">
                             <td onclick="event.stopPropagation(); viewBookDetails('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
@@ -11523,7 +12356,7 @@ div#bookDetails.book-detail .book-cover-section {
                             <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;"><strong>${book.circulation}</strong></td>
                             <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">
                                 <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
-                                    ${performance.level}
+                                    ${performance.label}
                                 </span>
                             </td>
                             <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(book.callNumber)}</code></td>
@@ -11569,7 +12402,7 @@ div#bookDetails.book-detail .book-cover-section {
                         <div style="font-size: 0.75rem;">${escapeHtml(book.collection)}</div>
                     </td>
                     <td>
-                        <div style="font-size: 0.75rem; color: #2563eb; font-weight: 500;">${escapeHtml(book.branch || 'Unknown')}</div>
+                        <div style="color: #2563eb; font-size: 0.75rem; font-weight: 500;">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</div>
                     </td>
                 </tr>
             `).join('');
@@ -11708,10 +12541,7 @@ div#bookDetails.book-detail .book-cover-section {
             const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Performance Level'];
 
             const getPerformanceLevel = (circulation) => {
-                if (circulation >= 50) return 'HIGH';
-                if (circulation >= 20) return 'GOOD';
-                if (circulation >= 5) return 'FAIR';
-                return 'LOW';
+                return getItemPerformanceLevel(circulation).label;
             };
 
             const data = books.map(book => [
@@ -11864,7 +12694,18 @@ div#bookDetails.book-detail .book-cover-section {
             document.getElementById('bookDetails').style.display = 'flex';
 
             document.getElementById('detailTitle').textContent = currentBook.title;
-            document.getElementById('detailAuthor').textContent = currentBook.author;
+
+            // Handle author display and copy button visibility
+            const authorElement = document.getElementById('detailAuthor');
+            const authorCopyBtn = document.querySelector('.book-author .copy-btn');
+
+            if (currentBook.author && currentBook.author.trim()) {
+                authorElement.textContent = currentBook.author;
+                authorCopyBtn.style.display = 'block';
+            } else {
+                authorElement.innerHTML = '<em>No Author Found</em>';
+                authorCopyBtn.style.display = 'none';
+            }
             document.getElementById('detailYear').textContent = currentBook.year;
             document.getElementById('detailCollection').textContent = currentBook.collection;
             document.getElementById('detailCallNumber').textContent = currentBook.callNumber;
@@ -11936,7 +12777,7 @@ div#bookDetails.book-detail .book-cover-section {
                         <div style="font-size: 0.75rem;">${escapeHtml(book.collection)}</div>
                     </td>
                     <td>
-                        <div style="font-size: 0.75rem; color: #2563eb; font-weight: 500;">${escapeHtml(book.branch || 'Unknown')}</div>
+                        <div style="color: #2563eb; font-size: 0.75rem; font-weight: 500;">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</div>
                     </td>
                 </tr>
             `).join('');
@@ -11946,6 +12787,12 @@ div#bookDetails.book-detail .book-cover-section {
 
             // Show the section
             document.getElementById('authorOtherTitlesSection').style.display = 'block';
+
+            // Ensure the table container is always visible (remove any previous toggle state)
+            const tableContainer = document.querySelector('#authorOtherTitlesSection .results-container');
+            if (tableContainer) {
+                tableContainer.style.display = 'block';
+            }
         }
 
         //===========================================================================
@@ -11989,7 +12836,7 @@ div#bookDetails.book-detail .book-cover-section {
                     <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
                     <td>${escapeHtml(item.collection)}</td>
                     <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                 </tr>
             `).join('');
 
@@ -12032,7 +12879,7 @@ div#bookDetails.book-detail .book-cover-section {
                     <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
                     <td>${escapeHtml(item.collection)}</td>
                     <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                 </tr>
             `).join('');
 
@@ -12187,7 +13034,7 @@ div#bookDetails.book-detail .book-cover-section {
                     <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
                     <td>${escapeHtml(item.collection)}</td>
                     <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                 </tr>
             `).join('');
 
@@ -12218,7 +13065,7 @@ div#bookDetails.book-detail .book-cover-section {
                     <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
                     <td>${escapeHtml(item.collection)}</td>
                     <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                    <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                 </tr>
             `).join('');
 
@@ -12290,23 +13137,6 @@ div#bookDetails.book-detail .book-cover-section {
                     alert('This item is not in the currently loaded collection. Load the appropriate snapshot to view details.');
                 }
             }, 100);
-        }
-
-        //===========================================================================
-        // toggleAuthorOtherTitles() - Toggle the author's other titles section
-        //===========================================================================
-        function toggleAuthorOtherTitles() {
-            const section = document.getElementById('authorOtherTitlesSection');
-            const tableContainer = section.querySelector('.results-container');
-            const button = document.getElementById('toggleAuthorTitlesBtn');
-
-            if (tableContainer.style.display === 'none') {
-                tableContainer.style.display = 'block';
-                button.textContent = '▼ Collapse';
-            } else {
-                tableContainer.style.display = 'none';
-                button.textContent = '▶ Show Other Titles';
-            }
         }
 
         //===========================================================================
@@ -12386,7 +13216,6 @@ div#bookDetails.book-detail .book-cover-section {
         window.deleteAllSnapshots = deleteAllSnapshots;
         window.scrollToSection = scrollToSection;
         window.showAuthorOtherTitles = showAuthorOtherTitles;
-        window.toggleAuthorOtherTitles = toggleAuthorOtherTitles;
         window.viewAuthorPerformance = viewAuthorPerformance;
         window.selectBookFromOtherTitles = selectBookFromOtherTitles;
         window.showComparisonAddedItems = showComparisonAddedItems;
@@ -12634,7 +13463,7 @@ div#bookDetails.book-detail .book-cover-section {
             const avgCirculation = Math.round(totalCirculation / totalItems);
             const topItem = collectionItems.reduce((top, item) =>
                 item.circulation > top.circulation ? item : top, collectionItems[0]);
-            const highPerformers = collectionItems.filter(item => item.circulation >= 35).length;
+            const highPerformers = collectionItems.filter(item => item.circulation >= getPerformanceThresholds().collection.high).length;
 
             // Show the details section
             document.getElementById('collectionDetailsSection').style.display = 'block';
@@ -12665,13 +13494,8 @@ div#bookDetails.book-detail .book-cover-section {
         </div>
     `;
 
-            // Performance indicator for each item
-            const getPerformanceLevel = (circulation) => {
-                if (circulation >= 50) return { level: 'HIGH', color: '#16a34a' };
-                if (circulation >= 20) return { level: 'GOOD', color: '#d97706' };
-                if (circulation >= 5) return { level: 'FAIR', color: '#6b7280' };
-                return { level: 'LOW', color: '#dc2626' };
-            };
+            // Performance indicator for each item - using centralised function
+            // (No local function needed - we'll use getItemPerformanceLevel directly)
 
             // Sort items by circulation
             collectionItems.sort((a, b) => b.circulation - a.circulation);
@@ -12679,7 +13503,7 @@ div#bookDetails.book-detail .book-cover-section {
             // Update items table
             const itemsBody = document.getElementById('collectionItemsBody');
             itemsBody.innerHTML = collectionItems.map(item => {
-                const performance = getPerformanceLevel(item.circulation);
+                const performance = getItemPerformanceLevel(item.circulation);
                 return `
             <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${item.circulation}" data-call-number="${escapeHtml(item.callNumber)}">
                 <td onclick="event.stopPropagation(); viewBookDetails('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
@@ -12690,7 +13514,7 @@ div#bookDetails.book-detail .book-cover-section {
                 <td><strong>${item.circulation}</strong></td>
                 <td>
                     <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
-                        ${performance.level}
+                        ${performance.label}
                     </span>
                 </td>
                 <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
@@ -12701,6 +13525,21 @@ div#bookDetails.book-detail .book-cover-section {
             // Store current collection items for sorting and export
             window.currentCollectionItems = collectionItems;
             window.currentCollectionDetails = { name: collectionName, items: collectionItems };
+
+            // Add item performance legend above the header section
+            const headerDiv = document.querySelector('#collectionDetailsContent .analysis-table').previousElementSibling;
+            const existingLegend = document.querySelector('.items-performance-legend');
+            if (existingLegend) {
+                existingLegend.remove();
+            }
+
+            const itemLegend = document.createElement('div');
+            itemLegend.className = 'items-performance-legend';
+            itemLegend.innerHTML = createPerformanceLegend('item');
+            itemLegend.style.marginBottom = '1rem';
+
+            // Insert before the header that contains h4 and buttons
+            headerDiv.parentNode.insertBefore(itemLegend, headerDiv);
 
             // Setup sorting for collection items table
             setupCollectionItemsSorting();
@@ -12730,10 +13569,7 @@ div#bookDetails.book-detail .book-cover-section {
             const headers = ['Title', 'Author', 'Year', 'Call Number', 'Circulation', 'Performance Level'];
 
             const getPerformanceLevel = (circulation) => {
-                if (circulation >= 50) return 'HIGH';
-                if (circulation >= 20) return 'GOOD';
-                if (circulation >= 5) return 'FAIR';
-                return 'LOW';
+                return getItemPerformanceLevel(circulation).label;
             };
 
             // Create data rows
@@ -12790,16 +13626,9 @@ div#bookDetails.book-detail .book-cover-section {
             const dataType = ['circulation', 'year', 'performance'].includes(field) ? 'number' : 'text';
             const sortedItems = sortTableData(window.currentCollectionItems, field, direction, dataType);
 
-            const getPerformanceLevel = (circulation) => {
-                if (circulation >= 50) return { level: 'HIGH', color: '#16a34a' };
-                if (circulation >= 20) return { level: 'GOOD', color: '#d97706' };
-                if (circulation >= 5) return { level: 'FAIR', color: '#6b7280' };
-                return { level: 'LOW', color: '#dc2626' };
-            };
-
             const itemsBody = document.getElementById('collectionItemsBody');
             itemsBody.innerHTML = sortedItems.map(item => {
-                const performance = getPerformanceLevel(item.circulation);
+                const performance = getItemPerformanceLevel(item.circulation);
                 return `
             <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${item.circulation}" data-call-number="${escapeHtml(item.callNumber)}">
                 <td onclick="event.stopPropagation(); viewBookDetails('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
@@ -12810,7 +13639,7 @@ div#bookDetails.book-detail .book-cover-section {
                 <td><strong>${item.circulation}</strong></td>
                 <td>
                     <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
-                        ${performance.level}
+                        ${performance.label}
                     </span>
                 </td>
                 <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
@@ -12872,7 +13701,7 @@ div#bookDetails.book-detail .book-cover-section {
             // When you update the thresholds in those functions, update this one too
 
             // Current HIGH threshold - update this when you change thresholds in other functions
-            return 50; // This matches: if (circulation >= 50) return { level: 'HIGH'...
+            return getPerformanceThresholds().item.high;
         }
 
         //===========================================================================
@@ -12919,7 +13748,7 @@ div#bookDetails.book-detail .book-cover-section {
             <td>${escapeHtml(item.collection)}</td>
             <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
             <td>${item.year || 'Unknown'}</td>
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
         </tr>
     `).join('');
 
@@ -12982,7 +13811,7 @@ div#bookDetails.book-detail .book-cover-section {
             <td>${escapeHtml(item.collection)}</td>
             <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
             <td>${item.year || 'Unknown'}</td>
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
         </tr>
     `).join('');
 
@@ -13153,7 +13982,7 @@ div#bookDetails.book-detail .book-cover-section {
                 <td>${escapeHtml(yearDisplay)}</td>
                 <td>${escapeHtml(item.collection)}</td>
                 <td><code>${escapeHtml(item.callNumber)}</code></td>
-                <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+                <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
             </tr>
         `;
             }).join('');
@@ -13184,7 +14013,7 @@ div#bookDetails.book-detail .book-cover-section {
             <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
             <td>${escapeHtml(item.collection)}</td>
             <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
         </tr>
     `).join('');
 
@@ -13216,7 +14045,7 @@ div#bookDetails.book-detail .book-cover-section {
             <td>${escapeHtml(item.collection)}</td>
             <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
             <td>${item.year || 'Unknown'}</td>
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(item.branch || 'Unknown')}</td>
+            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
         </tr>
     `).join('');
 
@@ -13655,9 +14484,315 @@ div#bookDetails.book-detail .book-cover-section {
             });
         }
 
+        //===========================================================================
+        // showChartItemsModal() - Show modal with items from chart click
+        //===========================================================================
+        async function showChartItemsModal(items) {
+            const modal = document.getElementById('chartItemsModal');
+            const title = document.getElementById('chartItemsModalTitle');
+            const tableBody = document.getElementById('chartItemsTableBody');
+
+            // Set title
+            const age = getItemAge(items[0].itemCreated);
+            const circulation = items[0].circulation;
+            title.textContent = `${items.length} items (${age} years old, ${circulation} circulations)`;
+
+            // Store items globally for bulk operations
+            window.chartModalItems = items;
+
+            // Clear existing rows
+            tableBody.innerHTML = '';
+
+            // Populate table
+            for (const item of items) {
+                const age = getItemAge(item.itemCreated);
+                const yearDisplay = item.itemCreated || 'Unknown';
+                const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+
+                // Check if item is tracked
+                const isTracked = await isItemTracked(item.barcode);
+                const trackingData = isTracked ? await getTrackingData(item.barcode) : null;
+
+                const row = document.createElement('tr');
+                row.setAttribute('data-barcode', item.barcode);
+                row.style.cursor = 'pointer';
+
+                if (isTracked) {
+                    row.classList.add('tracked-row');
+                }
+
+                row.innerHTML = `
+            <td style="text-align: center;">
+                <input type="checkbox" class="item-checkbox chart-modal-item-checkbox" 
+                       value="${item.barcode}" onchange="updateTrackSelectedButton('chartModal')">
+            </td>
+            <td onclick="selectBookFromTable('${item.barcode}')">
+                ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+                <strong>${escapeHtml(item.title)}</strong>
+                ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+            </td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.author)}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(yearDisplay)}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')"><code>${escapeHtml(item.callNumber)}</code></td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.collection)}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${item.circulation}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')">${ageDisplay}</td>
+            <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+            <td class="actions-column">
+                ${isTracked ?
+                        `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
+                        `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'chartModal', event)">Track</button>`
+                    }
+            </td>
+        `;
+
+                tableBody.appendChild(row);
+            }
+
+            // Reset checkboxes and setup mode selector
+            const selectAllCheckbox = document.getElementById('selectAllChartModal');
+            selectAllCheckbox.checked = false;
+
+            // Setup mode selector with click handlers and default selection
+            setupChartModalModeSelector();
+
+            // Setup mode selector with click handlers and default selection
+            setupChartModalModeSelector();
+
+            // Setup table sorting
+            setupChartModalTableSorting();
+
+            updateTrackSelectedButton('chartModal');
+
+            // Show modal
+            modal.classList.remove('hidden');
+        }
+
+        //===========================================================================
+        // closeChartItemsModal() - Close the chart items modal
+        //===========================================================================
+        function closeChartItemsModal() {
+            const modal = document.getElementById('chartItemsModal');
+            modal.classList.add('hidden');
+            window.chartModalItems = null;
+        }
+
+        //===========================================================================
+        // setupChartModalModeSelector() - Make chart modal mode selector buttons work
+        //===========================================================================
+        function setupChartModalModeSelector() {
+            const modeButtons = document.querySelectorAll('#chartItemsModal .mode-btn');
+
+            // Check if already set up (to avoid duplicate event listeners)
+            if (modeButtons[0] && modeButtons[0].hasAttribute('data-setup')) {
+                return; // Already set up, don't set up again
+            }
+
+            // Get currently active button before setting up (to preserve selection)
+            const currentlyActive = document.querySelector('#chartItemsModal .mode-btn.active');
+            const currentMode = currentlyActive ? currentlyActive.getAttribute('data-mode') : null;
+
+            modeButtons.forEach(button => {
+                // Mark as set up to avoid duplicate listeners
+                button.setAttribute('data-setup', 'true');
+
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons
+                    modeButtons.forEach(btn => btn.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    console.log('Chart modal mode selected:', this.getAttribute('data-mode')); // Debug
+                });
+            });
+
+            // Set active button (preserve current selection or default to weeding)
+            const targetMode = currentMode || 'weeding-candidate';
+            const targetButton = document.querySelector(`#chartItemsModal .mode-btn[data-mode="${targetMode}"]`);
+
+            if (targetButton) {
+                // Clear all active classes first
+                modeButtons.forEach(btn => btn.classList.remove('active'));
+                // Set the target button as active
+                targetButton.classList.add('active');
+                console.log('Chart modal mode set to:', targetMode); // Debug
+            }
+        }
+
     </script>
 
     <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Chart Items Modal -->
+    <div id="chartItemsModal" class="modal hidden">
+        <div class="modal-content" style="width: 95%; max-width: 1200px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h2 id="chartItemsModalTitle">Items at Selected Point</h2>
+                <button class="modal-close" onclick="closeChartItemsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Tracking Mode Selector -->
+                <div class="tracking-mode-selector" style="margin-bottom: 1rem;">
+                    <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                    <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
+                        <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
+                        <button class="mode-btn" data-mode="send-to-portland">Portland</button>
+                        <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
+                        <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
+                        <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                    </div>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div class="bulk-actions" id="chartModalBulkActions" style="margin-bottom: 1rem;">
+                    <button class="bulk-track-btn" id="chartModalTrackSelectedBtn"
+                        onclick="bulkTrackSelected('chartModal')" disabled>
+                        Track Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkTrackAll('chartModal')">
+                        Track All
+                    </button>
+                    <button class="bulk-track-btn" id="chartModalUntrackSelectedBtn"
+                        onclick="bulkUntrackSelected('chartModal')" disabled>
+                        Untrack Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" id="untrackAllChartModalBtn" onclick="bulkUntrackAll('chartModal')">
+                        Untrack All
+                    </button>
+                </div>
+
+                <!-- Items Table -->
+                <table class="analysis-table sortable-table" id="chartItemsTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px; text-align: center;">
+                                <input type="checkbox" id="selectAllChartModal" class="select-all-checkbox"
+                                    onchange="toggleAllItems(this, 'chartModal')">
+                            </th>
+                            <th class="sortable" data-sort="collection" data-type="text">
+                                Collection
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <th class="sortable" data-sort="performanceLevel" data-type="text">
+                                Performance
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <th class="sortable" data-sort="items" data-type="number">
+                                Items
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <th class="sortable" data-sort="totalCirculation" data-type="number">
+                                Total Circulation
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <th class="sortable" data-sort="avgCirculation" data-type="number">
+                                Avg. Circulation
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <th class="sortable" data-sort="highPerformers" data-type="number">
+                                High Performers
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <th class="sortable" data-sort="lowCirculation" data-type="number">
+                                Low Circulation
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="chartItemsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Items Modal -->
+    <div id="chartItemsModal" class="modal hidden">
+        <div class="modal-content" style="width: 95%; max-width: 1200px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h2 id="chartItemsModalTitle">Items at Selected Point</h2>
+                <button class="modal-close" onclick="closeChartItemsModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Tracking Mode Selector -->
+                <div class="tracking-mode-selector" style="margin-bottom: 1rem;">
+                    <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                    <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
+                        <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
+                        <button class="mode-btn" data-mode="send-to-portland">Portland</button>
+                        <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
+                        <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
+                        <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                    </div>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div class="bulk-actions" id="chartModalBulkActions" style="margin-bottom: 1rem;">
+                    <button class="bulk-track-btn" id="chartModalTrackSelectedBtn"
+                        onclick="bulkTrackSelected('chartModal')" disabled>
+                        Track Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkTrackAll('chartModal')">
+                        Track All
+                    </button>
+                    <button class="bulk-track-btn" id="chartModalUntrackSelectedBtn"
+                        onclick="bulkUntrackSelected('chartModal')" disabled>
+                        Untrack Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkUntrackAll('chartModal')">
+                        Untrack All
+                    </button>
+                </div>
+
+                <!-- Items Table -->
+                <table class="analysis-table sortable-table" id="chartItemsTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px; text-align: center;">
+                                <input type="checkbox" id="selectAllChartModal" class="select-all-checkbox"
+                                    onchange="toggleAllItems(this, 'chartModal')">
+                            </th>
+                            <th class="sortable" data-sort="title" data-type="text">Title</th>
+                            <th class="sortable" data-sort="author" data-type="text">Author</th>
+                            <th class="sortable" data-sort="itemCreated" data-type="number">Year</th>
+                            <th class="sortable" data-sort="callNumber" data-type="text">Call Number</th>
+                            <th class="sortable" data-sort="collection" data-type="text">Collection</th>
+                            <th class="sortable" data-sort="circulation" data-type="number">Circulation</th>
+                            <th class="sortable" data-sort="age" data-type="number">Age</th>
+                            <th class="sortable" data-sort="branch" data-type="text">Branch</th>
+                            <th style="width: 100px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="chartItemsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </body>
 
