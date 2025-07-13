@@ -1908,8 +1908,8 @@
                         <button class="mode-btn" data-mode="send-to-portland">Portland</button>
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                         <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
-                        <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                        <button class="mode-btn active" data-mode="monitor-performance">Monitor</button>
+                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
                     </div>
                 </div>
 
@@ -2562,9 +2562,9 @@
                         <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
                         <button class="mode-btn" data-mode="send-to-portland">Portland</button>
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
-                        <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
+                        <button class="mode-btn active" data-mode="weeding-candidate">Weeding</button>
                         <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
                     </div>
                 </div>
 
@@ -3009,9 +3009,51 @@
                             📊 Export Author Report
                         </button>
                     </div>
+                    <!-- Mode Selector for Author Details -->
+                    <div id="authorDetailsTrackingModeSelector" class="tracking-mode-selector" style="margin-bottom: 1rem; display: none;">
+                        <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                        <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
+                            <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
+                            <button class="mode-btn" data-mode="send-to-portland">Portland</button>
+                            <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
+                            <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
+                            <button class="mode-btn active" data-mode="monitor-performance">Monitor</button>
+                            <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Bulk Actions for Author Details -->
+                    <div class="bulk-actions" id="authorDetailsBulkActions" style="margin-bottom: 1rem;">
+                        <button class="bulk-track-btn" id="authorDetailsTrackSelectedBtn" onclick="bulkTrackSelected('authorDetails')"
+                            disabled>
+                            Track Selected (0)
+                        </button>
+                        <button class="bulk-track-btn" onclick="bulkTrackAll('authorDetails')">
+                            Track All
+                        </button>
+                        <button class="bulk-track-btn" id="authorDetailsUntrackSelectedBtn" onclick="bulkUntrackSelected('authorDetails')"
+                            disabled>
+                            Untrack Selected (0)
+                        </button>
+                        <button class="bulk-track-btn" onclick="bulkUntrackAll('authorDetails')">
+                            Untrack All
+                        </button>
+                        <!-- Export Buttons -->
+                        <button id="exportAllAuthorDetailsBtn" class="btn btn-secondary" onclick="exportAuthorDetailsAll()">
+                            📊 Export All
+                        </button>
+                        <button id="exportTrackedAuthorDetailsBtn" class="btn btn-secondary" onclick="exportAuthorDetailsTracked()">
+                            📈 Export Tracked
+                        </button>
+                    </div>
                     <table class="analysis-table sortable-table" id="authorTitlesTable">
                         <thead>
                             <tr>
+                                <th style="width: 40px; text-align: center;">
+                                    <input type="checkbox" class="select-all-checkbox" id="authorDetailsSelectAllCheckbox"
+                                        onchange="toggleAllItems(this, 'authorDetails')">
+                                </th>
                                 <th class="sortable" data-sort="title" data-type="text">
                                     Title
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3054,6 +3096,7 @@
                                             d="M5 15l7-7 7 7"></path>
                                     </svg>
                                 </th>
+                                <th style="width: 120px; text-align: center;">Track</th>
                             </tr>
                         </thead>
                         <tbody id="authorTitlesBody"></tbody>
@@ -3399,7 +3442,7 @@
                                 <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                                 <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
                                 <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                                <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                                <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
                             </div>
                         </div>
                     </div>
@@ -3758,6 +3801,9 @@
             } else if (tableType === 'collection') {
                 modeSelectorId = '#collectionTrackingModeSelector';
                 reason = 'monitor-performance'; // Default for collection items
+            } else if (tableType === 'authorDetails') {
+                modeSelectorId = '#authorDetailsTrackingModeSelector';
+                reason = 'monitor-performance'; // Default for author details
             }
 
             // Get reason from mode selector
@@ -3804,12 +3850,17 @@
                     await updateChartModalRowTracking(barcode);
                 } else if (tableType === 'collection') {
                     await updateCollectionItemTracking(barcode);
+                } else if (tableType === 'authorDetails') {
+                    await updateAuthorDetailsRowTracking(barcode);
                 }
 
-                updateTrackSelectedButton(tableType);
+                // Only update bulk selection buttons for tables that have them
+                if (tableType !== 'authorDetails') {
+                    updateTrackSelectedButton(tableType);
+                }
 
                 // Show success notification
-                showStatus(`Item tracked for ${reason.replace(/-/g, ' ')}`, 'success');
+                showStatus(`Item tracked for ${formatTrackingReason(reason)}`, 'success');
             } catch (error) {
                 console.error('Error tracking item:', error);
                 showStatus('Error tracking item: ' + error.message, 'error');
@@ -3836,7 +3887,7 @@
             titleCell.innerHTML = `
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
-        ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+        ${isTracked ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
     `;
 
             // Update the actions cell (last cell)
@@ -3972,7 +4023,7 @@
             <td onclick="selectBookFromTable('${item.barcode}')">
                 ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                 <strong>${escapeHtml(item.title)}</strong>
-                ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+                ${isTracked ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
             </td>
             <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.author)}</td>
             <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(yearDisplay)}</td>
@@ -4036,7 +4087,7 @@
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
         <br><span style="font-size: 0.8em; color: #6b7280;">${escapeHtml(item.author || 'Unknown Author')}</span>
-        ${isTracked ? `<br><span class="tracking-reason">${trackingData.reason}</span>` : ''}
+        ${isTracked ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
     `;
 
             // Update the actions cell (last cell)
@@ -4061,6 +4112,74 @@
 
             console.log('updateSearchRowTracking completed');
         }
+
+        //===========================================================================
+        // updateAuthorDetailsTrackingIndicators() - Update tracking indicators for author details table
+        //===========================================================================
+        async function updateAuthorDetailsTrackingIndicators() {
+            if (!window.currentAuthorBooks) return;
+
+            // Load tracking data if not already loaded
+            await loadTrackingData();
+
+            // Update each row
+            for (const book of window.currentAuthorBooks) {
+                await updateAuthorDetailsRowTracking(book.barcode);
+            }
+        }
+
+    //===========================================================================
+        // updateAuthorDetailsRowTracking() - Update tracking status for a specific row
+        //===========================================================================
+        async function updateAuthorDetailsRowTracking(barcode) {
+            const row = document.querySelector(`#authorTitlesTable tr[data-barcode="${barcode}"]`);
+            if (!row) return;
+
+            const isTracked = await isItemTracked(barcode);
+            // if no data, fall back to an empty object
+            const trackingData = isTracked
+                ? (await getTrackingData(barcode)) || {}
+                : {};
+
+            // grab the DOM elements
+            const indicatorEl = document.getElementById(`trackingIndicator-${barcode}`);
+            const reasonEl = document.getElementById(`trackingReason-${barcode}`);
+            const trackBtn = document.getElementById(`trackBtn-${barcode}`);
+            const untrackBtn = document.getElementById(`untrackBtn-${barcode}`);
+
+            // bail out if any of the elements are missing
+            if (!indicatorEl || !reasonEl || !trackBtn || !untrackBtn) {
+                console.warn('Missing authorDetails row elements for', barcode);
+                return;
+            }
+
+            if (isTracked) {
+                // show the “pin” indicator
+                indicatorEl.style.display = 'inline';
+
+                // only replace dashes if we actually have a reason
+                const rawReason = trackingData.reason || '';
+                reasonEl.textContent = formatTrackingReason(rawReason);
+                reasonEl.style.display = rawReason ? 'inline' : 'none';
+
+                // swap buttons
+                trackBtn.style.display = 'none';
+                untrackBtn.style.display = 'inline-block';
+
+                // style the row
+                row.classList.add('tracked-row');
+                row.style.borderLeft = '3px solid #2563eb';
+            } else {
+                // not tracked: hide everything
+                indicatorEl.style.display = 'none';
+                reasonEl.style.display = 'none';
+                trackBtn.style.display = 'inline-block';
+                untrackBtn.style.display = 'none';
+                row.classList.remove('tracked-row');
+                row.style.borderLeft = '';
+            }
+        }
+
 
         //===========================================================================
         // handleUntrackItem() - Handle untrack button clicks (generic for any table)
@@ -4089,6 +4208,12 @@
                 tableType = 'collection';
             }
 
+            // Check if we're in author details table
+            const authorDetailsRow = document.querySelector(`#authorTitlesTable tr[data-barcode="${barcode}"]`);
+            if (authorDetailsRow) {
+                tableType = 'authorDetails';
+            }
+
             try {
                 await untrackItem(barcode);
 
@@ -4104,8 +4229,9 @@
                     await updateChartModalRowTracking(barcode);
                 } else if (tableType === 'collection') {
                     await updateCollectionItemTracking(barcode);
-                } else if (tableType === 'collection') {
-                    await updateCollectionItemTracking(barcode);
+                } else if (tableType === 'authorDetails') {
+                    // Update the specific row in author details table
+                    await updateAuthorDetailsRowTracking(barcode);
                 }
 
                 updateTrackSelectedButton(tableType);
@@ -4260,7 +4386,10 @@
                 bulkActions.style.display = 'flex';
                 if (modeSelector) {
                     modeSelector.style.display = 'block';
+                    setupWeedingModeSelector();
                 }
+                // Setup the mode selector after showing it
+                initAllTrackingModeSelectors();
             }
 
             // On first run, clear out any old rows
@@ -4301,7 +4430,7 @@
             <td onclick="selectBookFromTable('${item.barcode}')">
                 ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                 <strong>${escapeHtml(item.title)}</strong>
-                ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+                ${isTracked ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
             </td>
             <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.author)}</td>
             <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(yearDisplay)}</td>
@@ -4362,6 +4491,9 @@
             } else if (tableType === 'chartModal') {
                 checkboxSelector = '.chart-modal-item-checkbox';
                 selectAllSelectors = '#selectAllChartModal';
+            } else if (tableType === 'authorDetails') {
+                checkboxSelector = '.author-details-item-checkbox';
+                selectAllSelectors = '#authorDetailsSelectAllCheckbox';
             }
 
             const checkboxes = document.querySelectorAll(checkboxSelector);
@@ -4423,6 +4555,11 @@
                 trackBtnId = 'collectionTrackSelectedBtn';
                 untrackBtnId = 'collectionUntrackSelectedBtn';
                 selectAllSelectors = '#collectionSelectAllCheckbox';
+            } else if (tableType === 'authorDetails') {
+                checkboxSelector = '.author-details-item-checkbox:checked';
+                trackBtnId = 'authorDetailsTrackSelectedBtn';
+                untrackBtnId = 'authorDetailsUntrackSelectedBtn';
+                selectAllSelectors = '#authorDetailsSelectAllCheckbox';
             }
 
             const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
@@ -4470,7 +4607,7 @@
             titleCell.innerHTML = `
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
-        ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+        ${isTracked ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
     `;
 
             // Update the actions cell (last cell)
@@ -4485,77 +4622,6 @@
             } else {
                 row.classList.remove('tracked-row');
             }
-        }
-
-        //===========================================================================
-        // bulkTrackSelected() - Track all selected items for any table
-        //===========================================================================
-        async function bulkTrackSelected(tableType) {
-            let checkboxSelector, modeSelectorId;
-            if (tableType === 'search') {
-                checkboxSelector = '.search-item-checkbox:checked';
-                modeSelectorId = '#searchTrackingModeSelector';
-            } else if (tableType === 'weeding') {
-                checkboxSelector = '.weeding-item-checkbox:checked';
-                modeSelectorId = '#weedingTrackingModeSelector';
-            } else if (tableType === 'chartModal') {
-                checkboxSelector = '.chart-modal-item-checkbox:checked';
-                modeSelectorId = '#chartItemsModal .tracking-mode-selector';
-            } else if (tableType === 'collection') {
-                checkboxSelector = '.collection-item-checkbox:checked';
-                modeSelectorId = '#collectionTrackingModeSelector';
-            }
-            const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
-            const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
-            if (!activeMode) {
-                showStatus('Please select a tracking mode first', 'error');
-                return;
-            }
-            if (selectedCheckboxes.length === 0) {
-                showStatus('No items selected', 'error');
-                return;
-            }
-            const reason = activeMode.getAttribute('data-mode');
-            const barcodes = Array.from(selectedCheckboxes).map(cb => cb.value);
-            let successCount = 0;
-            for (const barcode of barcodes) {
-                try {
-                    const isAlreadyTracked = await isItemTracked(barcode);
-                    if (!isAlreadyTracked) {
-                        await trackItem(barcode, reason, `Tracked from ${tableType} analysis`);
-                        successCount++;
-                    }
-                } catch (error) {
-                    console.error(`Error tracking item ${barcode}:`, error);
-                }
-            }
-            // Show result and refresh display
-            if (successCount > 0) {
-                showStatus(`Successfully tracked ${successCount} items for ${reason.replace(/-/g, ' ')}`, 'success');
-                if (tableType === 'search') {
-                    await refreshSearchResultsDisplay();
-                } else if (tableType === 'weeding') {
-                    await refreshWeedingTable();
-                } else if (tableType === 'chartModal') {
-                    // Refresh the modal display
-                    await refreshChartModalDisplay();
-                } else if (tableType === 'collection') {
-                    await refreshCollectionItemsDisplay();
-                }
-            }
-            // Clear checkboxes
-            let selectAllCheckboxes;
-            if (tableType === 'search') {
-                selectAllCheckboxes = document.querySelectorAll('#selectAllSearchHeader');
-            } else if (tableType === 'weeding') {
-                selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
-            } else if (tableType === 'chartModal') {
-                selectAllCheckboxes = document.querySelectorAll('#selectAllChartModal');
-            } else if (tableType === 'collection') {
-                selectAllCheckboxes = document.querySelectorAll('#collectionSelectAllCheckbox');
-            }
-            selectAllCheckboxes.forEach(cb => cb.checked = false);
-            updateTrackSelectedButton(tableType);
         }
 
         //===========================================================================
@@ -4576,6 +4642,9 @@
             } else if (tableType === 'collection') {
                 modeSelectorId = '#collectionTrackingModeSelector';
                 dataArray = window.currentCollectionDetails ? window.currentCollectionDetails.items : null;
+            } else if (tableType === 'authorDetails') {
+                modeSelectorId = '#authorDetailsTrackingModeSelector';
+                dataArray = window.currentAuthorBooks;
             }
 
             if (!dataArray || dataArray.length === 0) {
@@ -4606,7 +4675,7 @@
 
             // Show result and refresh display
             if (successCount > 0) {
-                showStatus(`Successfully tracked ${successCount} items for ${reason.replace(/-/g, ' ')}`, 'success');
+                showStatus(`Successfully tracked ${successCount} items for ${formatTrackingReason(reason)}`, 'success');
 
                 if (tableType === 'search') {
                     await refreshSearchResultsDisplay();
@@ -4616,70 +4685,182 @@
                     await refreshChartModalDisplay();
                 } else if (tableType === 'collection') {
                     await refreshCollectionItemsDisplay();
+                } else if (tableType === 'authorDetails') {
+                    await updateAuthorDetailsTrackingIndicators();
                 }
             }
         }
+
+        //===========================================================================
+        // bulkTrackSelected() - Track all selected items for any table
+        //===========================================================================
+        async function bulkTrackSelected(tableType) {
+            // figure out which checkboxes are checked & what reason is active
+            let checkboxSelector, modeSelector;
+            switch (tableType) {
+                case 'search':
+                    checkboxSelector = '.search-item-checkbox:checked';
+                    modeSelector = '#searchTrackingModeSelector .mode-btn.active';
+                    break;
+                case 'weeding':
+                    checkboxSelector = '.weeding-item-checkbox:checked';
+                    modeSelector = '#weedingTrackingModeSelector .mode-btn.active';
+                    break;
+                case 'chartModal':
+                    checkboxSelector = '.chart-modal-item-checkbox:checked';
+                    modeSelector = '#chartItemsModal .tracking-mode-selector .mode-btn.active';
+                    break;
+                case 'collection':
+                    checkboxSelector = '.collection-item-checkbox:checked';
+                    modeSelector = '#collectionTrackingModeSelector .mode-btn.active';
+                    break;
+                case 'authorDetails':
+                    checkboxSelector = '.author-details-item-checkbox:checked';
+                    modeSelector = '#authorDetailsTrackingModeSelector .mode-btn.active';
+                    break;
+                default:
+                    console.error(`Unknown tableType "${tableType}"`);
+                    return;
+            }
+
+            const selected = Array.from(document.querySelectorAll(checkboxSelector));
+            if (!selected.length) {
+                showStatus('No items selected', 'error');
+                return;
+            }
+
+            // Make sure a mode (reason) is selected
+            const active = document.querySelector(modeSelector);
+            if (!active) {
+                showStatus('Please select a tracking mode first', 'error');
+                return;
+            }
+            const reason = active.getAttribute('data-mode');
+
+            // Track each barcode and update its row in place
+            let successCount = 0;
+            for (const cb of selected) {
+                const barcode = cb.value;
+                if (!await isItemTracked(barcode)) {
+                    try {
+                        await trackItem(barcode, reason);
+                        successCount++;
+                        // call the right updater so the reason span gets refreshed
+                        if (tableType === 'search') await updateSearchRowTracking(barcode);
+                        else if (tableType === 'weeding') await updateWeedingRowTracking(barcode);
+                        else if (tableType === 'chartModal') await updateChartModalRowTracking(barcode);
+                        else if (tableType === 'collection') await updateCollectionItemTracking(barcode);
+                        else if (tableType === 'authorDetails') await updateAuthorDetailsRowTracking(barcode);
+                    } catch (err) {
+                        console.error(`Error tracking ${barcode}:`, err);
+                    }
+                }
+            }
+
+            if (successCount) {
+                showStatus(`Tracked ${successCount} item${successCount > 1 ? 's' : ''} for ${formatTrackingReason(reason)}`, 'success');
+            }
+
+            updateTrackSelectedButton(tableType);
+        }
+
 
         //===========================================================================
         // bulkUntrackSelected() - Untrack all selected items for any table
         //===========================================================================
         async function bulkUntrackSelected(tableType) {
             let checkboxSelector;
-
-            if (tableType === 'search') {
-                checkboxSelector = '.search-item-checkbox:checked';
-            } else if (tableType === 'weeding') {
-                checkboxSelector = '.weeding-item-checkbox:checked';
-            } else if (tableType === 'chartModal') {
-                checkboxSelector = '.chart-modal-item-checkbox:checked';
-            } else if (tableType === 'collection') {
-                checkboxSelector = '.collection-item-checkbox:checked';
+            switch (tableType) {
+                case 'search':
+                    checkboxSelector = '.search-item-checkbox:checked';
+                    break;
+                case 'weeding':
+                    checkboxSelector = '.weeding-item-checkbox:checked';
+                    break;
+                case 'chartModal':
+                    checkboxSelector = '.chart-modal-item-checkbox:checked';
+                    break;
+                case 'collection':
+                    checkboxSelector = '.collection-item-checkbox:checked';
+                    break;
+                case 'authorDetails':
+                    checkboxSelector = '.author-details-item-checkbox:checked';
+                    break;
+                default:
+                    console.error(`Unknown tableType "${tableType}"`);
+                    return;
             }
 
             const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
-
             if (selectedCheckboxes.length === 0) {
                 showStatus('No items selected', 'error');
                 return;
             }
 
-            const barcodes = Array.from(selectedCheckboxes).map(cb => cb.value);
-
+            const barcodes = Array.from(selectedCheckboxes, cb => cb.value);
             let successCount = 0;
             for (const barcode of barcodes) {
                 try {
-                    const isTracked = await isItemTracked(barcode);
-                    if (isTracked) {
+                    if (await isItemTracked(barcode)) {
                         await untrackItem(barcode);
                         successCount++;
                     }
-                } catch (error) {
-                    console.error(`Error untracking item ${barcode}:`, error);
+                } catch (err) {
+                    console.error(`Error untracking item ${barcode}:`, err);
                 }
             }
 
-            // Show result and refresh display
             if (successCount > 0) {
-                showStatus(`${successCount} items untracked`, 'success');
+                showStatus(`${successCount} item${successCount > 1 ? 's' : ''} untracked`, 'success');
 
-                if (tableType === 'search') {
-                    await refreshSearchResultsDisplay();
-                } else if (tableType === 'weeding') {
-                    await refreshWeedingTable();
-                } else if (tableType === 'chartModal') {
-                    await refreshChartModalDisplay();
-                } else if (tableType === 'collection') {
-                    await refreshCollectionItemsDisplay();
+                switch (tableType) {
+                    case 'search':
+                        await refreshSearchResultsDisplay();
+                        break;
+                    case 'weeding':
+                        // update only the affected rows, so checkboxes stay put
+                        for (const barcode of barcodes) {
+                            await updateWeedingRowTracking(barcode);
+                        }
+                        break;
+                    case 'chartModal':
+                        await refreshChartModalDisplay();
+                        break;
+                    case 'collection':
+                        await refreshCollectionItemsDisplay();
+                        break;
+                    case 'authorDetails':
+                        await updateAuthorDetailsTrackingIndicators();
+                        break;
+                }
+
+                let selectAllSelector;
+                switch (tableType) {
+                    case 'search':
+                        selectAllSelector = '#selectAllSearchHeader';
+                        break;
+                    case 'weeding':
+                        selectAllSelector = '#selectAllWeeding, #selectAllWeedingHeader';
+                        break;
+                    case 'chartModal':
+                        selectAllSelector = '#selectAllChartModal';
+                        break;
+                    case 'collection':
+                        selectAllSelector = '#collectionSelectAllCheckbox';
+                        break;
+                    case 'authorDetails':
+                        selectAllSelector = '#authorDetailsSelectAllCheckbox';
+                        break;
+                }
+                if (selectAllSelector) {
+                    document.querySelectorAll(selectAllSelector)
+                        .forEach(cb => cb.checked = false);
                 }
             }
 
-            // Clear checkboxes
-            const selectAllCheckboxes = document.querySelectorAll(
-                tableType === 'search' ? '#selectAllSearchHeader' : '#selectAllWeeding, #selectAllWeedingHeader'
-            );
-            selectAllCheckboxes.forEach(cb => cb.checked = false);
             updateTrackSelectedButton(tableType);
         }
+
 
         //===========================================================================
         // bulkUntrackAll() - Untrack all visible items for any table
@@ -4699,6 +4880,9 @@
             } else if (tableType === 'collection') {
                 dataArray = window.currentCollectionDetails ? window.currentCollectionDetails.items : null;
                 confirmMessage = `Untrack all visible collection items?`;
+            } else if (tableType === 'authorDetails') {
+                dataArray = window.currentAuthorBooks;
+                confirmMessage = `Untrack all titles by this author?`;
             }
 
             if (!dataArray || dataArray.length === 0) {
@@ -4731,6 +4915,8 @@
                     await refreshChartModalDisplay();
                 } else if (tableType === 'collection') {
                     await refreshCollectionItemsDisplay();
+                } else if (tableType === 'authorDetails') {
+                    await updateAuthorDetailsTrackingIndicators();
                 }
             }
         }
@@ -4973,33 +5159,38 @@
             }
         }
 
-        //===========================================================================
+    //===========================================================================
         // setupWeedingModeSelector() - Make weeding mode selector buttons work
         //===========================================================================
         function setupWeedingModeSelector() {
             const modeButtons = document.querySelectorAll('#weedingTrackingModeSelector .mode-btn');
+            if (modeButtons.length === 0) return; // Exit if no buttons found
 
             modeButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     // Remove active class from all buttons
                     modeButtons.forEach(btn => btn.classList.remove('active'));
-
                     // Add active class to clicked button
                     this.classList.add('active');
-
                     // Store the selected mode
                     localStorage.setItem('weedingTrackingMode', this.getAttribute('data-mode'));
                 });
             });
 
-            // Restore previously selected mode or default to 'weeding-candidate'
-            const savedMode = localStorage.getItem('weedingTrackingMode') || 'weeding-candidate';
-            const savedButton = document.querySelector(`#weedingTrackingModeSelector .mode-btn[data-mode="${savedMode}"]`);
-            if (savedButton) {
-                savedButton.classList.add('active');
+            // Set default or restore previously selected mode
+            const savedMode = localStorage.getItem('weedingTrackingMode');
+            const defaultMode = 'weeding-candidate'; // Default for weeding tab
+            const modeToUse = savedMode || defaultMode;
+
+            const buttonToActivate = document.querySelector(`#weedingTrackingModeSelector .mode-btn[data-mode="${modeToUse}"]`);
+            if (buttonToActivate) {
+                buttonToActivate.classList.add('active');
+                // Only save to localStorage if we're using a user selection (not default)
+                if (savedMode) {
+                    localStorage.setItem('weedingTrackingMode', modeToUse);
+                }
             }
         }
-        //===========================================================================
 
         //===========================================================================
         // Enhanced Sorting Functions for All Tables
@@ -5623,7 +5814,7 @@
                     ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                     <strong>${escapeHtml(book.title)}</strong>
                     <br><span style="font-size: 0.8em; color: #6b7280;">${book.author ? escapeHtml(book.author) : '<em>No Author Found</em>'}</span>
-                    ${isTracked ? `<br><span class="tracking-reason">${trackingData.reason}</span>` : ''}
+                    ${isTracked ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
                 </td>
                 <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.year || 'Unknown Year')}</td>
                 <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${(() => {
@@ -7757,6 +7948,18 @@
         }
 
         //===========================================================================
+        // formatTrackingReason() - Format tracking reason for consistent display
+        //===========================================================================
+        function formatTrackingReason(reason) {
+            if (!reason) return '';
+
+            // Convert to proper case with spaces
+            return reason
+                .replace(/-/g, ' ')           // Replace hyphens with spaces
+                .replace(/\b\w/g, l => l.toUpperCase()); // Capitalize first letter of each word
+        }
+
+        //===========================================================================
         // escapeHtml() - Escape HTML characters to prevent XSS and parsing issues
         //===========================================================================
         function escapeHtml(text) {
@@ -9024,7 +9227,7 @@
                 bulkActions.style.display = 'flex';
             }
 
-            setupSearchModeSelector();
+            initAllTrackingModeSelectors();
             resultCount.textContent = results.length;
 
             // Render initial batch of sorted results
@@ -11091,6 +11294,45 @@
         }
 
         //===========================================================================
+        // exportAuthorDetailsAll() - Export every title for this author
+        //===========================================================================
+        async function exportAuthorDetailsAll() {
+            const books = window.currentAuthorBooks || [];
+            if (books.length === 0) {
+                alert('No author titles to export');
+                return;
+            }
+
+            // build the rows
+            const perf = getItemPerformanceLevel; // helper alias
+            const data = books.map(b => [
+                b.title,
+                b.year || '',
+                b.collection,
+                b.circulation,
+                perf(b.circulation).label,
+                b.callNumber
+            ]);
+
+            const headers = [
+                'Title',
+                'Year',
+                'Collection',
+                'Circulation',
+                'Performance Level',
+                'Call Number'
+            ];
+
+            const authorName = (window.currentAuthorDetails?.name || 'Unknown-Author')
+                .replace(/[^A-Za-z0-9]/g, '-');
+            const today = new Date().toISOString().slice(0, 10);
+            const filename = `author-titles-all-${authorName}-${today}.xlsx`;
+
+            createExcelFile(data, headers, filename, `${window.currentAuthorDetails.name} — All Titles`);
+            showStatus(`Exported ${books.length} titles for ${window.currentAuthorDetails.name}`, 'success');
+        }
+
+        //===========================================================================
         // exportSearchResults() - Export all search results to Excel
         //===========================================================================
         function exportSearchResults() {
@@ -12289,9 +12531,14 @@
             titlesBody.innerHTML = authorBooks.map(book => {
                 const performance = getPerformanceLevel(book.circulation);
                 return `
-                    <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.year || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}">
+                    <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.year || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}" class="author-table-row">
+                        <td style="text-align: center;">
+                            <input type="checkbox" class="item-checkbox author-details-item-checkbox" value="${book.barcode}" onchange="updateTrackSelectedButton('authorDetails')">
+                        </td>
                         <td onclick="event.stopPropagation(); viewBookDetails('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+                            <span class="tracking-indicator" id="trackingIndicator-${book.barcode}" style="color: #2563eb; margin-right: 0.25rem; display: none;">📌</span>
                             <strong>${escapeHtml(book.title)}</strong>
+                            <span class="tracking-reason" id="trackingReason-${book.barcode}" style="font-size: 0.75rem; background: #eff6ff; color: #2563eb; padding: 0.125rem 0.25rem; border-radius: 0.25rem; margin-left: 0.5rem; display: none;"></span>
                         </td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">${book.year || 'Unknown'}</td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">${escapeHtml(book.collection)}</td>
@@ -12302,6 +12549,10 @@
                             </span>
                         </td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(book.callNumber)}</code></td>
+                        <td style="text-align: center;">
+                            <button class="track-btn" id="trackBtn-${book.barcode}" onclick="handleTrackItem('${book.barcode}', 'authorDetails', event)" style="padding: 0.25rem 0.5rem; border: none; border-radius: 0.25rem; font-size: 0.75rem; cursor: pointer; background: #2563eb; color: white;">Track</button>
+                            <button class="untrack-btn" id="untrackBtn-${book.barcode}" onclick="handleUntrackItem('${book.barcode}', event)" style="padding: 0.25rem 0.5rem; border: none; border-radius: 0.25rem; font-size: 0.75rem; cursor: pointer; background: #dc2626; color: white; display: none;">Untrack</button>
+                        </td>
                     </tr>
                 `;
             }).join('');
@@ -12321,8 +12572,51 @@
             // Setup sorting for author titles table
             setupAuthorTitlesSorting();
 
+            // Show and setup tracking mode selector - MUST be after table is rendered
+            const authorTrackingModeSelector = document.getElementById('authorDetailsTrackingModeSelector');
+            if (authorTrackingModeSelector) {
+                authorTrackingModeSelector.style.display = 'block';
+                initAllTrackingModeSelectors();
+            }
+
+            // Update tracking indicators for author details table
+            updateAuthorDetailsTrackingIndicators();
+
             // Scroll to the section with offset for sticky navigation
             scrollToSection('authorDetailsSection');
+        }
+
+    //===========================================================================
+        // setupAuthorDetailsMode() - Make author details mode selector buttons work
+        //===========================================================================
+        function setupAuthorDetailsMode() {
+            const modeButtons = document.querySelectorAll('#authorDetailsTrackingModeSelector .mode-btn');
+            if (modeButtons.length === 0) return; // Exit if no buttons found
+
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons
+                    modeButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // Store the selected mode
+                    localStorage.setItem('authorDetailsTrackingMode', this.getAttribute('data-mode'));
+                });
+            });
+
+            // Set default or restore previously selected mode
+            const savedMode = localStorage.getItem('authorDetailsTrackingMode');
+            const defaultMode = 'monitor-performance'; // Default for author details tab
+            const modeToUse = savedMode || defaultMode;
+
+            const buttonToActivate = document.querySelector(`#authorDetailsTrackingModeSelector .mode-btn[data-mode="${modeToUse}"]`);
+            if (buttonToActivate) {
+                buttonToActivate.classList.add('active');
+                // Only save to localStorage if we're using a user selection (not default)
+                if (savedMode) {
+                    localStorage.setItem('authorDetailsTrackingMode', modeToUse);
+                }
+            }
         }
 
         //===========================================================================
@@ -12637,6 +12931,87 @@
 
             createExcelFile(data, headers, filename, 'Author Analysis');
         }
+
+    //===========================================================================
+        // exportAuthorDetailsAll() - Export all titles by this author to Excel
+        //===========================================================================
+        function exportAuthorDetailsAll() {
+            if (!window.currentAuthorBooks || window.currentAuthorBooks.length === 0) {
+                alert('No author titles to export');
+                return;
+            }
+
+            const authorName = window.currentAuthorDetails ? window.currentAuthorDetails.name : 'Unknown Author';
+            const headers = ['Title', 'Year', 'Collection', 'Circulation', 'Performance Level', 'Call Number'];
+
+            const data = window.currentAuthorBooks.map(book => {
+                const performance = getItemPerformanceLevel(book.circulation);
+                return [
+                    book.title,
+                    book.year || '',
+                    book.collection,
+                    book.circulation,
+                    performance.label,
+                    book.callNumber
+                ];
+            });
+
+            const today = new Date().toISOString().split('T')[0];
+            const filename = `author-titles-all-${authorName.replace(/[^a-zA-Z0-9]/g, '-')}-${today}.xlsx`;
+
+            createExcelFile(data, headers, filename, `${authorName} - All Titles`);
+        }
+
+    //===========================================================================
+        // exportAuthorDetailsTracked() - Export only tracked titles by this author
+        //===========================================================================
+        async function exportAuthorDetailsTracked() {
+            const books = window.currentAuthorBooks || [];
+            if (books.length === 0) {
+                alert('No author titles to export');
+                return;
+            }
+
+            const headers = [
+                'Title', 'Year', 'Collection',
+                'Circulation', 'Performance Level',
+                'Call Number', 'Tracking Reason'
+            ];
+            const rows = [];
+
+            for (const b of books) {
+                if (await isItemTracked(b.barcode)) {
+                    // fetch (or default) the reason
+                    const td = (await getTrackingData(b.barcode)) || {};
+                    const reason = formatTrackingReason(td.reason);
+                    const perf = getItemPerformanceLevel(b.circulation).label;
+
+                    rows.push([
+                        b.title,
+                        b.year || '',
+                        b.collection,
+                        b.circulation,
+                        perf,
+                        b.callNumber,
+                        reason
+                    ]);
+                }
+            }
+
+            if (rows.length === 0) {
+                alert('No tracked items found for this author');
+                return;
+            }
+
+            const authorSlug = (window.currentAuthorDetails?.name || 'Unknown-Author')
+                .replace(/[^A-Za-z0-9]/g, '-');
+            const today = new Date().toISOString().slice(0, 10);
+            const filename = `author-titles-tracked-${authorSlug}-${today}.xlsx`;
+
+            createExcelFile(rows, headers, filename, `${window.currentAuthorDetails?.name} — Tracked Titles`);
+            showStatus(`Exported ${rows.length} tracked item${rows.length > 1 ? 's' : ''} for ${window.currentAuthorDetails?.name}`, 'success');
+        }
+
 
         //===========================================================================
         // exportAuthorTitles() - Export current author's titles to Excel
@@ -13360,7 +13735,7 @@
         window.exportTrackingData = exportTrackingData;
         window.importTrackingData = importTrackingData;
 
-        //===========================================================================
+    //===========================================================================
         // resetTrackingModeDefaults() - Reset all tracking modes to defaults on page load
         //===========================================================================
         function resetTrackingModeDefaults() {
@@ -13368,12 +13743,16 @@
             localStorage.removeItem('searchTrackingMode');
             localStorage.removeItem('collectionTrackingMode');
             localStorage.removeItem('weedingTrackingMode');
+            localStorage.removeItem('authorDetailsTrackingMode');
+            localStorage.removeItem('chartModalTrackingMode');
 
             console.log('✅ Tracking mode defaults reset for new session');
         }
 
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', async function () {
+            // Event listeners
+            document.addEventListener('DOMContentLoaded', async function () {
+            // Reset tracking modes to defaults on fresh page load
+                resetTrackingModeDefaults();
 
             // Header upload functionality
             document.getElementById('fileInputHeader').addEventListener('change', (e) => {
@@ -13615,8 +13994,8 @@
                     <button class="mode-btn" data-mode="send-to-portland">Portland</button>
                     <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                     <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
-                    <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                    <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                    <button class="mode-btn active" data-mode="monitor-performance">Monitor</button>
+                    <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
                 </div>
             </div>
         `;
@@ -13778,7 +14157,7 @@
                     const trackingReasonPlaceholder = document.querySelector(`.tracking-reason-${item.barcode}`);
                     if (trackingReasonPlaceholder) {
                         trackingReasonPlaceholder.innerHTML = isTracked && trackingData && trackingData.reason ?
-                            `<span class="tracking-reason">${trackingData.reason.replace(/-/g, ' ')}</span>` : '';
+                            `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : '';
                     }
 
                     // Update the action button
@@ -13894,7 +14273,7 @@
                 item.callNumber || '',
                 item.circulation || 0,
                 getPerformanceLevel(item.circulation),
-                item.trackingReason.replace(/-/g, ' ')
+                formatTrackingReason(item.trackingReason)
             ]);
 
             // Create filename with timestamp
@@ -13938,7 +14317,7 @@
             titleCell.innerHTML = `
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
-        ${isTracked && trackingData && trackingData.reason ? `<span class="tracking-reason">${trackingData.reason.replace(/-/g, ' ')}</span>` : ''}
+        ${isTracked && trackingData && trackingData.reason ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
     `;
 
             // Update the actions cell (last cell)
@@ -14757,7 +15136,7 @@
                                 <td>${escapeHtml(item.author)}</td>
                                 <td>
                                     <span style="background: #eff6ff; color: #2563eb; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem;">
-                                        ${item.reason.replace(/-/g, ' ').toUpperCase()}
+                                        ${formatTrackingReason(item.reason)}
                                     </span>
                                 </td>
                                 <td>${escapeHtml(item.location)}</td>
@@ -14944,7 +15323,7 @@
             <td onclick="selectBookFromTable('${item.barcode}')">
                 ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                 <strong>${escapeHtml(item.title)}</strong>
-                ${isTracked ? `<span class="tracking-reason">${trackingData.reason}</span>` : ''}
+                ${isTracked ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
             </td>
             <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.author)}</td>
             <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(yearDisplay)}</td>
@@ -15032,8 +15411,64 @@
                 // Set the target button as active
                 targetButton.classList.add('active');
                 console.log('Chart modal mode set to:', targetMode); // Debug
+                initAllTrackingModeSelectors();
             }
         }
+
+        //===========================================================================
+            // initAllTrackingModeSelectors() - Initialize all tracking mode selectors with correct case
+            //===========================================================================
+            function initAllTrackingModeSelectors() {
+                const configs = [
+                    { selector: '#weedingTrackingModeSelector', key: 'weedingTrackingMode', default: 'weeding-candidate' },
+                    { selector: '#collectionTrackingModeSelector', key: 'collectionTrackingMode', default: 'monitor-performance' },
+                    { selector: '#authorDetailsTrackingModeSelector', key: 'authorDetailsTrackingMode', default: 'monitor-performance' },
+                    { selector: '#chartItemsModal .tracking-mode-selector', key: 'chartModalTrackingMode', default: 'monitor-performance' },
+                    { selector: '#searchTrackingModeSelector', key: 'searchTrackingMode', default: 'monitor-performance' }
+                ];
+
+                configs.forEach(({ selector, key, default: defMode }) => {
+                    const container = document.querySelector(selector);
+                    if (!container) return;
+
+                    const btns = container.querySelectorAll('.mode-btn');
+                    if (btns.length === 0) return;
+
+                    // Clear any existing active states
+                    btns.forEach(b => b.classList.remove('active'));
+
+                    // Get saved mode or use default
+                    const saved = localStorage.getItem(key) || defMode;
+
+                    // Find and activate the correct button
+                    const targetButton = container.querySelector(`[data-mode="${saved}"]`);
+                    if (targetButton) {
+                        targetButton.classList.add('active');
+                    }
+
+                    // Add click event listeners (remove any existing ones first)
+                    btns.forEach(b => {
+                        // Clone node to remove existing event listeners
+                        const newButton = b.cloneNode(true);
+                        b.parentNode.replaceChild(newButton, b);
+
+                        newButton.addEventListener('click', () => {
+                            btns.forEach(x => x.classList.remove('active'));
+                            newButton.classList.add('active');
+                            localStorage.setItem(key, newButton.dataset.mode);
+                        });
+                    });
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', initAllTrackingModeSelectors);
+            // AND at the end of renderWeedingPage() & showChartItemsModal():
+            //    initAllTrackingModeSelectors();
+
+
+            // Run it once when the page finishes loading
+            document.addEventListener('DOMContentLoaded', initAllTrackingModeSelectors);
+
 
     </script>
 
@@ -15057,7 +15492,7 @@
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                         <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
                         <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
                     </div>
                 </div>
 
@@ -15162,7 +15597,7 @@
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                         <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
                         <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
                     </div>
                 </div>
 
