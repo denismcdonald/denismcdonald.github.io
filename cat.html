@@ -5060,35 +5060,6 @@
             }
         }
 
-        //===========================================================================
-        // setupSearchModeSelector() - Make mode selector buttons work
-        //===========================================================================
-        function setupSearchModeSelector() {
-            const modeButtons = document.querySelectorAll('#searchTrackingModeSelector .mode-btn');
-            modeButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    // Remove active class from all buttons
-                    modeButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    // Store the selected mode
-                    localStorage.setItem('searchTrackingMode', this.getAttribute('data-mode'));
-                });
-            });
-            // Set default or restore previously selected mode
-            const savedMode = localStorage.getItem('searchTrackingMode');
-            const defaultMode = 'monitor-performance'; // Default for search tab
-            const modeToUse = savedMode || defaultMode;
-            const buttonToActivate = document.querySelector(`#searchTrackingModeSelector .mode-btn[data-mode="${modeToUse}"]`);
-            if (buttonToActivate) {
-                buttonToActivate.classList.add('active');
-                // Only save to localStorage if we're using a user selection (not default)
-                if (savedMode) {
-                    localStorage.setItem('searchTrackingMode', modeToUse);
-                }
-            }
-        }
-
     //===========================================================================
         // setupWeedingModeSelector() - Make weeding mode selector buttons work
         //===========================================================================
