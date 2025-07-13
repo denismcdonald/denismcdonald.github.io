@@ -886,6 +886,10 @@
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         }
 
+        .analysis-section h3 {
+            text-align: center;
+        }
+
         .analysis-table {
             width: 100%;
             border-collapse: collapse;
@@ -1020,6 +1024,15 @@
 
         .btn-secondary:hover {
             background-color: #2a7e35;
+        }
+
+        .btn-close {
+            background-color: white;
+            border: 1px solid #c5c5c5;
+        }
+
+        .btn-close:hover {
+            background-color: rgb(228, 228, 228);
         }
 
         .mode-btn {
@@ -1749,7 +1762,7 @@
                                 <option value="">Month...</option>
                             </select>
                             <button id="loadSampleBtn" class="btn btn-primary" onclick="loadSampleData()" disabled
-                                style="font-size: 0.75rem; padding: 0.25rem 0.75rem;">
+                                style="font-size: 0.75rem; padding: 0.5rem 0.75rem;">
                                 Load
                             </button>
                         </div>
@@ -2015,7 +2028,7 @@
 
                 <!-- Author's Other Titles Section -->
                 <div id="authorOtherTitlesSection"
-                    style="display: none; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e5e7eb;">
+                    style="display: none; margin-top: 2rem; padding-top: 1.5rem;">
                     <div class="panel">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
@@ -2153,15 +2166,21 @@
                                             d="M5 15l7-7 7 7"></path>
                                     </svg>
                                 </th>
+                                <th class="sortable" data-sort="avgAge" data-type="number">
+                                    Avg. Age
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
                                 <th class="sortable" data-sort="totalCirculation" data-type="number">
-                                    Total Circulation
+                                    Total Circ.
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 15l7-7 7 7"></path>
                                     </svg>
                                 </th>
                                 <th class="sortable" data-sort="avgCirculation" data-type="number">
-                                    Avg. Circulation
+                                    Avg. Circ.
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 15l7-7 7 7"></path>
@@ -2175,7 +2194,7 @@
                                     </svg>
                                 </th>
                                 <th class="sortable" data-sort="lowCirculation" data-type="number">
-                                    Low Circulation
+                                    Low Circ.
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 15l7-7 7 7"></path>
@@ -2191,16 +2210,16 @@
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <h3 id="collectionDetailsTitle">Collection Details</h3>
-                        <button class="btn btn-secondary" onclick="closeCollectionDetails()">✕ Close</button>
+                        <button class="btn btn-close" onclick="closeCollectionDetails()">✕ Close</button>
                     </div>
 
                     <div id="collectionDetailsContent">
                         <!-- Collection stats cards -->
                         <div id="collectionStatsCards"
-                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                            style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
                         </div>
 
-                        <!-- Collection's items table -->
+                        <!-- Collections items table -->
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                             <div style="display: flex; align-items: center; gap: 1rem;">
@@ -2210,62 +2229,57 @@
                                     Clear Sort
                                 </button>
                             </div>
-                            <button id="exportCollectionBtn" class="btn btn-secondary"
-                                onclick="exportCollectionItems()">
-                                📊 Export to Excel
-                            </button>
                         </div>
                         <table class="analysis-table sortable-table" id="collectionItemsTable">
                             <thead>
                                 <tr>
+                                    <th style="width: 40px; text-align: center;">
+                                        <input type="checkbox" class="select-all-checkbox" id="collectionSelectAllCheckbox"
+                                            onchange="toggleAllItems(this, 'collection')">
+                                    </th>
                                     <th class="sortable" data-sort="title" data-type="text">
                                         Title
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 15l7-7 7 7">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                             </path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="author" data-type="text">
                                         Author
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 15l7-7 7 7">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                             </path>
                                         </svg>
                                     </th>
-                                    <th class="sortable" data-sort="year" data-type="number">
-                                        Date Added
+                                    <th class="sortable" data-sort="age" data-type="number">
+                                        Age
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 15l7-7 7 7">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                             </path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="circulation" data-type="number">
                                         Circulation
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 15l7-7 7 7">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                             </path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="performance" data-type="number">
                                         Performance
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 15l7-7 7 7">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                             </path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="callNumber" data-type="text">
                                         Call Number
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M5 15l7-7 7 7">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7">
                                             </path>
                                         </svg>
                                     </th>
+                                    <th style="width: 100px; text-align: center;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="collectionItemsBody"></tbody>
@@ -2285,10 +2299,10 @@
                         </button>
                     </div>
                     <div style="display: flex; gap: 1rem;">
-                        <button class="btn btn-secondary" onclick="closeHighPerformers()">✕ Close</button>
                         <button id="exportHighPerformersBtn" class="btn btn-secondary" onclick="exportHighPerformers()">
                             📊 Export to Excel
                         </button>
+                        <button class="btn btn-close" onclick="closeHighPerformers()">✕ Close</button>
                     </div>
                 </div>
                 <table class="analysis-table sortable-table" id="highPerformersTable">
@@ -2479,10 +2493,10 @@
                             </button>
                         </div>
                         <div style="display: flex; gap: 1rem;">
-                            <button class="btn btn-secondary" onclick="closeGrubbyItems()">✕ Close</button>
                             <button id="exportGrubbyBtn" class="btn btn-secondary" onclick="exportGrubbyItems()">
                                 📊 Export to Excel
                             </button>
+                            <button class="btn btn-close" onclick="closeGrubbyItems()">✕ Close</button>
                         </div>
                     </div>
                     <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem;">
@@ -3008,7 +3022,7 @@
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <h3 id="authorDetailsTitle">Author Details</h3>
-                        <button class="btn btn-secondary" onclick="closeAuthorDetails()">✕ Close</button>
+                        <button class="btn btn-close" onclick="closeAuthorDetails()">✕ Close</button>
                     </div>
 
                     <div id="authorDetailsContent">
@@ -3028,7 +3042,7 @@
                                 </button>
                             </div>
                             <button id="exportAuthorBtn" class="btn btn-secondary" onclick="exportAuthorTitles()">
-                                📄 Export Author Report
+                                📊 Export Author Report
                             </button>
                         </div>
                         <table class="analysis-table sortable-table" id="authorTitlesTable">
@@ -3094,7 +3108,7 @@
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                         <h3 id="authorDetailsTitle">Author Details</h3>
-                        <button class="btn btn-secondary" onclick="closeAuthorDetails()">✕ Close</button>
+                        <button class="btn btn-close" onclick="closeAuthorDetails()">✕ Close</button>
                     </div>
 
                     <div id="authorDetailsContent">
@@ -3264,7 +3278,7 @@
                 </div>
                 <div style="display: flex; gap: 1rem;">
                     <button class="btn btn-secondary" onclick="exportAddedItems()">📊 Export to Excel</button>
-                    <button class="btn btn-secondary" onclick="closeAddedItems()">✕ Close</button>
+                    <button class="btn btn-close" onclick="closeAddedItems()">✕ Close</button>
                 </div>
             </div>
 
@@ -3339,7 +3353,7 @@
                 <div style="display: flex; gap: 1rem;">
                     <button class="btn btn-secondary" onclick="exportCollectionChangesDetail()">📊 Export to
                         Excel</button>
-                    <button class="btn btn-secondary" onclick="closeCollectionChangesDetail()">✕ Close</button>
+                    <button class="btn btn-close" onclick="closeCollectionChangesDetail()">✕ Close</button>
                 </div>
             </div>
 
@@ -3419,7 +3433,7 @@
                 </div>
                 <div style="display: flex; gap: 1rem;">
                     <button class="btn btn-secondary" onclick="exportRemovedItems()">📊 Export to Excel</button>
-                    <button class="btn btn-secondary" onclick="closeRemovedItems()">✕ Close</button>
+                    <button class="btn btn-close" onclick="closeRemovedItems()">✕ Close</button>
                 </div>
             </div>
 
@@ -3848,7 +3862,7 @@
             });
         }
 
-        //===========================================================================
+    //===========================================================================
         // handleTrackItem() - Handle track button clicks (generic for any table)
         //===========================================================================
         async function handleTrackItem(barcode, tableType, event) {
@@ -3864,6 +3878,9 @@
                 reason = 'weeding-candidate'; // Default for weeding
             } else if (tableType === 'chartModal') {
                 modeSelectorId = '#chartItemsModal .tracking-mode-selector';
+            } else if (tableType === 'collection') {
+                modeSelectorId = '#collectionTrackingModeSelector';
+                reason = 'monitor-performance'; // Default for collection items
             }
 
             // Get reason from mode selector
@@ -3887,6 +3904,12 @@
                     return;
                 }
                 reason = activeMode.getAttribute('data-mode');
+            } else if (tableType === 'collection') {
+                const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
+                if (activeMode) {
+                    reason = activeMode.getAttribute('data-mode');
+                }
+                // If no mode selected for collection, use the default 'monitor-performance'
             }
 
             try {
@@ -3902,6 +3925,8 @@
                     await updateWeedingRowTracking(barcode);
                 } else if (tableType === 'chartModal') {
                     await updateChartModalRowTracking(barcode);
+                } else if (tableType === 'collection') {
+                    await updateCollectionItemTracking(barcode);
                 }
 
                 updateTrackSelectedButton(tableType);
@@ -4181,6 +4206,12 @@
                 tableType = 'chartModal';
             }
 
+            // Check if we're in collection items table
+            const collectionRow = document.querySelector(`#collectionItemsBody tr[data-barcode="${barcode}"]`);
+            if (collectionRow) {
+                tableType = 'collection';
+            }
+
             try {
                 await untrackItem(barcode);
 
@@ -4194,6 +4225,10 @@
                     await updateWeedingRowTracking(barcode);
                 } else if (tableType === 'chartModal') {
                     await updateChartModalRowTracking(barcode);
+                } else if (tableType === 'collection') {
+                    await updateCollectionItemTracking(barcode);
+                } else if (tableType === 'collection') {
+                    await updateCollectionItemTracking(barcode);
                 }
 
                 updateTrackSelectedButton(tableType);
@@ -4506,6 +4541,11 @@
                 trackBtnId = 'chartModalTrackSelectedBtn';
                 untrackBtnId = 'chartModalUntrackSelectedBtn';
                 selectAllSelectors = '#selectAllChartModal';
+            } else if (tableType === 'collection') {
+                checkboxSelector = '.collection-item-checkbox:checked';
+                trackBtnId = 'collectionTrackSelectedBtn';
+                untrackBtnId = 'collectionUntrackSelectedBtn';
+                selectAllSelectors = '#collectionSelectAllCheckbox';
             }
 
             const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
@@ -4575,7 +4615,6 @@
         //===========================================================================
         async function bulkTrackSelected(tableType) {
             let checkboxSelector, modeSelectorId;
-
             if (tableType === 'search') {
                 checkboxSelector = '.search-item-checkbox:checked';
                 modeSelectorId = '#searchTrackingModeSelector';
@@ -4585,24 +4624,22 @@
             } else if (tableType === 'chartModal') {
                 checkboxSelector = '.chart-modal-item-checkbox:checked';
                 modeSelectorId = '#chartItemsModal .tracking-mode-selector';
+            } else if (tableType === 'collection') {
+                checkboxSelector = '.collection-item-checkbox:checked';
+                modeSelectorId = '#collectionTrackingModeSelector';
             }
-
             const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
             const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
-
             if (!activeMode) {
                 showStatus('Please select a tracking mode first', 'error');
                 return;
             }
-
             if (selectedCheckboxes.length === 0) {
                 showStatus('No items selected', 'error');
                 return;
             }
-
             const reason = activeMode.getAttribute('data-mode');
             const barcodes = Array.from(selectedCheckboxes).map(cb => cb.value);
-
             let successCount = 0;
             for (const barcode of barcodes) {
                 try {
@@ -4615,11 +4652,9 @@
                     console.error(`Error tracking item ${barcode}:`, error);
                 }
             }
-
             // Show result and refresh display
             if (successCount > 0) {
                 showStatus(`Successfully tracked ${successCount} items for ${reason.replace(/-/g, ' ')}`, 'success');
-
                 if (tableType === 'search') {
                     await refreshSearchResultsDisplay();
                 } else if (tableType === 'weeding') {
@@ -4627,9 +4662,10 @@
                 } else if (tableType === 'chartModal') {
                     // Refresh the modal display
                     await refreshChartModalDisplay();
+                } else if (tableType === 'collection') {
+                    await refreshCollectionItemsDisplay();
                 }
             }
-
             // Clear checkboxes
             let selectAllCheckboxes;
             if (tableType === 'search') {
@@ -4638,13 +4674,14 @@
                 selectAllCheckboxes = document.querySelectorAll('#selectAllWeeding, #selectAllWeedingHeader');
             } else if (tableType === 'chartModal') {
                 selectAllCheckboxes = document.querySelectorAll('#selectAllChartModal');
+            } else if (tableType === 'collection') {
+                selectAllCheckboxes = document.querySelectorAll('#collectionSelectAllCheckbox');
             }
-
             selectAllCheckboxes.forEach(cb => cb.checked = false);
             updateTrackSelectedButton(tableType);
         }
 
-        //===========================================================================
+    //===========================================================================
         // bulkTrackAll() - Track all visible items for any table
         //===========================================================================
         async function bulkTrackAll(tableType) {
@@ -4659,6 +4696,9 @@
             } else if (tableType === 'chartModal') {
                 modeSelectorId = '#chartItemsModal .tracking-mode-selector';
                 dataArray = window.chartModalItems;
+            } else if (tableType === 'collection') {
+                modeSelectorId = '#collectionTrackingModeSelector';
+                dataArray = window.currentCollectionDetails ? window.currentCollectionDetails.items : null;
             }
 
             if (!dataArray || dataArray.length === 0) {
@@ -4697,6 +4737,8 @@
                     await refreshWeedingTable();
                 } else if (tableType === 'chartModal') {
                     await refreshChartModalDisplay();
+                } else if (tableType === 'collection') {
+                    await refreshCollectionItemsDisplay();
                 }
             }
         }
@@ -4713,6 +4755,8 @@
                 checkboxSelector = '.weeding-item-checkbox:checked';
             } else if (tableType === 'chartModal') {
                 checkboxSelector = '.chart-modal-item-checkbox:checked';
+            } else if (tableType === 'collection') {
+                checkboxSelector = '.collection-item-checkbox:checked';
             }
 
             const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
@@ -4747,6 +4791,8 @@
                     await refreshWeedingTable();
                 } else if (tableType === 'chartModal') {
                     await refreshChartModalDisplay();
+                }  else if (tableType === 'collection') {
+                await refreshCollectionItemsDisplay();
                 }
             }
 
@@ -4758,7 +4804,7 @@
             updateTrackSelectedButton(tableType);
         }
 
-        //===========================================================================
+    //===========================================================================
         // bulkUntrackAll() - Untrack all visible items for any table
         //===========================================================================
         async function bulkUntrackAll(tableType) {
@@ -4773,14 +4819,15 @@
             } else if (tableType === 'chartModal') {
                 dataArray = window.chartModalItems;
                 confirmMessage = `Untrack all items in this window?`;
+            } else if (tableType === 'collection') {
+                dataArray = window.currentCollectionDetails ? window.currentCollectionDetails.items : null;
+                confirmMessage = `Untrack all visible collection items?`;
             }
 
             if (!dataArray || dataArray.length === 0) {
                 showStatus(`No ${tableType} results to untrack`, 'error');
                 return;
             }
-
-
 
             let successCount = 0;
             for (const item of dataArray) {
@@ -4805,6 +4852,8 @@
                     await refreshWeedingTable();
                 } else if (tableType === 'chartModal') {
                     await refreshChartModalDisplay();
+                } else if (tableType === 'collection') {
+                    await refreshCollectionItemsDisplay();
                 }
             }
         }
@@ -4988,30 +5037,61 @@
         }
 
         //===========================================================================
-        // setupSearchModeSelector() - Make mode selector buttons work
+        // setupCollectionModeSelector() - Make collection mode selector buttons work
         //===========================================================================
-        function setupSearchModeSelector() {
-            const modeButtons = document.querySelectorAll('#searchTrackingModeSelector .mode-btn');
-
+        function setupCollectionModeSelector() {
+            const modeButtons = document.querySelectorAll('#collectionTrackingModeSelector .mode-btn');
             modeButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     // Remove active class from all buttons
                     modeButtons.forEach(btn => btn.classList.remove('active'));
-
                     // Add active class to clicked button
                     this.classList.add('active');
+                    // Store the selected mode
+                    localStorage.setItem('collectionTrackingMode', this.getAttribute('data-mode'));
+                });
+            });
 
+            // Set default or restore previously selected mode
+            const savedMode = localStorage.getItem('collectionTrackingMode');
+            const defaultMode = 'monitor-performance'; // Default for collection tab
+            const modeToUse = savedMode || defaultMode;
+
+            const buttonToActivate = document.querySelector(`#collectionTrackingModeSelector .mode-btn[data-mode="${modeToUse}"]`);
+            if (buttonToActivate) {
+                buttonToActivate.classList.add('active');
+                // Only save to localStorage if we're using a user selection (not default)
+                if (savedMode) {
+                    localStorage.setItem('collectionTrackingMode', modeToUse);
+                }
+            }
+        }
+
+        //===========================================================================
+        // setupSearchModeSelector() - Make mode selector buttons work
+        //===========================================================================
+        function setupSearchModeSelector() {
+            const modeButtons = document.querySelectorAll('#searchTrackingModeSelector .mode-btn');
+            modeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons
+                    modeButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
                     // Store the selected mode
                     localStorage.setItem('searchTrackingMode', this.getAttribute('data-mode'));
                 });
             });
-
-            // Restore previously selected mode
+            // Set default or restore previously selected mode
             const savedMode = localStorage.getItem('searchTrackingMode');
-            if (savedMode) {
-                const savedButton = document.querySelector(`#searchTrackingModeSelector .mode-btn[data-mode="${savedMode}"]`);
-                if (savedButton) {
-                    savedButton.classList.add('active');
+            const defaultMode = 'monitor-performance'; // Default for search tab
+            const modeToUse = savedMode || defaultMode;
+            const buttonToActivate = document.querySelector(`#searchTrackingModeSelector .mode-btn[data-mode="${modeToUse}"]`);
+            if (buttonToActivate) {
+                buttonToActivate.classList.add('active');
+                // Only save to localStorage if we're using a user selection (not default)
+                if (savedMode) {
+                    localStorage.setItem('searchTrackingMode', modeToUse);
                 }
             }
         }
@@ -5379,15 +5459,16 @@
                     collection: cells[0]?.textContent?.trim() || '',
                     performanceLevel: parseInt(row.getAttribute('data-performance-value')) || 0,
                     items: parseInt(cells[2]?.textContent?.replace(/,/g, '') || '0'),
-                    totalCirculation: parseInt(cells[3]?.textContent?.replace(/,/g, '') || '0'),
-                    avgCirculation: parseInt(cells[4]?.textContent || '0'),
-                    highPerformers: parseInt(cells[5]?.textContent || '0'),
-                    lowCirculation: parseInt(cells[6]?.textContent || '0')
+                    avgAge: cells[3]?.textContent?.trim() || '',
+                    totalCirculation: parseInt(cells[4]?.textContent?.replace(/,/g, '') || '0'),
+                    avgCirculation: parseInt(cells[5]?.textContent || '0'),
+                    highPerformers: parseInt(cells[6]?.textContent || '0'),
+                    lowCirculation: parseInt(cells[7]?.textContent || '0')
                 };
             });
 
             // Determine data type based on field
-            const dataType = ['items', 'totalCirculation', 'avgCirculation', 'highPerformers', 'lowCirculation', 'performanceLevel'].includes(field) ? 'number' : 'text';
+            const dataType = ['items', 'avgAge', 'totalCirculation', 'avgCirculation', 'highPerformers', 'lowCirculation', 'performanceLevel'].includes(field) ? 'number' : 'text';
 
             // Sort the data
             const sortedData = sortTableData(data, field, direction, dataType);
@@ -7971,6 +8052,31 @@
         }
 
         //===========================================================================
+        // calculateAverageAge() - Calculate average age of items in a collection
+        //===========================================================================
+        function calculateAverageAge(items) {
+            const currentDate = new Date();
+            let totalAgeInDays = 0;
+            let validItems = 0;
+
+            items.forEach(item => {
+                if (item.itemCreated) {
+                    const createdDate = new Date(item.itemCreated);
+                    if (!isNaN(createdDate.getTime())) {
+                        const ageInDays = (currentDate - createdDate) / (1000 * 60 * 60 * 24);
+                        totalAgeInDays += ageInDays;
+                        validItems++;
+                    }
+                }
+            });
+
+            if (validItems === 0) return 'N/A';
+
+            const avgAgeInYears = totalAgeInDays / validItems / 365.25;
+            return avgAgeInYears < 1 ? '< 1yr' : `${Math.round(avgAgeInYears * 10) / 10}yrs`;
+        }
+
+        //===========================================================================
         // initializeFuzzySearch() - Disabled to prevent performance issues
         //===========================================================================
         function initializeFuzzySearch() {
@@ -9282,6 +9388,10 @@
 
             // Load tab-specific data
             switch (tabName) {
+                case 'search':
+                    // Setup search mode selector when search tab is shown
+                    setupSearchModeSelector();
+                    break;
                 case 'overview':
                     loadOverviewData();
                     break;
@@ -9637,7 +9747,7 @@
             }
 
             if (lowCirculationHeader) {
-                lowCirculationHeader.innerHTML = `Low Circulation (&lt;${thresholds.item.fair})
+                lowCirculationHeader.innerHTML = `Low Circ. (&lt;${thresholds.item.fair})
         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
         </svg>`;
@@ -9649,6 +9759,8 @@
             const totalCirculation = filteredData.reduce((sum, item) => sum + item.circulation, 0);
             const averageCirculation = Math.round(totalCirculation / totalItems);
             const collectionsCount = Object.keys(collections).length;
+            // Calculate average age for entire collection
+            const overallAvgAge = calculateAverageAge(filteredData);
 
             document.getElementById('overviewMetrics').innerHTML = `
                 <div class="metric-card">
@@ -9682,9 +9794,9 @@
                 </div>
                 
                 <div class="metric-card">
-                    <div class="metric-title">New Items Performance</div>
-                    <div class="metric-value">${analyzeNewItems(filteredData).averageCirculation}</div>
-                    <div class="metric-subtitle">Avg circulation per new item</div>
+                    <div class="metric-title">Average Item Age</div>
+                    <div class="metric-value">${overallAvgAge}</div>
+                    <div class="metric-subtitle">Time since added to collection</div>
                 </div>
             `;
 
@@ -9724,6 +9836,8 @@
                 const avgCirc = Math.round(totalCirc / items.length);
                 const highPerf = items.filter(i => i.circulation >= getPerformanceThresholds().item.high).length;
                 const lowCirc = items.filter(i => i.circulation < getPerformanceThresholds().item.fair).length;
+                // Calculate average age of items in this collection
+                const avgAge = calculateAverageAge(items);
 
                 // Calculate performance level and color using centralized function
                 const performance = getCollectionPerformanceLevel(avgCirc);
@@ -9747,6 +9861,7 @@
             </span>
         </td>
         <td>${items.length.toLocaleString()}</td>
+        <td style="font-weight: 600; color: #374151;">${avgAge}</td>
         <td>${totalCirc.toLocaleString()}</td>
         <td>
             <span style="color: ${performance.color}; font-weight: 600;">
@@ -9805,7 +9920,7 @@
                     </div>
                     <div style="display: flex; gap: 1rem;">
                         <button class="btn btn-secondary" onclick="exportNewItems()">📊 Export to Excel</button>
-                        <button class="btn btn-secondary" onclick="closeNewItems()">✕ Close</button>
+                        <button class="btn btn-close" onclick="closeNewItems()">✕ Close</button>
                     </div>
                 </div>
                 
@@ -11974,7 +12089,7 @@
                 messageSection.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                 <h3>${title}</h3>
-                <button class="btn btn-secondary" onclick="document.getElementById('${sectionId}').remove()">✕ Close</button>
+                <button class="btn btn-close" onclick="document.getElementById('${sectionId}').remove()">✕ Close</button>
             </div>
             <p style="text-align: center; color: #6b7280; padding: 2rem;">${description}</p>
         `;
@@ -12002,7 +12117,7 @@
             </div>
             <div style="display: flex; gap: 1rem;">
                 <button class="btn btn-secondary" onclick="exportInsightData('${sectionId}')">📊 Export to Excel</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('${sectionId}').remove()">✕ Close</button>
+                <button class="btn btn-close" onclick="document.getElementById('${sectionId}').remove()">✕ Close</button>
             </div>
         </div>
         
@@ -13368,6 +13483,18 @@
         window.exportTrackingData = exportTrackingData;
         window.importTrackingData = importTrackingData;
 
+        //===========================================================================
+        // resetTrackingModeDefaults() - Reset all tracking modes to defaults on page load
+        //===========================================================================
+        function resetTrackingModeDefaults() {
+            // Clear any stored tracking modes from previous sessions
+            localStorage.removeItem('searchTrackingMode');
+            localStorage.removeItem('collectionTrackingMode');
+            localStorage.removeItem('weedingTrackingMode');
+
+            console.log('✅ Tracking mode defaults reset for new session');
+        }
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', async function () {
 
@@ -13377,6 +13504,9 @@
                     handleFile(e.target.files[0]);
                 }
             });
+
+            // Reset tracking mode selections to defaults
+            resetTrackingModeDefaults();
 
             // Clear any cached book covers to get fresh results with improved matching
             bookCovers = {};
@@ -13574,7 +13704,7 @@
             }
         });
 
-        //===========================================================================
+    //===========================================================================
         // showCollectionDetails() - Display detailed view for selected collection
         //===========================================================================
         function showCollectionDetails(collectionName) {
@@ -13595,33 +13725,64 @@
             const highPerformers = collectionItems.filter(item => item.circulation >= getPerformanceThresholds().collection.high).length;
 
             // Show the details section
+            // Add tracking mode selector if it doesn't exist
+            const existingModeSelector = document.querySelector('#collectionDetailsContent .tracking-mode-selector');
+            if (!existingModeSelector) {
+                const collectionItemsTable = document.querySelector('#collectionDetailsContent .analysis-table');
+                const modeSelectorHTML = `
+            <div class="tracking-mode-selector" id="collectionTrackingModeSelector" style="margin-bottom: 1rem;">
+                <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
+                    <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
+                    <button class="mode-btn" data-mode="send-to-portland">Portland</button>
+                    <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
+                    <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
+                    <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                    <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
+                </div>
+            </div>
+        `;
+
+                collectionItemsTable.insertAdjacentHTML('beforebegin', modeSelectorHTML);
+
+                // Setup mode selector event listeners
+                setupCollectionModeSelector();
+            }
             document.getElementById('collectionDetailsSection').style.display = 'block';
             document.getElementById('collectionDetailsTitle').textContent = `Collection: ${collectionName}`;
 
             // Update stats cards
             const statsCards = document.getElementById('collectionStatsCards');
+            // Calculate average age for this collection
+            const avgAge = calculateAverageAge(collectionItems);
             statsCards.innerHTML = `
-        <div class="metric-card">
-            <div class="metric-title">Total Items</div>
-            <div class="metric-value">${totalItems}</div>
-            <div class="metric-subtitle">In collection</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-title">Total Circulation</div>
-            <div class="metric-value">${totalCirculation.toLocaleString()}</div>
-            <div class="metric-subtitle">All items combined</div>
-        </div>
-        <div class="metric-card">
-            <div class="metric-title">Average per Item</div>
-            <div class="metric-value">${avgCirculation}</div>
-            <div class="metric-subtitle">Circulation per item</div>
-        </div>
-        <div class="metric-card" onclick="showHighPerformersForCollection('${escapeHtml(collectionName)}')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#f0f9ff'; this.style.borderColor='#2563eb';" onmouseout="this.style.backgroundColor=''; this.style.borderColor='';">
-            <div class="metric-title">High Performers</div>
-            <div class="metric-value">${highPerformers}</div>
-            <div class="metric-subtitle">Click to view high-performing items</div>
-        </div>
-    `;
+            <div class="metric-card">
+                <div class="metric-title">Total Items</div>
+                <div class="metric-value">${totalItems}</div>
+                <div class="metric-subtitle">In collection</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Total Circulation</div>
+                <div class="metric-value">${totalCirculation.toLocaleString()}</div>
+                <div class="metric-subtitle">All items combined</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Average per Item</div>
+                <div class="metric-value">${avgCirculation}</div>
+                <div class="metric-subtitle">Circulation per item</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Average Item Age</div>
+                <div class="metric-value">${avgAge}</div>
+                <div class="metric-subtitle">Time since added to collection</div>
+            </div>
+            <div class="metric-card" onclick="showHighPerformersForCollection('${escapeHtml(collectionName)}')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#f0f9ff'; this.style.borderColor='#2563eb';" onmouseout="this.style.backgroundColor=''; this.style.borderColor='';">
+                <div class="metric-title">High Performers</div>
+                <div class="metric-value">${highPerformers}</div>
+                <div class="metric-subtitle">Click to view high-performing items</div>
+            </div>
+        `;
 
             // Performance indicator for each item - using centralised function
             // (No local function needed - we'll use getItemPerformanceLevel directly)
@@ -13629,34 +13790,75 @@
             // Sort items by circulation
             collectionItems.sort((a, b) => b.circulation - a.circulation);
 
-            // Update items table
+            // Update items table with tracking support
             const itemsBody = document.getElementById('collectionItemsBody');
             itemsBody.innerHTML = collectionItems.map(item => {
                 const performance = getItemPerformanceLevel(item.circulation);
                 return `
-            <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${item.circulation}" data-call-number="${escapeHtml(item.callNumber)}">
-                <td onclick="event.stopPropagation(); viewBookDetails('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
-                    <strong>${escapeHtml(item.title)}</strong>
-                </td>
-                <td>${escapeHtml(item.author)}</td>
-                <td>${item.year || 'Unknown'}</td>
-                <td><strong>${item.circulation}</strong></td>
-                <td>
-                    <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
-                        ${performance.label}
-                    </span>
-                </td>
-                <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-            </tr>
+        <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="viewBookDetails('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+            <td style="text-align: center;" onclick="event.stopPropagation();">
+                <input type="checkbox" class="item-checkbox collection-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('collection')">
+            </td>
+            <td style="color: #6b7280; font-weight: 500;">
+                <span class="tracking-placeholder-${item.barcode}"></span>
+                <strong>${escapeHtml(item.title)}</strong>
+                <span class="tracking-reason-${item.barcode}"></span>
+            </td>
+            <td>${escapeHtml(item.author)}</td>
+            <td>${(() => {
+                        const age = getItemAge(item.itemCreated);
+                        return age > 0 ? (age === 1 ? '1 year' : `${age} years`) : '< 1 year';
+                    })()}</td>
+            <td><strong>${item.circulation}</strong></td>
+            <td>
+                <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
+                    ${performance.label}
+                </span>
+            </td>
+            <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
+            <td style="text-align: center;" onclick="event.stopPropagation();">
+                <button class="track-btn tracking-action-${item.barcode}" onclick="handleTrackItem('${item.barcode}', 'collection', event)">Track</button>
+            </td>
+        </tr>
         `;
             }).join('');
+
+            // Load tracking data for all items asynchronously
+            loadCollectionTrackingData(collectionItems);
 
             // Store current collection items for sorting and export
             window.currentCollectionItems = collectionItems;
             window.currentCollectionDetails = { name: collectionName, items: collectionItems };
 
-            // Add item performance legend above the header section
-            const headerDiv = document.querySelector('#collectionDetailsContent .analysis-table').previousElementSibling;
+            // Add bulk action controls if they don't exist
+            const existingBulkControls = document.querySelector('#collectionDetailsContent .bulk-actions');
+            if (!existingBulkControls) {
+                const collectionItemsTable = document.querySelector('#collectionDetailsContent .analysis-table');
+                const bulkControlsHTML = `
+            <div class="bulk-actions" style="margin-bottom: 1rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <button class="bulk-track-btn" id="collectionTrackSelectedBtn" onclick="bulkTrackSelected('collection')" disabled>
+                        Track Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" id="collectionUntrackSelectedBtn" onclick="bulkUntrackSelected('collection')" style="background: #dc2626;" disabled>
+                        Untrack Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkTrackAll('collection')">
+                        Track All Visible
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkUntrackAll('collection')" style="background: #dc2626;">
+                        Untrack All Visible
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportCollectionItems()">📊 Export All</button>
+                    <button class="btn btn-secondary" onclick="exportCollectionItemsTracked()">📌 Export Tracked</button>
+                </div>
+            </div>
+        `;
+
+                collectionItemsTable.insertAdjacentHTML('beforebegin', bulkControlsHTML);
+            }
+
+            // Add item performance legend above the tracking mode selector
             const existingLegend = document.querySelector('.items-performance-legend');
             if (existingLegend) {
                 existingLegend.remove();
@@ -13667,14 +13869,71 @@
             itemLegend.innerHTML = createPerformanceLegend('item');
             itemLegend.style.marginBottom = '1rem';
 
-            // Insert before the header that contains h4 and buttons
-            headerDiv.parentNode.insertBefore(itemLegend, headerDiv);
+            // Insert before the tracking mode selector
+            const modeSelector = document.getElementById('collectionTrackingModeSelector');
+            if (modeSelector) {
+                modeSelector.parentNode.insertBefore(itemLegend, modeSelector);
+            }
 
             // Setup sorting for collection items table
             setupCollectionItemsSorting();
 
             // Scroll to the details section
             scrollToSection('collectionDetailsSection');
+        }
+
+        //===========================================================================
+        // loadCollectionTrackingData() - Load tracking data for collection items asynchronously
+        //===========================================================================
+        async function loadCollectionTrackingData(items) {
+            for (const item of items) {
+                try {
+                    const isTracked = await isItemTracked(item.barcode);
+                    const trackingData = isTracked ? await getTrackingData(item.barcode) : null;
+
+                    // Update the tracking indicator placeholder
+                    const trackingPlaceholder = document.querySelector(`.tracking-placeholder-${item.barcode}`);
+                    if (trackingPlaceholder) {
+                        trackingPlaceholder.innerHTML = isTracked ? '<span class="tracking-indicator">📌</span>' : '';
+                    }
+
+                    // Update the tracking reason placeholder
+                    const trackingReasonPlaceholder = document.querySelector(`.tracking-reason-${item.barcode}`);
+                    if (trackingReasonPlaceholder) {
+                        trackingReasonPlaceholder.innerHTML = isTracked && trackingData && trackingData.reason ?
+                            `<span class="tracking-reason">${trackingData.reason.replace(/-/g, ' ')}</span>` : '';
+                    }
+
+                    // Update the action button
+                    const actionButton = document.querySelector(`.tracking-action-${item.barcode}`);
+                    if (actionButton) {
+                        if (isTracked) {
+                            actionButton.textContent = 'Untrack';
+                            actionButton.className = 'untrack-btn';
+                            actionButton.setAttribute('onclick', `handleUntrackItem('${item.barcode}', event)`);
+                        } else {
+                            actionButton.textContent = 'Track';
+                            actionButton.className = 'track-btn';
+                            actionButton.setAttribute('onclick', `handleTrackItem('${item.barcode}', 'collection', event)`);
+                        }
+                    }
+
+                    // Update row styling
+                    const row = document.querySelector(`tr[data-barcode="${item.barcode}"]`);
+                    if (row) {
+                        if (isTracked) {
+                            row.classList.add('tracked-row');
+                        } else {
+                            row.classList.remove('tracked-row');
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error loading tracking data for ${item.barcode}:`, error);
+                }
+            }
+
+            // Update bulk action button states after all tracking data is loaded
+            updateTrackSelectedButton('collection');
         }
 
         //===========================================================================
@@ -13718,6 +13977,107 @@
             createExcelFile(data, headers, filename, `${name} Collection`);
         }
 
+    //===========================================================================
+        // exportCollectionItemsTracked() - Export tracked items from current collection to Excel
+        //===========================================================================
+        async function exportCollectionItemsTracked() {
+            if (!window.currentCollectionDetails) {
+                alert('No collection selected for export');
+                return;
+            }
+
+            const { name, items } = window.currentCollectionDetails;
+
+            // Filter to only tracked items
+            const trackedItems = [];
+            for (const item of items) {
+                const isTracked = await isItemTracked(item.barcode);
+                if (isTracked) {
+                    const trackingData = await getTrackingData(item.barcode);
+                    trackedItems.push({ ...item, trackingReason: trackingData.reason });
+                }
+            }
+
+            if (trackedItems.length === 0) {
+                alert('No tracked items to export');
+                return;
+            }
+
+            const headers = ['Title', 'Author', 'Year', 'Call Number', 'Circulation', 'Performance Level', 'Tracking Reason'];
+
+            const getPerformanceLevel = (circulation) => {
+                return getItemPerformanceLevel(circulation).label;
+            };
+
+            // Create data rows
+            const data = trackedItems.map(item => [
+                item.title || '',
+                item.author || '',
+                item.year || '',
+                item.callNumber || '',
+                item.circulation || 0,
+                getPerformanceLevel(item.circulation),
+                item.trackingReason.replace(/-/g, ' ')
+            ]);
+
+            // Create filename with timestamp
+            const now = new Date();
+            const timestamp = now.toISOString().split('T')[0];
+            const filename = `tracked-items-${name.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${timestamp}.xlsx`;
+
+            createExcelFile(data, headers, filename);
+            showStatus(`Exported ${trackedItems.length} tracked items from ${name}`, 'success');
+        }
+
+        //===========================================================================
+        // refreshCollectionItemsDisplay() - Refresh the collection items table with tracking updates
+        //===========================================================================
+        async function refreshCollectionItemsDisplay() {
+            if (!window.currentCollectionDetails) return;
+
+            const { name } = window.currentCollectionDetails;
+
+            // Re-run the display function to refresh with current tracking state
+            showCollectionDetails(name);
+        }
+
+        //===========================================================================
+        // updateCollectionItemTracking() - Update tracking status for a specific collection item
+        //===========================================================================
+        async function updateCollectionItemTracking(barcode) {
+            const row = document.querySelector(`#collectionItemsBody tr[data-barcode="${barcode}"]`);
+            if (!row) return; // Row not currently visible
+
+            // Find the item data
+            const item = window.currentCollectionDetails.items.find(item => item.barcode === barcode);
+            if (!item) return;
+
+            // Check current tracking status
+            const isTracked = await isItemTracked(barcode);
+            const trackingData = isTracked ? await getTrackingData(barcode) : null;
+
+            // Update the title cell (second cell, after checkbox)
+            const titleCell = row.children[1];
+            titleCell.innerHTML = `
+        ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+        <strong>${escapeHtml(item.title)}</strong>
+        ${isTracked && trackingData && trackingData.reason ? `<span class="tracking-reason">${trackingData.reason.replace(/-/g, ' ')}</span>` : ''}
+    `;
+
+            // Update the actions cell (last cell)
+            const actionsCell = row.children[row.children.length - 1];
+            actionsCell.innerHTML = isTracked ?
+                `<button class="untrack-btn" onclick="handleUntrackItem('${barcode}', event)">Untrack</button>` :
+                `<button class="track-btn" onclick="handleTrackItem('${barcode}', 'collection', event)">Track</button>`;
+
+            // Update row styling
+            if (isTracked) {
+                row.classList.add('tracked-row');
+            } else {
+                row.classList.remove('tracked-row');
+            }
+        }
+
         //===========================================================================
         // setupCollectionItemsSorting() - Setup sorting for collection items table
         //===========================================================================
@@ -13739,7 +14099,7 @@
             });
         }
 
-        //===========================================================================
+    //===========================================================================
         // sortCollectionItems() - Sort collection items table
         //===========================================================================
         function sortCollectionItems(field) {
@@ -13752,31 +14112,78 @@
 
             window.collectionItemsSortState = { field, direction };
 
-            const dataType = ['circulation', 'year', 'performance'].includes(field) ? 'number' : 'text';
-            const sortedItems = sortTableData(window.currentCollectionItems, field, direction, dataType);
+            let sortedItems;
+
+            if (field === 'performance') {
+                // Special handling for performance sorting
+                const itemsWithPerformance = window.currentCollectionItems.map(item => ({
+                    ...item,
+                    performanceLevel: getItemPerformanceLevel(item.circulation).level === 'high' ? 3 :
+                        getItemPerformanceLevel(item.circulation).level === 'good' ? 2 :
+                            getItemPerformanceLevel(item.circulation).level === 'fair' ? 1 : 0
+                }));
+
+                sortedItems = itemsWithPerformance.sort((a, b) => {
+                    if (direction === 'asc') {
+                        return a.performanceLevel - b.performanceLevel; // Low to High
+                    } else {
+                        return b.performanceLevel - a.performanceLevel; // High to Low
+                    }
+                });
+            } else if (field === 'age') {
+                // Special handling for age sorting
+                const itemsWithAge = window.currentCollectionItems.map(item => ({
+                    ...item,
+                    ageValue: getItemAge(item.itemCreated)
+                }));
+
+                sortedItems = itemsWithAge.sort((a, b) => {
+                    if (direction === 'asc') {
+                        return a.ageValue - b.ageValue; // New to Old
+                    } else {
+                        return b.ageValue - a.ageValue; // Old to New
+                    }
+                });
+            } else {
+                // Normal sorting for other fields
+                const dataType = ['circulation'].includes(field) ? 'number' : 'text';
+                sortedItems = sortTableData(window.currentCollectionItems, field, direction, dataType);
+            }
 
             const itemsBody = document.getElementById('collectionItemsBody');
             itemsBody.innerHTML = sortedItems.map(item => {
                 const performance = getItemPerformanceLevel(item.circulation);
                 return `
-            <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${item.circulation}" data-call-number="${escapeHtml(item.callNumber)}">
-                <td onclick="event.stopPropagation(); viewBookDetails('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
-                    <strong>${escapeHtml(item.title)}</strong>
-                </td>
-                <td>${escapeHtml(item.author)}</td>
-                <td>${item.year || 'Unknown'}</td>
-                <td><strong>${item.circulation}</strong></td>
-                <td>
-                    <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
-                        ${performance.label}
-                    </span>
-                </td>
-                <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-            </tr>
+        <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="viewBookDetails('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+            <td style="text-align: center;" onclick="event.stopPropagation();">
+                <input type="checkbox" class="item-checkbox collection-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('collection')">
+            </td>
+            <td style="color: #2563eb; font-weight: 500;">
+                <span class="tracking-placeholder-${item.barcode}"></span>
+                <strong>${escapeHtml(item.title)}</strong>
+                <span class="tracking-reason-${item.barcode}"></span>
+            </td>
+            <td>${escapeHtml(item.author)}</td>
+            <td>${(() => {
+                        const age = getItemAge(item.itemCreated);
+                        return age > 0 ? (age === 1 ? '1 year' : `${age} years`) : '< 1 year';
+                    })()}</td>
+            <td><strong>${item.circulation}</strong></td>
+            <td>
+                <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500;">
+                    ${performance.label}
+                </span>
+            </td>
+            <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
+            <td style="text-align: center;" onclick="event.stopPropagation();">
+                <button class="track-btn tracking-action-${item.barcode}" onclick="handleTrackItem('${item.barcode}', 'collection', event)">Track</button>
+            </td>
+        </tr>
         `;
             }).join('');
 
             updateCollectionItemsSortIcons(field, direction);
+            loadCollectionTrackingData(sortedItems);
         }
 
         //===========================================================================
@@ -13917,15 +14324,15 @@
             const sectionTitle = document.querySelector('#highPerformersSection h3');
             sectionTitle.innerHTML = `High-Performing Items in "${escapeHtml(collectionName)}" (<span id="highPerformersCount">${highPerformers.length}</span> items)`;
 
-            // Add "Show All" button to the controls
-            const controlsDiv = document.querySelector('#highPerformersSection .btn').parentNode;
+            // Add "Show All" button next to the heading
+            const headingDiv = document.querySelector('#highPerformersSection h3').parentNode;
             if (!document.getElementById('showAllHighPerformersBtn')) {
                 const showAllBtn = document.createElement('button');
                 showAllBtn.id = 'showAllHighPerformersBtn';
-                showAllBtn.className = 'btn btn-secondary';
+                showAllBtn.className = 'btn btn-close';
                 showAllBtn.onclick = function () { showHighPerformers(); };
-                showAllBtn.innerHTML = '📊 Show All High Performers';
-                controlsDiv.insertBefore(showAllBtn, controlsDiv.firstChild);
+                showAllBtn.innerHTML = 'Show All High Performers &nbsp;ᕦ(ò_óˇ)ᕤ';
+                headingDiv.appendChild(showAllBtn);
             }
 
             // Populate table
