@@ -1592,6 +1592,7 @@
         #untrackAllSearchBtn,
         #untrackAllWeedingBtn,
         #untrackAllChartModalBtn,
+        #collectionUntrackSelectedBtn,
         .btn-danger {
             background-color: #d34949;
             color: white;
@@ -1610,7 +1611,8 @@
         .btn-danger:disabled,
         #untrackSearchSelectedBtn:disabled,
         #untrackSelectedBtn:disabled,
-        #chartModalUntrackSelectedBtn:disabled {
+        #chartModalUntrackSelectedBtn:disabled,
+        #collectionUntrackSelectedBtn:disabled {
             background-color: #9ca3af;
             cursor: not-allowed;
         }
@@ -1618,6 +1620,8 @@
         #weedingTab>div:nth-child(3)>h3:nth-child(1) {
             text-align: center;
         }
+
+        
     </style>
 </head>
 
@@ -1926,7 +1930,7 @@
                         </button>
 
                         <button class="bulk-track-btn" onclick="bulkTrackAll('search')">
-                            Track All Visible
+                            Track All
                         </button>
 
                         <button class="bulk-track-btn" id="untrackSearchSelectedBtn"
@@ -1935,7 +1939,7 @@
                         </button>
 
                         <button class="bulk-track-btn" id="untrackAllSearchBtn" onclick="bulkUntrackAll('search')">
-                            Untrack All Visible
+                            Untrack All
                         </button>
 
                         <!-- Export Buttons -->
@@ -2599,13 +2603,13 @@
                             Track Selected (0)
                         </button>
                         <button class="bulk-track-btn" onclick="bulkTrackAll('weeding')">
-                            Track All Visible
+                            Track All
                         </button>
                         <button class="bulk-track-btn" id="untrackSelectedBtn" onclick="bulkUntrackSelected('weeding')">
                             Untrack Selected (0)
                         </button>
                         <button class="bulk-track-btn" id="untrackAllWeedingBtn" onclick="bulkUntrackAll('weeding')">
-                            Untrack All Visible
+                            Untrack All
                         </button>
                         <!-- Export Buttons -->
                         <button id="exportAllWeedingBtn" class="btn btn-secondary" onclick="exportWeedingCandidates()">
@@ -13840,14 +13844,14 @@
                     <button class="bulk-track-btn" id="collectionTrackSelectedBtn" onclick="bulkTrackSelected('collection')" disabled>
                         Track Selected (0)
                     </button>
-                    <button class="bulk-track-btn" id="collectionUntrackSelectedBtn" onclick="bulkUntrackSelected('collection')" style="background: #dc2626;" disabled>
+                    <button class="bulk-track-btn" id="collectionUntrackSelectedBtn" onclick="bulkUntrackSelected('collection')" disabled>
                         Untrack Selected (0)
                     </button>
                     <button class="bulk-track-btn" onclick="bulkTrackAll('collection')">
-                        Track All Visible
+                        Track All
                     </button>
                     <button class="bulk-track-btn" onclick="bulkUntrackAll('collection')" style="background: #dc2626;">
-                        Untrack All Visible
+                        Untrack All
                     </button>
                     <button class="btn btn-secondary" onclick="exportCollectionItems()">📊 Export All</button>
                     <button class="btn btn-secondary" onclick="exportCollectionItemsTracked()">📌 Export Tracked</button>
