@@ -3433,7 +3433,7 @@
                 <div class="filter-controls">
                     <div class="filter-group">
                         <label>Reason Filter</label>
-                        <div class="tracking-mode-selector" style="margin-bottom: 1rem;">
+                        <div class="tracking-mode-selector" id="trackingModeSelector" style="margin-bottom: 1rem;">
                             <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
                             <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                                 <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
@@ -3448,6 +3448,29 @@
                     </div>
                 </div>
 
+                <!-- Bulk Actions -->
+                <div class="bulk-actions" id="trackingBulkActions">
+                    <button class="bulk-track-btn" id="trackTrackingSelectedBtn" onclick="bulkTrackSelected('tracking')" disabled>
+                        Track Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkTrackAll('tracking')">
+                        Track All
+                    </button>
+                    <button class="bulk-track-btn" id="untrackTrackingSelectedBtn" onclick="bulkUntrackSelected('tracking')" disabled>
+                        Untrack Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" id="untrackAllTrackingBtn" onclick="bulkUntrackAll('tracking')">
+                        Untrack All
+                    </button>
+                    <!-- Export Buttons -->
+                    <button id="exportAllTrackingBtn" class="btn btn-secondary" onclick="exportAllTracking()">
+                        📊 Export All
+                    </button>
+                    <button id="exportTrackedTrackingBtn" class="btn btn-secondary" onclick="exportTrackedTracking()">
+                        📈 Export Tracked
+                    </button>
+                </div>
+
                 <!-- Item Tracking Search -->
                 <div class="search-input" style="margin-bottom:1.5rem;">
                     <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3458,28 +3481,6 @@
                 </div>
 
                 <div class="results-container" id="trackingSearchResults"></div>
-
-                <!-- Manual Track Controls -->
-                <div class="filter-controls" style="margin-bottom: 1.5rem;">
-                    <div class="filter-group">
-                        <label for="manualTrackBarcode">Barcode:</label>
-                        <input type="text" id="manualTrackBarcode" placeholder="Enter barcode to track"
-                            style="min-width: 200px;">
-                    </div>
-                    <div class="filter-group">
-                        <label for="manualTrackReason">Reason:</label>
-                        <select id="manualTrackReason">
-                            <option value="general-monitoring">General Monitoring</option>
-                            <option value="weeding-candidate">Weeding Candidate</option>
-                            <option value="monitor-performance">Monitor Performance</option>
-                            <option value="replacement-candidate">Replacement Candidate</option>
-                        </select>
-                    </div>
-                    <button class="track-btn" onclick="handleManualTrackItem()"
-                        style="margin-top: 1.5rem; padding: 0.5rem 1rem; font-size: 0.875rem;">
-                        Track Item
-                    </button>
-                </div>
 
                 <div id="trackingTableContainer">
                     <p style="text-align: center; color: #6b7280; padding: 2rem;">
@@ -4937,51 +4938,6 @@
         }
 
         //===========================================================================
-        // handleTrackFromSearch() - Handle tracking from search results
-        //===========================================================================
-        async function handleTrackFromSearch(barcode, reason, buttonElement) {
-            if (!reason) {
-                showStatus('Please select a tracking reason', 'error');
-                return;
-            }
-
-            try {
-                // Check if already tracked
-                const isAlreadyTracked = await isItemTracked(barcode);
-                if (isAlreadyTracked) {
-                    showStatus('Item is already being tracked', 'error');
-                    return;
-                }
-
-                await trackItem(barcode, reason, 'Tracked from search');
-
-                // Update button to show untrack option
-                buttonElement.textContent = 'Untrack';
-                buttonElement.disabled = false;
-                buttonElement.style.background = '#dc2626';
-                buttonElement.onclick = () => handleUntrackFromSearch(barcode, buttonElement);
-
-                // Disable the reason dropdown since item is now tracked
-                const reasonSelect = buttonElement.previousElementSibling;
-                reasonSelect.disabled = true;
-                reasonSelect.value = reason; // Show what reason was used
-
-                // Force tracking cache to refresh
-                trackingDataLoaded = false;
-
-                // Refresh tracking tab data if it's visible
-                const trackingTab = document.getElementById('trackingTab');
-                if (trackingTab && !trackingTab.classList.contains('hidden')) {
-                    await loadTrackingTab();
-                }
-
-            } catch (error) {
-                console.error('Error tracking item:', error);
-                showStatus('Error tracking item: ' + error.message, 'error');
-            }
-        }
-
-        //===========================================================================
         // handleUntrackFromSearch() - Handle untracking from search results
         //===========================================================================
         async function handleUntrackFromSearch(barcode, buttonElement) {
@@ -5050,32 +5006,6 @@
                 trackingDataLoaded = false;
                 await loadTrackingTab();
 
-            } catch (error) {
-                console.error('Error tracking item:', error);
-                showStatus('Error tracking item: ' + error.message, 'error');
-            }
-        }
-
-        //===========================================================================
-        // handleTrackFromSearch() - Handle tracking from search results
-        //===========================================================================
-        async function handleTrackFromSearch(barcode, buttonElement) {
-            // Get the selected mode
-            const activeMode = document.querySelector('#searchTrackingModeSelector .mode-btn.active');
-            if (!activeMode) {
-                showStatus('Please select a tracking mode first', 'error');
-                return;
-            }
-
-            const reason = activeMode.getAttribute('data-mode');
-
-            try {
-                await trackItem(barcode, reason, 'Tracked from search results');
-
-                // Update the specific row
-                await renderSearchResults(allSearchResults);
-
-                showStatus(`Item tracked for ${reason}`, 'success');
             } catch (error) {
                 console.error('Error tracking item:', error);
                 showStatus('Error tracking item: ' + error.message, 'error');
@@ -9470,7 +9400,7 @@
             switch (tabName) {
                 case 'search':
                     // Setup search mode selector when search tab is shown
-                    setupSearchModeSelector();
+                    initAllTrackingModeSelectors();
                     break;
                 case 'overview':
                     loadOverviewData();
@@ -15121,6 +15051,9 @@
                 <table class="analysis-table sortable-table">
                     <thead>
                         <tr>
+                            <th style="width: 40px; text-align: center;">
+                                <input type="checkbox" class="select-all-checkbox" onchange="toggleAllItems(this, 'tracking')">
+                            </th>
                             <th>Title</th>
                             <th>Author</th>
                             <th>Reason</th>
@@ -15132,6 +15065,9 @@
                     <tbody>
                         ${trackingArray.map(item => `
                             <tr data-barcode="${item.barcode}">
+                                <td style="text-align: center;">
+                                    <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}">
+                                </td>
                                 <td><strong>${escapeHtml(item.title)}</strong></td>
                                 <td>${escapeHtml(item.author)}</td>
                                 <td>
@@ -15252,18 +15188,7 @@
                                 ${escapeHtml(item.author)} • ${escapeHtml(item.callNumber)}
                             </div>
                         </div>
-                        <div class="filter-group" style="margin: 0;">
-                            <select onchange="this.nextElementSibling.disabled = !this.value">
-                                <option value="">Reason...</option>
-                                <option value="general-monitoring">General Monitoring</option>
-                                <option value="weeding-candidate">Weeding Candidate</option>
-                                <option value="monitor-performance">Monitor Performance</option>
-                                <option value="replacement-candidate">Replacement Candidate</option>
-                            </select>
-                            <button class="track-btn" disabled onclick="handleTrackFromSearch('${item.barcode}', this.previousElementSibling.value, this)">
-                                Track
-                            </button>
-                        </div>
+                        <button class="track-btn" onclick="handleTrackFromTrackingSearch('${item.barcode}', event)">Track</button>
                     </div>
                 `).join('')}
             `;
@@ -15419,12 +15344,15 @@
             // initAllTrackingModeSelectors() - Initialize all tracking mode selectors with correct case
             //===========================================================================
             function initAllTrackingModeSelectors() {
+            
                 const configs = [
                     { selector: '#weedingTrackingModeSelector', key: 'weedingTrackingMode', default: 'weeding-candidate' },
                     { selector: '#collectionTrackingModeSelector', key: 'collectionTrackingMode', default: 'monitor-performance' },
                     { selector: '#authorDetailsTrackingModeSelector', key: 'authorDetailsTrackingMode', default: 'monitor-performance' },
                     { selector: '#chartItemsModal .tracking-mode-selector', key: 'chartModalTrackingMode', default: 'monitor-performance' },
-                    { selector: '#searchTrackingModeSelector', key: 'searchTrackingMode', default: 'monitor-performance' }
+                    { selector: '#searchTrackingModeSelector', key: 'searchTrackingMode', default: 'monitor-performance' },
+                    { selector: '#trackingTabModeSelector', key: 'trackingTabMode', default: 'monitor-performance' },
+                    { selector: '#trackingModeSelector', key: 'trackingMode', default: 'monitor-performance' }
                 ];
 
                 configs.forEach(({ selector, key, default: defMode }) => {
@@ -15453,7 +15381,8 @@
                         b.parentNode.replaceChild(newButton, b);
 
                         newButton.addEventListener('click', () => {
-                            btns.forEach(x => x.classList.remove('active'));
+                            const currentBtns = container.querySelectorAll('.mode-btn');
+                            currentBtns.forEach(x => x.classList.remove('active'));
                             newButton.classList.add('active');
                             localStorage.setItem(key, newButton.dataset.mode);
                         });
