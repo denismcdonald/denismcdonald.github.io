@@ -362,8 +362,6 @@
             border-bottom-color: #bfdbfe;
         }
 
-
-
         /* Search Results Table Styles */
         .search-results-table {
             width: 100%;
@@ -423,7 +421,41 @@
             text-align: center;
         }
 
-        /* Track button */
+        /* Tracking Table Column Widths */
+        .tracking-table th:nth-child(1),
+        .tracking-table td:nth-child(1) {
+            width: 40px; /* Checkbox */
+        }
+
+        .tracking-table th:nth-child(2),
+        .tracking-table td:nth-child(2) {
+            width: 40%; /* Title */
+        }
+
+        .tracking-table th:nth-child(3),
+        .tracking-table td:nth-child(3) {
+            width: 20%; /* Author */
+        }
+
+        .tracking-table th:nth-child(4),
+        .tracking-table td:nth-child(4) {
+            width: 15%; /* Reason */
+        }
+
+        .tracking-table th:nth-child(5),
+        .tracking-table td:nth-child(5) {
+            width: 10%; /* Location */
+        }
+
+        .tracking-table th:nth-child(6),
+        .tracking-table td:nth-child(6) {
+            width: 10%; /* Date Added */
+        }
+
+        .tracking-table th:nth-child(7),
+        .tracking-table td:nth-child(7) {
+            width: 80px; /* Actions */
+        }
 
         .search-results-table th {
             background-color: #f9fafb;
@@ -1081,7 +1113,7 @@
         .filter-controls {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1rem;
+            /* margin-bottom: 1rem; */
             flex-wrap: wrap;
         }
 
@@ -1620,6 +1652,26 @@
         #weedingTab>div:nth-child(3)>h3:nth-child(1) {
             text-align: center;
         }
+
+        #trackingTableContainer button {
+            background-color: #d34949;
+        }
+
+        #trackingTableContainer button:hover {
+            background-color: #ad3c3c;
+        }
+
+        #emailCastertonBtn,
+        #emailHeywoodBtn,
+        #exportPortlandBtn {
+            background-color: #da6405;
+        }
+
+        #emailCastertonBtn:hover,
+        #emailHeywoodBtn:hover,
+        #exportPortlandBtn:hover {
+            background-color: #b85300;
+        }
     </style>
 </head>
 
@@ -1908,8 +1960,8 @@
                         <button class="mode-btn" data-mode="send-to-portland">Portland</button>
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                         <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
-                        <button class="mode-btn active" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                        <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
                     </div>
                 </div>
 
@@ -2562,9 +2614,9 @@
                         <button class="mode-btn" data-mode="send-to-casterton">Casterton</button>
                         <button class="mode-btn" data-mode="send-to-portland">Portland</button>
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
-                        <button class="mode-btn active" data-mode="weeding-candidate">Weeding</button>
+                        <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
                         <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
                     </div>
                 </div>
 
@@ -3018,8 +3070,8 @@
                             <button class="mode-btn" data-mode="send-to-portland">Portland</button>
                             <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                             <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
-                            <button class="mode-btn active" data-mode="monitor-performance">Monitor</button>
-                            <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                            <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                            <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
                         </div>
                     </div>
                     
@@ -3432,8 +3484,7 @@
 
                 <div class="filter-controls">
                     <div class="filter-group">
-                        <label>Reason Filter</label>
-                        <div class="tracking-mode-selector" id="trackingModeSelector" style="margin-bottom: 1rem;">
+                        <div class="tracking-mode-selector" id="trackingModeSelector">
                             <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
                             <div class="mode-buttons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                                 <button class="mode-btn" data-mode="send-to-heywood">Heywood</button>
@@ -3442,19 +3493,30 @@
                                 <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                                 <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
                                 <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                                <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                                <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
                             </div>
                         </div>
+                    </div>
+                    <div style="margin-left: auto; display: flex; gap: 0.5rem; align-items: center;">
+                        <button id="emailHeywoodBtn" class="btn btn-secondary" onclick="emailLocationItems('heywood')"
+                            style="border-color: #059669; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
+                            📧 Heywood
+                        </button>
+                        <button id="emailCastertonBtn" class="btn btn-secondary" onclick="emailLocationItems('casterton')"
+                            style="border-color: #7c3aed; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
+                            📧 Casterton
+                        </button>
+                        <button id="exportPortlandBtn" class="btn btn-secondary" onclick="exportLocationOnly('portland')"
+                            style="border-color: #dc2626; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
+                            📋 Portland
+                        </button>
                     </div>
                 </div>
 
                 <!-- Bulk Actions -->
                 <div class="bulk-actions" id="trackingBulkActions">
-                    <button class="bulk-track-btn" id="trackTrackingSelectedBtn" onclick="bulkTrackSelected('tracking')" disabled>
-                        Track Selected (0)
-                    </button>
-                    <button class="bulk-track-btn" onclick="bulkTrackAll('tracking')">
-                        Track All
+                    <button class="bulk-track-btn" id="changeReasonSelectedBtn" onclick="bulkChangeReasonSelected('tracking')" disabled>
+                        Change Reason (0)
                     </button>
                     <button class="bulk-track-btn" id="untrackTrackingSelectedBtn" onclick="bulkUntrackSelected('tracking')" disabled>
                         Untrack Selected (0)
@@ -3466,9 +3528,24 @@
                     <button id="exportAllTrackingBtn" class="btn btn-secondary" onclick="exportAllTracking()">
                         📊 Export All
                     </button>
-                    <button id="exportTrackedTrackingBtn" class="btn btn-secondary" onclick="exportTrackedTracking()">
-                        📈 Export Tracked
+                    <button id="exportSelectedTrackingBtn" class="btn btn-secondary" onclick="exportSelectedTracking()" disabled>
+                        📋 Export Selected (0)
                     </button>
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-left: 1rem;">
+                        <label for="exportReasonSelect" style="font-size: 0.875rem; font-weight: 500;">Export by reason:</label>
+                        <select id="exportReasonSelect" class="form-select" style="width: auto; font-size: 0.875rem;">
+                            <option value="send-to-heywood">Heywood</option>
+                            <option value="send-to-casterton">Casterton</option>
+                            <option value="send-to-portland">Portland</option>
+                            <option value="send-to-mobile-library">Mobile</option>
+                            <option value="weeding-candidate">Weeding</option>
+                            <option value="monitor-performance">Monitor</option>
+                            <option value="replacement-candidate">Replace</option>
+                        </select>
+                        <button id="exportByReasonBtn" class="btn btn-secondary" onclick="exportTrackingByReason()">
+                            🔍 Export
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Item Tracking Search -->
@@ -3828,6 +3905,12 @@
                     return;
                 }
                 reason = activeMode.getAttribute('data-mode');
+            } else if (tableType === 'authorDetails') {
+                const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
+                if (activeMode) {
+                    reason = activeMode.getAttribute('data-mode');
+                }
+                // If no mode selected, keep the default 'monitor-performance'
             } else if (tableType === 'collection') {
                 const activeMode = document.querySelector(`${modeSelectorId} .mode-btn.active`);
                 if (activeMode) {
@@ -3865,6 +3948,81 @@
             } catch (error) {
                 console.error('Error tracking item:', error);
                 showStatus('Error tracking item: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // handleUntrackFromTrackingTable() - Handle untracking from the tracking table
+        //===========================================================================
+        async function handleUntrackFromTrackingTable(barcode) {
+            try {
+                await untrackItem(barcode);
+
+                // Refresh the tracking table to remove the untracked item
+                trackingDataLoaded = false;
+                await loadTrackingTab();
+
+                showStatus('Item untracked successfully', 'success');
+            } catch (error) {
+                console.error('Error untracking item:', error);
+                showStatus('Error untracking item: ' + error.message, 'error');
+            }
+        }
+
+    //===========================================================================
+        // refreshTrackingSearchResults() - Refresh the tracking search results display
+        //===========================================================================
+        async function refreshTrackingSearchResults() {
+            const searchInput = document.getElementById('trackingSearchInput');
+            const out = document.getElementById('trackingSearchResults');
+
+            if (!searchInput || !out) return;
+
+            const term = searchInput.value;
+
+            // Only refresh if there's a search term
+            if (!term || term.length < 2) {
+                out.style.display = 'none';
+                return;
+            }
+
+            // Perform the search again
+            const results = performSearch(term);
+            const limitedResults = results.slice(0, 50);
+
+            if (limitedResults.length > 0) {
+                out.style.display = 'block';
+
+                // Check tracking status for all results
+                const resultsWithTracking = await Promise.all(limitedResults.map(async item => {
+                    const isTracked = await isItemTracked(item.barcode);
+                    const trackingData = isTracked ? await getTrackingData(item.barcode) : null;
+                    return { ...item, isTracked, trackingData };
+                }));
+
+                out.innerHTML = `
+            <div style="padding: 0.5rem 1rem; background: #f8fafc; border-bottom: 1px solid #e5e7eb; font-size: 0.875rem; color: #6b7280;">
+                ${limitedResults.length} result${limitedResults.length !== 1 ? 's' : ''} found${results.length > 50 ? ' (showing first 50)' : ''}
+            </div>
+            ${resultsWithTracking.map(item => `
+                <div class="result-row">
+                    <div style="flex: 1; min-width: 0;">
+                        <div style="font-weight: 500; margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            ${item.isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+                            ${escapeHtml(item.title)}
+                            ${item.isTracked ? `<span class="tracking-reason">${formatTrackingReason(item.trackingData.reason)}</span>` : ''}
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            ${escapeHtml(item.author)} • ${escapeHtml(item.callNumber)}
+                        </div>
+                    </div>
+                    ${item.isTracked ?
+                        `<button class="untrack-btn" onclick="handleUntrackFromTrackingSearch('${item.barcode}', event)">Untrack</button>` :
+                        `<button class="track-btn" onclick="handleTrackFromTrackingSearch('${item.barcode}', event)">Track</button>`
+                    }
+                </div>
+            `).join('')}
+        `;
             }
         }
 
@@ -4482,7 +4640,6 @@
         //===========================================================================
         function toggleAllItems(sourceCheckbox, tableType) {
             let checkboxSelector, selectAllSelectors;
-
             if (tableType === 'search') {
                 checkboxSelector = '.search-item-checkbox';
                 selectAllSelectors = '#selectAllSearchHeader';
@@ -4495,6 +4652,9 @@
             } else if (tableType === 'authorDetails') {
                 checkboxSelector = '.author-details-item-checkbox';
                 selectAllSelectors = '#authorDetailsSelectAllCheckbox';
+            } else if (tableType === 'tracking') {
+                checkboxSelector = '.tracking-item-checkbox';
+                selectAllSelectors = '.select-all-checkbox';
             }
 
             const checkboxes = document.querySelectorAll(checkboxSelector);
@@ -4513,6 +4673,11 @@
             }
 
             updateTrackSelectedButton(tableType);
+
+            // Update export selected button for tracking table
+            if (tableType === 'tracking') {
+                updateExportSelectedButton();
+            }
         }
 
         //===========================================================================
@@ -4561,6 +4726,11 @@
                 trackBtnId = 'authorDetailsTrackSelectedBtn';
                 untrackBtnId = 'authorDetailsUntrackSelectedBtn';
                 selectAllSelectors = '#authorDetailsSelectAllCheckbox';
+            } else if (tableType === 'tracking') {
+                checkboxSelector = '.tracking-item-checkbox:checked';
+                trackBtnId = 'changeReasonSelectedBtn';
+                untrackBtnId = 'untrackTrackingSelectedBtn';
+                selectAllSelectors = '.select-all-checkbox';
             }
 
             const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
@@ -4569,7 +4739,11 @@
 
             if (trackSelectedBtn && untrackSelectedBtn) {
                 const count = selectedCheckboxes.length;
-                trackSelectedBtn.textContent = `Track Selected (${count})`;
+                if (tableType === 'tracking') {
+                    trackSelectedBtn.textContent = `Change Reason (${count})`;
+                } else {
+                    trackSelectedBtn.textContent = `Track Selected (${count})`;
+                }
                 trackSelectedBtn.disabled = count === 0;
 
                 untrackSelectedBtn.textContent = `Untrack Selected (${count})`;
@@ -4791,6 +4965,9 @@
                 case 'authorDetails':
                     checkboxSelector = '.author-details-item-checkbox:checked';
                     break;
+                case 'tracking':
+                    checkboxSelector = '.tracking-item-checkbox:checked';
+                    break;
                 default:
                     console.error(`Unknown tableType "${tableType}"`);
                     return;
@@ -4815,6 +4992,14 @@
                 }
             }
 
+            if (successCount > 0 && tableType === 'tracking') {
+                // Refresh the tracking table to remove untracked items
+                trackingDataLoaded = false;
+                await loadTrackingTab();
+            }
+
+            updateTrackSelectedButton(tableType);
+
             if (successCount > 0) {
                 showStatus(`${successCount} item${successCount > 1 ? 's' : ''} untracked`, 'success');
 
@@ -4836,6 +5021,9 @@
                         break;
                     case 'authorDetails':
                         await updateAuthorDetailsTrackingIndicators();
+                        break;
+                    case 'tracking':
+                        await refreshTrackingTableDisplay();
                         break;
                 }
 
@@ -4888,6 +5076,10 @@
             } else if (tableType === 'authorDetails') {
                 dataArray = window.currentAuthorBooks;
                 confirmMessage = `Untrack all titles by this author?`;
+            } else if (tableType === 'tracking') {
+                // Get all tracked items from IndexedDB
+                dataArray = await getTrackedItems();
+                confirmMessage = `Untrack all tracked items?`;
             }
 
             if (!dataArray || dataArray.length === 0) {
@@ -4922,8 +5114,32 @@
                     await refreshCollectionItemsDisplay();
                 } else if (tableType === 'authorDetails') {
                     await updateAuthorDetailsTrackingIndicators();
+                } else if (tableType === 'tracking') {
+                    await refreshTrackingTableDisplay();
                 }
             }
+        }
+
+        //===========================================================================
+        // getTrackedItems() - Get all tracked items for bulk operations
+        //===========================================================================
+        async function getTrackedItems() {
+            if (!db) await initializeDB();
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['tracked_items'], 'readonly');
+                const store = transaction.objectStore('tracked_items');
+                const request = store.getAll();
+
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+
+                request.onerror = () => {
+                    console.error('Error getting tracked items:', request.error);
+                    reject(request.error);
+                };
+            });
         }
 
         //===========================================================================
@@ -6619,14 +6835,42 @@
             try {
                 await trackItem(barcode, reason, 'Tracked from tracking tab search');
 
-                // Refresh tracking data
+               // Refresh the tracking search results to show updated buttons
+                await refreshTrackingSearchResults();
+
+                // Also refresh the main tracking table to show the newly tracked item
                 trackingDataLoaded = false;
                 await loadTrackingTab();
+
+                showStatus(`Item tracked for ${formatTrackingReason(reason)}`, 'success');
 
                 showStatus(`Item tracked for ${formatTrackingReason(reason)}`, 'success');
             } catch (error) {
                 console.error('Error tracking item:', error);
                 showStatus('Error tracking item: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // handleUntrackFromTrackingSearch() - Handle untracking from tracking search results
+        //===========================================================================
+        async function handleUntrackFromTrackingSearch(barcode, event) {
+            event.stopPropagation();
+
+            try {
+                await untrackItem(barcode);
+
+                // Refresh the tracking search results to show updated buttons
+                await refreshTrackingSearchResults();
+
+                // Also refresh the main tracking table to remove the untracked item
+                trackingDataLoaded = false;
+                await loadTrackingTab();
+
+                showStatus('Item untracked successfully', 'success');
+            } catch (error) {
+                console.error('Error untracking item:', error);
+                showStatus('Error untracking item: ' + error.message, 'error');
             }
         }
 
@@ -13878,8 +14122,8 @@
                     <button class="mode-btn" data-mode="send-to-portland">Portland</button>
                     <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                     <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
-                    <button class="mode-btn active" data-mode="monitor-performance">Monitor</button>
-                    <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                    <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
+                    <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
                 </div>
             </div>
         `;
@@ -14179,6 +14423,15 @@
 
             // Re-run the display function to refresh with current tracking state
             showCollectionDetails(name);
+        }
+
+        //===========================================================================
+        // refreshTrackingTableDisplay() - Refresh the tracking table display after changes
+        //===========================================================================
+        async function refreshTrackingTableDisplay() {
+            // Refresh the tracking table
+            trackingDataLoaded = false;
+            await loadTrackingTab();
         }
 
         //===========================================================================
@@ -14935,6 +15188,126 @@
                     </div>
                 `;
             }
+            // Initialize mode selector
+            initAllTrackingModeSelectors();
+
+            // Setup checkbox event listeners for the tracking table
+            setupTrackingTableCheckboxes();
+        }
+
+        //===========================================================================
+        // setupTrackingTableCheckboxes() - Set up checkbox event listeners for tracking table
+        //===========================================================================
+        function setupTrackingTableCheckboxes() {
+            // Add event listeners to individual checkboxes
+            document.querySelectorAll('.tracking-item-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    updateTrackSelectedButton('tracking');
+                    updateExportSelectedButton();
+                });
+            });
+
+            // Update button states initially
+            updateTrackSelectedButton('tracking');
+            updateExportSelectedButton();
+        }
+
+        //===========================================================================
+        // updateExportSelectedButton() - Update the export selected button state
+        //===========================================================================
+        function updateExportSelectedButton() {
+            const selectedCheckboxes = document.querySelectorAll('.tracking-item-checkbox:checked');
+            const selectedCount = selectedCheckboxes.length;
+            const exportSelectedBtn = document.getElementById('exportSelectedTrackingBtn');
+
+            if (exportSelectedBtn) {
+                exportSelectedBtn.disabled = selectedCount === 0;
+                exportSelectedBtn.textContent = `📋 Export Selected (${selectedCount})`;
+            }
+        }
+
+        //===========================================================================
+        // bulkChangeReasonSelected() - Change tracking reason for selected items
+        //===========================================================================
+        async function bulkChangeReasonSelected(tableType) {
+            const checkboxSelector = '.tracking-item-checkbox:checked';
+            const selectedCheckboxes = document.querySelectorAll(checkboxSelector);
+
+            if (selectedCheckboxes.length === 0) {
+                showStatus('No items selected', 'error');
+                return;
+            }
+
+            // Get the selected mode from the tracking tab mode selector
+            const activeMode = document.querySelector('#trackingModeSelector .mode-btn.active');
+            if (!activeMode) {
+                showStatus('Please select a tracking mode first', 'error');
+                return;
+            }
+
+            const newReason = activeMode.getAttribute('data-mode');
+            const barcodes = Array.from(selectedCheckboxes, cb => cb.value);
+
+            let successCount = 0;
+            for (const barcode of barcodes) {
+                try {
+                    // Get current tracking data
+                    const trackingData = await getTrackingData(barcode);
+                    if (trackingData) {
+                        // Update the reason
+                        trackingData.reason = newReason;
+                        trackingData.history.push({
+                            date: new Date().toISOString(),
+                            action: 'reason-changed',
+                            details: `Reason changed to: ${formatTrackingReason(newReason)}`,
+                            notes: 'Bulk reason change'
+                        });
+
+                        // Save the updated data
+                        if (!db) await initializeDB();
+                        const transaction = db.transaction(['tracked_items'], 'readwrite');
+                        const store = transaction.objectStore('tracked_items');
+                        await new Promise((resolve, reject) => {
+                            const request = store.put(trackingData);
+                            request.onsuccess = () => resolve();
+                            request.onerror = () => reject(request.error);
+                        });
+
+                        successCount++;
+                    }
+                } catch (err) {
+                    console.error(`Error updating tracking reason for ${barcode}:`, err);
+                }
+            }
+
+            if (successCount > 0) {
+                showStatus(`${successCount} item${successCount > 1 ? 's' : ''} updated to ${formatTrackingReason(newReason)}`, 'success');
+
+               // Update only the affected rows, so checkboxes stay put
+                for (const barcode of barcodes) {
+                    await updateTrackingRowData(barcode);
+                }
+            }
+        }
+
+        //===========================================================================
+        // updateTrackingRowData() - Update tracking data display for a specific row
+        //===========================================================================
+        async function updateTrackingRowData(barcode) {
+            const row = document.querySelector(`#trackingTableContainer tr[data-barcode="${barcode}"]`);
+            if (!row) return; // Row not currently visible
+
+            // Get updated tracking data
+            const trackingData = await getTrackingData(barcode);
+            if (!trackingData) return;
+
+            // Update the reason cell (4th column - Title, Author, Reason, Location, Date, Actions)
+            const reasonCell = row.children[3];
+            reasonCell.innerHTML = `
+        <span style="background: #eff6ff; color: #2563eb; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem;">
+            ${formatTrackingReason(trackingData.reason)}
+        </span>
+    `;
         }
 
         //===========================================================================
@@ -15002,7 +15375,7 @@
             trackingArray.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
 
             const tableHTML = `
-                <table class="analysis-table sortable-table">
+                <table class="analysis-table sortable-table tracking-table">
                     <thead>
                         <tr>
                             <th style="width: 40px; text-align: center;">
@@ -15032,8 +15405,8 @@
                                 <td>${escapeHtml(item.location)}</td>
                                 <td>${new Date(item.dateAdded).toLocaleDateString()}</td>
                                 <td>
-                                    <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" 
-                                            onclick="untrackItem('${item.barcode}').then(() => { loadTrackingTab(); })">
+                                    <button class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"
+                                            onclick="handleUntrackFromTrackingTable('${item.barcode}')">
                                         Untrack
                                     </button>
                                 </td>
@@ -15064,10 +15437,398 @@
         }
 
         //===========================================================================
-        // exportTrackingData() - Export tracking data (placeholder)
+        // exportAllTracking() - Export all items in tracking table
         //===========================================================================
-        function exportTrackingData() {
-            alert('Export functionality will be implemented in Phase 5');
+        async function exportAllTracking() {
+            try {
+                const trackedItems = await getAllTrackedItems();
+
+                if (trackedItems.length === 0) {
+                    alert('No tracked items to export');
+                    return;
+                }
+
+                const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Branch', 'Tracking Reason', 'Date Added', 'Notes'];
+
+                // Create data rows
+                const data = trackedItems.map(item => [
+                    item.title || '',
+                    item.author || '',
+                    item.year || '',
+                    item.collection || '',
+                    item.callNumber || '',
+                    item.circulation || 0,
+                    item.branch || '',
+                    formatTrackingReason(item.reason) || '',
+                    new Date(item.dateAdded).toLocaleDateString() || '',
+                    item.notes || ''
+                ]);
+
+                // Create filename with timestamp
+                const today = new Date().toISOString().split('T')[0];
+                const filename = `all-tracked-items-${today}.xlsx`;
+
+                createExcelFile(data, headers, filename);
+                showStatus(`Exported ${trackedItems.length} tracked items to Excel`, 'success');
+
+            } catch (error) {
+                console.error('Error exporting tracked items:', error);
+                showStatus('Error exporting tracked items: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // exportSelectedTracking() - Export selected items from tracking table
+        //===========================================================================
+        async function exportSelectedTracking() {
+            try {
+                // Get selected checkboxes
+                const selectedCheckboxes = document.querySelectorAll('.tracking-item-checkbox:checked');
+
+                if (selectedCheckboxes.length === 0) {
+                    alert('No items selected for export');
+                    return;
+                }
+
+                // Get selected barcodes
+                const selectedBarcodes = Array.from(selectedCheckboxes).map(cb => cb.value);
+
+                // Get tracking data for selected items
+                const selectedItems = [];
+                for (const barcode of selectedBarcodes) {
+                    const trackingData = await getTrackingData(barcode);
+                    if (trackingData) {
+                        // Find the item in current library data to get full details
+                        const libraryItem = libraryData.find(item => item.barcode === barcode);
+                        if (libraryItem) {
+                            selectedItems.push({
+                                ...libraryItem,
+                                reason: trackingData.reason,
+                                dateAdded: trackingData.dateAdded,
+                                notes: trackingData.notes
+                            });
+                        }
+                    }
+                }
+
+                if (selectedItems.length === 0) {
+                    alert('No valid tracked items found for selected barcodes');
+                    return;
+                }
+
+                const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Branch', 'Tracking Reason', 'Date Added', 'Notes'];
+
+                // Create data rows
+                const data = selectedItems.map(item => [
+                    item.title || '',
+                    item.author || '',
+                    item.year || '',
+                    item.collection || '',
+                    item.callNumber || '',
+                    item.circulation || 0,
+                    item.branch || '',
+                    formatTrackingReason(item.reason) || '',
+                    new Date(item.dateAdded).toLocaleDateString() || '',
+                    item.notes || ''
+                ]);
+
+                // Create filename with timestamp
+                const today = new Date().toISOString().split('T')[0];
+                const filename = `selected-tracked-items-${today}.xlsx`;
+
+                createExcelFile(data, headers, filename);
+                showStatus(`Exported ${selectedItems.length} selected tracked items to Excel`, 'success');
+
+            } catch (error) {
+                console.error('Error exporting selected items:', error);
+                showStatus('Error exporting selected items: ' + error.message, 'error');
+            }
+        }
+
+    //===========================================================================
+        // exportTrackingByReason() - Export items by selected tracking reason
+        //===========================================================================
+        async function exportTrackingByReason() {
+            try {
+                const reasonSelect = document.getElementById('exportReasonSelect');
+                const selectedReason = reasonSelect.value;
+
+                if (!selectedReason) {
+                    alert('Please select a tracking reason to filter by');
+                    return;
+                }
+
+                const allTrackedItems = await getAllTrackedItems();
+
+                // Filter by selected reason
+                const filteredItems = allTrackedItems.filter(item => item.reason === selectedReason);
+
+                if (filteredItems.length === 0) {
+                    alert(`No tracked items found with reason: ${formatTrackingReason(selectedReason)}`);
+                    return;
+                }
+
+                // ✅ FIXED: Added tracking reason column back to headers
+                const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Branch', 'Tracking Reason', 'Date Added', 'Notes'];
+
+                // ✅ FIXED: Added tracking reason to data rows
+                const data = filteredItems.map(item => [
+                    item.title || '',
+                    item.author || '',
+                    item.year || '',
+                    item.collection || '',
+                    item.callNumber || '',
+                    item.circulation || 0,
+                    item.branch || '',
+                    formatTrackingReason(item.reason) || '',  // ✅ Added this back
+                    new Date(item.dateAdded).toLocaleDateString() || '',
+                    item.notes || ''
+                ]);
+
+                // Create filename with reason and timestamp
+                const today = new Date().toISOString().split('T')[0];
+                const reasonLabel = formatTrackingReason(selectedReason).toLowerCase().replace(/[^a-z0-9]/g, '-');
+                const filename = `tracked-items-${reasonLabel}-${today}.xlsx`;
+
+                createExcelFile(data, headers, filename);
+                showStatus(`Exported ${filteredItems.length} items tracked for ${formatTrackingReason(selectedReason)}`, 'success');
+
+            } catch (error) {
+                console.error('Error exporting by reason:', error);
+                showStatus('Error exporting by reason: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // getAllTrackedItems() - Get all tracked items with full details
+        //===========================================================================
+        async function getAllTrackedItems() {
+            try {
+                // Use the existing database pattern from your code
+                if (!db) {
+                    await initializeDB();
+                }
+
+                const transaction = db.transaction(['tracked_items'], 'readonly');
+                const store = transaction.objectStore('tracked_items');
+                const request = store.getAll();
+
+                return new Promise((resolve, reject) => {
+                    request.onsuccess = () => {
+                        const trackedItems = request.result;
+
+                        // Merge with current library data to get full item details
+                        const fullItems = trackedItems.map(trackedItem => {
+                            const libraryItem = libraryData.find(item => item.barcode === trackedItem.barcode);
+                            if (libraryItem) {
+                                return {
+                                    ...libraryItem,
+                                    reason: trackedItem.reason,
+                                    dateAdded: trackedItem.dateAdded,
+                                    notes: trackedItem.notes
+                                };
+                            }
+                            return trackedItem; // Return tracking data even if item not in current collection
+                        });
+
+                        resolve(fullItems);
+                    };
+
+                    request.onerror = () => {
+                        console.error('Error getting tracked items:', request.error);
+                        reject(request.error);
+                    };
+                });
+            } catch (error) {
+                console.error('Error in getAllTrackedItems:', error);
+                throw error;
+            }
+        }
+
+        //===========================================================================
+        // exportTrackingData() - Export tracking data as JSON backup
+        //===========================================================================
+        async function exportTrackingData() {
+            try {
+                const trackedItems = await getAllTrackedItems();
+
+                const exportData = {
+                    exportDate: new Date().toISOString(),
+                    exportSource: "Collection Analysis Tool",
+                    version: "1.0",
+                    trackingData: trackedItems
+                };
+
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+
+                const today = new Date().toISOString().split('T')[0];
+                link.download = `tracking-backup-${today}.json`;
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showStatus(`Exported tracking backup with ${trackedItems.length} items`, 'success');
+
+            } catch (error) {
+                console.error('Error exporting tracking backup:', error);
+                showStatus('Error exporting tracking backup: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // emailLocationItems() - Email specific location with tracked items
+        //===========================================================================
+        async function emailLocationItems(location) {
+            try {
+                const allTrackedItems = await getAllTrackedItems();
+
+                // Define location mappings
+                const locationConfig = {
+                    'heywood': {
+                        branchName: 'Heywood Library',  // ✅ Filter by actual branch location
+                        displayName: 'Heywood Library',
+                        emailTo: 'CSPortlandHeywood@gsc.glenelg.vic.gov.au',
+                        subject: 'Pick list for Heywood Library',
+                        greeting: 'Hi team Heywood'
+                    },
+                    'casterton': {
+                        branchName: 'Casterton Library',  // ✅ Filter by actual branch location
+                        displayName: 'Casterton Library',
+                        emailTo: 'CustomerService-Casterton@glenelg.vic.gov.au',
+                        subject: 'Pick list for Casterton Library',
+                        greeting: 'Hi team Casterton'
+                    }
+                };
+
+                const config = locationConfig[location];
+                if (!config) {
+                    alert('Invalid location specified');
+                    return;
+                }
+
+                // ✅ FIXED: Filter by actual branch location, not tracking reason
+                const locationItems = allTrackedItems.filter(item =>
+                    item.branch === config.branchName ||
+                    item.branch === config.branchName.replace(' Library', '') // Also check for "Heywood" vs "Heywood Library"
+                );
+
+                if (locationItems.length === 0) {
+                    alert(`No tracked items found at ${config.displayName}`);
+                    return;
+                }
+
+                // Export Excel file first
+                await exportLocationItems(locationItems, config.displayName);
+
+                // Generate email
+                generateLocationEmail(config, locationItems.length);
+
+                showStatus(`Email generated and Excel exported for ${locationItems.length} items at ${config.displayName}`, 'success');
+
+            } catch (error) {
+                console.error('Error emailing location items:', error);
+                showStatus('Error generating email: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // exportLocationOnly() - Export items for a location without emailing
+        //===========================================================================
+        async function exportLocationOnly(location) {
+            try {
+                const allTrackedItems = await getAllTrackedItems();
+
+                const locationConfig = {
+                    'portland': {
+                        branchName: 'Portland Library',
+                        displayName: 'Portland Library'
+                    }
+                };
+
+                const config = locationConfig[location];
+                if (!config) {
+                    alert('Invalid location specified');
+                    return;
+                }
+
+                // Filter by actual branch location
+                const locationItems = allTrackedItems.filter(item =>
+                    item.branch === config.branchName ||
+                    item.branch === config.branchName.replace(' Library', '')
+                );
+
+                if (locationItems.length === 0) {
+                    alert(`No tracked items found at ${config.displayName}`);
+                    return;
+                }
+
+                // Export Excel file only (no email)
+                await exportLocationItems(locationItems, config.displayName);
+
+                showStatus(`Exported ${locationItems.length} items at ${config.displayName}`, 'success');
+
+            } catch (error) {
+                console.error('Error exporting location items:', error);
+                showStatus('Error exporting items: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // exportLocationItems() - Export Excel file for specific location
+        //===========================================================================
+        async function exportLocationItems(items, locationName) {
+            // ✅ FIXED: Added 'Tracking Reason' column
+            const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Branch', 'Tracking Reason', 'Date Added', 'Notes'];
+
+            // ✅ FIXED: Added tracking reason to data rows
+            const data = items.map(item => [
+                item.title || '',
+                item.author || '',
+                item.year || '',
+                item.collection || '',
+                item.callNumber || '',
+                item.circulation || 0,
+                item.branch || '',
+                formatTrackingReason(item.reason) || '',  // ✅ Added this!
+                new Date(item.dateAdded).toLocaleDateString() || '',
+                item.notes || ''
+            ]);
+
+            // Create filename with timestamp
+            const today = new Date().toISOString().split('T')[0];
+            const locationLabel = locationName.toLowerCase().replace(/[^a-z0-9]/g, '-');
+            const filename = `pick-list-${locationLabel}-${today}.xlsx`;
+
+            createExcelFile(data, headers, filename);
+        }
+
+        //===========================================================================
+        // generateLocationEmail() - Generate pre-filled email using mailto
+        //===========================================================================
+        function generateLocationEmail(config, itemCount) {
+            // Create email body with dynamic count
+            const bodyText = `${config.greeting},
+
+Please find the attached pick list for ${itemCount} library items to be taken off the shelves.
+
+Regards,
+Kirsten`;
+
+            // Encode the email components for URL
+            const encodedTo = encodeURIComponent(config.emailTo);
+            const encodedSubject = encodeURIComponent(config.subject);
+            const encodedBody = encodeURIComponent(bodyText);
+
+            // Create mailto URL
+            const mailtoURL = `mailto:${encodedTo}?subject=${encodedSubject}&body=${encodedBody}`;
+
+            // Open default email client
+            window.open(mailtoURL);
         }
 
         //===========================================================================
@@ -15114,7 +15875,7 @@
                 const term = e.target.value;
                 const out = document.getElementById('trackingSearchResults');
 
-                // Clear results immediately if search term is too short (like main search)
+                // Clear results immediately if search term is too short
                 if (!term || term.length < 2) {
                     out.style.display = 'none';
                     return;
@@ -15123,36 +15884,49 @@
                 // Use same search function as main search
                 const results = performSearch(term);
 
-                // Limit results for performance (like main search)
+                // Limit results for performance
                 const limitedResults = results.slice(0, 50);
 
                 if (limitedResults.length > 0) {
                     out.style.display = 'block';
-                    out.innerHTML = `
+
+                    // Use promises to handle async tracking checks
+                    Promise.all(limitedResults.map(async item => {
+                        const isTracked = await isItemTracked(item.barcode);
+                        const trackingData = isTracked ? await getTrackingData(item.barcode) : null;
+                        return { ...item, isTracked, trackingData };
+                    })).then(resultsWithTracking => {
+                        out.innerHTML = `
                 <div style="padding: 0.5rem 1rem; background: #f8fafc; border-bottom: 1px solid #e5e7eb; font-size: 0.875rem; color: #6b7280;">
                     ${limitedResults.length} result${limitedResults.length !== 1 ? 's' : ''} found${results.length > 50 ? ' (showing first 50)' : ''}
                 </div>
-                ${limitedResults.map(item => `
+                ${resultsWithTracking.map(item => `
                     <div class="result-row">
                         <div style="flex: 1; min-width: 0;">
                             <div style="font-weight: 500; margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                ${item.isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                                 ${escapeHtml(item.title)}
+                                ${item.isTracked ? `<span class="tracking-reason">${formatTrackingReason(item.trackingData.reason)}</span>` : ''}
                             </div>
                             <div style="font-size: 0.875rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 ${escapeHtml(item.author)} • ${escapeHtml(item.callNumber)}
                             </div>
                         </div>
-                        <button class="track-btn" onclick="handleTrackFromTrackingSearch('${item.barcode}', event)">Track</button>
+                        ${item.isTracked ?
+                                `<button class="untrack-btn" onclick="handleUntrackFromTrackingSearch('${item.barcode}', event)">Untrack</button>` :
+                                `<button class="track-btn" onclick="handleTrackFromTrackingSearch('${item.barcode}', event)">Track</button>`
+                            }
                     </div>
                 `).join('')}
             `;
+                    });
                 } else {
                     out.style.display = 'block';
                     out.innerHTML = `
-                <div style="padding: 1rem; text-align: center; color: #6b7280;">
-                    No items found for "${escapeHtml(term)}"
-                </div>
-            `;
+            <div style="padding: 1rem; text-align: center; color: #6b7280;">
+                No items found for "${escapeHtml(term)}"
+            </div>
+        `;
                 }
             });
         }
@@ -15375,7 +16149,7 @@
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                         <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
                         <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
                     </div>
                 </div>
 
@@ -15480,7 +16254,7 @@
                         <button class="mode-btn" data-mode="send-to-mobile-library">Mobile</button>
                         <button class="mode-btn" data-mode="weeding-candidate">Weeding</button>
                         <button class="mode-btn" data-mode="monitor-performance">Monitor</button>
-                        <button class="mode-btn" data-mode="Replacement-candidate">Replace</button>
+                        <button class="mode-btn" data-mode="replacement-candidate">Replace</button>
                     </div>
                 </div>
 
