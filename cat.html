@@ -4719,6 +4719,10 @@
                     checkboxSelector = '.author-details-item-checkbox:checked';
                     modeSelector = '#authorDetailsTrackingModeSelector .mode-btn.active';
                     break;
+                case 'tracking':
+                    checkboxSelector = '.tracking-item-checkbox:checked';
+                    modeSelector = '#trackingModeSelector .mode-btn.active';
+                    break;
                 default:
                     console.error(`Unknown tableType "${tableType}"`);
                     return;
@@ -4938,39 +4942,6 @@
         }
 
         //===========================================================================
-        // handleUntrackFromSearch() - Handle untracking from search results
-        //===========================================================================
-        async function handleUntrackFromSearch(barcode, buttonElement) {
-            try {
-                await untrackItem(barcode);
-
-                // Reset button back to track state
-                buttonElement.textContent = 'Track';
-                buttonElement.disabled = true; // Will be enabled when reason is selected
-                buttonElement.style.background = '#2563eb';
-                buttonElement.onclick = () => handleTrackFromSearch(barcode, buttonElement.previousElementSibling.value, buttonElement);
-
-                // Re-enable the reason dropdown and clear it
-                const reasonSelect = buttonElement.previousElementSibling;
-                reasonSelect.disabled = false;
-                reasonSelect.value = '';
-
-                // Force tracking cache to refresh
-                trackingDataLoaded = false;
-
-                // Refresh tracking tab data if it's visible
-                const trackingTab = document.getElementById('trackingTab');
-                if (trackingTab && !trackingTab.classList.contains('hidden')) {
-                    await loadTrackingTab();
-                }
-
-            } catch (error) {
-                console.error('Error untracking item:', error);
-                showStatus('Error untracking item: ' + error.message, 'error');
-            }
-        }
-
-        //===========================================================================
         // handleManualTrackItem() - Handle manual item tracking from tracking tab
         //===========================================================================
         async function handleManualTrackItem() {
@@ -5009,23 +4980,6 @@
             } catch (error) {
                 console.error('Error tracking item:', error);
                 showStatus('Error tracking item: ' + error.message, 'error');
-            }
-        }
-
-        //===========================================================================
-        // handleUntrackFromSearch() - Handle untracking from search results  
-        //===========================================================================
-        async function handleUntrackFromSearch(barcode, buttonElement) {
-            try {
-                await untrackItem(barcode);
-
-                // Update the specific row
-                await renderSearchResults(allSearchResults);
-
-                showStatus('Item untracked successfully', 'success');
-            } catch (error) {
-                console.error('Error untracking item:', error);
-                showStatus('Error untracking item: ' + error.message, 'error');
             }
         }
 
@@ -6644,6 +6598,35 @@
             } catch (error) {
                 console.error('Error untracking item:', error);
                 showStatus('Error untracking item: ' + error.message, 'error');
+            }
+        }
+
+        //===========================================================================
+        // handleTrackFromTrackingSearch() - Handle tracking from tracking search results
+        //===========================================================================
+        async function handleTrackFromTrackingSearch(barcode, event) {
+            event.stopPropagation();
+
+            // Get the selected mode from the tracking tab mode selector
+            const activeMode = document.querySelector('#trackingModeSelector .mode-btn.active');
+            if (!activeMode) {
+                showStatus('Please select a tracking mode first', 'error');
+                return;
+            }
+
+            const reason = activeMode.getAttribute('data-mode');
+
+            try {
+                await trackItem(barcode, reason, 'Tracked from tracking tab search');
+
+                // Refresh tracking data
+                trackingDataLoaded = false;
+                await loadTrackingTab();
+
+                showStatus(`Item tracked for ${formatTrackingReason(reason)}`, 'success');
+            } catch (error) {
+                console.error('Error tracking item:', error);
+                showStatus('Error tracking item: ' + error.message, 'error');
             }
         }
 
