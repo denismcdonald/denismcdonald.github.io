@@ -2536,6 +2536,7 @@
                 <table class="analysis-table sortable-table" id="grubbyTable">
                     <thead>
                         <tr>
+                            <th style="width: 50px; text-align: center; font-size: 0.875rem;">Copy</th>
                             <th class="sortable" data-sort="title" data-type="text">
                                 Title
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2649,69 +2650,72 @@
 
                 <table class="analysis-table sortable-table" id="weedingTable">
                     <thead>
-                        <tr>
-                            <th style="width: 40px; text-align: center;">
-                                <input type="checkbox" id="selectAllWeedingHeader" class="select-all-checkbox"
-                                    onchange="toggleAllWeedingItems(this)">
-                            </th>
-                            <th class="sortable" data-sort="title" data-type="text">
-                                Title
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="sortable" data-sort="author" data-type="text">
-                                Author
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="sortable" data-sort="year" data-type="number">
-                                Date Added
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="sortable" data-sort="callNumber" data-type="text">
-                                Call Number
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="sortable" data-sort="collection" data-type="text">
-                                Collection
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="sortable" data-sort="circulation" data-type="number">
-                                Circulation
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="sortable" data-sort="age" data-type="number">
-                                Age
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="sortable" data-sort="branch" data-type="text">
-                                Branch
-                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5 15l7-7 7 7"></path>
-                                </svg>
-                            </th>
-                            <th class="actions-column">Actions</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th style="width: 40px; text-align: center;">
+                                    <input type="checkbox" id="selectAllWeedingHeader" class="select-all-checkbox"
+                                        onchange="toggleAllWeedingItems(this)">
+                                </th>
+                                <th style="width: 50px; text-align: center; font-size: 0.875rem;">Copy</th>
+                                <th class="sortable" data-sort="title" data-type="text">
+                                    Title
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="sortable" data-sort="author" data-type="text">
+                                    Author
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="sortable" data-sort="year" data-type="number">
+                                    Date Added
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="sortable" data-sort="callNumber" data-type="text">
+                                    Call Number
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="sortable" data-sort="collection" data-type="text">
+                                    Collection
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="sortable" data-sort="circulation" data-type="number">
+                                    Circulation
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="sortable" data-sort="age" data-type="number">
+                                    Age
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="sortable" data-sort="branch" data-type="text">
+                                    Branch
+                                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </th>
+                                <th class="actions-column">Actions</th>
+                            </tr>
+                        </thead>
                     </thead>
                     <tbody id="weedingTableBody"></tbody>
                 </table>
@@ -4218,6 +4222,70 @@
         }
 
         //===========================================================================
+        // copyTitleToClipboard() - Copy item title to clipboard
+        //===========================================================================
+        async function copyTitleToClipboard(title, event) {
+            event.stopPropagation(); // Prevent row click
+            
+            try {
+                await navigator.clipboard.writeText(title);
+                showStatus(`Copied title: ${title}`, 'success');
+                
+                // Brief visual feedback
+                const icon = event.target;
+                const originalText = icon.textContent;
+                icon.textContent = '✓';
+                icon.style.color = '#16a34a';
+                setTimeout(() => {
+                    icon.textContent = originalText;
+                    icon.style.color = '';
+                }, 1000);
+                
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = title;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showStatus(`Copied title: ${title}`, 'success');
+            }
+        }
+
+        //===========================================================================
+        // copyBarcodeToClipboard() - Copy item ID to clipboard
+        //===========================================================================
+        async function copyBarcodeToClipboard(barcode, event) {
+            event.stopPropagation(); // Prevent row click
+            
+            try {
+                await navigator.clipboard.writeText(barcode);
+                showStatus(`Copied ID: ${barcode}`, 'success');
+                
+                // Brief visual feedback
+                const icon = event.target;
+                const originalText = icon.textContent;
+                icon.textContent = '✓';
+                icon.style.color = '#16a34a';
+                setTimeout(() => {
+                    icon.textContent = originalText;
+                    icon.style.color = '';
+                }, 1000);
+                
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = barcode;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showStatus(`Copied ID: ${barcode}`, 'success');
+            }
+        }
+
+        //===========================================================================
         // updateSearchRowTracking() - Update tracking status for a specific search row
         //===========================================================================
         async function updateSearchRowTracking(barcode) {
@@ -4593,6 +4661,14 @@
                 <input type="checkbox" class="item-checkbox weeding-item-checkbox" 
                        value="${item.barcode}" onchange="updateTrackSelectedButton('weeding')">
             </td>
+            <td style="text-align: center; padding: 0.5rem 0.25rem;">
+                <span onclick="copyTitleToClipboard('${escapeHtml(item.title)}', event)" 
+                      style="cursor: pointer; color: #6b7280; font-size: 0.9rem; margin-right: 0.5rem;" 
+                      title="Copy title">📄</span>
+                <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                      style="cursor: pointer; color: #6b7280; font-size: 0.9rem;" 
+                      title="Copy ID">#️⃣</span>
+            </td>
             <td onclick="selectBookFromTable('${item.barcode}')">
                 ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                 <strong>${escapeHtml(item.title)}</strong>
@@ -4607,9 +4683,9 @@
             <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
             <td class="actions-column">
                 ${isTracked ?
-                        `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
-                        `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding', event)">Track</button>`
-                    }
+                    `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
+                    `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding', event)">Track</button>`
+                }
             </td>
         `;
 
@@ -5650,17 +5726,17 @@
             // Extract data from rows for sorting
             const data = rows.map(row => {
                 const cells = row.querySelectorAll('td');
-                const yearText = cells[2]?.textContent?.trim() || '';
-                const ageText = cells[6]?.textContent?.trim() || '';
+                const yearText = cells[4]?.textContent?.trim() || '';
+                const ageText = cells[8]?.textContent?.trim() || '';
 
                 return {
                     element: row,
-                    title: cells[0]?.textContent?.trim() || '',
-                    author: cells[1]?.textContent?.trim() || '',
+                    title: cells[2]?.textContent?.trim() || '',
+                    author: cells[3]?.textContent?.trim() || '',
                     year: yearText === 'Unknown' ? 0 : parseInt(yearText) || 0,
-                    callNumber: cells[3]?.textContent?.trim() || '',
-                    collection: cells[4]?.textContent?.trim() || '',
-                    circulation: parseInt(cells[5]?.textContent || '0'),
+                    callNumber: cells[5]?.textContent?.trim() || '',
+                    collection: cells[6]?.textContent?.trim() || '',
+                    circulation: parseInt(cells[7]?.textContent || '0'),
                     age: ageText === 'Unknown' ? 0 : parseInt(ageText.replace(' years', '')) || 0
                 };
             });
