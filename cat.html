@@ -422,40 +422,45 @@
         }
 
         /* Tracking Table Column Widths */
-        .tracking-table th:nth-child(1),
-        .tracking-table td:nth-child(1) {
-            width: 40px; /* Checkbox */
-        }
+.tracking-table th:nth-child(1),
+.tracking-table td:nth-child(1) {
+    width: 40px; /* Checkbox */
+}
 
-        .tracking-table th:nth-child(2),
-        .tracking-table td:nth-child(2) {
-            width: 40%; /* Title */
-        }
+.tracking-table th:nth-child(2),
+.tracking-table td:nth-child(2) {
+    width: 60px; /* Copy */
+}
 
-        .tracking-table th:nth-child(3),
-        .tracking-table td:nth-child(3) {
-            width: 20%; /* Author */
-        }
+.tracking-table th:nth-child(3),
+.tracking-table td:nth-child(3) {
+    width: 35%; /* Title */
+}
 
-        .tracking-table th:nth-child(4),
-        .tracking-table td:nth-child(4) {
-            width: 15%; /* Reason */
-        }
+.tracking-table th:nth-child(4),
+.tracking-table td:nth-child(4) {
+    width: 20%; /* Author */
+}
 
-        .tracking-table th:nth-child(5),
-        .tracking-table td:nth-child(5) {
-            width: 10%; /* Location */
-        }
+.tracking-table th:nth-child(5),
+.tracking-table td:nth-child(5) {
+    width: 15%; /* Reason */
+}
 
-        .tracking-table th:nth-child(6),
-        .tracking-table td:nth-child(6) {
-            width: 10%; /* Date Added */
-        }
+.tracking-table th:nth-child(6),
+.tracking-table td:nth-child(6) {
+    width: 10%; /* Location */
+}
 
-        .tracking-table th:nth-child(7),
-        .tracking-table td:nth-child(7) {
-            width: 80px; /* Actions */
-        }
+.tracking-table th:nth-child(7),
+.tracking-table td:nth-child(7) {
+    width: 10%; /* Date Added */
+}
+
+.tracking-table th:nth-child(8),
+.tracking-table td:nth-child(8) {
+    width: 80px; /* Actions */
+}
 
         .search-results-table th {
             background-color: #f9fafb;
@@ -1094,7 +1099,7 @@
             background: #f8fafc;
             border: 1px solid #e5e7eb;
             border-radius: 0.5rem;
-            margin-bottom: 1rem;
+            /* margin-bottom: 1rem; */
         }
 
         .mode-buttons {
@@ -1113,7 +1118,7 @@
         .filter-controls {
             display: flex;
             gap: 1rem;
-            /* margin-bottom: 1rem; */
+            margin-bottom: 1rem;
             flex-wrap: wrap;
         }
 
@@ -1674,6 +1679,13 @@
         #exportPortlandBtn:hover {
             background-color: #b85300;
         }
+
+        /* Position copy buttons slightly lower */
+        span[onclick*="copyTitleToClipboard"],
+        span[onclick*="copyBarcodeToClipboard"] {
+            margin-top: 5px !important;
+        }
+
     </style>
 </head>
 
@@ -2277,6 +2289,7 @@
                                     <input type="checkbox" class="select-all-checkbox" id="collectionSelectAllCheckbox"
                                         onchange="toggleAllItems(this, 'collection')">
                                 </th>
+                                <th style="width: 60px; text-align: center; font-size: 0.875rem;">Copy</th>
                                 <th class="sortable" data-sort="title" data-type="text">
                                     Title
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3112,6 +3125,7 @@
                                     <input type="checkbox" class="select-all-checkbox" id="authorDetailsSelectAllCheckbox"
                                         onchange="toggleAllItems(this, 'authorDetails')">
                                 </th>
+                                <th style="width: 60px; text-align: center; font-size: 0.875rem;">Copy</th>
                                 <th class="sortable" data-sort="title" data-type="text">
                                     Title
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4055,7 +4069,7 @@
             const trackingData = isTracked ? await getTrackingData(barcode) : null;
 
             // Update the title cell (second cell, after checkbox)
-            const titleCell = row.children[1];
+            const titleCell = row.children[2];
             titleCell.innerHTML = `
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
@@ -4189,8 +4203,16 @@
 
                 row.innerHTML = `
                 <td style="text-align: center;">
-                    <input type="checkbox" class="item-checkbox chart-modal-item-checkbox" 
+                    <input type="checkbox" class="item-checkbox chart-modal-item-checkbox"
                         value="${item.barcode}" onchange="updateTrackSelectedButton('chartModal')">
+                </td>
+                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                        title="Copy title">📄</span>
+                    <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                        title="Copy ID">#️⃣</span>
                 </td>
                 <td onclick="selectBookFromTable('${item.barcode}')">
                     ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
@@ -4286,6 +4308,19 @@
         }
 
         //===========================================================================
+        // escapeForJavaScript() - Escape string for safe use in JavaScript
+        //===========================================================================
+        function escapeForJavaScript(str) {
+            if (!str) return '';
+            return str.replace(/\\/g, '\\\\')   // Escape backslashes first
+                .replace(/'/g, "\\'")      // Escape single quotes
+                .replace(/"/g, '\\"')      // Escape double quotes
+                .replace(/\n/g, '\\n')     // Escape newlines
+                .replace(/\r/g, '\\r')     // Escape carriage returns
+                .replace(/\t/g, '\\t');    // Escape tabs
+        }
+
+        //===========================================================================
         // updateSearchRowTracking() - Update tracking status for a specific search row
         //===========================================================================
         async function updateSearchRowTracking(barcode) {
@@ -4316,7 +4351,7 @@
             console.log('trackingData:', trackingData);
 
             // Update the title cell (second cell, after checkbox)
-            const titleCell = row.children[1];
+            const titleCell = row.children[2];
             titleCell.innerHTML = `
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
@@ -4661,13 +4696,13 @@
                 <input type="checkbox" class="item-checkbox weeding-item-checkbox" 
                        value="${item.barcode}" onchange="updateTrackSelectedButton('weeding')">
             </td>
-            <td style="text-align: center; padding: 0.5rem 0.25rem;">
-                <span onclick="copyTitleToClipboard('${escapeHtml(item.title)}', event)" 
-                      style="cursor: pointer; color: #6b7280; font-size: 0.9rem; margin-right: 0.5rem;" 
-                      title="Copy title">📄</span>
+            <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;">
+                <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                    title="Copy title">📄</span>
                 <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
-                      style="cursor: pointer; color: #6b7280; font-size: 0.9rem;" 
-                      title="Copy ID">#️⃣</span>
+                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                    title="Copy ID">#️⃣</span>
             </td>
             <td onclick="selectBookFromTable('${item.barcode}')">
                 ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
@@ -4861,7 +4896,7 @@
             const trackingData = isTracked ? await getTrackingData(barcode) : null;
 
             // Update the title cell (second cell, after checkbox)
-            const titleCell = row.children[1];
+            const titleCell = row.children[2];
             titleCell.innerHTML = `
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
@@ -12795,12 +12830,20 @@
                         <td style="text-align: center;">
                             <input type="checkbox" class="item-checkbox author-details-item-checkbox" value="${book.barcode}" onchange="updateTrackSelectedButton('authorDetails')">
                         </td>
+                        <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                            <span onclick="copyTitleToClipboard('${escapeForJavaScript(book.title)}', event)" 
+                                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                                title="Copy title">📄</span>
+                            <span onclick="copyBarcodeToClipboard('${book.barcode}', event)" 
+                                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                                title="Copy ID">#️⃣</span>
+                        </td>
                         <td onclick="event.stopPropagation(); viewBookDetails('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
                             <span class="tracking-indicator" id="trackingIndicator-${book.barcode}" style="color: #2563eb; margin-right: 0.25rem; display: none;">📌</span>
                             <strong>${escapeHtml(book.title)}</strong>
                             <span class="tracking-reason" id="trackingReason-${book.barcode}" style="font-size: 0.75rem; background: #eff6ff; color: #2563eb; padding: 0.125rem 0.25rem; border-radius: 0.25rem; margin-left: 0.5rem; display: none;"></span>
                         </td>
-                        <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">${book.year || 'Unknown'}</td>
+                        <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">${book.itemCreated || 'Unknown'}</td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">${escapeHtml(book.collection)}</td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;"><strong>${book.circulation}</strong></td>
                         <td onclick="selectBook('${book.barcode}')" style="cursor: pointer;">
@@ -14313,13 +14356,21 @@
                 return `
         <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="viewBookDetails('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
             <td style="text-align: center;" onclick="event.stopPropagation();">
-                <input type="checkbox" class="item-checkbox collection-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('collection')">
-            </td>
-            <td style="color: #6b7280; font-weight: 500;">
-                <span class="tracking-placeholder-${item.barcode}"></span>
-                <strong>${escapeHtml(item.title)}</strong>
-                <span class="tracking-reason-${item.barcode}"></span>
-            </td>
+            <input type="checkbox" class="item-checkbox collection-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('collection')">
+        </td>
+        <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+            <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                title="Copy title">📄</span>
+            <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                title="Copy ID">#️⃣</span>
+        </td>
+        <td style="color: #6b7280; font-weight: 500;">
+            <span class="tracking-placeholder-${item.barcode}"></span>
+            <strong>${escapeHtml(item.title)}</strong>
+            <span class="tracking-reason-${item.barcode}"></span>
+        </td>
             <td>${escapeHtml(item.author)}</td>
             <td>${(() => {
                         const age = getItemAge(item.itemCreated);
@@ -14582,7 +14633,7 @@
             const trackingData = isTracked ? await getTrackingData(barcode) : null;
 
             // Update the title cell (second cell, after checkbox)
-            const titleCell = row.children[1];
+            const titleCell = row.children[2];
             titleCell.innerHTML = `
         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
         <strong>${escapeHtml(item.title)}</strong>
@@ -15433,8 +15484,8 @@
             const trackingData = await getTrackingData(barcode);
             if (!trackingData) return;
 
-            // Update the reason cell (4th column - Title, Author, Reason, Location, Date, Actions)
-            const reasonCell = row.children[3];
+            // Update the reason cell (5th column - Checkbox, Copy, Title, Author, Reason, Location, Date, Actions)
+            const reasonCell = row.children[4];
             reasonCell.innerHTML = `
         <span style="background: #eff6ff; color: #2563eb; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem;">
             ${formatTrackingReason(trackingData.reason)}
@@ -15541,6 +15592,7 @@
                             <th style="width: 40px; text-align: center;">
                                 <input type="checkbox" class="select-all-checkbox" onchange="toggleAllItems(this, 'tracking')">
                             </th>
+                            <th style="width: 45px !important; max-width: 45px !important; text-align: center; font-size: 0.875rem;">Copy</th>
                             <th class="sortable" data-sort="title" data-type="text">
                                 Title
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -15579,6 +15631,14 @@
                             <tr data-barcode="${item.barcode}">
                                 <td style="text-align: center;">
                                     <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}">
+                                </td>
+                                <td style="text-align: center; padding: 0.25rem; white-space: nowrap; width: 60px !important; max-width: 60px !important;" onclick="event.stopPropagation();">
+                                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                                        title="Copy title">📄</span>
+                                    <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                                        title="Copy ID">#️⃣</span>
                                 </td>
                                 <td onclick="selectBookFromTable('${item.barcode}')" style="cursor: pointer;"><strong>${escapeHtml(item.title)}</strong></td>
                                 <td onclick="selectBookFromTable('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.author)}</td>
@@ -16160,8 +16220,16 @@ Kirsten`;
 
                 row.innerHTML = `
                     <td style="text-align: center;">
-                        <input type="checkbox" class="item-checkbox chart-modal-item-checkbox" 
+                        <input type="checkbox" class="item-checkbox chart-modal-item-checkbox"
                             value="${item.barcode}" onchange="updateTrackSelectedButton('chartModal')">
+                    </td>
+                    <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                        <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                            style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                            title="Copy title">📄</span>
+                        <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                            style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                            title="Copy ID">#️⃣</span>
                     </td>
                     <td onclick="selectBookFromTable('${item.barcode}')">
                         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
@@ -16367,6 +16435,7 @@ Kirsten`;
                                 <input type="checkbox" id="selectAllChartModal" class="select-all-checkbox"
                                     onchange="toggleAllItems(this, 'chartModal')">
                             </th>
+                            <th style="width: 60px; text-align: center; font-size: 0.875rem;">Copy</th>
                             <th class="sortable" data-sort="title" data-type="text">
                                 Title
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
