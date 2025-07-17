@@ -3626,7 +3626,8 @@
         const AVAILABLE_SAMPLES = {
             2025: [
                 { value: 'June-2025', label: 'June 2025' },
-                { value: 'mid-July-2025', label: 'mid-July-2025' }
+                { value: 'mid-July-2025', label: 'mid-July-2025' },
+                { value: 'Test', label: 'Test' }
                 // Add more months as you upload them
             ]
         };
@@ -8080,6 +8081,25 @@
                     // Initialize search and save for recovery
                     initializeFuzzySearch();
                     saveCurrentCollectionForRecovery();
+
+                    // Show detailed parsing results like manual uploads
+                    if (window.lastParsingStats) {
+                        console.log('GitHub load: Showing parsing results...');
+                        showParsingResults(window.lastParsingStats);
+                    } else {
+                        console.log('GitHub load: No parsing stats available');
+                        // Show simple success message as fallback
+                        statusDiv.className = 'status-success';
+                        statusDiv.innerHTML = `
+                            <div style="padding: 1rem; border-radius: 0.5rem; background: #f0fdf4; border: 1px solid #16a34a;">
+                                ✅ Successfully loaded ${data.length.toLocaleString()} items from ${sampleData.label}
+                                <br><small style="color: #15803d;">Switch to Search tab to begin analysis</small>
+                            </div>
+                        `;
+                    }
+
+                    // Show the main interface
+                    document.getElementById('uploadSection').style.display = 'block';
 
                     // Show the main interface
                     document.getElementById('uploadSection').style.display = 'block';
