@@ -8179,14 +8179,21 @@
                         initializeFuzzySearch();
                         saveCurrentCollectionForRecovery();
 
-                        // Show success status
-                        statusDiv.className = 'status-success';
-                        statusDiv.innerHTML = `
-                            <div style="padding: 1rem; border-radius: 0.5rem; background: #f0fdf4; border: 1px solid #16a34a;">
-                                ✅ Successfully loaded ${data.length.toLocaleString()} items from ${file.name}
-                                <br><small style="color: #15803d;">Switch to Search tab to begin analysis</small>
-                            </div>
-                        `;
+                        // Show detailed parsing results like the regular upload
+                        if (window.lastParsingStats) {
+                            console.log('Manual upload: Showing parsing results...');
+                            showParsingResults(window.lastParsingStats);
+                        } else {
+                            console.log('Manual upload: No parsing stats available');
+                            // Fallback to simple success message
+                            statusDiv.className = 'status-success';
+                            statusDiv.innerHTML = `
+        <div style="padding: 1rem; border-radius: 0.5rem; background: #f0fdf4; border: 1px solid #16a34a;">
+            ✅ Successfully loaded ${data.length.toLocaleString()} items from ${file.name}
+            <br><small style="color: #15803d;">Switch to Search tab to begin analysis</small>
+        </div>
+    `;
+                        }
 
                         // Show the main interface
                         document.getElementById('uploadSection').style.display = 'block';
@@ -8232,78 +8239,64 @@
             reader.readAsText(file);
         }
 
-        //===========================================================================
-        // parseCSVLine() - Parse a single CSV line handling your specific format
+    //===========================================================================
+        // parseCSVLine() - Simple, reliable CSV parser that works with both formats
         //===========================================================================
         function parseCSVLine(line) {
-            const fields = [];
-            let i = 0;
+            console.log('parseCSVLine called with:', line.substring(0, 100));
 
-            // Remove any leading/trailing quotes from the entire line first
+            // Remove any leading/trailing whitespace
             line = line.trim();
 
-            // Special handling for header lines that are entirely quoted
-            if (line.startsWith('"') && line.endsWith('"') && line.includes('Item Barcode')) {
-                // This is a header line in the format: "Item Barcode,""Catalog Author"",""Catalog Title""..."
-                const innerContent = line.slice(1, -1); // Remove outer quotes
-                const rawFields = innerContent.split(',');
+            // Handle empty lines
+            if (!line) return [];
 
-                return rawFields.map(field => {
-                    // Remove internal double quotes and trim
-                    return field.replace(/^""/, '').replace(/""$/, '').trim();
-                });
-            }
+            // Use a simple but robust parsing approach
+            const fields = [];
+            let current = '';
+            let inQuotes = false;
+            let i = 0;
 
-            // Handle data lines: first field may have quote, rest in ""quotes""
             while (i < line.length) {
-                let current = '';
+                const char = line[i];
+                const nextChar = line[i + 1];
 
-                // Skip whitespace
-                while (i < line.length && line[i] === ' ') {
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        // Escaped quote: "" becomes "
+                        current += '"';
+                        i += 2; // Skip both quotes
+                    } else {
+                        // Toggle quote state
+                        inQuotes = !inQuotes;
+                        i++;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    // Field separator found outside quotes
+                    fields.push(current.trim());
+                    current = '';
                     i++;
-                }
-
-                if (i >= line.length) break;
-
-                if (line[i] === '"' && i + 1 < line.length && line[i + 1] === '"') {
-                    // This is a ""quoted field""
-                    i += 2; // Skip the opening ""
-                    while (i < line.length - 1) {
-                        if (line[i] === '"' && line[i + 1] === '"') {
-                            i += 2;
-                            break;
-                        }
-                        current += line[i];
-                        i++;
-                    }
                 } else {
-                    // This could be an unquoted field OR a single-quoted field
-                    while (i < line.length && line[i] !== ',') {
-                        current += line[i];
-                        i++;
-                    }
-                }
-
-                // Clean up any remaining quotes from the field
-                current = current.replace(/^"/, '').replace(/"$/, '').trim();
-                fields.push(current);
-
-                // Skip the comma
-                if (i < line.length && line[i] === ',') {
+                    // Regular character
+                    current += char;
                     i++;
                 }
             }
 
+            // Add the last field
+            fields.push(current.trim());
+
+            console.log('Parsed fields:', fields);
             return fields;
         }
 
         //===========================================================================
-        // detectColumns() - Smart detection of CSV column mappings
+        // detectColumns() - Enhanced column detection for standard CSV headers  
         //===========================================================================
         function detectColumns(headers) {
             const mappings = {};
 
-            // Define patterns for each field we need - updated for your specific format
+            // Define patterns for each field we need
             const patterns = {
                 barcode: /^item\s*barcode$/i,
                 author: /^catalog\s*author$/i,
@@ -8318,96 +8311,264 @@
                 itemType: /^item\s*type$/i
             };
 
-            console.log('Headers to detect:', headers);
+            console.log('Detecting columns from headers:', headers);
 
             // Try to match each header to our patterns
             headers.forEach((header, index) => {
-                const cleanHeader = header.trim().replace(/^["']|["']$/g, ''); // Remove quotes
-                console.log(`Checking header ${index}: "${cleanHeader}"`);
+                if (!header) return;
 
-                for (const [field, pattern] of Object.entries(patterns)) {
-                    if (pattern.test(cleanHeader) && !mappings[field]) {
-                        mappings[field] = index;
-                        console.log(`✓ Detected ${field}: "${cleanHeader}" at column ${index}`);
-                        break;
+                // Clean header for matching - remove any remaining quotes and trim
+                const cleanHeader = header.replace(/^["']|["']$/g, '').trim();
+                console.log(`Checking header "${cleanHeader}" at index ${index}`);
+
+                // Try to match against each pattern
+                for (const [fieldName, pattern] of Object.entries(patterns)) {
+                    if (pattern.test(cleanHeader)) {
+                        mappings[fieldName] = index;
+                        console.log(`✓ Mapped '${cleanHeader}' to ${fieldName} at index ${index}`);
+                        break; // Stop at first match
                     }
                 }
             });
 
-            console.log('Final mappings:', mappings);
-            console.log('Circulation column detected at index:', mappings.circulation);
-            // Debug: Check if itemType was detected
-            if (mappings.itemType !== undefined) {
-                console.log('✅ Item Type column detected at index:', mappings.itemType);
-            } else {
-                console.log('❌ Item Type column NOT detected');
-                console.log('Available headers:', headers);
-                console.log('Looking for patterns matching: /^item\\s*type$/i');
-            }
+            console.log('Final column mappings:', mappings);
             return mappings;
         }
 
         //===========================================================================
-        // createBookFromFields() - Convert CSV fields to book object
+        // parseCSV() - Main CSV parser with simplified logic
         //===========================================================================
-        function createBookFromFields(fields, mappings, rowIndex) {
-            
-            const book = {
-                barcode: getColumnValue(fields, mappings.barcode) || `unknown-${rowIndex}`,
-                author: cleanText(getColumnValue(fields, mappings.author) || ''),
-                title: cleanText(getColumnValue(fields, mappings.title) || ''),
-                year: getColumnValue(fields, mappings.year) || '',
-                collection: getColumnValue(fields, mappings.collection) || 'Unknown',
-                callNumber: getColumnValue(fields, mappings.callNumber) || '',
-                circulation: (() => {
-                    const rawValue = getColumnValue(fields, mappings.circulation);
-                    const parsedValue = parseInt(rawValue);
-                    if (rowIndex <= 10) {
-                        console.log(`Row ${rowIndex} circulation debug:`, {
-                            mappings_circulation: mappings.circulation,
-                            rawValue: `"${rawValue}"`,
-                            parsedValue: parsedValue,
-                            isNaN: isNaN(parsedValue),
-                            finalValue: parsedValue || 0
-                        });
-                    }
-                    return parsedValue || 0;
-                })(),
-                status: getColumnValue(fields, mappings.status) || '',
-                itemCreated: getColumnValue(fields, mappings.itemCreated) || '',
-                lastActivity: getColumnValue(fields, mappings.lastActivity) || '',
-                itemType: getColumnValue(fields, mappings.itemType) || ''
+        function parseCSV(csvText) {
+            console.log('Parsing CSV with simplified parser...');
+            const lines = csvText.split('\n');
+            const data = [];
+            let currentBranch = 'Unknown Branch';
+            let columnMappings = null;
+
+            // Reset exclusion statistics
+            exclusionStats = {
+                totalRows: 0,
+                validItems: 0,
+                emptyLines: 0,
+                noTitle: 0,
+                shortTitle: 0,
+                noAuthor: 0,
+                excludedSamples: []
             };
 
-            // Debug book object after creation
-            if (rowIndex <= 5 || fields[0] === 'A2692945B') {
-                console.log('Book object after creation:', {
-                    barcode: book.barcode,
-                    author: `"${book.author}"`,
-                    title: `"${book.title}"`,
-                    collection: `"${book.collection}"`
-                });
-            }
+            console.log(`Processing ${lines.length} lines...`);
 
-            // Debug: Log first few items with their itemType
-            if (rowIndex <= 5) {
-                console.log(`Row ${rowIndex} itemType:`, book.itemType, 'from field index:', mappings.itemType);
-                if (mappings.itemType !== undefined) {
-                    console.log(`Raw field value:`, fields[mappings.itemType]);
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+
+                // Skip empty lines
+                if (!line) {
+                    exclusionStats.emptyLines++;
+                    continue;
+                }
+
+                // Detect branch markers
+                if (line.includes('Branch:') || line.includes('Library:')) {
+                    const branchMatch = line.match(/(Heywood|Casterton|Portland|Mobile)/i);
+                    if (branchMatch) {
+                        currentBranch = branchMatch[0] + ' Library';
+                        console.log(`Branch detected: ${currentBranch}`);
+                    }
+                    continue;
+                }
+
+                // Check for header line
+                if (line.includes('Item Barcode') && !columnMappings) {
+                    console.log(`Found header line: ${line}`);
+
+                    const headers = parseCSVLine(line);
+
+                    // Auto-detect columns
+                    columnMappings = detectColumns(headers);
+
+                    // Check if we found essential columns
+                    const requiredFields = ['title'];
+                    const missingFields = requiredFields.filter(field => columnMappings[field] === undefined);
+
+                    if (missingFields.length > 0) {
+                        console.log('Missing required fields:', missingFields);
+                        showColumnMappingUI(headers, lines);
+                        return null;
+                    }
+                    continue;
+                }
+
+                // Process data lines - must have column mappings and contain commas
+                if (columnMappings && line.includes(',')) {
+
+                    // Debug early rows
+                    if (i <= 10) {
+                        console.log(`=== PARSING DATA ROW ${i + 1} ===`);
+                        console.log('Line preview:', line.substring(0, 100) + (line.length > 100 ? '...' : ''));
+                    }
+
+                    exclusionStats.totalRows++;
+
+                    const fields = parseCSVLine(line);
+
+                    // Debug field parsing for early rows
+                    if (i <= 10) {
+                        console.log(`Parsed ${fields.length} fields from row ${i + 1}`);
+                    }
+
+                    const book = createBookFromFields(fields, columnMappings, i);
+
+                    if (book) {
+                        book.branch = currentBranch;
+
+                        // Apply exclusion logic
+                        let excluded = false;
+                        let exclusionReason = '';
+
+                        if (!book.title) {
+                            exclusionStats.noTitle++;
+                            exclusionReason = 'No title';
+                            excluded = true;
+                        } else if (book.title.length <= 1) {
+                            exclusionStats.shortTitle++;
+                            exclusionReason = 'Title too short (≤1 character)';
+                            excluded = true;
+                        } else if (!book.author && !isMultimediaCollection(book.collection)) {
+                            exclusionStats.noAuthor++;
+                            exclusionReason = 'No author (traditional books/fiction only)';
+                            excluded = true;
+                        }
+
+                        if (!excluded) {
+                            data.push(book);
+                            exclusionStats.validItems++;
+                        } else {
+                            // Store exclusion sample for debugging
+                            if (exclusionStats.excludedSamples.length < 1000) {
+                                exclusionStats.excludedSamples.push({
+                                    row: i + 1,
+                                    reason: exclusionReason,
+                                    title: book.title || '[missing]',
+                                    author: book.author || '[missing]',
+                                    collection: book.collection || '[missing]',
+                                    barcode: book.barcode || '[missing]'
+                                });
+                            }
+                        }
+                    }
                 }
             }
 
-            // Debug final book object before return
-            if (rowIndex <= 5 || fields[0] === 'A2692945B') {
-                console.log('Final book object before return:', {
-                    barcode: book.barcode,
-                    author: `"${book.author}"`,
-                    title: `"${book.title}"`,
-                    collection: `"${book.collection}"`
-                });
+            console.log(`Parsing complete: ${data.length} items processed successfully`);
+
+            // CRITICAL: Store parsing stats globally for showParsingResults()
+            window.lastParsingStats = exclusionStats;
+
+            return data;
+        }
+
+        //===========================================================================
+        // createBookFromFields() - Enhanced book object creation with validation
+        //===========================================================================
+        function createBookFromFields(fields, columnMappings, rowIndex) {
+            try {
+                // Extract field values using column mappings
+                const getField = (fieldName) => {
+                    const columnIndex = columnMappings[fieldName];
+                    return columnIndex !== undefined && fields[columnIndex] !== undefined
+                        ? String(fields[columnIndex]).trim()
+                        : '';
+                };
+
+                // Create book object
+                const book = {
+                    barcode: getField('barcode'),
+                    title: getField('title'),
+                    author: getField('author'),
+                    year: getField('year'),
+                    collection: getField('collection'),
+                    callNumber: getField('callNumber'),
+                    circulation: parseInt(getField('circulation')) || 0,
+                    status: getField('status'),
+                    itemCreated: getField('itemCreated'),
+                    lastActivity: getField('lastActivity'),
+                    itemType: getField('itemType')
+                };
+
+                // Basic validation
+                if (!book.barcode) {
+                    console.warn(`Row ${rowIndex + 1}: Missing barcode`);
+                }
+
+                // Clean and normalize text fields (assuming these functions exist)
+                if (typeof normalizeApostrophes === 'function') {
+                    book.title = normalizeApostrophes(book.title);
+                    book.author = normalizeApostrophes(book.author);
+                }
+
+                // Additional computed fields (assuming these functions exist)
+                if (typeof calculateAge === 'function') {
+                    book.age = calculateAge(book.year);
+                }
+                if (typeof calculateAgeInYears === 'function') {
+                    book.ageInYears = calculateAgeInYears(book.year);
+                }
+                if (typeof formatAge === 'function') {
+                    book.formattedAge = formatAge(book.ageInYears);
+                }
+
+                return book;
+
+            } catch (error) {
+                console.error(`Error creating book from fields at row ${rowIndex + 1}:`, error);
+                return null;
+            }
+        }
+
+        //===========================================================================
+        // validateCSVStructure() - Pre-parse validation for CSV structure
+        //===========================================================================
+        function validateCSVStructure(csvText) {
+            const lines = csvText.split('\n');
+            const issues = [];
+
+            // Check for basic CSV structure
+            if (lines.length < 2) {
+                issues.push('CSV must have at least a header row and one data row');
             }
 
-            return book;
+            // Look for header row
+            const headerLineIndex = lines.findIndex(line => line.includes('Item Barcode'));
+            if (headerLineIndex === -1) {
+                issues.push('No header row found (must contain "Item Barcode")');
+            }
+
+            // Check for consistent field counts in first few data rows
+            if (headerLineIndex >= 0) {
+                const headerFields = parseCSVLine(lines[headerLineIndex]);
+                const expectedFieldCount = headerFields.length;
+
+                let inconsistentRows = 0;
+                for (let i = headerLineIndex + 1; i < Math.min(lines.length, headerLineIndex + 10); i++) {
+                    const line = lines[i].trim();
+                    if (line && line.includes(',')) {
+                        const fields = parseCSVLine(line);
+                        if (fields.length !== expectedFieldCount) {
+                            inconsistentRows++;
+                        }
+                    }
+                }
+
+                if (inconsistentRows > 3) {
+                    issues.push(`Many rows have inconsistent field counts (expected ${expectedFieldCount})`);
+                }
+            }
+
+            return {
+                isValid: issues.length === 0,
+                issues: issues,
+                headerLineIndex: headerLineIndex
+            };
         }
 
         //===========================================================================
@@ -8749,183 +8910,6 @@
                 .replace('Heywood Library', 'Heywood')
                 .replace('Portland Library', 'Portland')
                 .replace('Glenelg Mobile Library', 'Mobile Library');
-        }
-
-        //===========================================================================
-        // Simple CSV parser - handles quoted fields properly for your format
-        //===========================================================================
-        function parseCSV(csvText) {
-            console.log('Parsing CSV with built-in parser...');
-            const lines = csvText.split('\n');
-            const data = [];
-            let currentBranch = 'Unknown Branch';
-            let columnMappings = null;
-
-            // Track exclusions for detailed reporting
-            const exclusionStats = {
-                totalRows: 0,
-                emptyLines: 0,
-                noTitle: 0,
-                shortTitle: 0,
-                noAuthor: 0,
-                validItems: 0,
-                excludedSamples: []
-            };
-
-            if (lines.length < 2) {
-                throw new Error('CSV file appears to be empty or invalid');
-            }
-
-            // Parse the file line by line
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i].trim();
-
-                // Skip empty lines
-                if (!line) {
-                    continue;
-                }
-
-                // Skip "All items GL" line
-                if (line.toLowerCase().includes('all items')) {
-                    console.log('Skipping "All items" line:', line);
-                    continue;
-                }
-
-                // Check for branch divider lines
-                if (line.startsWith('Page by:')) {
-                    console.log('Found Page by line, skipping');
-                    continue;
-                }
-
-                if (line.startsWith('Item Library Desc:')) {
-                    // Extract branch name
-                    currentBranch = line.replace('Item Library Desc:', '').trim();
-                    console.log('Detected branch:', currentBranch);
-                    continue;
-                }
-
-                // Check if this is a header line (contains Item Barcode and is quoted)
-                if (line.startsWith('"') && line.includes('Item Barcode') && line.includes('Catalog')) {
-                    console.log('Found header line:', line);
-
-                    // Parse the special quoted header format
-                    const innerContent = line.slice(1, -1); // Remove outer quotes
-                    const headers = innerContent.split(',').map(field => {
-                        return field.replace(/^""/, '').replace(/""$/, '').trim();
-                    });
-
-                    // Auto-detect columns
-                    columnMappings = detectColumns(headers);
-                    console.log('Column mappings:', columnMappings);
-
-                    // Check if we found essential columns
-                    const requiredFields = ['title'];
-                    const missingFields = requiredFields.filter(field => columnMappings[field] === undefined);
-
-                    if (missingFields.length > 0) {
-                        console.log('Missing required fields:', missingFields);
-                        showColumnMappingUI(headers, lines);
-                        return null;
-                    }
-                    continue;
-                }
-
-                // If we have column mappings and this looks like data (starts with quote and has commas)
-                if (columnMappings && line.startsWith('"') && line.includes(',')) {
-                    // Debug early rows
-                    if (i <= 20) {
-                        console.log(`=== PARSING ROW ${i} ===`);
-                        console.log('Line:', line.substring(0, 100) + '...');
-                    }
-                    exclusionStats.totalRows++;
-
-                    // Preprocess line to handle escaped quotes in standard CSV format
-                    let processedLine = line;
-                    if (line.includes('""') && !line.match(/^".*"$/)) {
-                        // This looks like it might have escaped quotes within a standard quoted field
-                        // Convert ""word"" back to "word" for our parser
-                        processedLine = line.replace(/""/g, '"');
-                    }
-                    const fields = parseCSVLine(processedLine);
-                    // Debug parsed fields for early rows
-                    if (i <= 20) {
-                        console.log('Parsed fields:', fields);
-                        console.log('Fields count:', fields.length);
-                    }
-                    const book = createBookFromFields(fields, columnMappings, i);
-                    // Debug before book creation
-                    if (i <= 20) {
-                        console.log(`About to create book from row ${i}`);
-                    }
-                    // Add branch information
-                    if (book) {
-                        book.branch = currentBranch;
-                    }
-
-                    // Validation logic
-                    let excluded = false;
-                    let exclusionReason = '';
-
-                    if (!book || !book.title) {
-                        exclusionStats.noTitle++;
-                        exclusionReason = 'No title';
-                        excluded = true;
-                    } else if (book.title.length <= 1) {
-                        exclusionStats.shortTitle++;
-                        exclusionReason = 'Title too short (≤1 character)';
-                        excluded = true;
-                    } else if (!book.author && !isMultimediaCollection(book.collection)) {
-                        exclusionStats.noAuthor++;
-                        exclusionReason = 'No author (traditional books/fiction only)';
-                        excluded = true;
-                    }
-
-                    if (excluded) {
-                        if (exclusionStats.excludedSamples.length < 1000) {
-                            exclusionStats.excludedSamples.push({
-                                row: i + 1,
-                                reason: exclusionReason,
-                                title: book?.title || '[missing]',
-                                author: book?.author || '[missing]',
-                                collection: book?.collection || '[missing]',
-                                callNumber: book?.callNumber || '[missing]',
-                                branch: book?.branch || currentBranch
-                            });
-                        }
-                    } else {
-                        if (!book.author && !isMultimediaCollection(book.collection)) {
-                            book.author = book.collection || 'Unknown';
-                        }
-                        // Clean up obviously incorrect collection values
-                        if (book.collection === 'foods that cause disease and weight gain /') {
-                            book.collection = 'HEALTHFAM'; // Fix the known problematic record
-                        }
-                        // Fix the problematic "plant paradox" record that has parsing issues
-                        if (book.title && book.title.includes('The plant paradox : the hidden dangers') && book.author && book.author.includes('Gundry')) {
-                            book.circulation = 29; // Hard-code the known circulation value
-                            book.year = '2017'; // Ensure year is correct
-                            book.collection = 'HEALTHFAM'; // Ensure collection is correct
-                        }
-                        // Fix the problematic "Jelly filled" quilting record that has parsing issues with inch symbols
-                        if (book.title && book.title.includes('Jelly filled') && book.author && book.author.includes('Goertzen')) {
-                            book.circulation = 21; // Hard-code the known circulation value
-                            book.year = '2019'; // Ensure year is correct
-                            book.collection = 'RECREATION'; // Ensure collection is correct
-                            book.itemCreated = '26/06/2020'; // Ensure creation date is correct
-                            book.callNumber = 'RECR 746.46041 GOER'; // Ensure call number is correct
-                        }
-                        data.push(book);
-                        exclusionStats.validItems++;
-                    }
-                }
-            }
-
-            // Show detailed parsing results
-            showParsingResults(exclusionStats);
-            window.lastParsingStats = exclusionStats;
-
-            console.log(`Successfully parsed ${exclusionStats.validItems} valid books from ${exclusionStats.totalRows} rows`);
-            return data;
         }
 
         //===========================================================================
