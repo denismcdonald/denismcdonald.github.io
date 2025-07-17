@@ -8367,8 +8367,8 @@
                     continue;
                 }
 
-                // Detect branch markers
-                if (line.includes('Branch:') || line.includes('Library:')) {
+               // Detect branch markers  
+                if (line.includes('Branch:') || line.includes('Library:') || line.includes('Item Library Desc:')) {
                     const branchMatch = line.match(/(Heywood|Casterton|Portland|Mobile)/i);
                     if (branchMatch) {
                         currentBranch = branchMatch[0] + ' Library';
@@ -8500,7 +8500,11 @@
                     console.warn(`Row ${rowIndex + 1}: Missing barcode`);
                 }
 
-                // Clean and normalize text fields (assuming these functions exist)
+                // Clean and normalize text fields using existing functions
+                if (typeof cleanText === 'function') {
+                    book.title = cleanText(book.title);
+                    book.author = cleanText(book.author);
+                }
                 if (typeof normalizeApostrophes === 'function') {
                     book.title = normalizeApostrophes(book.title);
                     book.author = normalizeApostrophes(book.author);
