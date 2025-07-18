@@ -3626,7 +3626,7 @@
         const AVAILABLE_SAMPLES = {
             2025: [
                 { value: 'June-2025', label: 'June 2025' },
-                { value: 'June-2025s', label: 'June 2025s' }
+                { value: 'mid-July-2025', label: 'mid-July 2025' }
                 // Add more months as you upload them
             ]
         };
@@ -3741,6 +3741,37 @@
         // trackItem() - Add item to tracking system
         //===========================================================================
         async function trackItem(barcode, reason, notes = '', location = '') {
+            
+            
+            console.log('=== trackItem DEBUG START ===');
+            console.log('trackItem called with barcode:', barcode);
+            console.log('barcode type:', typeof barcode);
+            console.log('barcode length:', barcode?.length);
+            console.log('reason:', reason);
+
+            if (!db) {
+                await initializeDB();
+            }
+
+            // Check if already tracked
+            const existingData = await getTrackingData(barcode);
+            if (existingData) {
+                showMessage('Item is already being tracked', 'info');
+                return existingData;
+            }
+
+            // Find the item in current collection data
+            console.log('Searching for exact barcode match...');
+            const foundItem = libraryData ? libraryData.find(book => book.barcode === barcode) : null;
+            console.log('Found item:', foundItem);
+
+            if (!foundItem) {
+                console.log('Exact match failed. Checking first few libraryData barcodes:');
+                console.log(libraryData?.slice(0, 5).map(book => ({ barcode: book.barcode, type: typeof book.barcode })));
+                console.log('=== trackItem DEBUG END ===');
+                throw new Error('Item not found in current collection');
+            }
+            
             if (!db) {
                 await initializeDB();
             }
@@ -3753,20 +3784,27 @@
 
             const trackingData = {
                 barcode: barcode,
-                title: item.title,
-                author: item.author,
+                title: foundItem.title,
+                author: foundItem.author,
                 reason: reason,
                 dateAdded: new Date().toISOString(),
                 status: 'active',
+                completedDate: null,                                     // ✅ NEW FIELD
                 notes: notes,
                 location: location || formatBranchName(item.branch || 'Unknown'),
+                branchHistory: [{                                        // ✅ NEW FIELD
+                    date: new Date().toISOString(),
+                    branch: formatBranchName(item.branch || 'Unknown'),
+                    snapshotId: currentSnapshotId || 'current',
+                    reason: 'initial-tracking'
+                }],
                 history: [{
                     date: new Date().toISOString(),
                     action: 'added',
                     details: `Added for tracking: ${reason}`,
                     snapshotId: currentSnapshotId || 'current',
-                    circulation: item.circulation || 0,
-                    location: location || formatBranchName(item.branch || 'Unknown')
+                    circulation: foundItem.circulation || 0,
+                    location: location || formatBranchName(foundItem.branch || 'Unknown')
                 }]
             };
 
@@ -3993,7 +4031,7 @@
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // refreshTrackingSearchResults() - Refresh the tracking search results display
         //===========================================================================
         async function refreshTrackingSearchResults() {
@@ -4048,6 +4086,222 @@
             `).join('')}
         `;
             }
+        }
+
+        //===========================================================================
+        // processTrackingLifecycles() - Handle all lifecycle changes for new collection period
+        //===========================================================================
+        async function processTrackingLifecycles(csvUploadId) {
+            console.log('🔄 Processing tracking lifecycles for new collection period:', csvUploadId);
+
+            try {
+                // 1. Auto-delete weeded/replaced items
+                await autoDeleteWeedingCandidates();
+
+                // 2. Future: Update locations and performance for remaining items
+                // await updateTrackingPerformance(csvUploadId);
+
+                // 3. Future: Check for completed branch rotations
+                // await checkBranchRotationCompletions(csvUploadId);
+
+                // 4. Refresh tracking cache and UI
+                await loadTrackingData(true); // Force refresh
+                if (document.getElementById('trackingTab').classList.contains('active')) {
+                    refreshTrackingTable();
+                }
+
+                console.log('✅ Tracking lifecycle processing completed');
+
+            } catch (error) {
+                console.error('❌ Error processing tracking lifecycles:', error);
+            }
+        }
+
+        //===========================================================================
+        // autoDeleteWeedingCandidates() - Remove tracking for weeded/replaced items
+        //===========================================================================
+        async function autoDeleteWeedingCandidates() {
+            if (!libraryData || libraryData.length === 0) {
+                console.log('⚠️ No library data available for lifecycle processing');
+                return;
+            }
+
+            // Get current barcodes from the new collection data
+            const currentBarcodes = new Set(libraryData.map(item => item.barcode));
+            console.log(`📊 Current collection contains ${currentBarcodes.size} items`);
+
+            // Get all tracked items from cache
+            const trackedItems = Array.from(trackedItemsCache.values());
+            console.log(`📌 Found ${trackedItems.length} tracked items to check`);
+
+            let deletedCount = 0;
+            const deletedItems = [];
+
+            for (const trackedItem of trackedItems) {
+                // Check if this tracked item is no longer in the current collection
+                if (!currentBarcodes.has(trackedItem.barcode)) {
+                    console.log(`🔍 Item ${trackedItem.barcode} no longer in collection (reason: ${trackedItem.reason})`);
+
+                    // Auto-delete only weeding and replacement candidates
+                    if (trackedItem.reason === 'weeding-candidate' ||
+                        trackedItem.reason === 'replacement-candidate') {
+
+                        try {
+                            await untrackItem(trackedItem.barcode);
+                            deletedCount++;
+                            deletedItems.push({
+                                barcode: trackedItem.barcode,
+                                title: trackedItem.title || 'Unknown Title',
+                                reason: trackedItem.reason
+                            });
+
+                            console.log(`🗑️ Auto-deleted tracking for: ${trackedItem.title || trackedItem.barcode} (${trackedItem.reason})`);
+
+                        } catch (error) {
+                            console.error(`❌ Failed to auto-delete tracking for ${trackedItem.barcode}:`, error);
+                        }
+                    } else {
+                        console.log(`⏭️ Skipping auto-delete for ${trackedItem.barcode} (reason: ${trackedItem.reason} - persistent tracking)`);
+                    }
+                }
+            }
+
+            // Summary logging
+            if (deletedCount > 0) {
+                console.log(`🎯 Auto-deletion Summary: Removed ${deletedCount} weeded/replaced items from tracking:`);
+                deletedItems.forEach(item => {
+                    console.log(`   • ${item.title} (${item.reason})`);
+                });
+            } else {
+                console.log(`✨ Auto-deletion Summary: No weeded/replaced items found for removal`);
+            }
+
+            return {
+                deletedCount,
+                deletedItems
+            };
+        }
+
+        //===========================================================================
+        // updateBranchHistory() - Update branch history when item moves
+        //===========================================================================
+        async function updateBranchHistory(barcode, newBranch, snapshotId, reason = 'branch-change') {
+            if (!db) {
+                await initializeDB();
+            }
+
+            const trackingData = await getTrackingData(barcode);
+            if (!trackingData) {
+                return; // Item not tracked, nothing to update
+            }
+
+            // Check if this is actually a branch change
+            const lastBranchEntry = trackingData.branchHistory[trackingData.branchHistory.length - 1];
+            const formattedNewBranch = formatBranchName(newBranch || 'Unknown');
+
+            if (lastBranchEntry && lastBranchEntry.branch === formattedNewBranch) {
+                return; // No change in branch
+            }
+
+            // Add new branch history entry
+            trackingData.branchHistory.push({
+                date: new Date().toISOString(),
+                branch: formattedNewBranch,
+                snapshotId: snapshotId || currentSnapshotId || 'current',
+                reason: reason
+            });
+
+            // Update current location
+            trackingData.location = formattedNewBranch;
+
+            // Also add to general history
+            trackingData.history.push({
+                date: new Date().toISOString(),
+                action: 'branch-changed',
+                details: `Moved to branch: ${formattedNewBranch}`,
+                snapshotId: snapshotId || currentSnapshotId || 'current',
+                circulation: 0, // Will be updated with performance tracking
+                location: formattedNewBranch
+            });
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['tracked_items'], 'readwrite');
+                const store = transaction.objectStore('tracked_items');
+                const request = store.put(trackingData);
+
+                request.onsuccess = () => {
+                    // Update cache
+                    trackedItemsCache.set(barcode, trackingData);
+                    console.log('Branch history updated for:', barcode);
+                    resolve(trackingData);
+                };
+
+                request.onerror = () => {
+                    console.error('Error updating branch history:', request.error);
+                    reject(request.error);
+                };
+            });
+        }
+
+        //===========================================================================
+        // migrateTrackingData() - Add new fields to existing tracking data
+        //===========================================================================
+        async function migrateTrackingData() {
+            if (!db) {
+                return;
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['tracked_items'], 'readwrite');
+                const store = transaction.objectStore('tracked_items');
+                const request = store.getAll();
+
+                request.onsuccess = () => {
+                    const allItems = request.result;
+                    let updatePromises = [];
+
+                    allItems.forEach(item => {
+                        let needsUpdate = false;
+
+                        // Add completedDate if missing
+                        if (!item.hasOwnProperty('completedDate')) {
+                            item.completedDate = null;
+                            needsUpdate = true;
+                        }
+
+                        // Add branchHistory if missing
+                        if (!item.hasOwnProperty('branchHistory')) {
+                            item.branchHistory = [{
+                                date: item.dateAdded,
+                                branch: item.location || 'Unknown',
+                                snapshotId: 'migrated',
+                                reason: 'data-migration'
+                            }];
+                            needsUpdate = true;
+                        }
+
+                        if (needsUpdate) {
+                            const updateRequest = store.put(item);
+                            updatePromises.push(new Promise((res, rej) => {
+                                updateRequest.onsuccess = () => res();
+                                updateRequest.onerror = () => rej(updateRequest.error);
+                            }));
+                        }
+                    });
+
+                    Promise.all(updatePromises)
+                        .then(() => {
+                            console.log('Tracking data migration completed');
+                            resolve();
+                        })
+                        .catch(reject);
+                };
+
+                request.onerror = () => {
+                    console.error('Error during tracking data migration:', request.error);
+                    reject(request.error);
+                };
+            });
         }
 
         //===========================================================================
@@ -4522,16 +4776,25 @@
         }
 
         //===========================================================================
-        // updateTrackingStatus() - Update tracking status and add history entry
+        // updateTrackingStatus() - Update tracking status with completion support
         //===========================================================================
         async function updateTrackingStatus(barcode, newStatus, notes = '') {
-            const trackingData = await getTrackingData(barcode);
-            if (!trackingData) {
-                throw new Error('Item not being tracked');
+            if (!db) {
+                await initializeDB();
             }
 
-            // Update status and add history entry
+            const trackingData = await getTrackingData(barcode);
+            if (!trackingData) {
+                throw new Error('Item is not currently being tracked');
+            }
+
+            // Update status and set completedDate if status is "completed-rotation"
             trackingData.status = newStatus;
+            if (newStatus === 'completed-rotation' && !trackingData.completedDate) {
+                trackingData.completedDate = new Date().toISOString();
+            }
+
+            // Add to history
             trackingData.history.push({
                 date: new Date().toISOString(),
                 action: 'status-changed',
@@ -6260,7 +6523,7 @@
                 // Add timestamp to database name to avoid conflicts between different instances
                 const dbName = 'CollectionSnapshots_' + (window.dbInstance || 'main');
 
-                const request = indexedDB.open(dbName, 3);
+                const request = indexedDB.open(dbName, 4);
 
                 request.onerror = () => {
                     console.error('Error opening IndexedDB:', request.error);
@@ -6273,7 +6536,7 @@
                         deleteRequest.onsuccess = () => {
                             console.log('Corrupted database deleted, trying again...');
                             // Try again with a fresh database
-                            const retryRequest = indexedDB.open(dbName, 3);
+                            const retryRequest = indexedDB.open(dbName, 4);
 
                             retryRequest.onsuccess = () => {
                                 db = retryRequest.result;
@@ -6306,6 +6569,14 @@
                     console.log('IndexedDB initialized successfully');
                     resolve(db);
                 };
+
+                // Add this migration call:
+                migrateTrackingData().then(() => {
+                    resolve(db);
+                }).catch(error => {
+                    console.error('Error during tracking data migration:', error);
+                    resolve(db); // Still resolve even if migration fails
+                });
 
                 request.onupgradeneeded = (event) => {
                     db = event.target.result;
@@ -6353,7 +6624,7 @@
                 trackingStore.createIndex('dateAdded', 'dateAdded', { unique: false });
                 trackingStore.createIndex('status', 'status', { unique: false });
                 trackingStore.createIndex('location', 'location', { unique: false });
-
+                trackingStore.createIndex('completedDate', 'completedDate', { unique: false });
             }
 
         }
@@ -6397,11 +6668,18 @@
         //===========================================================================
         // getAllSnapshots() - Retrieve all saved snapshots from IndexedDB
         //===========================================================================
-
         async function getAllSnapshots() {
             try {
+                // Ensure database is initialized and ready
                 if (!db) {
+                    console.log('Database not ready, initializing...');
                     await initializeDB();
+                }
+
+                // Double-check that db is now available
+                if (!db) {
+                    console.warn('Database still not available after initialization');
+                    return [];
                 }
 
                 return new Promise((resolve, reject) => {
@@ -6422,7 +6700,7 @@
                     };
                 });
             } catch (error) {
-                console.error('IndexedDB not available:', error);
+                console.error('Error in getAllSnapshots:', error);
                 // Return empty array if IndexedDB is not available
                 return [];
             }
@@ -6482,6 +6760,12 @@
         //===========================================================================
         async function tryRecoverLastSession() {
             try {
+                // Ensure database is ready before proceeding
+                if (!db) {
+                    console.log('Database not ready for recovery check');
+                    return false;
+                }
+
                 const snapshots = await getAllSnapshots();
                 if (snapshots && snapshots.length > 0) {
                     // Look for recovery snapshot first, then most recent regular snapshot
@@ -6495,31 +6779,32 @@
                     const recoveryDiv = document.createElement('div');
                     recoveryDiv.className = 'status-loading';
                     recoveryDiv.innerHTML = `
-                        <h3 style="margin-bottom: 0.5rem;">📁 Previous Collection Found</h3>
-                        <p style="margin-bottom: 1rem;">
-                            Found a previously loaded collection: "${latestSnapshot.name}" 
-                            (${latestSnapshot.itemCount.toLocaleString()} items, ${new Date(latestSnapshot.timestamp).toLocaleDateString()})
-                        </p>
-                        <div style="display: flex; gap: 1rem;">
-                            <button class="btn btn-primary" onclick="loadSnapshotById('${latestSnapshot.id}')">
-                                📁 Load Previous Collection
-                            </button>
-                            <button class="btn btn-secondary" onclick="showTab('snapshots')">
-                                View All Snapshots
-                            </button>
-                            <button class="btn btn-danger" onclick="deletePreviousCollection('${latestSnapshot.id}')">
-                                🗑️ Delete Collection
-                            </button>
-                        </div>
-                    `;
+                <h3 style="margin-bottom: 0.5rem;">📁 Previous Collection Found</h3>
+                <p style="margin-bottom: 1rem;">
+                    Found a previously loaded collection: "${latestSnapshot.name}" 
+                    (${latestSnapshot.itemCount.toLocaleString()} items, ${new Date(latestSnapshot.timestamp).toLocaleDateString()})
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-primary" onclick="loadSnapshotById('${latestSnapshot.id}')">
+                        📁 Load Previous Collection
+                    </button>
+                    <button class="btn btn-secondary" onclick="showTab('snapshots')">
+                        View All Snapshots
+                    </button>
+                    <button class="btn btn-danger" onclick="deletePreviousCollection('${latestSnapshot.id}')">
+                        🗑️ Delete Collection
+                    </button>
+                </div>
+            `;
 
                     uploadStatus.appendChild(recoveryDiv);
                     return true; // Recovery option shown
                 }
             } catch (error) {
                 console.error('Error checking for previous sessions:', error);
+                // Don't throw - just fail gracefully
             }
-            return false; // No recovery available
+            return false;
         }
 
         //===========================================================================
@@ -6592,63 +6877,6 @@
                 console.error('Error loading snapshot:', error);
                 showStatus('Error loading snapshot: ' + error.message, 'error');
             }
-        }
-
-        //===========================================================================
-        // saveCurrentCollectionForRecovery() - Automatically save collection for session recovery
-        //===========================================================================
-        async function saveCurrentCollectionForRecovery() {
-            if (!db || !libraryData || libraryData.length === 0) {
-                return;
-            }
-
-            try {
-                // Create a special recovery snapshot
-                const recoverySnapshot = {
-                    id: 'recovery_latest',
-                    name: `Auto-saved Collection (${new Date().toLocaleDateString()})`,
-                    timestamp: new Date().toISOString(),
-                    itemCount: libraryData.length,
-                    totalCirculation: libraryData.reduce((sum, item) => sum + (item.circulation || 0), 0),
-                    collections: [...new Set(libraryData.map(item => item.collection))].length,
-                    data: libraryData,
-                    isRecovery: true // Mark as recovery snapshot
-                };
-
-                const transaction = db.transaction(['snapshots'], 'readwrite');
-                const store = transaction.objectStore('snapshots');
-
-                // Use put instead of add to overwrite existing recovery snapshot
-                const request = store.put(recoverySnapshot);
-
-                request.onsuccess = () => {
-                    console.log('✅ Collection auto-saved for recovery');
-
-                    // If no current snapshot is set (i.e., this is fresh uploaded data),
-                    // mark the auto-save as the current snapshot
-                    if (!currentSnapshotId) {
-                        currentSnapshotId = 'recovery_latest';
-                        console.log('Auto-save marked as currently loaded');
-                        // Update header status
-                        updateCurrentCollectionStatus();
-                    }
-                };
-
-                request.onerror = () => {
-                    console.error('❌ Error auto-saving collection for recovery:', request.error);
-                };
-
-            } catch (error) {
-                console.error('❌ Error in saveCurrentCollectionForRecovery:', error);
-            }
-        }
-        function dismissRecovery() {
-            const uploadStatus = document.getElementById('uploadStatus');
-            uploadStatus.innerHTML = '';
-            uploadStatus.className = ''; // Remove any status classes
-
-            // Ensure upload section is visible and reset to normal state
-            document.getElementById('uploadSection').style.display = 'block';
         }
 
         //===========================================================================
@@ -7940,13 +8168,39 @@
             // Clear existing options except the first
             yearSelect.innerHTML = '<option value="">Select year...</option>';
 
+            // Get available years
+            const availableYears = Object.keys(AVAILABLE_SAMPLES).sort((a, b) => b - a);
+
             // Add available years
-            Object.keys(AVAILABLE_SAMPLES).sort((a, b) => b - a).forEach(year => {
+            availableYears.forEach(year => {
                 const option = document.createElement('option');
                 option.value = year;
                 option.textContent = year;
                 yearSelect.appendChild(option);
             });
+
+            // Auto-select if only one year is available
+            if (availableYears.length === 1) {
+                yearSelect.value = availableYears[0];
+                console.log(`Auto-selected year: ${availableYears[0]} (only option available)`);
+
+                // Trigger month dropdown population
+                updateSampleMonths();
+
+                // Check if only one month is available and auto-select it too
+                setTimeout(() => {
+                    const monthSelect = document.getElementById('sampleMonth');
+                    if (monthSelect && monthSelect.options.length === 2) { // "Select month..." + 1 option
+                        monthSelect.selectedIndex = 1; // Select the first (and only) real option
+                        const selectedMonth = monthSelect.value;
+                        if (selectedMonth) {
+                            console.log(`Auto-selected month: ${monthSelect.options[1].textContent} (only option available)`);
+                            // Enable the load button
+                            document.getElementById('loadSampleBtn').disabled = false;
+                        }
+                    }
+                }, 10); // Small delay to let updateSampleMonths() complete
+            }
         }
 
         //===========================================================================
@@ -8065,10 +8319,10 @@
 
                     if (isNewPeriod) {
                         console.log(`Processing new collection period: ${selectedMonth}`);
-                        // Future: Trigger lifecycle management will be added here
-                        // setTimeout(async () => {
-                        //     await processTrackingLifecycles(localStorage.getItem('currentCSVUploadId'));
-                        // }, 1000);
+                        // Trigger lifecycle management after data is fully loaded
+                        setTimeout(async () => {
+                            await processTrackingLifecycles(localStorage.getItem('currentCSVUploadId'));
+                        }, 1000);
                     }
 
                     // Update header status with sample data indicator
@@ -8079,7 +8333,6 @@
 
                     // Initialize search and save for recovery
                     initializeFuzzySearch();
-                    saveCurrentCollectionForRecovery();
 
                     // Show detailed parsing results like manual uploads
                     if (window.lastParsingStats) {
@@ -8188,6 +8441,13 @@
                         localStorage.setItem('currentCSVUploadId', `manual-${new Date().toISOString().split('T')[0]}`);
                         console.log('Manual upload detected - GitHub collection tracking reset');
 
+                        // After manual upload processing is complete
+                        const csvUploadId = `manual-upload-${new Date().toISOString().split('T')[0]}`;
+                        localStorage.setItem('currentCSVUploadId', csvUploadId);
+                        setTimeout(async () => {
+                            await processTrackingLifecycles(csvUploadId);
+                        }, 1000);
+
                         // Update header status with manual data indicator
                         updateCurrentCollectionStatus();
 
@@ -8196,7 +8456,6 @@
 
                         // Initialize search and save for recovery
                         initializeFuzzySearch();
-                        saveCurrentCollectionForRecovery();
 
                         // Show detailed parsing results like the regular upload
                         if (window.lastParsingStats) {
@@ -9319,9 +9578,6 @@
 
                 // Update branch filter options
                 updateBranchFilter();
-
-                // Auto-save for recovery
-                saveCurrentCollectionForRecovery();
 
                 // Don't initialize fuzzy search - keep it simple for max performance
                 // initializeFuzzySearch();
@@ -13599,7 +13855,6 @@
 
                         // Initialize fuzzy search and save for recovery
                         initializeFuzzySearch();
-                        saveCurrentCollectionForRecovery();
 
                         // ─── Always show parsing details on every upload ───
                         console.log('=== About to show parsing results ===');
@@ -14168,9 +14423,7 @@
         window.showTab = showTab;
         window.applyManualMapping = applyManualMapping;
         window.saveCurrentSnapshot = saveCurrentSnapshot;
-        window.saveCurrentCollectionForRecovery = saveCurrentCollectionForRecovery;
         window.loadSnapshotById = loadSnapshotById;
-        window.dismissRecovery = dismissRecovery;
         window.toggleSnapshotSelection = toggleSnapshotSelection;
         window.loadSelectedSnapshot = loadSelectedSnapshot;
         window.deleteSnapshotById = deleteSnapshotById;
@@ -14287,11 +14540,8 @@
                 console.log('✅ IndexedDB initialized successfully');
 
                 // Try to recover last session
-                const recoveryShown = await tryRecoverLastSession();
-                if (!recoveryShown) {
-                    console.log('No previous snapshots found - showing fresh upload interface');
-                    // Upload section is already visible from above
-                }
+                // Database ready - upload section is already visible by default
+                console.log('Ready for fresh collection upload');
 
             } catch (error) {
                 console.error('❌ IndexedDB initialization failed:', error);
