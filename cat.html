@@ -3619,6 +3619,7 @@
         // Global branch filtering
         let availableBranches = [];
         let currentBranchFilter = '';
+        let currentSampleDataLabel = null; // Store the label from GitHub sample data
 
         // Sample data configuration
         const GITHUB_REPO = 'denismcdonald/denismcdonald.github.io';
@@ -6822,6 +6823,7 @@
                 if (snapshot && snapshot.data) {
                     libraryData = snapshot.data;
                     currentSnapshotId = id;
+                    currentSampleDataLabel = null; // Clear GitHub sample label
                     // Update header status
                     updateCurrentCollectionStatus();
 
@@ -8277,6 +8279,9 @@
                 alert('Sample data not found');
                 return;
             }
+
+            // Store the sample data label for use in collection status
+            currentSampleDataLabel = sampleData.label;
 
             try {
 
@@ -13846,6 +13851,7 @@
                         libraryData = data;
 
                         // Clear current snapshot ID since this is fresh data
+                        currentSampleDataLabel = null; // Clear GitHub sample label
                         currentSnapshotId = null;
                         // Update header status
                         updateCurrentCollectionStatus();
@@ -15727,7 +15733,7 @@
             }
         }
 
-        //===========================================================================
+    //===========================================================================
         // updateCurrentCollectionStatus() - Update header collection indicator
         //===========================================================================
         function updateCurrentCollectionStatus() {
@@ -15764,9 +15770,15 @@
                     collectionType = 'snapshot';
                 }
             } else {
-                const today = new Date().toLocaleDateString();
-                collectionName = `Collection (${today})`;
-                collectionType = 'fresh';
+                // Check if this is sample data loaded from GitHub
+                if (currentSampleDataLabel) {
+                    collectionName = currentSampleDataLabel;
+                    collectionType = 'github-sample';
+                } else {
+                    const today = new Date().toLocaleDateString();
+                    collectionName = `Collection (${today})`;
+                    collectionType = 'fresh';
+                }
             }
 
             // Update the display
