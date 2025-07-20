@@ -1764,6 +1764,10 @@
             background-color: #1586be;
         }
 
+        #exportReasonSelect {
+            padding: 0.25rem;
+        }
+
         /* Position copy buttons slightly lower */
         span[onclick*="copyTitleToClipboard"],
         span[onclick*="copyBarcodeToClipboard"] {
@@ -3384,8 +3388,8 @@
                             <option value="">Select snapshot...</option>
                         </select>
                     </div>
-                    <button id="compareBtn" class="btn btn-primary" onclick="compareSnapshots()">
-                        📊 Compare
+                    <button id="compareBtn" class="btn" onclick="compareSnapshots()">
+                        Go
                     </button>
                 </div>
                 <div id="comparisonResults"></div>
@@ -3630,20 +3634,19 @@
                 <!-- Header with all action buttons grouped logically -->
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <h3 style="margin: 0;">Tracked Items</h3>
-
+                
                     <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end;">
                         <!-- Top row: Main data operations -->
                         <div style="display: flex; gap: 0.5rem;">
-                            <button class="btn btn-secondary" onclick="exportTrackingData()">📊 Export Tracking
-                                Data</button>
+                            <button class="btn btn-secondary" onclick="exportTrackingData()">📊 Export Tracking Data</button>
                             <input type="file" id="importTrackingFile" accept=".json" style="display: none;"
                                 onchange="handleImportTrackingFile(this)">
-                            <button class="btn btn-secondary"
-                                onclick="document.getElementById('importTrackingFile').click()">📁 Import Tracking
-                                Data</button>
+                            <button class="btn btn-secondary" onclick="document.getElementById('importTrackingFile').click()">
+                                📁 Import Tracking Data
+                            </button>
                         </div>
-
-                        <!-- Bottom row: Location-specific operations -->
+                
+                        <!-- Second row: Location-specific operations -->
                         <div style="display: flex; gap: 0.5rem; align-items: center">
                             <button id="emailHeywoodBtn" class="btn" onclick="emailLocationItems('heywood')"
                                 style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
@@ -3656,6 +3659,19 @@
                             <button id="exportPortlandBtn" class="btn" onclick="exportLocationOnly('portland')"
                                 style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
                                 📋 Portland Items
+                            </button>
+                        </div>
+                
+                        <!-- Third row: Export by reason controls -->
+                        <div id="exportByReasonControls" style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label for="exportReasonSelect" style="font-size: 0.875rem; font-weight: 500; white-space: nowrap;">
+                                Export by reason:
+                            </label>
+                            <select id="exportReasonSelect" class="form-select" style="width: auto; font-size: 0.875rem;">
+                                <!-- Populated by generateExportReasonOptions() -->
+                            </select>
+                            <button id="exportByReasonBtn" class="btn btn-secondary" onclick="exportTrackingByReason()">
+                                📊 Export
                             </button>
                         </div>
                     </div>
@@ -3716,59 +3732,51 @@
                 <!-- Bulk Actions -->
                 <div class="bulk-actions" id="trackingBulkActions"
                     style="display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; min-width: 0;">
-                    <div style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 1; min-width: 0;">
-                        <button class="bulk-track-btn" id="changeReasonSelectedBtn"
-                            onclick="bulkChangeReasonSelected('tracking')" disabled>
+                
+                    <!-- Left side: All bulk action buttons -->
+                    <div style="display: flex; gap: 0.25rem; align-items: center; flex-shrink: 1; min-width: 0;">
+                        <button class="bulk-track-btn" id="changeReasonSelectedBtn" onclick="bulkChangeReasonSelected('tracking')"
+                            disabled style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
                             Change Reason (0)
                         </button>
-                        <button class="bulk-track-btn" id="untrackTrackingSelectedBtn"
-                            onclick="bulkUntrackSelected('tracking')" disabled>
+                        <button class="bulk-track-btn" id="untrackTrackingSelectedBtn" onclick="bulkUntrackSelected('tracking')"
+                            disabled style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
                             Untrack Selected (0)
                         </button>
                         <button class="bulk-track-btn" id="rotateSelectedBtn" onclick="rotateSelectedItems()" disabled
-                            style="color: white; border-color: #059669;">
+                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap; color: white; border-color: #059669;">
                             🔄 Rotate Selected (0)
                         </button>
-                        <button class="bulk-track-btn" id="untrackAllTrackingBtn" onclick="bulkUntrackAll('tracking')">
+                        <button class="bulk-track-btn" id="untrackAllTrackingBtn" onclick="bulkUntrackAll('tracking')"
+                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
                             Untrack All
                         </button>
-                        <!-- Export Buttons -->
-                        <button id="exportAllTrackingBtn" class="btn btn-secondary" onclick="exportAllTracking()">
+                        <button id="exportAllTrackingBtn" class="btn btn-secondary" onclick="exportAllTracking()"
+                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
                             📊 Export All
                         </button>
-                        <button id="exportSelectedTrackingBtn" class="btn btn-secondary"
-                            onclick="exportSelectedTracking()" disabled>
+                        <button id="exportSelectedTrackingBtn" class="btn btn-secondary" onclick="exportSelectedTracking()" disabled
+                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
                             📋 Export Selected (0)
                         </button>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;">
-                        <!-- Original Export by Reason Controls -->
-                        <div id="exportByReasonControls" style="display: flex; align-items: center; gap: 0.5rem;">
-                            <label for="exportReasonSelect" style="font-size: 0.875rem; font-weight: 500; white-space: nowrap;">Export by
-                                reason:</label>
-                            <select id="exportReasonSelect" class="form-select" style="width: auto; font-size: 0.875rem;">
-                                <!-- Populated by generateExportReasonOptions() -->
-                            </select>
-                            <button id="exportByReasonBtn" class="btn btn-secondary" onclick="exportTrackingByReason()">
-                                📊 Export
-                            </button>
-                        </div>
-                    
-                    <!-- New Snapshot Comparison Controls (initially hidden) -->
-                    <div id="snapshotComparisonControls" style="display: none; align-items: center; gap: 0.25rem;">
-                        <label style="font-size: 0.75rem; font-weight: 500; white-space: nowrap;">Compare:</label>
-                        <select id="firstSnapshotSelect" class="form-select" style="width: 120px; font-size: 0.75rem; padding: 0.25rem;">
-                            <option value="">1st Snapshot</option>
+                
+                    <!-- Right side: Snapshot comparison controls -->
+                    <div id="snapshotComparisonControls" style="display: flex; align-items: center; gap: 0.25rem;">
+                        <label style="font-size: 0.775rem; font-weight: 500; white-space: nowrap;">Compare:</label>
+                        <select id="firstSnapshotSelect" class="form-select"
+                            style="width: 125px; font-size: 0.775rem; padding: 0.3rem;">
+                            <option value="">First snapshot</option>
                         </select>
-                        <span style="font-size: 0.75rem; color: #6b7280;">vs</span>
-                        <select id="secondSnapshotSelect" class="form-select" style="width: 120px; font-size: 0.75rem; padding: 0.25rem;">
-                            <option value="">2nd Snapshot</option>
+                        <span style="font-size: 0.775rem; color: #6b7280;">vs</span>
+                        <select id="secondSnapshotSelect" class="form-select"
+                            style="width: 125px; font-size: 0.775rem; padding: 0.3rem;">
+                            <option value="">Second snapshot</option>
                         </select>
                         <button id="compareSnapshotsBtn" class="btn" onclick="comparePerformanceSnapshots()" disabled
-                            style="padding: 0.25rem 0.5rem; font-size: 0.75rem; background: #16a34a; color: white; border: none;">
+                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; background: #16a34a; color: white; border: none; white-space: nowrap;">
                             Go
                         </button>
-                    </div>
                     </div>
                 </div>
 
@@ -11199,6 +11207,7 @@
                     break;
                 case 'tracking':
                     loadTrackingTab();
+                    populateSnapshotDropdowns();
                     break;
             }
 
@@ -16870,6 +16879,9 @@
                 // Update tracking metrics
                 updateTrackingMetrics();
 
+                // Populate snapshot dropdowns when tracking tab loads
+                populateSnapshotDropdowns();
+
                 // Apply the currently active filter (or default to 'all')
                 const activeFilterButton = document.querySelector('.filter-btn.active');
                 if (activeFilterButton) {
@@ -17129,9 +17141,6 @@
         function filterTrackingByStatus(status) {
             console.log('🔍 FILTER DEBUG: Starting filterTrackingByStatus with status:', status);
 
-            // NEW: Handle UI changes for monitoring vs other statuses
-            toggleExportControls(status);
-
             // If monitoring status, populate snapshot dropdowns
             if (status === 'monitoring') {
                 populateSnapshotDropdowns();
@@ -17213,6 +17222,11 @@
             refreshTrackingTable(filteredData);
             console.log('🔍 FILTER DEBUG: refreshTrackingTable completed');
 
+        // NEW: Populate snapshot dropdowns for monitoring and mid-rotation views
+            if (status === 'monitoring' || status === 'mid-rotation') {
+                populateSnapshotDropdowns();
+            }
+
             // Show/hide bulk actions based on status filter
             const trackingBulkActions = document.getElementById('trackingBulkActions');
             if (trackingBulkActions) {
@@ -17240,34 +17254,6 @@
         }
 
         //===========================================================================
-        // toggleExportControls() - Show/hide export controls based on status filter
-        //===========================================================================
-        function toggleExportControls(status) {
-            const exportByReasonControls = document.getElementById('exportByReasonControls');
-            const snapshotComparisonControls = document.getElementById('snapshotComparisonControls');
-
-            if (status === 'monitoring') {
-                // Hide export by reason controls
-                if (exportByReasonControls) {
-                    exportByReasonControls.style.display = 'none';
-                }
-                // Show snapshot comparison controls
-                if (snapshotComparisonControls) {
-                    snapshotComparisonControls.style.display = 'flex';
-                }
-            } else {
-                // Show export by reason controls
-                if (exportByReasonControls) {
-                    exportByReasonControls.style.display = 'flex';
-                }
-                // Hide snapshot comparison controls
-                if (snapshotComparisonControls) {
-                    snapshotComparisonControls.style.display = 'none';
-                }
-            }
-        }
-
-        //===========================================================================
         // populateSnapshotDropdowns() - Populate snapshot selection dropdowns (FIXED)
         //===========================================================================
         async function populateSnapshotDropdowns() {
@@ -17279,8 +17265,8 @@
                 if (!firstSelect || !secondSelect) return;
 
                 // Clear existing options except the first placeholder
-                firstSelect.innerHTML = '<option value="">First Snapshot</option>';
-                secondSelect.innerHTML = '<option value="">Second Snapshot</option>';
+                firstSelect.innerHTML = '<option value="">First snapshot</option>';
+                secondSelect.innerHTML = '<option value="">Second snapshot</option>';
 
                 // Sort snapshots by date (newest first)
                 const sortedSnapshots = snapshots.sort((a, b) => {
@@ -17326,7 +17312,7 @@
         }
 
     //===========================================================================
-        // comparePerformanceSnapshots() - DEBUG VERSION to see what data we have
+        // comparePerformanceSnapshots() - Calculate performance for both views simultaneously
         //===========================================================================
         async function comparePerformanceSnapshots() {
             const firstSnapshotId = document.getElementById('firstSnapshotSelect').value;
@@ -17345,65 +17331,58 @@
             try {
                 showStatus('Loading performance comparison...', 'info');
 
-                // DEBUG: Let's see what tracking data we actually have
                 const allTrackedItems = Array.from(trackedItemsCache.values());
-                console.log('🔍 DEBUG: All tracked items:', allTrackedItems);
-                console.log('🔍 DEBUG: Total tracked items:', allTrackedItems.length);
 
-                // DEBUG: Let's see what reasons and statuses we have
-                const reasonCounts = {};
-                const statusCounts = {};
-                allTrackedItems.forEach(item => {
-                    reasonCounts[item.reason] = (reasonCounts[item.reason] || 0) + 1;
-                    statusCounts[item.status] = (statusCounts[item.status] || 0) + 1;
-                });
-                console.log('🔍 DEBUG: Reasons found:', reasonCounts);
-                console.log('🔍 DEBUG: Statuses found:', statusCounts);
-
-                // UPDATED: Look for items with any monitor-related reason
-                const monitoredItems = allTrackedItems.filter(item => {
+                // Get items for BOTH monitoring and mid-rotation views
+                const monitoringItems = allTrackedItems.filter(item => {
                     const hasMonitorReason = item.reason && (
                         item.reason.includes('monitor') ||
                         item.reason.includes('Monitor') ||
                         item.reason === 'monitor-performance'
                     );
-                    console.log(`🔍 DEBUG: Item ${item.title} - reason: "${item.reason}", status: "${item.status}", hasMonitorReason: ${hasMonitorReason}`);
                     return hasMonitorReason;
                 });
 
-                console.log('🔍 DEBUG: Filtered monitored items:', monitoredItems);
+                const midRotationItems = allTrackedItems.filter(item => {
+                    const isInMidRotation = item.status === 'active' &&
+                        item.rotationIntent === true &&
+                        !isBranchRotationComplete(item);
+                    return isInMidRotation;
+                });
 
-                if (monitoredItems.length === 0) {
-                    showStatus('No items found with monitor-performance tracking reason. Check console for debug info.', 'warning');
+                // Combine both sets of items (remove duplicates if any)
+                const allItemsToCompare = [...new Set([...monitoringItems, ...midRotationItems])];
+
+                console.log('🔍 DEBUG: Monitoring items:', monitoringItems.length);
+                console.log('🔍 DEBUG: Mid-rotation items:', midRotationItems.length);
+                console.log('🔍 DEBUG: Total items to compare:', allItemsToCompare.length);
+
+                if (allItemsToCompare.length === 0) {
+                    showStatus('No items found for performance comparison', 'warning');
                     return;
                 }
 
-                // Load both snapshots using the correct function name
+                // Load both snapshots
                 const [firstSnapshot, secondSnapshot] = await Promise.all([
                     getSnapshot(firstSnapshotId),
                     getSnapshot(secondSnapshotId)
                 ]);
-
-                console.log('🔍 DEBUG: First snapshot:', firstSnapshot?.name, 'Items:', firstSnapshot?.data?.length);
-                console.log('🔍 DEBUG: Second snapshot:', secondSnapshot?.name, 'Items:', secondSnapshot?.data?.length);
 
                 if (!firstSnapshot || !secondSnapshot) {
                     showStatus('Error: Could not load one or both snapshots', 'error');
                     return;
                 }
 
-                // Calculate performance data for each monitored item
+                // Calculate performance data for ALL items (both monitoring and mid-rotation)
                 const performanceData = new Map();
 
-                monitoredItems.forEach(trackedItem => {
+                allItemsToCompare.forEach(trackedItem => {
                     const firstSnapshotData = firstSnapshot.data.find(item => item.barcode === trackedItem.barcode);
                     const secondSnapshotData = secondSnapshot.data.find(item => item.barcode === trackedItem.barcode);
 
                     const firstCirculation = firstSnapshotData ? (firstSnapshotData.circulation || 0) : 0;
                     const secondCirculation = secondSnapshotData ? (secondSnapshotData.circulation || 0) : 0;
                     const performanceChange = secondCirculation - firstCirculation;
-
-                    console.log(`🔍 DEBUG: ${trackedItem.title} - First: ${firstCirculation}, Second: ${secondCirculation}, Change: ${performanceChange}`);
 
                     performanceData.set(trackedItem.barcode, {
                         firstCirculation,
@@ -17414,20 +17393,20 @@
                     });
                 });
 
-                // Store performance data globally so the table can access it
+                // Store performance data globally so both views can access it
                 window.currentPerformanceComparison = performanceData;
-                console.log('🔍 DEBUG: Performance data stored:', performanceData);
+                console.log('🔍 DEBUG: Performance data stored for', performanceData.size, 'items');
 
-                // Re-render the tracking table to show performance data
-                const filteredItems = monitoredItems;
-                refreshTrackingTable(filteredItems);
+                // Refresh the current view (don't force specific items)
+                const currentStatus = document.querySelector('.filter-btn.active')?.getAttribute('data-status');
+                filterTrackingByStatus(currentStatus || 'all');
 
-                const totalItems = monitoredItems.length;
+                const totalItems = allItemsToCompare.length;
                 const improved = Array.from(performanceData.values()).filter(perf => perf.performanceChange > 0).length;
                 const declined = Array.from(performanceData.values()).filter(perf => perf.performanceChange < 0).length;
 
                 showStatus(
-                    `Performance comparison loaded: ${totalItems} items (${improved} improved, ${declined} declined)`,
+                    `Performance comparison loaded: ${totalItems} items (${improved} improved, ${declined} declined) - available on both Monitoring and Mid-Rotation views`,
                     'success'
                 );
 
@@ -17739,19 +17718,28 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                             </svg>
                         </th>
-                        <!-- COLUMN 7: Date when tracking started (sortable) -->
+                        <!-- COLUMN 7: Date when originally tracked -->
                         <th class="sortable" data-sort="dateAdded" data-type="date">
                             Date Tracked
                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                             </svg>
                         </th>
-                        <!-- COLUMN 8: Branches still to visit (non-sortable) -->
-                        <th style="width: 150px;">Yet to Visit</th>
-                        <!-- COLUMN 9: Action buttons (non-sortable) -->
-                        <th style="width: 80px; text-align: center;">Actions</th>
-                    </tr>
-                </thead>
+                        ${window.currentPerformanceComparison ? `
+                        <!-- COLUMN 8: Performance Comparison (only when comparing) -->
+                        <th class="sortable" data-sort="performance" data-type="number">
+                            Performance
+                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                            </svg>
+                        </th>
+                        ` : ''}
+                        <!-- COLUMN 8/9: Yet to visit (remaining branches or completion message) -->
+                        <th>Yet to Visit</th>
+                        <!-- COLUMN 9/10: Action buttons -->
+                        <th>Actions</th>
+                                            </tr>
+                        </thead>
                 
                 <!--
                 ================================================================
@@ -17809,7 +17797,8 @@
                 <td style="color: #374151;">${escapeHtml(currentLocation)}</td>
                 <!-- COLUMN 7: Date when originally tracked -->
                 <td>${formatDate(item.dateAdded)}</td>
-                <!-- COLUMN 8: Yet to visit (remaining branches or completion message) -->
+                ${window.currentPerformanceComparison ? `<td>${getPerformanceDisplayForItem(item.barcode)}</td>` : ''}
+                <!-- COLUMN 8/9: Yet to visit (remaining branches or completion message) -->
                 <td style="font-size: 0.875rem; color: ${yetToVisitColor};">
                     ${yetToVisit}
                 </td>
@@ -17874,8 +17863,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                             </svg>
                         </th>
-                        ${window.currentPerformanceComparison && document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' ? `
-                        <!-- COLUMN 8: Performance Comparison (only in monitoring mode) -->
+                        ${window.currentPerformanceComparison && (document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation') ? `
+                        <!-- COLUMN 8: Performance Comparison (only in monitoring/mid-rotation mode) -->
                         <th class="sortable" data-sort="performance" data-type="number">
                             Performance
                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -17968,7 +17957,8 @@
         function generateStandardTrackingRows(trackingArray) {
             // Check if we should show performance column
             const showPerformanceColumn = window.currentPerformanceComparison &&
-                document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring';
+                (document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' ||
+                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation');
 
             return trackingArray.map(item => {
                 return `
