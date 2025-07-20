@@ -10737,7 +10737,7 @@
             });
         }
 
-    //===========================================================================
+        //===========================================================================
         // showLocationWarning() - Show warning for same-location tracking
         //===========================================================================
         function showLocationWarning(itemLocation, trackingReason) {
@@ -16874,6 +16874,19 @@
                     if (trackingData) {
                         // Update the reason
                         trackingData.reason = newReason;
+
+                        trackingData.reason = newReason;
+
+                        // Check for same-location tracking
+                        const currentItem = libraryData.find(item => item.barcode === barcode);
+                        if (currentItem && newReason.startsWith('send-to-')) {
+                            const targetBranch = newReason.replace('send-to-', '');
+                            const currentBranch = currentItem.branch?.toLowerCase().replace(' library', '');
+
+                            if (currentBranch === targetBranch) {
+                                showLocationWarning(currentItem.branch, newReason);
+                            }
+                        }
 
                         // 🔧 NEW: Reset completed items back to active when reason changes
                         if (trackingData.status === 'completed-rotation') {
