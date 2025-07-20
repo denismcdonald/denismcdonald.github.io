@@ -17253,8 +17253,8 @@
             console.log('🔍 FILTER DEBUG: filterTrackingByStatus completed');
         }
 
-        //===========================================================================
-        // populateSnapshotDropdowns() - Populate snapshot selection dropdowns (FIXED)
+    //===========================================================================
+        // populateSnapshotDropdowns() - Populate snapshot selection dropdowns (PRESERVE SELECTIONS)
         //===========================================================================
         async function populateSnapshotDropdowns() {
             try {
@@ -17264,13 +17264,16 @@
 
                 if (!firstSelect || !secondSelect) return;
 
-                // Clear existing options except the first placeholder
-                firstSelect.innerHTML = '<option value="">First snapshot</option>';
-                secondSelect.innerHTML = '<option value="">Second snapshot</option>';
+                // Remember current selections before repopulating
+                const currentFirstSelection = firstSelect.value;
+                const currentSecondSelection = secondSelect.value;
+
+                // Clear existing options
+                firstSelect.innerHTML = '<option value="">First snapshot...</option>';
+                secondSelect.innerHTML = '<option value="">Second snapshot...</option>';
 
                 // Sort snapshots by date (newest first)
                 const sortedSnapshots = snapshots.sort((a, b) => {
-                    // Handle different possible date formats
                     const dateA = new Date(a.date || a.timestamp || a.created);
                     const dateB = new Date(b.date || b.timestamp || b.created);
                     return dateB - dateA;
@@ -17278,7 +17281,6 @@
 
                 // Populate both dropdowns
                 sortedSnapshots.forEach(snapshot => {
-                    // Create a proper date string
                     let dateStr = 'Unknown Date';
                     const snapshotDate = new Date(snapshot.date || snapshot.timestamp || snapshot.created);
                     if (!isNaN(snapshotDate.getTime())) {
@@ -17294,6 +17296,14 @@
                     secondSelect.appendChild(option2);
                 });
 
+                // Restore previous selections if they still exist
+                if (currentFirstSelection && Array.from(firstSelect.options).some(opt => opt.value === currentFirstSelection)) {
+                    firstSelect.value = currentFirstSelection;
+                }
+                if (currentSecondSelection && Array.from(secondSelect.options).some(opt => opt.value === currentSecondSelection)) {
+                    secondSelect.value = currentSecondSelection;
+                }
+
                 // Add event listeners to enable compare button when both selections made
                 const updateCompareButton = () => {
                     const compareBtn = document.getElementById('compareSnapshotsBtn');
@@ -17305,6 +17315,9 @@
 
                 firstSelect.addEventListener('change', updateCompareButton);
                 secondSelect.addEventListener('change', updateCompareButton);
+
+                // Update compare button state after restoring selections
+                updateCompareButton();
 
             } catch (error) {
                 console.error('Error populating snapshot dropdowns:', error);
