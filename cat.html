@@ -302,6 +302,20 @@
             border-bottom: 1px solid #e5e7eb;
         }
 
+        /* Make all title cells in tables blue instead of grey */
+        .sortable-table td strong,
+        .search-results-table td strong,
+        .analysis-table td strong {
+            color: #1d4ed8 !important;
+        }
+
+        /* Also make title cells themselves blue for consistency */
+        .sortable-table tr td:nth-child(3),
+        .search-results-table tr td:nth-child(3) {
+            color: #1d4ed8;
+            font-weight: 500;
+        }
+
         /* Universal Table Styles for Sorting */
         .sortable-table {
             width: 100%;
@@ -4345,14 +4359,15 @@
             ${resultsWithTracking.map(item => `
                 <div class="result-row">
                     <div style="flex: 1; min-width: 0;">
-                        <div style="font-weight: 500; margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            ${item.isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
-                            ${escapeHtml(item.title)}
-                            ${item.isTracked ? `<span class="tracking-reason">${formatTrackingReason(item.trackingData.reason)}</span>` : ''}
-                        </div>
-                        <div style="font-size: 0.875rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            ${escapeHtml(item.author)} • ${escapeHtml(item.callNumber)}
-                        </div>
+                        <div style="font-weight: 500; margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; color: #2563eb;" onclick="showTrackingItemModal('${item.barcode}')">
+                        ${item.isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+                        ${escapeHtml(item.title)}
+                        ${item.isTracked ? `<span class="tracking-reason">${formatTrackingReason(item.trackingData.reason)}</span>` : ''}
+                    </div>
+                    <div style="font-size: 0.875rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        ${escapeHtml(item.author)} • ${escapeHtml(item.callNumber)}
+                        ${item.branch ? ` • ${escapeHtml(formatBranchName(item.branch))}` : ''}
+                    </div>
                     </div>
                     ${item.isTracked ?
                         `<button class="untrack-btn" onclick="handleUntrackFromTrackingSearch('${item.barcode}', event)">Untrack</button>` :
@@ -4801,7 +4816,7 @@
                 }
 
                 row.innerHTML = `
-                <td style="text-align: center;">
+                <td style="text-align: center;" onclick="event.stopPropagation();">
                     <input type="checkbox" class="item-checkbox chart-modal-item-checkbox"
                         value="${item.barcode}" onchange="updateTrackSelectedButton('chartModal')">
                 </td>
@@ -5344,11 +5359,11 @@
                 }
 
                 row.innerHTML = `
-            <td style="text-align: center;">
+            <td style="text-align: center;" onclick="event.stopPropagation();">
                 <input type="checkbox" class="item-checkbox weeding-item-checkbox" 
                        value="${item.barcode}" onchange="updateTrackSelectedButton('weeding')">
             </td>
-            <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;">
+            <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
                 <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
                     style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                     title="Copy title">📄</span>
@@ -5356,18 +5371,18 @@
                     style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                     title="Copy ID">#️⃣</span>
             </td>
-            <td onclick="selectBookFromTable('${item.barcode}')">
+            <td onclick="showTrackingItemModal('${item.barcode}')">
                 ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                 <strong>${escapeHtml(item.title)}</strong>
                 ${isTracked ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
             </td>
-            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.author)}</td>
-            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(yearDisplay)}</td>
-            <td onclick="selectBookFromTable('${item.barcode}')"><code>${escapeHtml(item.callNumber)}</code></td>
-            <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.collection)}</td>
-            <td onclick="selectBookFromTable('${item.barcode}')">${item.circulation}</td>
-            <td onclick="selectBookFromTable('${item.barcode}')">${ageDisplay}</td>
-            <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+            <td onclick="showTrackingItemModal('${item.barcode}')">${escapeHtml(item.author)}</td>
+            <td onclick="showTrackingItemModal('${item.barcode}')">${escapeHtml(yearDisplay)}</td>
+            <td onclick="showTrackingItemModal('${item.barcode}')"><code>${escapeHtml(item.callNumber)}</code></td>
+            <td onclick="showTrackingItemModal('${item.barcode}')">${escapeHtml(item.collection)}</td>
+            <td onclick="showTrackingItemModal('${item.barcode}')">${item.circulation}</td>
+            <td onclick="showTrackingItemModal('${item.barcode}')">${ageDisplay}</td>
+            <td onclick="showTrackingItemModal('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
             <td class="actions-column">
                 ${isTracked ?
                     `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
@@ -6796,11 +6811,11 @@
 
                 return `
             <tr data-barcode="${escapeHtml(book.barcode)}" style="cursor: pointer;" ${isTracked ? 'class="tracked-row"' : ''}>
-                <td style="text-align: center;">
+                <td style="text-align: center;" onclick="event.stopPropagation();">
                     <input type="checkbox" class="item-checkbox search-item-checkbox" 
                         value="${book.barcode}" onchange="updateTrackSelectedButton('search')">
                 </td>
-                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;">
+                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
                     <span onclick="copyTitleToClipboard('${escapeForJavaScript(book.title)}', event)" 
                         style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                         title="Copy title">📄</span>
@@ -8110,7 +8125,7 @@
                     const ageDisplay = age > 0 ? `${age} years` : 'Unknown';
 
                     return `
-                        <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromCollectionChanges('${item.barcode}')" 
+                        <tr data-barcode="${item.barcode}" onclick="showTrackingItemModal('${item.barcode}')" 
                             style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                             <td><strong>${escapeHtml(item.title)}</strong></td>
                             <td>${escapeHtml(item.author)}</td>
@@ -8278,7 +8293,7 @@
                 const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
 
                 return `
-                    <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromCollectionChanges('${item.barcode}')" 
+                    <tr data-barcode="${item.barcode}" onclick="showTrackingItemModal('${item.barcode}')" 
                         style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                         <td><strong>${escapeHtml(item.title)}</strong></td>
                         <td>${escapeHtml(item.author)}</td>
@@ -9097,6 +9112,10 @@
                             await processTrackingLifecycles(localStorage.getItem('currentCSVUploadId'));
                         }, 1000);
                     }
+
+                    // Reset branch filter to "All Branches" when loading new collection
+                    currentBranchFilter = '';
+                    document.getElementById('globalBranchFilter').value = '';
 
                     // Update header status with sample data indicator
                     updateCurrentCollectionStatus();
@@ -11193,11 +11212,10 @@
 
             currentCollectionInfo.style.display = 'block';
 
-            const filteredData = getFilteredData();
-            const totalItems = filteredData.length;
-            const totalCirculation = filteredData.reduce((sum, item) => sum + (item.circulation || 0), 0);
-            const collections = [...new Set(filteredData.map(item => item.collection))].length;
-            const branches = [...new Set(filteredData.map(item => item.branch))].length;
+            const totalItems = libraryData.length;
+            const totalCirculation = libraryData.reduce((sum, item) => sum + (item.circulation || 0), 0);
+            const collections = [...new Set(libraryData.map(item => item.collection))].length;
+            const branches = [...new Set(libraryData.map(item => item.branch))].length;
             const loadedFrom = currentSnapshotId ? 'Loaded from snapshot' : 'Recently uploaded';
 
             currentCollectionDetails.innerHTML = `
@@ -14139,7 +14157,7 @@
                 const performance = getPerformanceLevel(book.circulation);
                 return `
                     <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.year || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}" class="author-table-row">
-                        <td style="text-align: center;">
+                        <td style="text-align: center;" onclick="event.stopPropagation();">
                             <input type="checkbox" class="item-checkbox author-details-item-checkbox" value="${book.barcode}" onchange="updateTrackSelectedButton('authorDetails')">
                         </td>
                         <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
@@ -14150,7 +14168,7 @@
                                 style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                                 title="Copy ID">#️⃣</span>
                         </td>
-                        <td onclick="event.stopPropagation(); viewBookDetails('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+                        <td onclick="event.stopPropagation(); showTrackingItemModal('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
                             <span class="tracking-indicator" id="trackingIndicator-${book.barcode}" style="color: #2563eb; margin-right: 0.25rem; display: none;">📌</span>
                             <strong>${escapeHtml(book.title)}</strong>
                             <span class="tracking-reason" id="trackingReason-${book.barcode}" style="font-size: 0.75rem; background: #eff6ff; color: #2563eb; padding: 0.125rem 0.25rem; border-radius: 0.25rem; margin-left: 0.5rem; display: none;"></span>
@@ -14167,7 +14185,7 @@
                         <td>
     <div style="color: #2563eb; font-size: 0.75rem; font-weight: 500;">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</div>
 </td>
-                        <td style="text-align: center;">
+                        <td style="text-align: center;" onclick="event.stopPropagation();">
                             <button class="track-btn" id="trackBtn-${book.barcode}" onclick="handleTrackItem('${book.barcode}', 'authorDetails', event)" style="padding: 0.25rem 0.5rem; border: none; border-radius: 0.25rem; font-size: 0.75rem; cursor: pointer; background: #2563eb; color: white;">Track</button>
                             <button class="untrack-btn" id="untrackBtn-${book.barcode}" onclick="handleUntrackItem('${book.barcode}', event)" style="padding: 0.25rem 0.5rem; border: none; border-radius: 0.25rem; font-size: 0.75rem; cursor: pointer; background: #dc2626; color: white; display: none;">Untrack</button>
                         </td>
@@ -14302,7 +14320,7 @@
                 const performance = getItemPerformanceLevel(book.circulation);
                 return `
         <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.itemCreated || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}" class="author-table-row">
-            <td style="text-align: center;">
+            <td style="text-align: center;" onclick="event.stopPropagation();">
                 <input type="checkbox" class="item-checkbox author-details-item-checkbox" value="${book.barcode}" onchange="updateTrackSelectedButton('authorDetails')">
             </td>
             <td style="text-align: center; padding: 0.25rem; white-space: nowrap; width: 60px;" onclick="event.stopPropagation();">
@@ -14313,7 +14331,7 @@
                       style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                       title="Copy ID">#️⃣</span>
             </td>
-            <td onclick="event.stopPropagation(); viewBookDetails('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+            <td onclick="event.stopPropagation(); showTrackingItemModal('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
                 <span class="tracking-indicator" id="trackingIndicator-${book.barcode}" style="color: #2563eb; margin-right: 0.25rem; display: none;">📌</span>
                 <strong>${escapeHtml(book.title)}</strong>
                 <span class="tracking-reason" id="trackingReason-${book.barcode}" style="font-size: 0.75rem; background: #eff6ff; color: #2563eb; padding: 0.125rem 0.25rem; border-radius: 0.25rem; margin-left: 0.5rem; display: none;"></span>
@@ -14377,7 +14395,7 @@
                         const performance = getItemPerformanceLevel(book.circulation);
                         return `
                 <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.itemCreated || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}" class="author-table-row">
-                    <td style="text-align: center;">
+                    <td style="text-align: center;" onclick="event.stopPropagation();">
                         <input type="checkbox" class="item-checkbox author-details-item-checkbox" value="${book.barcode}" onchange="updateTrackSelectedButton('authorDetails')">
                     </td>
                     <td style="text-align: center; padding: 0.25rem; white-space: nowrap; width: 60px;" onclick="event.stopPropagation();">
@@ -14388,7 +14406,7 @@
                               style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                               title="Copy ID">#️⃣</span>
                     </td>
-                    <td onclick="event.stopPropagation(); viewBookDetails('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+                    <td onclick="event.stopPropagation(); showTrackingItemModal('${book.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
                         <span class="tracking-indicator" id="trackingIndicator-${book.barcode}" style="color: #2563eb; margin-right: 0.25rem; display: none;">📌</span>
                         <strong>${escapeHtml(book.title)}</strong>
                         <span class="tracking-reason" id="trackingReason-${book.barcode}" style="font-size: 0.75rem; background: #eff6ff; color: #2563eb; padding: 0.125rem 0.25rem; border-radius: 0.25rem; margin-left: 0.5rem; display: none;"></span>
@@ -14978,7 +14996,7 @@
 
             const tableBody = document.getElementById('addedItemsTableBody');
             tableBody.innerHTML = addedItems.map(item => `
-                <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromComparison('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <tr data-barcode="${item.barcode}" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                     <td><strong>${escapeHtml(item.title)}</strong></td>
                     <td>${escapeHtml(item.author)}</td>
                     <td>${item.itemCreated || 'Unknown'}</td>
@@ -15021,7 +15039,7 @@
 
             const tableBody = document.getElementById('removedItemsTableBody');
             tableBody.innerHTML = removedItems.map(item => `
-                <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromComparison('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <tr data-barcode="${item.barcode}" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                     <td><strong>${escapeHtml(item.title)}</strong></td>
                     <td>${escapeHtml(item.author)}</td>
                     <td>${item.itemCreated || 'Unknown'}</td>
@@ -15176,7 +15194,7 @@
 
             const tableBody = document.getElementById('addedItemsTableBody');
             tableBody.innerHTML = sortedData.map(item => `
-                <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromComparison('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <tr data-barcode="${item.barcode}" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                     <td><strong>${escapeHtml(item.title)}</strong></td>
                     <td>${escapeHtml(item.author)}</td>
                     <td>${item.itemCreated || 'Unknown'}</td>
@@ -15207,7 +15225,7 @@
 
             const tableBody = document.getElementById('removedItemsTableBody');
             tableBody.innerHTML = sortedData.map(item => `
-                <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromComparison('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <tr data-barcode="${item.barcode}" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                     <td><strong>${escapeHtml(item.title)}</strong></td>
                     <td>${escapeHtml(item.author)}</td>
                     <td>${item.itemCreated || 'Unknown'}</td>
@@ -15697,7 +15715,7 @@
             itemsBody.innerHTML = collectionItems.map(item => {
                 const performance = getItemPerformanceLevel(item.circulation);
                 return `
-        <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="viewBookDetails('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+        <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
             <td style="text-align: center;" onclick="event.stopPropagation();">
             <input type="checkbox" class="item-checkbox collection-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('collection')">
         </td>
@@ -16076,7 +16094,7 @@
             itemsBody.innerHTML = sortedItems.map(item => {
                 const performance = getItemPerformanceLevel(item.circulation);
                 return `
-        <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="viewBookDetails('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+            <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
             <td style="text-align: center;" onclick="event.stopPropagation();">
                 <input type="checkbox" class="item-checkbox collection-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('collection')">
             </td>
@@ -16106,8 +16124,8 @@
             </td>
             <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
             <td>
-    <div style="color: #2563eb; font-size: 0.75rem; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</div>
-</td>
+                <div style="color: #2563eb; font-size: 0.75rem; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</div>
+            </td>
             <td style="text-align: center;" onclick="event.stopPropagation();">
                 <button class="track-btn tracking-action-${item.barcode}" onclick="handleTrackItem('${item.barcode}', 'collection', event)">Track</button>
             </td>
@@ -16119,7 +16137,7 @@
             loadCollectionTrackingData(sortedItems);
         }
 
-    //===========================================================================
+        //===========================================================================
         // clearCollectionItemsSort() - Clear collection items sort
         //===========================================================================
         function clearCollectionItemsSort() {
@@ -16132,7 +16150,7 @@
                 itemsBody.innerHTML = sortedItems.map(item => {
                     const performance = getItemPerformanceLevel(item.circulation);
                     return `
-                <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="viewBookDetails('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <tr data-barcode="${item.barcode}" data-title="${escapeHtml(item.title)}" data-author="${escapeHtml(item.author)}" data-year="${item.year || 0}" data-circulation="${item.circulation}" data-performance="${performance.level === 'high' ? 3 : performance.level === 'good' ? 2 : performance.level === 'fair' ? 1 : 0}" data-call-number="${escapeHtml(item.callNumber)}" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                     <td style="text-align: center;" onclick="event.stopPropagation();">
                         <input type="checkbox" class="item-checkbox collection-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('collection')">
                     </td>
@@ -16639,9 +16657,8 @@
                 return;
             }
 
-            const filteredData = getFilteredData();
-            const itemCount = filteredData.length;
-            const totalCirculation = filteredData.reduce((sum, item) => sum + (item.circulation || 0), 0);
+            const itemCount = libraryData.length;
+            const totalCirculation = libraryData.reduce((sum, item) => sum + (item.circulation || 0), 0);
 
             // Determine what collection is loaded
             let collectionName = 'Unknown Collection';
@@ -17406,17 +17423,17 @@
                         const yetToVisitColor = remainingBranches.length === 0 ? '#059669' : '#374151';
 
                         return `
-            <tr data-barcode="${item.barcode}" class="tracked-row">
+            <tr data-barcode="${item.barcode}" class="tracked-row" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
                 <!-- COLUMN 1: Bulk selection checkbox -->
-                <td style="text-align: center;">
-                    <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('tracking'); updateExportSelectedButton(); updateRotateSelectedButton();">
+                <td style="text-align: center;" onclick="event.stopPropagation();">
+                    <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}" onclick="event.stopPropagation();" onchange="updateTrackSelectedButton('tracking'); updateExportSelectedButton(); updateRotateSelectedButton();">
                 </td>
                 <!-- COLUMN 2: Copy title and barcode buttons -->
-                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;">
-                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                    <span onclick="event.stopPropagation(); copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
                         style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                         title="Copy title">📄</span>
-                    <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                    <span onclick="event.stopPropagation(); copyBarcodeToClipboard('${item.barcode}', event)" 
                         style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                         title="Copy ID">#️⃣</span>
                 </td>
@@ -17439,8 +17456,8 @@
                     ${yetToVisit}
                 </td>
                 <!-- COLUMN 9: Action buttons -->
-                <td style="text-align: center;">
-                    <button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>
+                <td style="text-align: center;" onclick="event.stopPropagation();">
+                    <button class="untrack-btn" onclick="event.stopPropagation(); handleUntrackItem('${item.barcode}', event)" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>
                 </td>
             </tr>
         `;
@@ -17540,15 +17557,15 @@
                 const bestBranch = identifyBestBranch(performanceData);
 
                 return `
-            <tr data-barcode="${item.barcode}" class="tracked-row">
-                <td style="text-align: center;">
-                    <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('tracking'); if(document.getElementById('exportSelectedPerformanceBtn')) updateCompletedRotationBulkButtons();">
+            <tr data-barcode="${item.barcode}" class="tracked-row" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <td style="text-align: center;" onclick="event.stopPropagation();">
+                    <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}" onclick="event.stopPropagation();" onchange="updateTrackSelectedButton('tracking'); if(document.getElementById('exportSelectedPerformanceBtn')) updateCompletedRotationBulkButtons();">
                 </td>
-                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;">
-                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                    <span onclick="event.stopPropagation(); copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
                         style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                         title="Copy title">📄</span>
-                    <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                    <span onclick="event.stopPropagation(); copyBarcodeToClipboard('${item.barcode}', event)" 
                         style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                         title="Copy ID">#️⃣</span>
                 </td>
@@ -17561,16 +17578,16 @@
                 <td>${formatBranchPerformance(performanceData)}</td>
                 <td>${formatBestBranch(bestBranch)}</td>
                 <td>
-                    <button id="btn-detail" onclick="showPerformanceDetail('${item.barcode}')" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
+                    <button id="btn-detail" onclick="event.stopPropagation(); showPerformanceDetail('${item.barcode}')" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                         📊 View Detail
                     </button>
                 </td>
                 <td>
                     <div style="display: flex; gap: 0.25rem; align-items: center; justify-content: center;">
-                        <button class="btn btn-danger" onclick="resetTrackingItem('${item.barcode}')" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
+                        <button class="btn btn-danger" onclick="event.stopPropagation(); resetTrackingItem('${item.barcode}')" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                             🔄 Reset
                         </button>
-                        <button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
+                        <button class="untrack-btn" onclick="event.stopPropagation(); handleUntrackItem('${item.barcode}', event)" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                             Untrack
                         </button>
                     </div>
@@ -17586,15 +17603,15 @@
         function generateStandardTrackingRows(trackingArray) {
             return trackingArray.map(item => {
                 return `
-            <tr data-barcode="${item.barcode}" class="tracked-row">
-                <td style="text-align: center;">
-                    <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('tracking'); updateExportSelectedButton(); updateRotateSelectedButton(); if(document.getElementById('exportSelectedPerformanceBtn')) updateCompletedRotationBulkButtons();">
+            <tr data-barcode="${item.barcode}" class="tracked-row" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <td style="text-align: center;" onclick="event.stopPropagation();">
+                    <input type="checkbox" class="item-checkbox tracking-item-checkbox" value="${item.barcode}" onclick="event.stopPropagation();" onchange="updateTrackSelectedButton('tracking'); updateExportSelectedButton(); updateRotateSelectedButton(); if(document.getElementById('exportSelectedPerformanceBtn')) updateCompletedRotationBulkButtons();">
                 </td>
-                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;">
-                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                    <span onclick="event.stopPropagation(); copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
                         style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                         title="Copy title">📄</span>
-                    <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                    <span onclick="event.stopPropagation(); copyBarcodeToClipboard('${item.barcode}', event)" 
                         style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                         title="Copy ID">#️⃣</span>
                 </td>
@@ -17610,7 +17627,7 @@
                 <td>${escapeHtml(item.location)}</td>
                 <td>${formatDate(item.dateAdded)}</td>
                 <td>
-                    <button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>
+                    <button class="untrack-btn" onclick="event.stopPropagation(); handleUntrackItem('${item.barcode}', event)">Untrack</button>
                 </td>
             </tr>
         `;
@@ -19182,14 +19199,15 @@ Kirsten`;
                 ${resultsWithTracking.map(item => `
                     <div class="result-row">
                         <div style="flex: 1; min-width: 0;">
-                            <div style="font-weight: 500; margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                ${item.isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
-                                ${escapeHtml(item.title)}
-                                ${item.isTracked ? `<span class="tracking-reason">${formatTrackingReason(item.trackingData.reason)}</span>` : ''}
-                            </div>
-                            <div style="font-size: 0.875rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                ${escapeHtml(item.author)} • ${escapeHtml(item.callNumber)}
-                            </div>
+                            <div style="font-weight: 500; margin-bottom: 0.25rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; color: #2563eb;" onclick="showTrackingItemModal('${item.barcode}')">
+                            ${item.isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+                            ${escapeHtml(item.title)}
+                            ${item.isTracked ? `<span class="tracking-reason">${formatTrackingReason(item.trackingData.reason)}</span>` : ''}
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            ${escapeHtml(item.author)} • ${escapeHtml(item.callNumber)}
+                            ${item.branch ? ` • ${escapeHtml(formatBranchName(item.branch))}` : ''}
+                        </div>
                         </div>
                         ${item.isTracked ?
                                 `<button class="untrack-btn" onclick="handleUntrackFromTrackingSearch('${item.barcode}', event)">Untrack</button>` :
@@ -19248,7 +19266,7 @@ Kirsten`;
                 }
 
                 row.innerHTML = `
-                    <td style="text-align: center;">
+                    <td style="text-align: center;" onclick="event.stopPropagation();">
                         <input type="checkbox" class="item-checkbox chart-modal-item-checkbox"
                             value="${item.barcode}" onchange="updateTrackSelectedButton('chartModal')">
                     </td>
@@ -19260,15 +19278,15 @@ Kirsten`;
                             style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
                             title="Copy ID">#️⃣</span>
                     </td>
-                    <td onclick="selectBookFromTable('${item.barcode}')">
+                    <td onclick="showChartModalItemDetails('${item.barcode}')">
                         ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
                         <strong>${escapeHtml(item.title)}</strong>
                         ${isTracked ? `<span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
                     </td>
-                    <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.author)}</td>
-                    <td onclick="selectBookFromTable('${item.barcode}')">${escapeHtml(item.collection)}</td>
-                    <td onclick="selectBookFromTable('${item.barcode}')">${ageDisplay}</td>
-                    <td onclick="selectBookFromTable('${item.barcode}')">${item.circulation}</td>
+                    <td onclick="showChartModalItemDetails('${item.barcode}')">${escapeHtml(item.author)}</td>
+                    <td onclick="showChartModalItemDetails('${item.barcode}')">${escapeHtml(item.collection)}</td>
+                    <td onclick="showChartModalItemDetails('${item.barcode}')">${ageDisplay}</td>
+                    <td onclick="showChartModalItemDetails('${item.barcode}')">${item.circulation}</td>
                     <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                     <td class="actions-column">
                         ${isTracked ?
@@ -19298,6 +19316,12 @@ Kirsten`;
             setupChartModalTableSorting();
 
             updateTrackSelectedButton('chartModal');
+
+            // Clear any stored content when showing fresh modal
+            window.originalChartModalContent = null;
+
+            // Show modal
+            modal.classList.remove('hidden');
 
             // Show modal
             modal.classList.remove('hidden');
@@ -19357,6 +19381,118 @@ Kirsten`;
         }
 
         //===========================================================================
+        // showChartModalItemDetails() - Show item details within chart modal
+        //===========================================================================
+        async function showChartModalItemDetails(barcode) {
+            const modal = document.getElementById('chartItemsModal');
+            const modalBody = modal.querySelector('.modal-content .modal-body');
+
+            // Store the original content so we can restore it
+            if (!window.originalChartModalContent) {
+                window.originalChartModalContent = modalBody.innerHTML;
+            }
+
+            // Find item in current collection data
+            const item = libraryData ? libraryData.find(i => i.barcode === barcode) : null;
+            if (!item) {
+                modalBody.innerHTML = `
+            <div style="text-align: center; padding: 2rem;">
+                <p style="color: #dc2626;">Item not found in current collection data.</p>
+                <button class="btn btn-secondary" onclick="restoreChartModalTable()">← Back to Chart Items</button>
+            </div>
+        `;
+                return;
+            }
+
+            // Get tracking data
+            const trackingData = await getTrackingData(barcode);
+            const performance = getItemPerformanceLevel(item.circulation);
+            const age = getItemAge(item.itemCreated);
+            const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+
+            // Build tracking status section
+            let trackingSection = '';
+            if (trackingData) {
+                trackingSection = `
+            <div style="background: #f0f9ff; border: 1px solid #bfdbfe; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #1e40af;">📌 Tracking Information</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div><strong>Reason:</strong> ${formatTrackingReason(trackingData.reason)}</div>
+                    <div><strong>Status:</strong> ${trackingData.status === 'completed-rotation' ? '✅ Completed' : '🔄 Active'}</div>
+                    <div><strong>Date Added:</strong> ${new Date(trackingData.dateAdded).toLocaleDateString()}</div>
+                    <div><strong>Location:</strong> ${formatBranchName(trackingData.location || 'Unknown')}</div>
+                </div>
+            </div>
+        `;
+            }
+
+            // Build modal content with item details
+            const modalContent = `
+        <div style="margin-bottom: 1rem;">
+            <button class="btn btn-secondary" onclick="restoreChartModalTable()">← Back to Chart Items</button>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; margin-bottom: 1rem;">
+            <div id="modalBookCover" style="width: 120px; height: 180px; background: #f3f4f6; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                <svg class="book-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 2.5rem; height: 2.5rem; color: #d1d5db;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253z"></path>
+                </svg>
+            </div>
+            <div>
+                <h2 style="margin: 0 0 0.5rem 0; color: #111827;">${escapeHtml(item.title)}</h2>
+                <p style="margin: 0 0 1rem 0; color: #6b7280; font-size: 1.125rem;">${escapeHtml(item.author)}</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div><strong>Collection:</strong> ${escapeHtml(item.collection)}</div>
+                    <div><strong>Call Number:</strong> ${escapeHtml(item.callNumber)}</div>
+                    <div><strong>Published:</strong> ${item.year || 'Unknown'}</div>
+                    <div><strong>Age:</strong> ${ageDisplay}</div>
+                    <div><strong>Circulation:</strong> ${item.circulation}</div>
+                    <div><strong>Location:</strong> ${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <strong>Performance:</strong> 
+                    <span style="background: ${performance.color}; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.875rem; margin-left: 0.5rem;">
+                        ${performance.label}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        ${trackingSection}
+    `;
+
+            // Update modal content
+            modalBody.innerHTML = modalContent;
+
+            // Load book cover if it's a book collection
+            const coverElement = document.getElementById('modalBookCover');
+            if (coverElement && isBookCollection && isBookCollection(item.collection)) {
+                fetchBookCover(item.title, item.author).then(coverUrl => {
+                    if (coverUrl) {
+                        coverElement.innerHTML = `<img src="${coverUrl}" alt="${escapeHtml(item.title)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0.5rem;">`;
+                    }
+                }).catch(error => {
+                    console.log('Book cover loading failed:', error);
+                });
+            }
+        }
+
+        //===========================================================================
+        // restoreChartModalTable() - Restore the chart modal table view
+        //===========================================================================
+        function restoreChartModalTable() {
+            const modal = document.getElementById('chartItemsModal');
+            const modalBody = modal.querySelector('.modal-content .modal-body');
+
+            // Restore the original content
+            if (window.originalChartModalContent) {
+                modalBody.innerHTML = window.originalChartModalContent;
+            } else {
+                console.error('No original chart modal content stored');
+            }
+        }
+
+        //===========================================================================
         // showModal() - Generic modal system
         //===========================================================================
         function showModal(title, content, options = {}) {
@@ -19409,6 +19545,153 @@ Kirsten`;
             const modal = document.getElementById('genericModal');
             if (modal) {
                 modal.classList.add('hidden');
+            }
+        }
+
+
+        //===========================================================================
+        // showTrackingItemModal() - Show item details in modal from tracking table
+        //===========================================================================
+        async function showTrackingItemModal(barcode) {
+            // Find item in current collection data
+            const item = libraryData ? libraryData.find(i => i.barcode === barcode) : null;
+            if (!item) {
+                showModal('Item Not Found', `
+            <p style="color: #dc2626; text-align: center; padding: 2rem;">
+                This item (${barcode}) is not found in the current collection data.
+                It may have been removed from the collection.
+            </p>
+            <div style="text-align: center; margin-top: 1rem;">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            </div>
+        `);
+                return;
+            }
+
+            // Get tracking data
+            const trackingData = await getTrackingData(barcode);
+            const performance = getItemPerformanceLevel(item.circulation);
+            const age = getItemAge(item.itemCreated);
+            const ageDisplay = age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+
+            // Build tracking status section
+            let trackingSection = '';
+            if (trackingData) {
+                trackingSection = `
+            <div style="background: #f0f9ff; border: 1px solid #bfdbfe; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+                <h4 style="margin: 0 0 0.5rem 0; color: #1e40af;">📌 Tracking Information</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div><strong>Reason:</strong> ${formatTrackingReason(trackingData.reason)}</div>
+                    <div><strong>Status:</strong> ${trackingData.status === 'completed-rotation' ? 'Completed Rotation' : 'Active'}</div>
+                    <div><strong>Date Added:</strong> ${formatDate(trackingData.dateAdded)}</div>
+                    <div><strong>Current Location:</strong> ${trackingData.location || 'Unknown'}</div>
+                </div>
+            </div>
+        `;
+            }
+
+            // Create modal content with book cover (matching Search tab format)
+            const modalContent = `
+    <div style="display: grid; grid-template-columns: auto 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem;">
+        <!-- Book Cover Column -->
+        <div class="book-cover-section" style="min-width: 120px;">
+            <div id="modalBookCover" class="book-cover" style="width: 120px; height: 180px; background: #f3f4f6; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; border: 1px solid #e5e7eb;">
+                <svg class="book-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 2.5rem; height: 2.5rem; color: #d1d5db;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253z"></path>
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Left column -->
+        <div>
+            <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Title</label>
+                <h3 style="margin: 0.25rem 0 0 0; font-size: 1.25rem; font-weight: 600;">${escapeHtml(item.title)}</h3>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Author</label>
+                <p style="margin: 0.25rem 0 0 0; font-size: 1rem;">${escapeHtml(item.author)}</p>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Collection</label>
+                <div style="margin: 0.25rem 0 0 0;">${escapeHtml(item.collection)}</div>
+            </div>
+        </div>
+        
+        <!-- Right column -->
+        <div>
+            <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Call Number</label>
+                <div style="margin: 0.25rem 0 0 0;"><code>${escapeHtml(item.callNumber)}</code></div>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Year Published</label>
+                <div style="margin: 0.25rem 0 0 0;">${item.itemCreated || 'Unknown'}</div>
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Circulation</label>
+                <div style="margin: 0.25rem 0 0 0;">
+                    <span style="font-weight: 600; font-size: 1.125rem;">${item.circulation}</span>
+                    <span style="background: ${performance.color}; color: white; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 500; margin-left: 0.5rem;">
+                        ${performance.label}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Additional details row -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem;">
+        <div>
+            <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Item ID</label>
+            <div style="margin: 0.25rem 0 0 0; font-family: monospace; font-size: 0.875rem;">${item.barcode}</div>
+        </div>
+        <div>
+            <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Age</label>
+            <div style="margin: 0.25rem 0 0 0;">${ageDisplay}</div>
+        </div>
+        <div>
+            <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Location</label>
+            <div style="margin: 0.25rem 0 0 0; color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</div>
+        </div>
+    </div>
+    
+    ${trackingSection}
+    
+    <div style="text-align: right; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+        <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+    </div>
+`;
+
+            // Show the modal
+            showModal('Item Details', modalContent);
+
+            // Load book cover asynchronously (just like in Search tab)
+            const coverElement = document.getElementById('modalBookCover');
+            if (coverElement) {
+                // Only load covers for book collections
+                if (isBookCollection && isBookCollection(item.collection)) {
+                    fetchBookCover(item.title, item.author).then(coverUrl => {
+                        if (coverUrl) {
+                            coverElement.innerHTML = `<img src="${coverUrl}" alt="${escapeHtml(item.title)}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0.5rem;">`;
+                        }
+                    }).catch(error => {
+                        console.log('Book cover loading failed:', error);
+                        // Keep the placeholder icon on error
+                    });
+                } else {
+                    // For multimedia items, try to show an appropriate icon
+                    if (getMediaIcon && typeof getMediaIcon === 'function') {
+                        const mediaIcon = getMediaIcon(item.collection);
+                        if (mediaIcon) {
+                            coverElement.innerHTML = mediaIcon;
+                        }
+                    }
+                }
             }
         }
 
