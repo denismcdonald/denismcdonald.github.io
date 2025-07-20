@@ -469,45 +469,53 @@
         }
 
         /* Tracking Table Column Widths */
-.tracking-table th:nth-child(1),
-.tracking-table td:nth-child(1) {
-    width: 40px; /* Checkbox */
-}
+        .tracking-table th:nth-child(1),
+        .tracking-table td:nth-child(1) {
+            width: 40px;
+            /* Checkbox */
+        }
 
-.tracking-table th:nth-child(2),
-.tracking-table td:nth-child(2) {
-    width: 60px; /* Copy */
-}
+        .tracking-table th:nth-child(2),
+        .tracking-table td:nth-child(2) {
+            width: 60px;
+            /* Copy */
+        }
 
-.tracking-table th:nth-child(3),
-.tracking-table td:nth-child(3) {
-    width: 35%; /* Title */
-}
+        .tracking-table th:nth-child(3),
+        .tracking-table td:nth-child(3) {
+            width: 35%;
+            /* Title */
+        }
 
-.tracking-table th:nth-child(4),
-.tracking-table td:nth-child(4) {
-    width: 20%; /* Author */
-}
+        .tracking-table th:nth-child(4),
+        .tracking-table td:nth-child(4) {
+            width: 20%;
+            /* Author */
+        }
 
-.tracking-table th:nth-child(5),
-.tracking-table td:nth-child(5) {
-    width: 15%; /* Reason */
-}
+        .tracking-table th:nth-child(5),
+        .tracking-table td:nth-child(5) {
+            width: 15%;
+            /* Reason */
+        }
 
-.tracking-table th:nth-child(6),
-.tracking-table td:nth-child(6) {
-    width: 10%; /* Location */
-}
+        .tracking-table th:nth-child(6),
+        .tracking-table td:nth-child(6) {
+            width: 10%;
+            /* Location */
+        }
 
-.tracking-table th:nth-child(7),
-.tracking-table td:nth-child(7) {
-    width: 10%; /* Date Added */
-}
+        .tracking-table th:nth-child(7),
+        .tracking-table td:nth-child(7) {
+            width: 10%;
+            /* Date Added */
+        }
 
-.tracking-table th:nth-child(8),
-.tracking-table td:nth-child(8) {
-    width: 80px; /* Actions */
-}
+        .tracking-table th:nth-child(8),
+        .tracking-table td:nth-child(8) {
+            width: 80px;
+            /* Actions */
+        }
 
         .search-results-table th {
             background-color: #f9fafb;
@@ -1082,7 +1090,7 @@
 
         .btn {
             display: inline-flex;
-            /* align-items: center; */
+            align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
             border: none;
@@ -1711,9 +1719,14 @@
         #untrackSelectedBtn:disabled,
         #chartModalUntrackSelectedBtn:disabled,
         #authorDetailsUntrackSelectedBtn:disabled,
-        #collectionUntrackSelectedBtn:disabled {
-            background-color: #9ca3af;
+        #collectionUntrackSelectedBtn:disabled,
+        #rotateSelectedBtn:disabled {
+            background-color: #9ca3af !important;
             cursor: not-allowed;
+        }
+
+        #rotateSelectedBtn:hover {
+            background-color: #168bc5;
         }
 
         #weedingTab>div:nth-child(3)>h3:nth-child(1) {
@@ -1741,14 +1754,14 @@
         #emailCastertonBtn,
         #emailHeywoodBtn,
         #exportPortlandBtn {
-            background-color: #fa0068;
+            background-color: #1795d4;
             color: #fff;
         }
 
         #emailCastertonBtn:hover,
         #emailHeywoodBtn:hover,
         #exportPortlandBtn:hover {
-            background-color: #dd005c;
+            background-color: #1586be;
         }
 
         /* Position copy buttons slightly lower */
@@ -1809,7 +1822,6 @@
         .btn-danger:hover {
             background: #b91c1c;
         }
-
     </style>
 </head>
 
@@ -1817,8 +1829,8 @@
     <!-- Header -->
     <div class="header">
         <div class="header-content">
-            <svg class="header-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="showTab('search')"
-                style="cursor: pointer;">
+            <svg class="header-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                onclick="showTab('search')" style="cursor: pointer;">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M12.0196 14.9374C11.7284 14.9374 11.4307 14.9818 11.1784 15.0796C11.0546 15.1275 10.9032 15.2031 10.7699 15.3252C10.6361 15.4479 10.4632 15.6749 10.4632 15.9999C10.4632 16.3249 10.6361 16.5519 10.7699 16.6745C10.9032 16.7967 11.0546 16.8722 11.1784 16.9202C11.4307 17.018 11.7284 17.0624 12.0196 17.0624C12.3109 17.0624 12.6085 17.018 12.8609 16.9202C12.9846 16.8722 13.136 16.7967 13.2693 16.6745C13.4032 16.5519 13.5761 16.3249 13.5761 15.9999C13.5761 15.6749 13.4032 15.4479 13.2693 15.3252C13.136 15.2031 12.9846 15.1275 12.8609 15.0796C12.6085 14.9818 12.3109 14.9374 12.0196 14.9374Z"
                     fill="#2563eb" />
@@ -2039,9 +2051,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    <input type="text" id="searchInput" placeholder="Search titles, authors, call numbers, or barcodes...">
-                    <svg class="search-clear" fill="none" stroke="currentColor" viewBox="0 0 24 24" onclick="clearMainSearch()">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <input type="text" id="searchInput"
+                        placeholder="Search titles, authors, call numbers, or barcodes...">
+                    <svg class="search-clear" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        onclick="clearMainSearch()">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
                     </svg>
                 </div>
             </div>
@@ -2062,7 +2077,8 @@
                 <div id="searchTrackingModeSelector" class="tracking-mode-selector"
                     style="margin-bottom: 1rem; display: none;">
                     <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                    <div class="mode-buttons" id="searchModeButtons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <div class="mode-buttons" id="searchModeButtons"
+                        style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                         <!-- Populated by generateModeButtons() -->
                     </div>
                 </div>
@@ -2115,42 +2131,48 @@
                                         Title
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             style="width: 1rem; height: 1rem;">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7"></path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="collection">
                                         Collection
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             style="width: 1rem; height: 1rem;">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7"></path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="year">
                                         Published
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             style="width: 1rem; height: 1rem;">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7"></path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="age">
                                         Age
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             style="width: 1rem; height: 1rem;">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7"></path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="circulation">
                                         Circulation
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             style="width: 1rem; height: 1rem;">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7"></path>
                                         </svg>
                                     </th>
                                     <th class="sortable" data-sort="branch">
                                         Branch
                                         <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                             style="width: 1rem; height: 1rem;">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 15l7-7 7 7"></path>
                                         </svg>
                                     </th>
                                     <th style="width: 100px; text-align: center;">
@@ -2422,7 +2444,8 @@
                                 <th class="sortable" data-sort="branch" data-type="text">
                                     Location
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
                                     </svg>
                                 </th>
                                 <th style="width: 100px; text-align: center;">Actions</th>
@@ -2718,7 +2741,8 @@
                 <div id="weedingTrackingModeSelector" class="tracking-mode-selector"
                     style="margin-bottom: 1rem; display: block;">
                     <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                    <div class="mode-buttons" id="weedingModeButtons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <div class="mode-buttons" id="weedingModeButtons"
+                        style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                         <!-- Populated by generateModeButtons() -->
                     </div>
                 </div>
@@ -3168,34 +3192,38 @@
                         </button>
                     </div>
                     <!-- Mode Selector for Author Details -->
-                    <div id="authorDetailsTrackingModeSelector" class="tracking-mode-selector" style="margin-bottom: 1rem; display: none;">
+                    <div id="authorDetailsTrackingModeSelector" class="tracking-mode-selector"
+                        style="margin-bottom: 1rem; display: none;">
                         <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                        <div class="mode-buttons" id="authorDetailsModeButtons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <div class="mode-buttons" id="authorDetailsModeButtons"
+                            style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                             <!-- Populated by generateModeButtons() -->
                         </div>
                     </div>
-                    
+
                     <!-- Bulk Actions for Author Details -->
                     <div class="bulk-actions" id="authorDetailsBulkActions" style="margin-bottom: 1rem;">
-                        <button class="bulk-track-btn" id="authorDetailsTrackSelectedBtn" onclick="bulkTrackSelected('authorDetails')"
-                            disabled>
+                        <button class="bulk-track-btn" id="authorDetailsTrackSelectedBtn"
+                            onclick="bulkTrackSelected('authorDetails')" disabled>
                             Track Selected (0)
                         </button>
                         <button class="bulk-track-btn" onclick="bulkTrackAll('authorDetails')">
                             Track All
                         </button>
-                        <button class="bulk-track-btn" id="authorDetailsUntrackSelectedBtn" onclick="bulkUntrackSelected('authorDetails')"
-                            disabled>
+                        <button class="bulk-track-btn" id="authorDetailsUntrackSelectedBtn"
+                            onclick="bulkUntrackSelected('authorDetails')" disabled>
                             Untrack Selected (0)
                         </button>
                         <button class="bulk-track-btn" onclick="bulkUntrackAll('authorDetails')">
                             Untrack All
                         </button>
                         <!-- Export Buttons -->
-                        <button id="exportAllAuthorDetailsBtn" class="btn btn-secondary" onclick="exportAuthorDetailsAll()">
+                        <button id="exportAllAuthorDetailsBtn" class="btn btn-secondary"
+                            onclick="exportAuthorDetailsAll()">
                             📊 Export All
                         </button>
-                        <button id="exportTrackedAuthorDetailsBtn" class="btn btn-secondary" onclick="exportAuthorDetailsTracked()">
+                        <button id="exportTrackedAuthorDetailsBtn" class="btn btn-secondary"
+                            onclick="exportAuthorDetailsTracked()">
                             📈 Export Tracked
                         </button>
                     </div>
@@ -3203,7 +3231,8 @@
                         <thead>
                             <tr>
                                 <th style="width: 40px; text-align: center;">
-                                    <input type="checkbox" class="select-all-checkbox" id="authorDetailsSelectAllCheckbox"
+                                    <input type="checkbox" class="select-all-checkbox"
+                                        id="authorDetailsSelectAllCheckbox"
                                         onchange="toggleAllItems(this, 'authorDetails')">
                                 </th>
                                 <th style="width: 60px; text-align: center; font-size: 0.875rem;">Copy</th>
@@ -3252,7 +3281,8 @@
                                 <th class="sortable" data-sort="branch" data-type="text">
                                     Location
                                     <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 15l7-7 7 7"></path>
                                     </svg>
                                 </th>
                                 <th style="width: 120px; text-align: center;">Track</th>
@@ -3294,7 +3324,7 @@
                     This will bypass collection tracking. Use header dropdowns for normal operations.
                 </div>
             </div>
-            
+
             <div id="manualUploadStatus" style="margin-bottom: 1rem; display: none;"></div>
 
             <!-- Save Current Collection as Snapshot -->
@@ -3315,7 +3345,8 @@
                 </p>
                 <div id="databaseStatus" style="margin-bottom: 1rem;"></div>
                 <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
-                    <button id="resetDatabaseBtn" class="btn btn-danger" onclick="resetDatabaseAndReload()" style="display: none;">
+                    <button id="resetDatabaseBtn" class="btn btn-danger" onclick="resetDatabaseAndReload()"
+                        style="display: none;">
                         🔄 Reset Database
                     </button>
                     <span id="resetDatabaseInfo" style="font-size: 0.875rem; color: #6b7280; display: none;">
@@ -3594,24 +3625,26 @@
             <div class="dashboard-grid" id="trackingMetrics">
                 <!-- Metrics will be populated by JavaScript -->
             </div>
-        
+
             <div class="analysis-section">
                 <!-- Header with all action buttons grouped logically -->
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <h3 style="margin: 0;">Tracked Items</h3>
-        
+
                     <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end;">
                         <!-- Top row: Main data operations -->
                         <div style="display: flex; gap: 0.5rem;">
-                            <button class="btn btn-secondary" onclick="exportTrackingData()">📊 Export Tracking Data</button>
+                            <button class="btn btn-secondary" onclick="exportTrackingData()">📊 Export Tracking
+                                Data</button>
                             <input type="file" id="importTrackingFile" accept=".json" style="display: none;"
                                 onchange="handleImportTrackingFile(this)">
-                            <button class="btn btn-secondary" onclick="document.getElementById('importTrackingFile').click()">📁 Import Tracking
+                            <button class="btn btn-secondary"
+                                onclick="document.getElementById('importTrackingFile').click()">📁 Import Tracking
                                 Data</button>
                         </div>
-        
+
                         <!-- Bottom row: Location-specific operations -->
-                        <div style="display: flex; gap: 0.5rem;">
+                        <div style="display: flex; gap: 0.5rem; align-items: center">
                             <button id="emailHeywoodBtn" class="btn" onclick="emailLocationItems('heywood')"
                                 style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
                                 📧 Email Heywood
@@ -3622,12 +3655,12 @@
                             </button>
                             <button id="exportPortlandBtn" class="btn" onclick="exportLocationOnly('portland')"
                                 style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
-                                📋 Portland
+                                📋 Portland Items
                             </button>
                         </div>
                     </div>
                 </div>
-        
+
                 <!-- Status filters - standalone row -->
                 <div style="margin-bottom: 1rem;">
                     <label style="font-weight: 500; margin-right: 1rem;">Status:</label>
@@ -3639,7 +3672,11 @@
                         style="padding: 0.375rem 0.75rem; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; margin-right: 0.5rem;">
                         Active
                     </button>
-                    <button class="filter-btn" data-status="mid-rotation" onclick="filterTrackingByStatus('mid-rotation')"
+                    <button class="filter-btn" data-status="monitoring" onclick="filterTrackingByStatus('monitoring')">
+                        Monitoring (<span id="monitoringTrackingCount">0</span>)
+                    </button>
+                    <button class="filter-btn" data-status="mid-rotation"
+                        onclick="filterTrackingByStatus('mid-rotation')"
                         style="padding: 0.375rem 0.75rem; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; margin-right: 0.5rem;">
                         Mid-Rotation
                     </button>
@@ -3649,7 +3686,7 @@
                         Completed Rotations
                     </button>
                 </div>
-        
+
                 <!-- Mode selector - in its own grey box -->
                 <div class="tracking-mode-selector" id="trackingModeSelector"
                     style="padding: 1rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 0.5rem; margin-bottom: 1rem;">
@@ -3659,7 +3696,7 @@
                         <!-- Buttons will be populated here by generateModeButtons() -->
                     </div>
                 </div>
-        
+
                 <!-- Item Tracking Search -->
                 <div class="search-input" style="margin-bottom:1.5rem;">
                     <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3669,12 +3706,13 @@
                     <input type="text" id="trackingSearchInput" placeholder="Search titles, authors, call numbers…">
                     <svg class="search-clear" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         onclick="clearTrackingSearch()">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
                     </svg>
                 </div>
-        
+
                 <div class="results-container" id="trackingSearchResults"></div>
-        
+
                 <!-- Bulk Actions -->
                 <div class="bulk-actions" id="trackingBulkActions"
                     style="display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; min-width: 0;">
@@ -3683,12 +3721,12 @@
                             onclick="bulkChangeReasonSelected('tracking')" disabled>
                             Change Reason (0)
                         </button>
-                        <button class="bulk-track-btn" id="untrackTrackingSelectedBtn" onclick="bulkUntrackSelected('tracking')"
-                            disabled>
+                        <button class="bulk-track-btn" id="untrackTrackingSelectedBtn"
+                            onclick="bulkUntrackSelected('tracking')" disabled>
                             Untrack Selected (0)
                         </button>
                         <button class="bulk-track-btn" id="rotateSelectedBtn" onclick="rotateSelectedItems()" disabled
-                            style="background: #059669; color: white; border-color: #059669;">
+                            style="color: white; border-color: #059669;">
                             🔄 Rotate Selected (0)
                         </button>
                         <button class="bulk-track-btn" id="untrackAllTrackingBtn" onclick="bulkUntrackAll('tracking')">
@@ -3698,8 +3736,8 @@
                         <button id="exportAllTrackingBtn" class="btn btn-secondary" onclick="exportAllTracking()">
                             📊 Export All
                         </button>
-                        <button id="exportSelectedTrackingBtn" class="btn btn-secondary" onclick="exportSelectedTracking()"
-                            disabled>
+                        <button id="exportSelectedTrackingBtn" class="btn btn-secondary"
+                            onclick="exportSelectedTracking()" disabled>
                             📋 Export Selected (0)
                         </button>
                     </div>
@@ -3711,18 +3749,18 @@
                             <!-- Populated by generateExportReasonOptions() -->
                         </select>
                         <button id="exportByReasonBtn" class="btn btn-secondary" onclick="exportTrackingByReason()">
-                            🔍 Export
+                            📊 Export
                         </button>
                     </div>
                 </div>
-        
+
                 <div id="trackingTableContainer">
                 </div>
             </div>
         </div>
 
-            </div>
-        </div>
+    </div>
+    </div>
     </div>
 
     <!-- Scroll to Top Button -->
@@ -3896,7 +3934,7 @@
 
         LIBRARY_CONFIG.getBranchTrackingModes = function () {
             return this.branches.map(branch => branch.trackingMode);
-        };    
+        };
 
         const AVAILABLE_SAMPLES = {
             2025: [
@@ -4018,8 +4056,8 @@
         // trackItem() - Add item to tracking system
         //===========================================================================
         async function trackItem(barcode, reason, notes = '', location = '') {
-            
-            
+
+
             console.log('=== trackItem DEBUG START ===');
             console.log('trackItem called with barcode:', barcode);
             console.log('barcode type:', typeof barcode);
@@ -4059,7 +4097,7 @@
                 console.log('=== trackItem DEBUG END ===');
                 throw new Error('Item not found in current collection');
             }
-            
+
             if (!db) {
                 await initializeDB();
             }
@@ -4457,11 +4495,30 @@
                 console.log('🔍 Search state cleared for new collection period');
 
                 // Refresh UI if tracking tab is currently active
-                if (document.getElementById('trackingTab').classList.contains('active')) {
-                    console.log('🎨 Refreshing tracking table UI...');
-                    refreshTrackingTable();
-                    console.log('📊 Updating tracking metrics...');
-                    updateTrackingMetrics();
+                const trackingTab = document.getElementById('trackingTab');
+                if (trackingTab && trackingTab.classList.contains('active')) {
+                    console.log('🎨 Refreshing tracking table UI after lifecycle processing...');
+
+                    // Force reload tracking data and reapply current filter
+                    setTimeout(() => {
+                        try {
+                            // Get current filter before refresh
+                            const activeFilterButton = document.querySelector('.filter-btn.active');
+                            const currentStatus = activeFilterButton ? activeFilterButton.getAttribute('data-status') : 'all';
+
+                            console.log(`Reapplying filter: ${currentStatus}`);
+
+                            // Force refresh tracking data and apply filter
+                            trackingDataLoaded = false;
+                            loadTrackingTab().then(() => {
+                                filterTrackingByStatus(currentStatus);
+                                console.log('✅ Tracking view refreshed with current filter');
+                            });
+
+                        } catch (error) {
+                            console.error('Error refreshing tracking view:', error);
+                        }
+                    }, 200);
                 }
 
                 console.log('✅ Lifecycle processing completed successfully');
@@ -4862,11 +4919,11 @@
         //===========================================================================
         async function copyTitleToClipboard(title, event) {
             event.stopPropagation(); // Prevent row click
-            
+
             try {
                 await navigator.clipboard.writeText(title);
                 showStatus(`Copied title: ${title}`, 'success');
-                
+
                 // Brief visual feedback
                 const icon = event.target;
                 const originalText = icon.textContent;
@@ -4876,7 +4933,7 @@
                     icon.textContent = originalText;
                     icon.style.color = '';
                 }, 1000);
-                
+
             } catch (err) {
                 // Fallback for older browsers
                 const textArea = document.createElement('textarea');
@@ -4894,11 +4951,11 @@
         //===========================================================================
         async function copyBarcodeToClipboard(barcode, event) {
             event.stopPropagation(); // Prevent row click
-            
+
             try {
                 await navigator.clipboard.writeText(barcode);
                 showStatus(`Copied ID: ${barcode}`, 'success');
-                
+
                 // Brief visual feedback
                 const icon = event.target;
                 const originalText = icon.textContent;
@@ -4908,7 +4965,7 @@
                     icon.textContent = originalText;
                     icon.style.color = '';
                 }, 1000);
-                
+
             } catch (err) {
                 // Fallback for older browsers
                 const textArea = document.createElement('textarea');
@@ -5011,7 +5068,7 @@
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // updateAuthorDetailsRowTracking() - Update tracking status for a specific row
         //===========================================================================
         async function updateAuthorDetailsRowTracking(barcode) {
@@ -5064,7 +5121,7 @@
         }
 
 
-    //===========================================================================
+        //===========================================================================
         // handleUntrackItem() - Handle untrack button clicks (generic for any table) - TAB-BASED DETECTION
         //===========================================================================
         async function handleUntrackItem(barcode, event) {
@@ -5385,9 +5442,9 @@
             <td onclick="showTrackingItemModal('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
             <td class="actions-column">
                 ${isTracked ?
-                    `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
-                    `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding', event)">Track</button>`
-                }
+                        `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
+                        `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'weeding', event)">Track</button>`
+                    }
             </td>
         `;
 
@@ -6035,7 +6092,7 @@
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // setupWeedingModeSelector() - Make weeding mode selector buttons work
         //===========================================================================
         function setupWeedingModeSelector() {
@@ -6133,7 +6190,7 @@
                     title: cells[2]?.textContent?.trim() || '',
                     year: parseInt(cells[4]?.textContent?.trim()) || 0,
                     age: cells[5]?.textContent?.includes('< 1 year') ?
-                    circulation: parseInt(cells[4]?.textContent?.trim()) || 0,
+                        circulation : parseInt(cells[4]?.textContent?.trim()) || 0,
                     collection: cells[5]?.textContent?.trim() || '',
                     branch: cells[6]?.textContent?.trim() || ''
                 };
@@ -6488,7 +6545,7 @@
             updateSortIcons('weeding');
         }
 
-    //===========================================================================
+        //===========================================================================
         // clearWeedingTableSort() - Clear weeding table sort without regenerating data
         //===========================================================================
         function clearWeedingTableSort() {
@@ -7713,7 +7770,7 @@
             try {
                 await trackItem(barcode, reason, 'Tracked from tracking tab search');
 
-               // Refresh the tracking search results to show updated buttons
+                // Refresh the tracking search results to show updated buttons
                 await refreshTrackingSearchResults();
 
                 // Also refresh the main tracking table to show the newly tracked item
@@ -8736,12 +8793,40 @@
 
             if (completedCount > 0) {
                 console.log(`🎉 Auto-completed ${completedCount} branch rotation${completedCount > 1 ? 's' : ''}`);
+
+                // Always refresh tracking view if tracking tab exists and tracking data is loaded
+                if (typeof refreshTrackingTable === 'function' && trackedItemsCache && trackedItemsCache.size > 0) {
+                    // Use a longer delay to ensure all database operations are complete
+                    setTimeout(() => {
+                        try {
+                            // Force reload tracking data from cache
+                            const trackingArray = Array.from(trackedItemsCache.values());
+
+                            // Check if we're currently viewing tracking tab
+                            const trackingTabContent = document.getElementById('trackingTab');
+                            const isTrackingVisible = trackingTabContent && !trackingTabContent.classList.contains('hidden');
+
+                            if (isTrackingVisible) {
+                                console.log('🔄 Refreshing tracking view after auto-completion');
+
+                                // Get current filter and reapply it
+                                const activeFilterButton = document.querySelector('.filter-btn.active');
+                                const currentStatus = activeFilterButton ? activeFilterButton.getAttribute('data-status') : 'all';
+
+                                // Force refresh with current filter
+                                filterTrackingByStatus(currentStatus);
+                            }
+                        } catch (error) {
+                            console.error('Error refreshing tracking view:', error);
+                        }
+                    }, 500); // Longer delay to ensure completion
+                }
             } else {
                 console.log('ℹ️ No branch rotations completed automatically');
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // checkBranchRotationCompletions() - Auto-complete branch rotations (DEBUG VERSION)
         //===========================================================================
         async function checkBranchRotationCompletions(csvUploadId) {
@@ -8807,59 +8892,48 @@
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // isBranchRotationComplete() - Configuration-driven completion detection
+        // FIXED: Now uses actual branch locations instead of tracking reasons
         //===========================================================================
         function isBranchRotationComplete(trackedItem) {
-            if (!LIBRARY_CONFIG.rotation.enabled) {
-                console.log(`❌ Rotation disabled for ${trackedItem.title}`);
-                return false;
-            }
+            if (!LIBRARY_CONFIG.rotation.enabled) return false;
 
-            // Get branch-specific tracking reasons
-            const branchModes = LIBRARY_CONFIG.getBranchTrackingModes();
             console.log(`🔍 Checking completion for "${trackedItem.title}"`);
-            console.log(`📍 Branch tracking modes:`, branchModes);
             console.log(`📋 Item's branch history:`, trackedItem.branchHistory);
-            console.log(`📋 Branch history details:`);
-            trackedItem.branchHistory.forEach((entry, index) => {
-                console.log(`  ${index + 1}. Date: ${entry.date}, Branch: ${entry.branch}, Reason: ${entry.reason}`);
-            });
 
-            // Filter branch history to only branch-related entries
-            const branchEntries = trackedItem.branchHistory.filter(entry =>
-                branchModes.includes(entry.reason)
-            );
-            console.log(`🎯 Filtered branch entries:`, branchEntries);
+            // Count unique branches actually visited (using actual locations)
+            const visitedBranches = new Set();
 
-            // Count unique branches visited
-            const uniqueBranches = new Set();
-            branchEntries.forEach(entry => {
-                // Map tracking reason back to branch for counting
-                LIBRARY_CONFIG.branches.forEach(branch => {
-                    if (branch.trackingMode === entry.reason) {
-                        uniqueBranches.add(branch.id);
-                        console.log(`✅ Found visit to ${branch.name} (${branch.id})`);
+            if (trackedItem.branchHistory && trackedItem.branchHistory.length > 0) {
+                trackedItem.branchHistory.forEach(entry => {
+                    if (entry.branch) {
+                        // Map actual branch name to branch ID for consistency
+                        const branchConfig = LIBRARY_CONFIG.branches.find(b => b.name === entry.branch);
+                        if (branchConfig) {
+                            visitedBranches.add(branchConfig.id);
+                            console.log(`✅ Found visit to ${branchConfig.name} (${branchConfig.id})`);
+                        }
                     }
                 });
-            });
+            }
 
-            console.log(`📊 Unique branches visited: ${Array.from(uniqueBranches)}`);
+            console.log(`📊 Unique branches visited: ${Array.from(visitedBranches)}`);
 
             // Determine completion threshold
             const requiredBranches = LIBRARY_CONFIG.rotation.requireAllBranches
                 ? LIBRARY_CONFIG.branches.length
                 : LIBRARY_CONFIG.rotation.completionThreshold;
 
-            console.log(`🎯 Required: ${requiredBranches}, Visited: ${uniqueBranches.size}`);
+            console.log(`🎯 Required: ${requiredBranches}, Visited: ${visitedBranches.size}`);
 
             // Complete if visited enough unique branches
-            const isComplete = uniqueBranches.size >= requiredBranches;
+            const isComplete = visitedBranches.size >= requiredBranches;
 
             if (isComplete) {
-                console.log(`🎉 ROTATION COMPLETE for ${trackedItem.title}: visited ${uniqueBranches.size}/${requiredBranches} branches`);
+                console.log(`🎉 ROTATION COMPLETE for ${trackedItem.title}: visited ${visitedBranches.size}/${requiredBranches} branches`);
             } else {
-                console.log(`⏳ Still needs to visit ${requiredBranches - uniqueBranches.size} more branch(es)`);
+                console.log(`⏳ Still needs to visit ${requiredBranches - visitedBranches.size} more branch(es)`);
             }
 
             return isComplete;
@@ -8924,7 +8998,7 @@
         }
 
         //===========================================================================
-        // updateLocationTracking() - Update branch locations for tracked items
+        // updateLocationTracking() - FIXED: Update branch locations for tracked items
         //===========================================================================
         async function updateLocationTracking(csvUploadId) {
             console.log('📍 Updating location tracking for active items...');
@@ -8954,18 +9028,18 @@
                         console.log(`📍 Updated location for ${trackedItem.title}: ${lastKnownLocation} → ${currentLocation}`);
                     }
 
-                    // Update circulation data in history
+                    // FIXED: Update circulation data in history with correct location variable
                     trackedItem.history.push({
                         date: new Date().toISOString(),
                         action: 'circulation-updated',
                         details: `Circulation: ${currentItem.circulation || 0}`,
                         snapshotId: csvUploadId || 'current',
                         circulation: currentItem.circulation || 0,
-                        location: newLocation
+                        location: currentLocation  // FIXED: was 'newLocation', now 'currentLocation'
                     });
 
                     // Save updated tracking data
-                    await updateTrackingItem(trackedItem);
+                    await updateTrackingItem(trackedItem.barcode, trackedItem);
                 }
             }
 
@@ -9329,7 +9403,7 @@
             reader.readAsText(file);
         }
 
-    //===========================================================================
+        //===========================================================================
         // parseCSVLine() - Simple, reliable CSV parser that works with both formats
         //===========================================================================
         function parseCSVLine(line) {
@@ -9455,7 +9529,7 @@
                     continue;
                 }
 
-               // Detect branch markers  
+                // Detect branch markers  
                 if (line.includes('Branch:') || line.includes('Library:') || line.includes('Item Library Desc:')) {
                     const branchMatch = line.match(/(Heywood|Casterton|Portland|Mobile)/i);
                     if (branchMatch) {
@@ -14222,7 +14296,7 @@
             scrollToSection('authorDetailsSection');
         }
 
-    //===========================================================================
+        //===========================================================================
         // setupAuthorDetailsMode() - Make author details mode selector buttons work
         //===========================================================================
         function setupAuthorDetailsMode() {
@@ -14386,14 +14460,14 @@
         // clearAuthorTitlesSort() - Clear author titles table sort
         //===========================================================================
         function clearAuthorTitlesSort() {
-                window.authorTitlesSortState = null;
-                if (window.currentAuthorBooks) {
-                    // Re-sort by circulation (default)
-                    const sortedBooks = [...window.currentAuthorBooks].sort((a, b) => b.circulation - a.circulation);
-                    const titlesBody = document.getElementById('authorTitlesBody');
-                    titlesBody.innerHTML = sortedBooks.map(book => {
-                        const performance = getItemPerformanceLevel(book.circulation);
-                        return `
+            window.authorTitlesSortState = null;
+            if (window.currentAuthorBooks) {
+                // Re-sort by circulation (default)
+                const sortedBooks = [...window.currentAuthorBooks].sort((a, b) => b.circulation - a.circulation);
+                const titlesBody = document.getElementById('authorTitlesBody');
+                titlesBody.innerHTML = sortedBooks.map(book => {
+                    const performance = getItemPerformanceLevel(book.circulation);
+                    return `
                 <tr data-barcode="${book.barcode}" data-title="${escapeHtml(book.title)}" data-year="${book.itemCreated || 0}" data-collection="${escapeHtml(book.collection)}" data-circulation="${book.circulation}" data-performance="${book.circulation}" data-call-number="${escapeHtml(book.callNumber)}" class="author-table-row">
                     <td style="text-align: center;" onclick="event.stopPropagation();">
                         <input type="checkbox" class="item-checkbox author-details-item-checkbox" value="${book.barcode}" onchange="updateTrackSelectedButton('authorDetails')">
@@ -14428,10 +14502,10 @@
                     </td>
                 </tr>
             `;
-                    }).join('');
-                }
-                updateAuthorTitlesSortIcons(null, null);
+                }).join('');
             }
+            updateAuthorTitlesSortIcons(null, null);
+        }
 
         //===========================================================================
         // sortAuthorOtherTitles() - Sort author other titles table
@@ -14603,7 +14677,7 @@
             createExcelFile(data, headers, filename, 'Author Analysis');
         }
 
-    //===========================================================================
+        //===========================================================================
         // exportAuthorDetailsAll() - Export all titles by this author to Excel
         //===========================================================================
         function exportAuthorDetailsAll() {
@@ -14633,7 +14707,7 @@
             createExcelFile(data, headers, filename, `${authorName} - All Titles`);
         }
 
-    //===========================================================================
+        //===========================================================================
         // exportAuthorDetailsTracked() - Export only tracked titles by this author
         //===========================================================================
         async function exportAuthorDetailsTracked() {
@@ -15418,10 +15492,10 @@
             console.log('✅ Tracking mode defaults reset for new session');
         }
 
-            // Event listeners
-            document.addEventListener('DOMContentLoaded', async function () {
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', async function () {
             // Reset tracking modes to defaults on fresh page load
-                resetTrackingModeDefaults();
+            resetTrackingModeDefaults();
 
             setupSearchEscapeKeys();
 
@@ -15497,10 +15571,10 @@
             const searchInput = document.getElementById('searchInput');
 
             searchInput.addEventListener('input', (e) => {
-                    const term = e.target.value;
+                const term = e.target.value;
 
-                    // Update clear button visibility
-                    updateSearchClearButton(e.target);
+                // Update clear button visibility
+                updateSearchClearButton(e.target);
 
                 // Clear results immediately if search term is too short
                 if (!term || term.length < 2) {
@@ -16645,7 +16719,7 @@
             }
         }
 
-    //===========================================================================
+        //===========================================================================
         // updateCurrentCollectionStatus() - Update header collection indicator
         //===========================================================================
         function updateCurrentCollectionStatus() {
@@ -16799,67 +16873,67 @@
             }
         }
 
-            //===========================================================================
-            // setupTrackingTableCheckboxes() - Set up checkbox event listeners for tracking table (DEBUG)
-            //===========================================================================
-            function setupTrackingTableCheckboxes() {
+        //===========================================================================
+        // setupTrackingTableCheckboxes() - Set up checkbox event listeners for tracking table (DEBUG)
+        //===========================================================================
+        function setupTrackingTableCheckboxes() {
 
-                // Find all tracking checkboxes
-                const checkboxes = document.querySelectorAll('.tracking-item-checkbox');
+            // Find all tracking checkboxes
+            const checkboxes = document.querySelectorAll('.tracking-item-checkbox');
 
-                // Add event listeners to individual checkboxes
-                checkboxes.forEach((checkbox, index) => {
+            // Add event listeners to individual checkboxes
+            checkboxes.forEach((checkbox, index) => {
 
-                    checkbox.addEventListener('change', () => {
-                        updateTrackSelectedButton('tracking');
-                        updateExportSelectedButton();
-                        updateRotateSelectedButton();
-                        // NEW: Update completed rotation bulk buttons if they exist
-                        if (document.getElementById('exportSelectedPerformanceBtn')) {
-                            updateCompletedRotationBulkButtons();
-                        } else {
-                            console.log('Export performance button not found');
-                        }
-                    });
-                });
-
-                // Update button states initially
-                updateTrackSelectedButton('tracking');
-                updateExportSelectedButton();
-                updateRotateSelectedButton();
-
-                // NEW: Update completed rotation buttons initially
-                if (document.getElementById('exportSelectedPerformanceBtn')) {
-                    updateCompletedRotationBulkButtons();
-                }
-            }
-
-            //===========================================================================
-            // updateExportSelectedButton() - Update the export selected button state
-            //===========================================================================
-            function updateExportSelectedButton() {
-                const selectedCheckboxes = document.querySelectorAll('.tracking-item-checkbox:checked');
-                const selectedCount = selectedCheckboxes.length;
-                const exportSelectedBtn = document.getElementById('exportSelectedTrackingBtn');
-
-                if (exportSelectedBtn) {
-                    exportSelectedBtn.disabled = selectedCount === 0;
-                    exportSelectedBtn.textContent = `📋 Export Selected (${selectedCount})`;
-
-                    // Apply visual styling to match other disabled buttons
-                    if (selectedCount === 0) {
-                        exportSelectedBtn.style.opacity = '0.5';
-                        exportSelectedBtn.style.cursor = 'not-allowed';
-                        exportSelectedBtn.style.backgroundColor = '#9ca3af';
-                        exportSelectedBtn.style.borderColor = '#9ca3af';
+                checkbox.addEventListener('change', () => {
+                    updateTrackSelectedButton('tracking');
+                    updateExportSelectedButton();
+                    updateRotateSelectedButton();
+                    // NEW: Update completed rotation bulk buttons if they exist
+                    if (document.getElementById('exportSelectedPerformanceBtn')) {
+                        updateCompletedRotationBulkButtons();
                     } else {
-                        exportSelectedBtn.style.opacity = '1';
-                        exportSelectedBtn.style.cursor = 'pointer';
-                        exportSelectedBtn.style.backgroundColor = '';
-                        exportSelectedBtn.style.borderColor = '';
+                        console.log('Export performance button not found');
                     }
+                });
+            });
+
+            // Update button states initially
+            updateTrackSelectedButton('tracking');
+            updateExportSelectedButton();
+            updateRotateSelectedButton();
+
+            // NEW: Update completed rotation buttons initially
+            if (document.getElementById('exportSelectedPerformanceBtn')) {
+                updateCompletedRotationBulkButtons();
+            }
+        }
+
+        //===========================================================================
+        // updateExportSelectedButton() - Update the export selected button state
+        //===========================================================================
+        function updateExportSelectedButton() {
+            const selectedCheckboxes = document.querySelectorAll('.tracking-item-checkbox:checked');
+            const selectedCount = selectedCheckboxes.length;
+            const exportSelectedBtn = document.getElementById('exportSelectedTrackingBtn');
+
+            if (exportSelectedBtn) {
+                exportSelectedBtn.disabled = selectedCount === 0;
+                exportSelectedBtn.textContent = `📋 Export Selected (${selectedCount})`;
+
+                // Apply visual styling to match other disabled buttons
+                if (selectedCount === 0) {
+                    exportSelectedBtn.style.opacity = '0.5';
+                    exportSelectedBtn.style.cursor = 'not-allowed';
+                    exportSelectedBtn.style.backgroundColor = '#9ca3af';
+                    exportSelectedBtn.style.borderColor = '#9ca3af';
+                } else {
+                    exportSelectedBtn.style.opacity = '1';
+                    exportSelectedBtn.style.cursor = 'pointer';
+                    exportSelectedBtn.style.backgroundColor = '';
+                    exportSelectedBtn.style.borderColor = '';
                 }
             }
+        }
 
         //===========================================================================
         // bulkChangeReasonSelected() - Change tracking reason for selected items (ENHANCED)
@@ -17031,7 +17105,7 @@
     `;
         }
 
-    //===========================================================================
+        //===========================================================================
         // filterTrackingByStatus() - Filter tracking table by status (DEBUG VERSION)
         //===========================================================================
         function filterTrackingByStatus(status) {
@@ -17068,6 +17142,13 @@
                     console.log(`🔍 FILTER DEBUG: Item ${item.barcode} (${item.title}): status=${item.status}, rotationIntent=${item.rotationIntent}, matches=${matches}`);
                     return matches;
                 });
+            } else if (status === 'monitoring') {
+                // Show items with monitor-performance reason that are not in rotation
+                filteredData = trackingArray.filter(item =>
+                    item.reason === 'monitor-performance' &&
+                    item.status !== 'completed-rotation' &&
+                    !item.rotationIntent
+                );
             } else if (status === 'completed-rotation') {
                 // Show only completed rotations
                 filteredData = trackingArray.filter(item => item.status === 'completed-rotation');
@@ -17146,6 +17227,18 @@
                 reasonCounts[item.reason] = (reasonCounts[item.reason] || 0) + 1;
             });
 
+            const monitoringCount = allTrackingData.filter(item =>
+                item.reason === 'monitor-performance' &&
+                item.status !== 'completed-rotation' &&
+                !item.rotationIntent
+            ).length;
+
+            // Update monitoring count display
+            const monitoringCountElement = document.getElementById('monitoringTrackingCount');
+            if (monitoringCountElement) {
+                monitoringCountElement.textContent = monitoringCount;
+            }
+
             // Update the metrics display
             const totalDisplayed = filteredData.length;
             const statusLabel = statusFilter === 'active' ? 'Active Items' :
@@ -17202,7 +17295,7 @@
             });
         }
 
-    //===========================================================================
+        //===========================================================================
         // refreshTrackingTable() - Refresh tracking items table
         // Purpose: Renders different table views based on active filter (All/Active/Mid-Rotation/Completed)
         // Input: providedData (optional) - pre-filtered tracking data, or uses cached data if null
@@ -17263,7 +17356,7 @@
                 //===================================================================
                 // TABLE 1: COMPLETED ROTATIONS VIEW (9 columns)
                 // Purpose: Shows items that have completed their branch rotation
-                // Columns: Checkbox | Copy | Title | Author | Completed | Branch Performance | Best Branch | Performance Detail | Actions
+                // Columns: Checkbox | Copy | Title | Author | Completed | Rotation Performance | Performance Detail | Actions
                 //===================================================================
                 `
             <table class="analysis-table sortable-table tracking-table">
@@ -17297,12 +17390,10 @@
                             </svg>
                         </th>
                         <!-- COLUMN 6: Branch performance analysis (non-sortable) -->
-                        <th>Branch Performance</th>
-                        <!-- COLUMN 7: Best performing branch (non-sortable) -->
-                        <th>Best Branch</th>
-                        <!-- COLUMN 8: Performance detail button (non-sortable) -->
+                        <th>Rotation Performance</th>
+                        <!-- COLUMN 7: Performance detail button (non-sortable) -->
                         <th>Performance Detail</th>
-                        <!-- COLUMN 9: Action buttons (non-sortable) -->
+                        <!-- COLUMN 8: Action buttons (non-sortable) -->
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -17554,7 +17645,6 @@
         function generateEnhancedTrackingRows(trackingArray) {
             return trackingArray.map(item => {
                 const performanceData = analyzeItemPerformance(item);
-                const bestBranch = identifyBestBranch(performanceData);
 
                 return `
             <tr data-barcode="${item.barcode}" class="tracked-row" onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
@@ -17576,7 +17666,6 @@
                 <td>${escapeHtml(item.author)}</td>
                 <td>${formatDate(item.completedDate)}</td>
                 <td>${formatBranchPerformance(performanceData)}</td>
-                <td>${formatBestBranch(bestBranch)}</td>
                 <td>
                     <button id="btn-detail" onclick="event.stopPropagation(); showPerformanceDetail('${item.barcode}')" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                         📊 View Detail
@@ -17659,17 +17748,27 @@
 
                 // Change button text and function based on current view
                 if (isMidRotationView) {
-                    rotateBtn.textContent = `🚪 Remove from Rotation (${selectedCount})`;
+                    rotateBtn.textContent = `Remove from Rotation (${selectedCount})`;
                     rotateBtn.onclick = removeFromRotationSelected;
                     rotateBtn.style.background = '#dc2626'; // Red background
+                    rotateBtn.style.transition = 'all 0.2s';
+
+                    // Add hover effects
+                    rotateBtn.onmouseenter = () => rotateBtn.style.background = '#b91c1c'; // Darker red
+                    rotateBtn.onmouseleave = () => rotateBtn.style.background = '#dc2626';  // Original red
                 } else {
                     rotateBtn.textContent = `🔄 Rotate Selected (${selectedCount})`;
                     rotateBtn.onclick = rotateSelectedItems;
-                    rotateBtn.style.background = '#059669'; // Green background
+                    rotateBtn.style.background = '#1795d4'; // Bluey background
+                    rotateBtn.style.transition = 'all 0.2s';
+
+                    // Add hover effects
+                    rotateBtn.onmouseenter = () => rotateBtn.style.background = '#1570a6'; // Darker blue
+                    rotateBtn.onmouseleave = () => rotateBtn.style.background = '#1795d4';  // Original blue
                 }
 
                 if (selectedCount === 0) {
-                    rotateBtn.style.opacity = '0.5';
+                    // rotateBtn.style.opacity = '0.5';
                     rotateBtn.style.cursor = 'not-allowed';
                 } else {
                     rotateBtn.style.opacity = '1';
@@ -17841,75 +17940,72 @@
         }
 
         //===========================================================================
-        // analyzeItemPerformance() - Fixed to use testing intentions and current CSV data
+        // analyzeItemPerformance() - Simplified location-based performance tracking
         //===========================================================================
         function analyzeItemPerformance(trackingItem) {
-            const performanceByBranch = {};
-
-            // Helper function to extract target branch from tracking reason
-            function getTargetBranchFromReason(reason) {
-                if (!reason) return null;
-
-                if (reason.includes('send-to-heywood')) return 'Heywood';
-                if (reason.includes('send-to-casterton')) return 'Casterton';
-                if (reason.includes('send-to-portland')) return 'Portland';
-
-                return null;
-            }
-
-            // Get all unique branches this item was sent to for testing
-            const testedBranches = new Set();
-
-            if (trackingItem.branchHistory && trackingItem.branchHistory.length > 0) {
-                trackingItem.branchHistory.forEach(entry => {
-                    const targetBranch = getTargetBranchFromReason(entry.reason);
-                    if (targetBranch) {
-                        testedBranches.add(targetBranch);
-                    }
-                });
-            }
-
-            console.log(`${trackingItem.title} was tested at: ${Array.from(testedBranches).join(', ')}`);
-
-            // Initialize all tested branches
-            testedBranches.forEach(branch => {
-                performanceByBranch[branch] = {
-                    circulationGain: 0,
-                    maxCirculation: 0
-                };
-            });
-
-            // Get baseline circulation (when tracking started) vs current circulation
+            // Get baseline circulation when tracking started
             const baselineCirculation = trackingItem.history && trackingItem.history.length > 0
                 ? (trackingItem.history.find(entry => entry.circulation > 0)?.circulation || 0)
                 : 0;
 
-            // Get CURRENT circulation from the loaded library data (not tracking history)
+            // Get current circulation from loaded library data
             const currentItem = libraryData?.find(item => item.barcode === trackingItem.barcode);
             const currentCirculation = currentItem ? parseInt(currentItem.circulation) || 0 : 0;
 
+            // Get last known location from branch history
+            const lastBranchEntry = trackingItem.branchHistory && trackingItem.branchHistory.length > 0
+                ? trackingItem.branchHistory[trackingItem.branchHistory.length - 1]
+                : null;
+            const lastLocation = lastBranchEntry ? lastBranchEntry.branch : (trackingItem.location || 'Unknown');
+
+            // Get current location
+            const currentLocation = currentItem ? formatBranchName(currentItem.branch || 'Unknown') : lastLocation;
+
+            // Calculate total circulation change
             const totalGain = currentCirculation - baselineCirculation;
 
-            console.log(`${trackingItem.title}: Baseline: ${baselineCirculation}, Current: ${currentCirculation}, Total gain: ${totalGain}`);
+            return {
+                lastLocation: lastLocation,
+                currentLocation: currentLocation,
+                baselineCirculation: baselineCirculation,
+                currentCirculation: currentCirculation,
+                totalGain: totalGain,
+                hasLocationChange: lastLocation !== currentLocation,
+                note: totalGain > 0 ? `Gained ${totalGain} circulation since tracking began` : 'No circulation gain since tracking began'
+            };
+        }
 
-            if (totalGain <= 0) {
-                console.log('No circulation gain during rotation period');
-                return performanceByBranch;
+        //===========================================================================
+        // Helper function to get the date when item moved to next branch
+        //===========================================================================
+        function getNextBranchDate(branchHistory, currentBranch) {
+            const currentIndex = branchHistory.findIndex(entry => entry.branch === currentBranch);
+            if (currentIndex !== -1 && currentIndex < branchHistory.length - 1) {
+                return branchHistory[currentIndex + 1].date;
+            }
+            return null; // This is the last/current branch
+        }
+
+        //===========================================================================
+        // Helper function to get circulation count closest to a specific date
+        //===========================================================================
+        function getCirculationAtDate(circulationHistory, targetDate) {
+            if (!circulationHistory.length || !targetDate) return null;
+
+            const target = new Date(targetDate);
+
+            // Find the circulation entry closest to (but not after) the target date
+            let bestEntry = null;
+            for (const entry of circulationHistory) {
+                const entryDate = new Date(entry.date);
+                if (entryDate <= target) {
+                    bestEntry = entry;
+                } else {
+                    break; // Entries are sorted, so we can stop here
+                }
             }
 
-            // For now, attribute all gain to the original location where circulation likely happened
-            // (In the future, you could track when specific circulation increases occurred)
-            const originalLocation = trackingItem.location?.includes('Casterton') ? 'Casterton' :
-                trackingItem.location?.includes('Heywood') ? 'Heywood' :
-                    trackingItem.location?.includes('Portland') ? 'Portland' : 'Unknown';
-
-            if (performanceByBranch[originalLocation]) {
-                performanceByBranch[originalLocation].circulationGain = totalGain;
-                performanceByBranch[originalLocation].maxCirculation = currentCirculation;
-            }
-
-            console.log('Final Performance Data:', performanceByBranch);
-            return performanceByBranch;
+            return bestEntry ? bestEntry.circulation : null;
         }
 
         //===========================================================================
@@ -17969,24 +18065,65 @@
         }
 
         //===========================================================================
-        // formatBranchPerformance() - Show circulation gains during rotation
+        // formatBranchPerformance() - FIXED: No location attribution for completed rotations
         //===========================================================================
         function formatBranchPerformance(performanceData) {
-            if (Object.keys(performanceData).length === 0) {
+            if (!performanceData) {
                 return '<span style="color: #6b7280; font-style: italic;">No data</span>';
             }
 
-            const branchSummaries = Object.entries(performanceData).map(([branchName, data]) => {
-                const displayText = data.circulationGain > 0
-                    ? `+${data.circulationGain} circulation`
-                    : 'No new circulation';
+            // For completed rotations, don't show location - just total change
+            const circulationDisplay = `${performanceData.baselineCirculation} → ${performanceData.currentCirculation}`;
+            const gainText = performanceData.totalGain > 0 ? `(+${performanceData.totalGain})` : '(no gain)';
+            const gainColor = performanceData.totalGain > 0 ? '#16a34a' : '#6b7280';
 
-                return `<div style="margin-bottom: 0.25rem; font-size: 0.75rem;">
-            <strong>${branchName}:</strong> ${displayText}
-        </div>`;
-            }).join('');
+            return `
+        <div style="line-height: 1.2; font-size: 0.75rem;">
+            <div style="font-weight: 500; color: #6b7280;">Total rotation:</div>
+            <div style="color: ${gainColor};">${circulationDisplay} ${gainText}</div>
+        </div>
+    `;
+        }
 
-            return `<div style="line-height: 1.2;">${branchSummaries}</div>`;
+        //===========================================================================
+        // identifyBestBranch() - Updated for simplified tracking
+        //===========================================================================
+        function identifyBestBranch(performanceData) {
+            if (!performanceData) {
+                return { branch: 'Unknown', reason: 'No performance data' };
+            }
+
+            const totalGain = performanceData.totalGain || 0;
+
+            return {
+                branch: performanceData.currentLocation || 'Unknown',
+                reason: totalGain > 0 ? `Total: +${totalGain} circulation` : 'No circulation gain',
+                maxCirculation: performanceData.currentCirculation || 0,
+                avgCirculation: totalGain
+            };
+        }
+
+        //===========================================================================
+        // identifyBestBranch() - Updated to handle limitations
+        //===========================================================================
+        function identifyBestBranch(performanceData) {
+            if (performanceData._metadata && performanceData._metadata.hasLimitation) {
+                const totalGain = performanceData._metadata.totalRotationGain || 0;
+                return {
+                    branch: 'Cannot determine',
+                    reason: totalGain > 0 ? `Total rotation: +${totalGain} circulation` : 'No circulation gain during rotation',
+                    maxCirculation: performanceData._metadata.currentCirculation || 0,
+                    avgCirculation: 0
+                };
+            }
+
+            // Fallback for edge cases
+            return {
+                branch: 'Unknown',
+                reason: 'Performance data unavailable',
+                maxCirculation: 0,
+                avgCirculation: 0
+            };
         }
 
         //===========================================================================
@@ -18046,7 +18183,7 @@
         }
 
         //===========================================================================
-        // showPerformanceDetail() - Show detailed performance modal for an item
+        // showPerformanceDetail() - FIXED: Show detailed performance modal for an item
         //===========================================================================
         async function showPerformanceDetail(barcode) {
             const trackingData = await getTrackingData(barcode);
@@ -18056,7 +18193,6 @@
             }
 
             const performanceData = analyzeItemPerformance(trackingData);
-            const bestBranch = identifyBestBranch(performanceData);
 
             // Get current circulation from library data
             const currentItem = libraryData?.find(item => item.barcode === trackingData.barcode);
@@ -18069,50 +18205,30 @@
         <p><strong>Rotation completed:</strong> ${formatDate(trackingData.completedDate)}</p>
         <p><strong>Rotation number:</strong> ${trackingData.rotationCount || 1}</p>
         
-        <h4>Branch Performance Analysis</h4>
-        ${Object.keys(performanceData).length > 0 ? `
-            <div style="margin-bottom: 1rem;">
-                ${Object.entries(performanceData).map(([branchName, data]) => `
-                    <div style="background: #f8fafc; padding: 1rem; margin-bottom: 0.5rem; border-radius: 0.25rem;">
-                        <h5 style="margin: 0 0 0.5rem 0; color: #1f2937;">${branchName}</h5>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div><strong>Circulation Gain:</strong> +${data.circulationGain || 0}</div>
-                            <div><strong>Max Recorded:</strong> ${data.maxCirculation || 0}</div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-            
-            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 1rem; border-radius: 0.25rem;">
-                <h5 style="margin: 0 0 0.5rem 0; color: #16a34a;">Performance Summary</h5>
-                <p style="margin: 0;"><strong>${bestBranch.branch}</strong> - ${bestBranch.reason}</p>
-            </div>
-        ` : `
-            <p style="color: #6b7280; font-style: italic;">No performance data available for this item.</p>
-        `}
-        
-        <div style="margin-top: 2rem; text-align: right;">
-            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+        <h4>Location and Performance Summary</h4>
+        <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+            <p><strong>Location:</strong> ${performanceData.lastLocation} → ${performanceData.currentLocation}</p>
+            <p><strong>Circulation Change:</strong> ${performanceData.baselineCirculation} → ${performanceData.currentCirculation} (${performanceData.totalGain >= 0 ? '+' : ''}${performanceData.totalGain})</p>
+            <p><strong>Summary:</strong> ${performanceData.note}</p>
         </div>
     `;
 
-            // Use the generic modal system
-            showModal(`Performance Detail - ${trackingData.title}`, modalContent);
+            showModal('Performance Detail - ' + escapeHtml(trackingData.title), modalContent);
         }
 
-    //===========================================================================
+        //===========================================================================
         // resetTrackingItem() - Reset a completed rotation to start a new cycle
         //===========================================================================
         async function resetTrackingItem(barcode) {
             try {
                 const trackingData = await getTrackingData(barcode);
                 if (!trackingData) {
-                    showMessage('Item not found in tracking data', 'error');
+                    showStatus('Item not found in tracking data', 'error');
                     return;
                 }
 
                 if (trackingData.status !== 'completed-rotation') {
-                    showMessage('Only completed rotations can be reset', 'warning');
+                    showStatus('Only completed rotations can be reset', 'warning');
                     return;
                 }
 
@@ -18126,7 +18242,9 @@
                 trackingData.status = 'active';
                 trackingData.lastCompletedDate = trackingData.completedDate;
                 trackingData.completedDate = null;
-                trackingData.branchHistory = []; // Clear for new cycle
+                // Clear branch history for new cycle
+                trackingData.branchHistory = [];
+                console.log(`🔄 Cleared branchHistory for ${trackingData.title}, now has ${trackingData.branchHistory.length} entries`);
 
                 // Add reset history entry
                 trackingData.history.push({
@@ -18138,17 +18256,38 @@
                     location: trackingData.location
                 });
 
-                // Update in database
-                await updateTrackingStatus(barcode, 'active', 'Reset to start new tracking cycle');
+                // Save the updated data directly to ensure branchHistory is cleared
+                if (!db) await initializeDB();
+                const transaction = db.transaction(['tracked_items'], 'readwrite');
+                const store = transaction.objectStore('tracked_items');
+                await new Promise((resolve, reject) => {
+                    const request = store.put(trackingData);
+                    request.onsuccess = () => {
+                        trackedItemsCache.set(barcode, trackingData);
+                        console.log(`💾 Saved reset data for ${trackingData.title}, branchHistory length: ${trackingData.branchHistory.length}`);
+                        resolve();
+                    };
+                    request.onerror = () => reject(request.error);
+                });
 
-                showMessage(`Reset "${trackingData.title}" to active status - starting new tracking cycle`, 'success');
+                showStatus(`Reset "${trackingData.title}" to active status - starting new tracking cycle`, 'success');
 
-                // Refresh the display
-                await loadTrackingTab();
+                // Refresh the current view immediately
+                const activeFilterButton = document.querySelector('.filter-btn.active');
+                const currentStatus = activeFilterButton ?
+                    activeFilterButton.getAttribute('data-status') : 'all';
+
+                // Force refresh the specific filtered view
+                if (typeof filterTrackingByStatus === 'function') {
+                    filterTrackingByStatus(currentStatus);
+                } else {
+                    // Fallback: reload entire tracking tab
+                    await loadTrackingTab();
+                }
 
             } catch (error) {
                 console.error('Error resetting tracking item:', error);
-                showMessage('Error resetting item: ' + error.message, 'error');
+                showStatus('Error resetting item: ' + error.message, 'error');
             }
         }
 
@@ -18186,68 +18325,68 @@
         }
 
         //===========================================================================
-            // updateCompletedRotationBulkButtons() - Update bulk action button states for completed rotations (DEBUG)
-            //===========================================================================
-            function updateCompletedRotationBulkButtons() {
-                console.log('updateCompletedRotationBulkButtons() called');
+        // updateCompletedRotationBulkButtons() - Update bulk action button states for completed rotations (DEBUG)
+        //===========================================================================
+        function updateCompletedRotationBulkButtons() {
+            console.log('updateCompletedRotationBulkButtons() called');
 
-                const selectedCheckboxes = document.querySelectorAll('.tracking-item-checkbox:checked');
-                console.log('Selected checkboxes found:', selectedCheckboxes.length);
-                console.log('Selected checkboxes:', selectedCheckboxes);
+            const selectedCheckboxes = document.querySelectorAll('.tracking-item-checkbox:checked');
+            console.log('Selected checkboxes found:', selectedCheckboxes.length);
+            console.log('Selected checkboxes:', selectedCheckboxes);
 
-                const selectedCount = selectedCheckboxes.length;
+            const selectedCount = selectedCheckboxes.length;
 
-                // Update Export button
-                const exportBtn = document.getElementById('exportSelectedPerformanceBtn');
-                console.log('Export button found:', exportBtn);
+            // Update Export button
+            const exportBtn = document.getElementById('exportSelectedPerformanceBtn');
+            console.log('Export button found:', exportBtn);
 
-                if (exportBtn) {
-                    exportBtn.textContent = `📊 Export Selected Performance Data (${selectedCount})`;
-                    exportBtn.disabled = selectedCount === 0;
-                    if (selectedCount === 0) {
-                        exportBtn.style.background = '#9ca3af';
-                        exportBtn.style.cursor = 'not-allowed';
-                    } else {
-                        exportBtn.style.background = '#329740';
-                        exportBtn.style.cursor = 'pointer';
-                    }
-                    console.log('Export button updated:', exportBtn.textContent, 'disabled:', exportBtn.disabled);
+            if (exportBtn) {
+                exportBtn.textContent = `📊 Export Selected Performance Data (${selectedCount})`;
+                exportBtn.disabled = selectedCount === 0;
+                if (selectedCount === 0) {
+                    exportBtn.style.background = '#9ca3af';
+                    exportBtn.style.cursor = 'not-allowed';
+                } else {
+                    exportBtn.style.background = '#329740';
+                    exportBtn.style.cursor = 'pointer';
                 }
-
-                // Update Reset button
-                const resetBtn = document.getElementById('resetSelectedRotationsBtn');
-                console.log('Reset button found:', resetBtn);
-
-                if (resetBtn) {
-                    resetBtn.textContent = `🔄 Reset Selected (${selectedCount})`;
-                    resetBtn.disabled = selectedCount === 0;
-                    if (selectedCount === 0) {
-                        resetBtn.style.background = '#9ca3af';
-                        resetBtn.style.cursor = 'not-allowed';
-                    } else {
-                        resetBtn.style.background = '#329740';
-                        resetBtn.style.cursor = 'pointer';
-                    }
-                    console.log('Reset button updated:', resetBtn.textContent, 'disabled:', resetBtn.disabled);
-                }
-
-                // Update Delete button
-                const deleteBtn = document.getElementById('deleteSelectedRotationsBtn');
-                console.log('Delete button found:', deleteBtn);
-
-                if (deleteBtn) {
-                    deleteBtn.textContent = `🗑️ Delete Selected (${selectedCount})`;
-                    deleteBtn.disabled = selectedCount === 0;
-                    if (selectedCount === 0) {
-                        deleteBtn.style.background = '#9ca3af';
-                        deleteBtn.style.cursor = 'not-allowed';
-                    } else {
-                        deleteBtn.style.background = '#dc2626';
-                        deleteBtn.style.cursor = 'pointer';
-                    }
-                    console.log('Delete button updated:', deleteBtn.textContent, 'disabled:', deleteBtn.disabled);
-                }
+                console.log('Export button updated:', exportBtn.textContent, 'disabled:', exportBtn.disabled);
             }
+
+            // Update Reset button
+            const resetBtn = document.getElementById('resetSelectedRotationsBtn');
+            console.log('Reset button found:', resetBtn);
+
+            if (resetBtn) {
+                resetBtn.textContent = `🔄 Reset Selected (${selectedCount})`;
+                resetBtn.disabled = selectedCount === 0;
+                if (selectedCount === 0) {
+                    resetBtn.style.background = '#9ca3af';
+                    resetBtn.style.cursor = 'not-allowed';
+                } else {
+                    resetBtn.style.background = '#329740';
+                    resetBtn.style.cursor = 'pointer';
+                }
+                console.log('Reset button updated:', resetBtn.textContent, 'disabled:', resetBtn.disabled);
+            }
+
+            // Update Delete button
+            const deleteBtn = document.getElementById('deleteSelectedRotationsBtn');
+            console.log('Delete button found:', deleteBtn);
+
+            if (deleteBtn) {
+                deleteBtn.textContent = `🗑️ Delete Selected (${selectedCount})`;
+                deleteBtn.disabled = selectedCount === 0;
+                if (selectedCount === 0) {
+                    deleteBtn.style.background = '#9ca3af';
+                    deleteBtn.style.cursor = 'not-allowed';
+                } else {
+                    deleteBtn.style.background = '#dc2626';
+                    deleteBtn.style.cursor = 'pointer';
+                }
+                console.log('Delete button updated:', deleteBtn.textContent, 'disabled:', deleteBtn.disabled);
+            }
+        }
 
         //===========================================================================
         // bulkExportCompletedRotations() - Export performance data for selected completed rotations (FIXED)
@@ -18265,7 +18404,6 @@
                 const trackingData = await getTrackingData(barcode);
                 if (trackingData && trackingData.status === 'completed-rotation') {
                     const performanceData = analyzeItemPerformance(trackingData);
-                    const bestBranch = identifyBestBranch(performanceData);
 
                     // Format branch performance in a readable way
                     const branchPerformanceText = Object.keys(performanceData).length > 0
@@ -18280,8 +18418,7 @@
                         author: trackingData.author,
                         completedDate: trackingData.completedDate,
                         rotationCount: trackingData.rotationCount || 1,
-                        bestBranch: bestBranch.branch,
-                        bestBranchReason: bestBranch.reason,
+                        totalGain: performanceData.totalGain || 0,
                         branchPerformanceText: branchPerformanceText
                     });
                 }
@@ -18292,16 +18429,14 @@
             const filename = `completed-rotations-performance-${timestamp}.xlsx`;
 
             const excelData = [
-                ['Barcode', 'Title', 'Author', 'Completed Date', 'Rotation #', 'Best Branch', 'Best Branch Reason', 'Branch Performance Summary'],
+                ['Barcode', 'Title', 'Author', 'Completed Date', 'Rotation #', 'Total Circulation Change'],
                 ...performanceReport.map(item => [
                     item.barcode,
                     item.title,
                     item.author,
                     new Date(item.completedDate).toLocaleDateString(),
                     item.rotationCount,
-                    item.bestBranch,
-                    item.bestBranchReason,
-                    item.branchPerformanceText
+                    `${item.totalGain > 0 ? '+' : ''}${item.totalGain || 0} circulation`
                 ])
             ];
 
@@ -19099,17 +19234,27 @@
             createExcelFile(data, headers, filename);
         }
 
-        //===========================================================================
+    //===========================================================================
         // generateLocationEmail() - Generate pre-filled email using mailto
         //===========================================================================
         function generateLocationEmail(config, itemCount) {
-            // Create email body with dynamic count
+            // Create email body with signature formatting
             const bodyText = `${config.greeting},
 
 Please find the attached pick list for ${itemCount} library items to be taken off the shelves.
 
-Regards,
-Kirsten`;
+Kind regards,
+
+Kirsten Jones
+Library Collections and Resources Officer
+Glenelg Libraries
+32 Bentinck St, Portland VIC
+Phone: 03 5522 2385
+Email: kjones@glenelg.vic.gov.au
+
+Organisational Values | Respect | Integrity | Teamwork | Service Excellence | Innovation
+
+The Glenelg Shire Council respectfully acknowledges the traditional lands and waters of the Gunditjmara people, Bunganditj people, Jardwadjali people and their respective cultural herituses. Council embraces diversity and is committed to fostering an inclusive community.`;
 
             // Encode the email components for URL
             const encodedTo = encodeURIComponent(config.emailTo);
@@ -19290,9 +19435,9 @@ Kirsten`;
                     <td onclick="selectBookFromTable('${item.barcode}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
                     <td class="actions-column">
                         ${isTracked ?
-                            `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
-                            `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'chartModal', event)">Track</button>`
-                        }
+                        `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
+                        `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'chartModal', event)">Track</button>`
+                    }
                     </td>
                 `;
 
@@ -19695,65 +19840,65 @@ Kirsten`;
             }
         }
 
-            //===========================================================================
-            // initAllTrackingModeSelectors() - Initialize all tracking mode selectors with correct case
-            //===========================================================================
-            function initAllTrackingModeSelectors() {
-            
-                const configs = [
-                    { selector: '#weedingTrackingModeSelector', key: 'weedingTrackingMode', default: 'weeding-candidate' },
-                    { selector: '#collectionTrackingModeSelector', key: 'collectionTrackingMode', default: 'monitor-performance' },
-                    { selector: '#authorDetailsTrackingModeSelector', key: 'authorDetailsTrackingMode', default: 'monitor-performance' },
-                    { selector: '#chartItemsModal .tracking-mode-selector', key: 'chartModalTrackingMode', default: 'monitor-performance' },
-                    { selector: '#searchTrackingModeSelector', key: 'searchTrackingMode', default: 'monitor-performance' },
-                    { selector: '#trackingTabModeSelector', key: 'trackingTabMode', default: 'monitor-performance' },
-                    { selector: '#trackingModeSelector', key: 'trackingMode', default: 'monitor-performance' }
-                ];
+        //===========================================================================
+        // initAllTrackingModeSelectors() - Initialize all tracking mode selectors with correct case
+        //===========================================================================
+        function initAllTrackingModeSelectors() {
 
-                configs.forEach(({ selector, key, default: defMode }) => {
-                    const container = document.querySelector(selector);
-                    if (!container) return;
+            const configs = [
+                { selector: '#weedingTrackingModeSelector', key: 'weedingTrackingMode', default: 'weeding-candidate' },
+                { selector: '#collectionTrackingModeSelector', key: 'collectionTrackingMode', default: 'monitor-performance' },
+                { selector: '#authorDetailsTrackingModeSelector', key: 'authorDetailsTrackingMode', default: 'monitor-performance' },
+                { selector: '#chartItemsModal .tracking-mode-selector', key: 'chartModalTrackingMode', default: 'monitor-performance' },
+                { selector: '#searchTrackingModeSelector', key: 'searchTrackingMode', default: 'monitor-performance' },
+                { selector: '#trackingTabModeSelector', key: 'trackingTabMode', default: 'monitor-performance' },
+                { selector: '#trackingModeSelector', key: 'trackingMode', default: 'monitor-performance' }
+            ];
 
-                    const btns = container.querySelectorAll('.mode-btn');
-                    if (btns.length === 0) return;
+            configs.forEach(({ selector, key, default: defMode }) => {
+                const container = document.querySelector(selector);
+                if (!container) return;
 
-                    // Clear any existing active states
-                    btns.forEach(b => b.classList.remove('active'));
+                const btns = container.querySelectorAll('.mode-btn');
+                if (btns.length === 0) return;
 
-                    // Get saved mode or use default
-                    const saved = localStorage.getItem(key) || defMode;
+                // Clear any existing active states
+                btns.forEach(b => b.classList.remove('active'));
 
-                    // Find and activate the correct button
-                    const targetButton = container.querySelector(`[data-mode="${saved}"]`);
-                    if (targetButton) {
-                        targetButton.classList.add('active');
-                    }
+                // Get saved mode or use default
+                const saved = localStorage.getItem(key) || defMode;
 
-                    // Add click event listeners (remove any existing ones first)
-                    btns.forEach(b => {
-                        // Clone node to remove existing event listeners
-                        const newButton = b.cloneNode(true);
-                        b.parentNode.replaceChild(newButton, b);
+                // Find and activate the correct button
+                const targetButton = container.querySelector(`[data-mode="${saved}"]`);
+                if (targetButton) {
+                    targetButton.classList.add('active');
+                }
 
-                        newButton.addEventListener('click', () => {
-                            const currentBtns = container.querySelectorAll('.mode-btn');
-                            currentBtns.forEach(x => x.classList.remove('active'));
-                            newButton.classList.add('active');
-                            localStorage.setItem(key, newButton.dataset.mode);
-                        });
+                // Add click event listeners (remove any existing ones first)
+                btns.forEach(b => {
+                    // Clone node to remove existing event listeners
+                    const newButton = b.cloneNode(true);
+                    b.parentNode.replaceChild(newButton, b);
+
+                    newButton.addEventListener('click', () => {
+                        const currentBtns = container.querySelectorAll('.mode-btn');
+                        currentBtns.forEach(x => x.classList.remove('active'));
+                        newButton.classList.add('active');
+                        localStorage.setItem(key, newButton.dataset.mode);
                     });
                 });
-            }
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', function () {
-                // Initialize configuration-driven UI elements first
-                setTimeout(() => {
-                    initializeConfigurationDrivenUI();
-                }, 100);
+            // Initialize configuration-driven UI elements first
+            setTimeout(() => {
+                initializeConfigurationDrivenUI();
+            }, 100);
 
-                // Then initialize tracking mode selectors
-                initAllTrackingModeSelectors();
-            });
+            // Then initialize tracking mode selectors
+            initAllTrackingModeSelectors();
+        });
 
         //===========================================================================
         // selectItemsByReason() - Smart selection for Mid-Rotation items
@@ -19835,7 +19980,8 @@ Kirsten`;
                 <!-- Tracking Mode Selector -->
                 <div class="tracking-mode-selector" style="margin-bottom: 1rem;">
                     <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                    <div class="mode-buttons" id="chartModalModeButtons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <div class="mode-buttons" id="chartModalModeButtons"
+                        style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                         <!-- Populated by generateModeButtons() -->
                     </div>
                 </div>
@@ -19870,37 +20016,43 @@ Kirsten`;
                             <th class="sortable" data-sort="title" data-type="text">
                                 Title
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="author" data-type="text">
                                 Author
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="collection" data-type="text">
                                 Collection
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="age" data-type="number">
                                 Age
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="circulation" data-type="number">
                                 Circulation
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="branch" data-type="text">
                                 Branch
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th style="width: 100px;">Actions</th>
