@@ -17731,13 +17731,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                             </svg>
                         </th>
-                        <!-- COLUMN 7: Date when originally tracked -->
-                        <th class="sortable" data-sort="dateAdded" data-type="date">
-                            Date Tracked
-                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-                            </svg>
-                        </th>
+                        <!-- COLUMN 7: Yet to visit (remaining branches or completion message) -->
+                        <th>Yet to Visit</th>
                         ${window.currentPerformanceComparison ? `
                         <!-- COLUMN 8: Performance Comparison (only when comparing) -->
                         <th class="sortable" data-sort="performance" data-type="number">
@@ -17747,9 +17742,14 @@
                             </svg>
                         </th>
                         ` : ''}
-                        <!-- COLUMN 8/9: Yet to visit (remaining branches or completion message) -->
-                        <th>Yet to Visit</th>
-                        <!-- COLUMN 9/10: Action buttons -->
+                        <!-- COLUMN 9: Date when originally tracked -->
+                        <th class="sortable" data-sort="dateAdded" data-type="date">
+                            Date Tracked
+                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                            </svg>
+                        </th>
+                        <!-- COLUMN 10: Action buttons -->
                         <th>Actions</th>
                                             </tr>
                         </thead>
@@ -17808,13 +17808,13 @@
                 </td>
                 <!-- COLUMN 6: Current location (shortened branch name) -->
                 <td style="color: #374151;">${escapeHtml(currentLocation)}</td>
-                <!-- COLUMN 7: Date when originally tracked -->
-                <td>${formatDate(item.dateAdded)}</td>
-                ${window.currentPerformanceComparison ? `<td>${getPerformanceDisplayForItem(item.barcode)}</td>` : ''}
-                <!-- COLUMN 8/9: Yet to visit (remaining branches or completion message) -->
+                <!-- COLUMN 8/9: Yet to visit -->
                 <td style="font-size: 0.875rem; color: ${yetToVisitColor};">
                     ${yetToVisit}
                 </td>
+                <!-- COLUMN 7: Performance (remaining branches or completion message) -->
+                ${window.currentPerformanceComparison ? `<td>${getPerformanceDisplayForItem(item.barcode)}</td>` : ''}
+                <td>${formatDate(item.dateAdded)}</td>
                 <!-- COLUMN 9: Action buttons -->
                 <td style="text-align: center;" onclick="event.stopPropagation();">
                     <button class="untrack-btn" onclick="event.stopPropagation(); handleUntrackItem('${item.barcode}', event)" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>
@@ -17869,15 +17869,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                             </svg>
                         </th>
-                        <!-- COLUMN 7: Date when tracking started (sortable) -->
-                        <th class="sortable" data-sort="dateAdded" data-type="date">
-                            Date Tracked
-                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-                            </svg>
-                        </th>
-                        ${window.currentPerformanceComparison && (document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation') ? `
-                        <!-- COLUMN 8: Performance Comparison (only in monitoring/mid-rotation mode) -->
+                        ${window.currentPerformanceComparison && (document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'active' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'all') ? `
+                        <!-- COLUMN 7: Performance Comparison (only in monitoring/mid-rotation mode) -->
                         <th class="sortable" data-sort="performance" data-type="number">
                             Performance
                             <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -17885,6 +17878,13 @@
                             </svg>
                         </th>
                         ` : ''}
+                        <!-- COLUMN 7/8: Date when tracking started (sortable) - MOVED HERE -->
+                        <th class="sortable" data-sort="dateAdded" data-type="date">
+                            Date Tracked
+                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                            </svg>
+                        </th>
                         <!-- COLUMN 8/9: Action buttons (non-sortable) -->
                         <th>Actions</th>
                     </tr>
@@ -17971,7 +17971,9 @@
             // Check if we should show performance column
             const showPerformanceColumn = window.currentPerformanceComparison &&
                 (document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' ||
-                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation');
+                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation' ||
+                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'active' ||
+                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'all');
 
             return trackingArray.map(item => {
                 return `
@@ -17997,8 +17999,8 @@
                 </span>
             </td>
             <td style="color: #374151;">${escapeHtml(item.location)}</td>
-            <td>${formatDate(item.dateAdded)}</td>
             ${showPerformanceColumn ? `<td>${getPerformanceDisplayForItem(item.barcode)}</td>` : ''}
+            <td>${formatDate(item.dateAdded)}</td>
             <td style="text-align: center;" onclick="event.stopPropagation();">
                 <button class="untrack-btn" onclick="event.stopPropagation(); handleUntrackItem('${item.barcode}', event)" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                     Untrack
