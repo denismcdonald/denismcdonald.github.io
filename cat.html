@@ -1874,6 +1874,8 @@
                     style="font-size: 0.75rem; padding: 0.375rem 0.75rem; background: #2563eb; border: none; border-radius: 0.25rem; color: white; font-weight: 500; cursor: pointer;">
                     Load
                 </button>
+                <!-- Status display for sample loading -->
+                <div id="sampleLoadingStatus" style="display: none; margin-top: 0.5rem;"></div>
             </div>
 
             <!-- Current Collection Status -->
@@ -3624,75 +3626,42 @@
             </div>
         </div>
 
-        <!-- Item Tracking Tab -->
-        <div id="trackingTab" class="tab-content hidden">
-            <div class="dashboard-grid" id="trackingMetrics">
-                <!-- Metrics will be populated by JavaScript -->
-            </div>
-
-            <div class="analysis-section">
-                <!-- Header with all action buttons grouped logically -->
-                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <h3 style="margin: 0;">Tracked Items</h3>
-                
-                    <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-end;">
-                        <!-- Top row: Main data operations -->
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button class="btn btn-secondary" onclick="exportTrackingData()">📊 Export Tracking Data</button>
-                            <input type="file" id="importTrackingFile" accept=".json" style="display: none;"
-                                onchange="handleImportTrackingFile(this)">
-                            <button class="btn btn-secondary" onclick="document.getElementById('importTrackingFile').click()">
-                                📁 Import Tracking Data
-                            </button>
-                        </div>
-                
-                        <!-- Second row: Location-specific operations -->
-                        <div style="display: flex; gap: 0.5rem; align-items: center">
-                            <button id="emailHeywoodBtn" class="btn" onclick="emailLocationItems('heywood')"
-                                style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
-                                📧 Email Heywood
-                            </button>
-                            <button id="emailCastertonBtn" class="btn" onclick="emailLocationItems('casterton')"
-                                style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
-                                📧 Email Casterton
-                            </button>
-                            <button id="exportPortlandBtn" class="btn" onclick="exportLocationOnly('portland')"
-                                style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
-                                📋 Portland Items
-                            </button>
-                        </div>
-                
-                        <!-- Third row: Export by reason controls -->
-                        <div id="exportByReasonControls" style="display: flex; align-items: center; gap: 0.5rem;">
-                            <label for="exportReasonSelect" style="font-size: 0.875rem; font-weight: 500; white-space: nowrap;">
-                                Export by reason:
-                            </label>
-                            <select id="exportReasonSelect" class="form-select" style="width: auto; font-size: 0.875rem;">
-                                <!-- Populated by generateExportReasonOptions() -->
-                            </select>
-                            <button id="exportByReasonBtn" class="btn btn-secondary" onclick="exportTrackingByReason()">
-                                📊 Export
-                            </button>
-                        </div>
-                    </div>
+    <!-- TRACKING TAB -->
+    <div id="trackingTab" class="tab-content hidden">
+        <div class="dashboard-grid" id="trackingMetrics">
+            <!-- Metrics will be populated by JavaScript -->
+        </div>
+    
+        <div class="analysis-section">
+            <!-- Header with Export/Import buttons -->
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                <h3 style="margin: 0;">Tracked Items</h3>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button class="btn btn-secondary" onclick="exportTrackingData()">📊 Export Tracking Data</button>
+                    <input type="file" id="importTrackingFile" accept=".json" style="display: none;"
+                        onchange="handleImportTrackingFile(this)">
+                    <button class="btn btn-secondary" onclick="document.getElementById('importTrackingFile').click()">📁
+                        Import Tracking Data</button>
                 </div>
-
-                <!-- Status filters - standalone row -->
-                <div style="margin-bottom: 1rem;">
-                    <label style="font-weight: 500; margin-right: 1rem;">Status:</label>
+            </div>
+    
+            <!-- Status Filter Buttons -->
+            <div style="margin-bottom: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <span style="font-weight: 500; margin-right: 0.5rem;">Status:</span>
                     <button class="filter-btn active" data-status="all" onclick="filterTrackingByStatus('all')"
-                        style="padding: 0.375rem 0.75rem; border: 1px solid #3b82f6; background: #3b82f6; color: white; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; margin-right: 0.5rem;">
-                        All Items
+                        style="padding: 0.375rem 0.75rem; border: 1px solid #d1d5db; background: #3b82f6; color: white; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; margin-right: 0.5rem;">
+                        All Items (<span id="totalTrackingCount">0</span>)
                     </button>
                     <button class="filter-btn" data-status="active" onclick="filterTrackingByStatus('active')"
                         style="padding: 0.375rem 0.75rem; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; margin-right: 0.5rem;">
-                        Active
+                        Active (<span id="activeTrackingCount">0</span>)
                     </button>
-                    <button class="filter-btn" data-status="monitoring" onclick="filterTrackingByStatus('monitoring')">
+                    <button class="filter-btn" data-status="monitoring" onclick="filterTrackingByStatus('monitoring')"
+                        style="padding: 0.375rem 0.75rem; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; margin-right: 0.5rem;">
                         Monitoring (<span id="monitoringTrackingCount">0</span>)
                     </button>
-                    <button class="filter-btn" data-status="mid-rotation"
-                        onclick="filterTrackingByStatus('mid-rotation')"
+                    <button class="filter-btn" data-status="mid-rotation" onclick="filterTrackingByStatus('mid-rotation')"
                         style="padding: 0.375rem 0.75rem; border: 1px solid #d1d5db; background: white; color: #374151; border-radius: 0.375rem; cursor: pointer; font-size: 0.875rem; margin-right: 0.5rem;">
                         Mid-Rotation
                     </button>
@@ -3702,91 +3671,154 @@
                         Completed Rotations
                     </button>
                 </div>
-
-                <!-- Mode selector - in its own grey box -->
-                <div class="tracking-mode-selector" id="trackingModeSelector"
-                    style="padding: 1rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 0.5rem; margin-bottom: 1rem;">
-                    <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                    <div class="mode-buttons" id="trackingModeButtons"
-                        style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <!-- Buttons will be populated here by generateModeButtons() -->
-                    </div>
-                </div>
-
-                <!-- Item Tracking Search -->
-                <div class="search-input" style="margin-bottom:1.5rem;">
-                    <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                    <input type="text" id="trackingSearchInput" placeholder="Search titles, authors, call numbers…">
-                    <svg class="search-clear" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        onclick="clearTrackingSearch()">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
-                    </svg>
-                </div>
-
-                <div class="results-container" id="trackingSearchResults"></div>
-
-                <!-- Bulk Actions -->
-                <div class="bulk-actions" id="trackingBulkActions"
-                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; min-width: 0;">
-                
-                    <!-- Left side: All bulk action buttons -->
-                    <div style="display: flex; gap: 0.25rem; align-items: center; flex-shrink: 1; min-width: 0;">
-                        <button class="bulk-track-btn" id="changeReasonSelectedBtn" onclick="bulkChangeReasonSelected('tracking')"
-                            disabled style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
-                            Change Reason (0)
+            </div>
+    
+            <!-- Email buttons, Track items, Search, and Compare Performance in same row -->
+            <div
+                style="display: grid; grid-template-columns: 1fr 400px; gap: 1.5rem; margin-bottom: 1rem; align-items: start;">
+                <!-- Left: Email buttons, Track items, and Search stacked -->
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Email buttons -->
+                    <div
+                        style="display: flex; gap: 0.5rem; align-items: center; padding: 0.75rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 0.5rem;">
+                        <span style="font-weight: 500; margin-right: 0.5rem;">Email pick lists:</span>
+                        <button id="emailHeywoodBtn" class="btn" onclick="emailLocationItems('heywood')"
+                            style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
+                            📧 Email Heywood
                         </button>
-                        <button class="bulk-track-btn" id="untrackTrackingSelectedBtn" onclick="bulkUntrackSelected('tracking')"
-                            disabled style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
-                            Untrack Selected (0)
+                        <button id="emailCastertonBtn" class="btn" onclick="emailLocationItems('casterton')"
+                            style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
+                            📧 Email Casterton
                         </button>
-                        <button class="bulk-track-btn" id="rotateSelectedBtn" onclick="rotateSelectedItems()" disabled
-                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap; color: white; border-color: #059669;">
-                            🔄 Rotate Selected (0)
-                        </button>
-                        <button class="bulk-track-btn" id="untrackAllTrackingBtn" onclick="bulkUntrackAll('tracking')"
-                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
-                            Untrack All
-                        </button>
-                        <button id="exportAllTrackingBtn" class="btn btn-secondary" onclick="exportAllTracking()"
-                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
-                            📊 Export All
-                        </button>
-                        <button id="exportSelectedTrackingBtn" class="btn btn-secondary" onclick="exportSelectedTracking()" disabled
-                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; white-space: nowrap;">
-                            📋 Export Selected (0)
+                        <button id="emailPortlandBtn" class="btn" onclick="emailLocationItems('portland')"
+                            style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
+                            📧 Portland Items
                         </button>
                     </div>
-                
-                    <!-- Right side: Snapshot comparison controls -->
-                    <div id="snapshotComparisonControls" style="display: flex; align-items: center; gap: 0.25rem;">
-                        <label style="font-size: 0.775rem; font-weight: 500; white-space: nowrap;">Compare:</label>
-                        <select id="firstSnapshotSelect" class="form-select"
-                            style="width: 125px; font-size: 0.775rem; padding: 0.3rem;">
-                            <option value="">First snapshot</option>
-                        </select>
-                        <span style="font-size: 0.775rem; color: #6b7280;">vs</span>
-                        <select id="secondSnapshotSelect" class="form-select"
-                            style="width: 125px; font-size: 0.775rem; padding: 0.3rem;">
-                            <option value="">Second snapshot</option>
-                        </select>
-                        <button id="compareSnapshotsBtn" class="btn" onclick="comparePerformanceSnapshots()" disabled
-                            style="padding: 0.3rem 0.6rem; font-size: 0.775rem; background: #16a34a; color: white; border: none; white-space: nowrap;">
-                            Go
-                        </button>
+    
+                    <!-- Track items for -->
+                    <div class="tracking-mode-selector" id="trackingModeSelector"
+                        style="padding: 1rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 0.5rem;">
+                        <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                        <div class="mode-buttons" id="trackingModeButtons"
+                            style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <!-- Buttons will be populated here by generateModeButtons() -->
+                        </div>
+                    </div>
+    
+                    <!-- Search input -->
+                    <div class="search-input">
+                        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" id="trackingSearchInput" placeholder="Search titles, authors, call numbers…">
+                        <svg class="search-clear" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            onclick="clearTrackingSearch()">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                            </path>
+                        </svg>
                     </div>
                 </div>
-
-                <div id="trackingTableContainer">
+    
+                <!-- Right: Compare Performance -->
+                <div
+                    style="background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1rem; height: fit-content;">
+                    <h4 style="margin: 0 0 1rem 0; font-size: 1rem; font-weight: 600;">Compare Performance</h4>
+    
+                    <div id="snapshotComparisonControls" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label style="font-size: 0.875rem; font-weight: 500; min-width: 80px;">Compare:</label>
+                            <select id="firstSnapshotSelect"
+                                style="flex: 1; padding: 0.375rem; border: 1px solid #d1d5db; border-radius: 0.25rem; font-size: 0.875rem;">
+                                <option value="">Select first snapshot...</option>
+                            </select>
+                        </div>
+    
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label style="font-size: 0.875rem; font-weight: 500; min-width: 80px;">vs</label>
+                            <select id="secondSnapshotSelect"
+                                style="flex: 1; padding: 0.375rem; border: 1px solid #d1d5db; border-radius: 0.25rem; font-size: 0.875rem;">
+                                <option value="">Select second snapshot...</option>
+                            </select>
+                        </div>
+    
+                        <button id="compareSnapshotsBtn" onclick="comparePerformanceSnapshots()" disabled
+                            style="background: #2563eb; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 500; cursor: pointer;">
+                            🔍 Compare Performance
+                        </button>
+                    </div>
                 </div>
             </div>
+    
+            <!-- Search results container -->
+            <div class="results-container" id="trackingSearchResults" style="margin-bottom: 1rem;"></div>
+    
+            <!-- Enhanced Bulk Actions -->
+            <div
+                style="display: flex; justify-content: flex-start; align-items: center; gap: 0.75rem; flex-wrap: wrap; padding: 1rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                <!-- Left side: Main bulk actions -->
+                <button class="btn" id="changeReasonSelectedBtn" onclick="bulkChangeReasonSelected('tracking')" disabled
+                    style="padding: 0.5rem; font-size: 0.875rem; white-space: nowrap; background: #6366f1; color: white; border: none; border-radius: 0.375rem; font-weight: 500;">
+                    Change Reason (0)
+                </button>
+                <button class="btn" id="untrackTrackingSelectedBtn" onclick="bulkUntrackSelected('tracking')" disabled
+                    style="padding: 0.5rem; font-size: 0.875rem; white-space: nowrap; background: #dc2626; color: white; border: none; border-radius: 0.375rem; font-weight: 500;">
+                    Untrack Selected (0)
+                </button>
+                <button class="btn" id="rotateSelectedBtn" onclick="rotateSelectedItems()" disabled
+                    style="padding: 0.5rem; font-size: 0.875rem; white-space: nowrap; background: #059669; color: white; border: none; border-radius: 0.375rem; font-weight: 500;">
+                    🔄 Rotate Selected (0)
+                </button>
+                <button class="btn" id="untrackAllTrackingBtn" onclick="bulkUntrackAll('tracking')"
+                    style="padding: 0.5rem; font-size: 0.875rem; white-space: nowrap; background: #7c2d12; color: white; border: none; border-radius: 0.375rem; font-weight: 500;">
+                    Untrack All
+                </button>
+    
+                <!-- Export buttons -->
+                <button class="btn" id="exportAllTrackingBtn" onclick="exportAllTracking()"
+                    style="padding: 0.5rem; font-size: 0.875rem; white-space: nowrap; background: #329740; color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
+                    onmouseover="this.style.backgroundColor='#2a7e35'" onmouseout="this.style.backgroundColor='#329740'">
+                    📊 Export All
+                </button>
+                <button class="btn" id="exportSelectedTrackingBtn" onclick="exportSelectedTracking()" disabled
+                    style="padding: 0.5rem; font-size: 0.875rem; white-space: nowrap; background: #329740; color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s; align-items: center;"
+                    onmouseover="if (!this.disabled) this.style.backgroundColor='#2a7e35'"
+                    onmouseout="if (!this.disabled) this.style.backgroundColor='#329740'">
+                    📋 Export Selected (0)
+                </button>
+                <style>
+                    #exportSelectedTrackingBtn:disabled {
+                        background: #9ca3af !important;
+                        cursor: not-allowed !important;
+                    }
+                </style>
+    
+                <!-- Export by reason -->
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: auto;">
+                    <select id="exportReasonSelect"
+                        style="padding: 0.375rem 0.5rem; border: 1px solid #d1d5db; border-radius: 0.25rem; font-size: 0.875rem;">
+                        <option value="">Export by reason...</option>
+                        <option value="send-to-heywood">Heywood</option>
+                        <option value="send-to-casterton">Casterton</option>
+                        <option value="send-to-portland">Portland</option>
+                        <option value="monitor-performance">Monitor</option>
+                        <option value="weeding-candidate">Weeding</option>
+                        <option value="replacement-candidate">Replace</option>
+                        <option value="send-to-mobile-library">Mobile</option>
+                    </select>
+                    <button class="btn" onclick="exportTrackingByReason()"
+                        style="padding: 0.5rem 1rem; font-size: 0.875rem; background: #329740; color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
+                        onmouseover="this.style.backgroundColor='#2a7e35'"
+                        onmouseout="this.style.backgroundColor='#329740'">📋 Export</button>
+                </div>
+            </div>
+    
+            <!-- Table Container -->
+            <div id="trackingTableContainer">
+                <!-- Table will be populated here -->
+            </div>
         </div>
-
-    </div>
-    </div>
     </div>
 
     <!-- Scroll to Top Button -->
@@ -9192,7 +9224,8 @@
                     }
 
                     // IMMEDIATE: Refresh tracking table if it's currently visible
-                    if (document.getElementById('trackingTab').classList.contains('active')) {
+                    const trackingTab = document.getElementById('trackingTab') || document.getElementById('tracking');
+                    if (trackingTab && trackingTab.classList.contains('active')) {
                         setTimeout(async () => {
                             trackingDataLoaded = false;
                             await loadTrackingTab();
@@ -9243,11 +9276,15 @@
                     }
 
                     // Show the main interface
-                    document.getElementById('uploadSection').style.display = 'block';
+                    const uploadSection = document.getElementById('uploadSection');
+                    if (uploadSection) {
+                        uploadSection.style.display = 'block';
+                    }
 
-                    // Show the main interface
-                    document.getElementById('uploadSection').style.display = 'block';
-                    document.getElementById('searchTab').classList.remove('hidden');
+                    const searchTab = document.getElementById('searchTab');
+                    if (searchTab) {
+                        searchTab.classList.remove('hidden');
+                    }
 
                     // Refresh overview tab if currently active
                     const activeTab = document.querySelector('.tab-content.active');
@@ -9386,8 +9423,15 @@
                         }
 
                         // Show the main interface
-                        document.getElementById('uploadSection').style.display = 'block';
-                        document.getElementById('searchTab').classList.remove('hidden');
+                        const uploadSection = document.getElementById('uploadSection');
+                        if (uploadSection) {
+                            uploadSection.style.display = 'block';
+                        }
+
+                        const searchTab = document.getElementById('searchTab');
+                        if (searchTab) {
+                            searchTab.classList.remove('hidden');
+                        }
 
                         // Auto-hide success message after 5 seconds
                         setTimeout(() => {
@@ -10064,8 +10108,15 @@
         }
 
         // Show the main interface
-        document.getElementById('uploadSection').style.display = 'block';
-        document.getElementById('searchTab').classList.remove('hidden');
+            const uploadSection = document.getElementById('uploadSection');
+            if (uploadSection) {
+                uploadSection.style.display = 'block';
+            }
+
+            const searchTab = document.getElementById('searchTab');
+            if (searchTab) {
+                searchTab.classList.remove('hidden');
+            }
 
         // Update branch filter options
         updateBranchFilter();
@@ -10514,8 +10565,15 @@
                 showParsingResults(exclusionStats);
 
                 // Show the main interface
-                document.getElementById('uploadSection').style.display = 'block';
-                document.getElementById('searchTab').classList.remove('hidden');
+                const uploadSection = document.getElementById('uploadSection');
+                if (uploadSection) {
+                    uploadSection.style.display = 'block';
+                }
+
+                const searchTab = document.getElementById('searchTab');
+                if (searchTab) {
+                    searchTab.classList.remove('hidden');
+                }
 
                 // Clear the stored data
                 window.currentLines = null;
@@ -14890,9 +14948,16 @@
                         // Make sure upload section is visible so parsing results show
                         document.getElementById('uploadSection').style.display = 'block';
 
-                        // Reveal the rest of the UI
-                        document.getElementById('uploadSection').style.display = 'block';
-                        document.getElementById('searchTab').classList.remove('hidden');
+                        // Show the main interface
+                        const uploadSection = document.getElementById('uploadSection');
+                        if (uploadSection) {
+                            uploadSection.style.display = 'block';
+                        }
+
+                        const searchTab = document.getElementById('searchTab');
+                        if (searchTab) {
+                            searchTab.classList.remove('hidden');
+                        }
                     }
                 } catch (error) {
                     showStatus('Error: ' + error.message, 'error');
@@ -16952,15 +17017,15 @@
 
                 // Apply visual styling to match other disabled buttons
                 if (selectedCount === 0) {
-                    exportSelectedBtn.style.opacity = '0.5';
+                    // exportSelectedBtn.style.opacity = '0.5';
                     exportSelectedBtn.style.cursor = 'not-allowed';
                     exportSelectedBtn.style.backgroundColor = '#9ca3af';
                     exportSelectedBtn.style.borderColor = '#9ca3af';
                 } else {
                     exportSelectedBtn.style.opacity = '1';
                     exportSelectedBtn.style.cursor = 'pointer';
-                    exportSelectedBtn.style.backgroundColor = '';
-                    exportSelectedBtn.style.borderColor = '';
+                    exportSelectedBtn.style.backgroundColor = '#329740';  // ← Change to green
+                    exportSelectedBtn.style.borderColor = '#329740';      // ← Change to green
                 }
             }
         }
@@ -18018,16 +18083,18 @@
             const activeButton = document.querySelector('[data-status="active"]');
             const allButton = document.querySelector('[data-status="all"]');
             const midRotationButton = document.querySelector('[data-status="mid-rotation"]');
+            const monitoringButton = document.querySelector('[data-status="monitoring"]');
 
             const isActiveView = activeButton && activeButton.classList.contains('active');
             const isAllView = allButton && allButton.classList.contains('active');
             const isMidRotationView = midRotationButton && midRotationButton.classList.contains('active');
+            const isMonitoringView = monitoringButton && monitoringButton.classList.contains('active');
 
             const rotateBtn = document.getElementById('rotateSelectedBtn');
             if (!rotateBtn) return;
 
             // Show button in Active, All Items, and Mid-Rotation views
-            if (isActiveView || isAllView || isMidRotationView) {
+            if (isActiveView || isAllView || isMidRotationView || isMonitoringView) {
                 const selectedCheckboxes = document.querySelectorAll('.tracking-item-checkbox:checked');
                 const selectedCount = selectedCheckboxes.length;
 
