@@ -4373,6 +4373,14 @@
                 // Force tracking cache to refresh
                 trackingDataLoaded = false;
 
+                // Update tracking table if we're on the tracking tab
+                if (tableType === 'tracking') {
+                    // Re-apply current filter to ensure proper visibility
+                    const activeFilterButton = document.querySelector('.filter-btn.active');
+                    const currentStatus = activeFilterButton ? activeFilterButton.getAttribute('data-status') : 'all';
+                    setTimeout(() => filterTrackingByStatus(currentStatus), 100);
+                }
+
                 // Update just this specific row
                 if (tableType === 'search') {
                     await updateSearchRowTracking(barcode);
@@ -5242,8 +5250,11 @@
                     console.log('🔍 DEBUG: Current filter status:', currentStatus);
 
                     console.log('🔍 DEBUG: Calling filterTrackingByStatus...');
-                    filterTrackingByStatus(currentStatus);
-                    console.log('🔍 DEBUG: filterTrackingByStatus completed');
+                    // Small delay to ensure cache is updated
+                    setTimeout(() => {
+                        filterTrackingByStatus(currentStatus);
+                        console.log('🔍 DEBUG: filterTrackingByStatus completed');
+                    }, 50);
 
                 } else if (tableType === 'search') {
                     await updateSearchRowTracking(barcode);
@@ -17137,6 +17148,12 @@
                 for (const barcode of barcodes) {
                     await updateTrackingRowData(barcode);
                 }
+
+                // CRITICAL: Re-apply current filter to remove/add items as needed
+                const activeFilterButton = document.querySelector('.filter-btn.active');
+                const currentStatus = activeFilterButton ? activeFilterButton.getAttribute('data-status') : 'all';
+                console.log('🔍 Re-applying filter after reason change:', currentStatus);
+                filterTrackingByStatus(currentStatus);
             }
         }
 
@@ -17279,8 +17296,9 @@
                 activeButton.style.borderColor = '#3b82f6';
             }
 
-            // Update metrics for filtered data
-            updateTrackingStatusCounts(filteredData, status);
+            // Update metrics for all data (not just filtered)
+            const allItems = Array.from(trackedItemsCache.values());
+            updateTrackingStatusCounts(allItems);
 
             console.log('🔍 FILTER DEBUG: About to call refreshTrackingTable...');
             // Refresh table with filtered data
@@ -17545,7 +17563,7 @@
             const activeItems = allTrackingData.filter(item => item.status !== 'completed-rotation');
             const completedItems = allTrackingData.filter(item => item.status === 'completed-rotation');
 
-            // Count by reason for the filtered data
+            // Count by reason for the filtered data (for dashboard metrics)
             const reasonCounts = {};
             filteredData.forEach(item => {
                 reasonCounts[item.reason] = (reasonCounts[item.reason] || 0) + 1;
@@ -17557,43 +17575,59 @@
                 !item.rotationIntent
             ).length;
 
-            // Update monitoring count display
-            const monitoringCountElement = document.getElementById('monitoringTrackingCount');
-            if (monitoringCountElement) {
-                monitoringCountElement.textContent = monitoringCount;
-            }
+            const midRotationCount = allTrackingData.filter(item => 
+                item.status !== 'completed-rotation' && 
+                item.rotationIntent
+            ).length;
 
-            // Update the metrics display
+            // UPDATE BUTTON COUNTERS (always based on ALL data)
+            const totalCountElement = document.getElementById('totalTrackingCount');
+            if (totalCountElement) totalCountElement.textContent = allTrackingData.length;
+            
+            const activeCountElement = document.getElementById('activeTrackingCount');
+            if (activeCountElement) activeCountElement.textContent = activeItems.length;
+            
+            const completedCountElement = document.getElementById('completedRotationCount');
+            if (completedCountElement) completedCountElement.textContent = completedItems.length;
+            
+            const monitoringCountElement = document.getElementById('monitoringTrackingCount');
+            if (monitoringCountElement) monitoringCountElement.textContent = monitoringCount;
+            
+            const midRotationCountElement = document.getElementById('midRotationTrackingCount');
+            if (midRotationCountElement) midRotationCountElement.textContent = midRotationCount;
+
+            // Update the dashboard metrics display (based on filtered data for context)
             const totalDisplayed = filteredData.length;
-            const statusLabel = statusFilter === 'active' ? 'Active Items' :
+            const statusLabel = statusFilter === 'active' ?
+                'Active Items' :
                 statusFilter === 'completed-rotation' ? 'Completed Rotations' :
                     'All Items';
 
             document.getElementById('trackingMetrics').innerHTML = `
-        <div class="metric-card">
-            <div class="metric-title">${statusLabel}</div>
-            <div class="metric-value">${totalDisplayed}</div>
-            <div class="metric-subtitle">Currently displayed</div>
-        </div>
-        
-        <div class="metric-card">
-            <div class="metric-title">Active Tracking</div>
-            <div class="metric-value">${activeItems.length}</div>
-            <div class="metric-subtitle">Currently managed items</div>
-        </div>
-        
-        <div class="metric-card">
-            <div class="metric-title">Completed Rotations</div>
-            <div class="metric-value">${completedItems.length}</div>
-            <div class="metric-subtitle">Rotation cycles finished</div>
-        </div>
-        
-        <div class="metric-card">
-            <div class="metric-title">For Branches</div>
-            <div class="metric-value">${LIBRARY_CONFIG.getBranchTrackingModes().reduce((total, mode) => total + (reasonCounts[mode] || 0), 0)}</div>
-            <div class="metric-subtitle">Branch transfers (in view)</div>
-        </div>
-    `;
+                <div class="metric-card">
+                    <div class="metric-title">${statusLabel}</div>
+                    <div class="metric-value">${totalDisplayed}</div>
+                    <div class="metric-subtitle">Currently displayed</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-title">Active Tracking</div>
+                    <div class="metric-value">${activeItems.length}</div>
+                    <div class="metric-subtitle">Currently managed items</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-title">Completed Rotations</div>
+                    <div class="metric-value">${completedItems.length}</div>
+                    <div class="metric-subtitle">Rotation cycles finished</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-title">For Branches</div>
+                    <div class="metric-value">${LIBRARY_CONFIG.getBranchTrackingModes().reduce((total, mode) => total + (reasonCounts[mode] || 0), 0)}</div>
+                    <div class="metric-subtitle">Branch transfers (in view)</div>
+                </div>
+            `;
         }
 
         //===========================================================================
