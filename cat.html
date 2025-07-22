@@ -17429,28 +17429,9 @@
 
                 const allTrackedItems = Array.from(trackedItemsCache.values());
 
-                // Get items for BOTH monitoring and mid-rotation views
-                const monitoringItems = allTrackedItems.filter(item => {
-                    const hasMonitorReason = item.reason && (
-                        item.reason.includes('monitor') ||
-                        item.reason.includes('Monitor') ||
-                        item.reason === 'monitor-performance'
-                    );
-                    return hasMonitorReason;
-                });
+                // Calculate performance for ALL tracked items, regardless of reason or status
+                const allItemsToCompare = allTrackedItems;
 
-                const midRotationItems = allTrackedItems.filter(item => {
-                    const isInMidRotation = item.status === 'active' &&
-                        item.rotationIntent === true &&
-                        !isBranchRotationComplete(item);
-                    return isInMidRotation;
-                });
-
-                // Combine both sets of items (remove duplicates if any)
-                const allItemsToCompare = [...new Set([...monitoringItems, ...midRotationItems])];
-
-                console.log('🔍 DEBUG: Monitoring items:', monitoringItems.length);
-                console.log('🔍 DEBUG: Mid-rotation items:', midRotationItems.length);
                 console.log('🔍 DEBUG: Total items to compare:', allItemsToCompare.length);
 
                 if (allItemsToCompare.length === 0) {
@@ -17968,7 +17949,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                             </svg>
                         </th>
-                        ${window.currentPerformanceComparison && (document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'active' || document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'all') ? `
+                        ${window.currentPerformanceComparison ? `
                         <!-- COLUMN 7: Performance Comparison (only in monitoring/mid-rotation mode) -->
                         <th class="sortable" data-sort="performance" data-type="number">
                             Performance
@@ -18068,11 +18049,7 @@
         //===========================================================================
         function generateStandardTrackingRows(trackingArray) {
             // Check if we should show performance column
-            const showPerformanceColumn = window.currentPerformanceComparison &&
-                (document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'monitoring' ||
-                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'mid-rotation' ||
-                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'active' ||
-                    document.querySelector('.filter-btn.active')?.getAttribute('data-status') === 'all');
+            const showPerformanceColumn = window.currentPerformanceComparison;
 
             return trackingArray.map(item => {
                 return `
