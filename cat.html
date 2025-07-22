@@ -1720,7 +1720,9 @@
         #chartModalUntrackSelectedBtn:disabled,
         #authorDetailsUntrackSelectedBtn:disabled,
         #collectionUntrackSelectedBtn:disabled,
-        #rotateSelectedBtn:disabled {
+        #rotateSelectedBtn:disabled,
+        #changeReasonSelectedBtn:disabled,
+        #untrackTrackingSelectedBtn:disabled {
             background-color: #9ca3af !important;
             cursor: not-allowed;
         }
@@ -3681,7 +3683,7 @@
                     <!-- Email buttons -->
                     <div
                         style="display: flex; gap: 0.5rem; align-items: center; padding: 0.75rem; background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 0.5rem;">
-                        <span style="font-weight: 500; margin-right: 0.5rem;">Email pick lists:</span>
+                        <span style="font-weight: 500; margin-right: 0.5rem;">Pick lists:</span>
                         <button id="emailHeywoodBtn" class="btn" onclick="emailLocationItems('heywood')"
                             style="border-color: #b3014b; padding: 0.375rem 0.75rem; font-size: 0.8rem;">
                             📧 Email Heywood
@@ -3785,7 +3787,7 @@
                     style="padding: 0.5rem; font-size: 0.875rem; white-space: nowrap; background: #329740; color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s; align-items: center;"
                     onmouseover="if (!this.disabled) this.style.backgroundColor='#2a7e35'"
                     onmouseout="if (!this.disabled) this.style.backgroundColor='#329740'">
-                    📋 Export Selected (0)
+                    📊 Export Selected (0)
                 </button>
                 <style>
                     #exportSelectedTrackingBtn:disabled {
@@ -3810,7 +3812,7 @@
                     <button class="btn" onclick="exportTrackingByReason()"
                         style="padding: 0.5rem 1rem; font-size: 0.875rem; background: #329740; color: white; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s;"
                         onmouseover="this.style.backgroundColor='#2a7e35'"
-                        onmouseout="this.style.backgroundColor='#329740'">📋 Export</button>
+                        onmouseout="this.style.backgroundColor='#329740'">📊 Export</button>
                 </div>
             </div>
     
@@ -17024,7 +17026,7 @@
 
             if (exportSelectedBtn) {
                 exportSelectedBtn.disabled = selectedCount === 0;
-                exportSelectedBtn.textContent = `📋 Export Selected (${selectedCount})`;
+                exportSelectedBtn.textContent = `📊 Export Selected (${selectedCount})`;
 
                 // Apply visual styling to match other disabled buttons
                 if (selectedCount === 0) {
