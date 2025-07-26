@@ -12276,7 +12276,7 @@
                 }, 100);
             }
 
-        //===========================================================================
+            //===========================================================================
             // showNewItems() - Display new items analysis section
             //===========================================================================
             async function showNewItems() {
@@ -12310,144 +12310,116 @@
                 window.currentNewItems = sortedNewItems;
 
                 newItemsSection.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-        <div>
-            <h3>New Items Analysis (${newItemsAnalysis.count} items)</h3>
-            <p style="margin: 0.5rem 0 0 0; color: #6b7280; font-size: 0.875rem;">
-                Items marked as "BOOK-FLT-N" representing new acquisitions
-            </p>
-        </div>
-        <div style="display: flex; gap: 1rem;">
-            <button class="btn btn-secondary" onclick="exportNewItems()">📊 Export to Excel</button>
-            <button class="btn btn-close" onclick="closeNewItems()">✕ Close</button>
-        </div>
-    </div>
-    
-    <!-- New Items Stats -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
-        <div style="background: #f0fdf4; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #16a34a;">
-            <div style="font-weight: bold; color: #16a34a;">Total New Items</div>
-            <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.count}</div>
-            <div style="font-size: 0.875rem; color: #6b7280;">${newItemsAnalysis.percentageOfCollection}% of collection</div>
-        </div>
-        <div style="background: #f0f9ff; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #0284c7;">
-            <div style="font-weight: bold; color: #0284c7;">Total Circulation</div>
-            <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.totalCirculation}</div>
-            <div style="font-size: 0.875rem; color: #6b7280;">All new items combined</div>
-        </div>
-        <div style="background: #fffbeb; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #d97706;">
-            <div style="font-weight: bold; color: #d97706;">Average Performance</div>
-            <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.averageCirculation}</div>
-            <div style="font-size: 0.875rem; color: #6b7280;">Circulations per new item</div>
-        </div>
-        <div style="background: #fef2f2; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #dc2626;">
-            <div style="font-weight: bold; color: #dc2626;">Top Performer</div>
-            <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.topPerformer.circulation}</div>
-            <div style="font-size: 0.875rem; color: #6b7280;">${newItemsAnalysis.topPerformer.title.substring(0, 25)}...</div>
-        </div>
-    </div>
-    
-    <!-- Mode Selector for New Items -->
-    <div class="tracking-mode-selector" id="newItemsTrackingModeSelector" style="margin-bottom: 1rem;">
-        <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-        <div class="mode-buttons" id="newItemsModeButtons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
-            <!-- Populated by generateModeButtons() -->
-        </div>
-    </div>
-    
-    <!-- Bulk Actions for New Items -->
-    <div class="bulk-actions" id="newItemsBulkActions" style="margin-bottom: 1rem;">
-        <button class="bulk-track-btn" id="newItemsTrackSelectedBtn"
-            onclick="bulkTrackSelected('newItems')" disabled>
-            Track Selected (0)
-        </button>
-        <button class="bulk-track-btn" onclick="bulkTrackAll('newItems')">
-            Track All
-        </button>
-        <button class="bulk-track-btn" onclick="bulkUntrackAll('newItems')" style="background: #dc2626;">
-            Untrack All
-        </button>
-        <button class="bulk-track-btn" id="newItemsUntrackSelectedBtn"
-            onclick="bulkUntrackSelected('newItems')" disabled>
-            Untrack Selected (0)
-        </button>
-        <!-- Export Buttons -->
-        <button id="exportAllNewItemsBtn" class="btn btn-secondary"
-            onclick="exportNewItems()">
-            📊 Export All
-        </button>
-        <button id="exportTrackedNewItemsBtn" class="btn btn-secondary"
-            onclick="exportTrackedNewItems()">
-            📈 Export Tracked
-        </button>
-    </div>
-    
-    <!-- New Items Table -->
-    <table class="analysis-table sortable-table" id="newItemsTable">
-        <thead>
-            <tr>
-                <!-- COLUMN 1: Bulk selection checkbox -->
-                <th style="width: 40px; text-align: center;">
-                    <input type="checkbox" class="select-all-checkbox" id="newItemsSelectAllCheckbox"
-                        onchange="toggleAllItems(this, 'newItems')">
-                </th>
-                <!-- COLUMN 2: Copy barcode button -->
-                <th style="width: 60px; text-align: center; font-size: 0.875rem;">Copy</th>
-                <!-- COLUMN 3: Item title (sortable) -->
-                <th class="sortable" data-sort="title" data-type="text">
-                    Title
-                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 15l7-7 7 7"></path>
-                    </svg>
-                </th>
-                <!-- COLUMN 4: Item author (sortable) -->
-                <th class="sortable" data-sort="author" data-type="text">
-                    Author
-                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 15l7-7 7 7"></path>
-                    </svg>
-                </th>
-                <!-- COLUMN 5: Date Added (sortable) -->
-                <th class="sortable" data-sort="year" data-type="number">
-                    Date Added
-                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 15l7-7 7 7"></path>
-                    </svg>
-                </th>
-                <!-- COLUMN 6: Collection (sortable) -->
-                <th class="sortable" data-sort="collection" data-type="text">
-                    Collection
-                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 15l7-7 7 7"></path>
-                    </svg>
-                </th>
-                <!-- COLUMN 7: Circulation (sortable) -->
-                <th class="sortable" data-sort="circulation" data-type="number">
-                    Circulation
-                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 15l7-7 7 7"></path>
-                    </svg>
-                </th>
-                <!-- COLUMN 8: Branch (sortable) -->
-                <th class="sortable" data-sort="branch" data-type="text">
-                    Branch
-                    <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 15l7-7 7 7"></path>
-                    </svg>
-                </th>
-                <!-- COLUMN 9: Actions -->
-                <th style="width: 100px; text-align: center;">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="newItemsTableBody"></tbody>
-    </table>
-    `;
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div>
+                        <h3>New Items Analysis (${newItemsAnalysis.count} items)</h3>
+                        <p style="margin: 0.5rem 0 0 0; color: #6b7280; font-size: 0.875rem;">
+                            Items marked as "BOOK-FLT-N" representing new acquisitions
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-secondary" onclick="exportNewItems()">📊 Export to Excel</button>
+                        <button class="btn btn-close" onclick="closeNewItems()">✕ Close</button>
+                    </div>
+                </div>
+
+                <!-- New Items Stats -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #16a34a;">
+                        <div style="font-weight: bold; color: #16a34a;">Total New Items</div>
+                        <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.count}</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">${newItemsAnalysis.percentageOfCollection}% of collection</div>
+                    </div>
+                    <div style="background: #f0f9ff; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #0284c7;">
+                        <div style="font-weight: bold; color: #0284c7;">Total Circulation</div>
+                        <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.totalCirculation}</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">All new items combined</div>
+                    </div>
+                    <div style="background: #fef3c7; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #d97706;">
+                        <div style="font-weight: bold; color: #d97706;">Average Circulation</div>
+                        <div style="font-size: 1.5rem; font-weight: bold;">${Math.round(newItemsAnalysis.totalCirculation / newItemsAnalysis.count)}</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">Per new item</div>
+                    </div>
+                    <div style="background: ${newItemsAnalysis.topPerformer ? '#e0e7ff' : '#f3f4f6'}; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid ${newItemsAnalysis.topPerformer ? '#3730a3' : '#9ca3af'};">
+                        <div style="font-weight: bold; color: ${newItemsAnalysis.topPerformer ? '#3730a3' : '#6b7280'};">Top Performer</div>
+                        <div style="font-size: 1.25rem; font-weight: bold;">${newItemsAnalysis.topPerformer ? newItemsAnalysis.topPerformer.circulation : 'N/A'}</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">${newItemsAnalysis.topPerformer ? escapeHtml(newItemsAnalysis.topPerformer.title.substring(0, 30)) + '...' : 'No circulation data'}</div>
+                    </div>
+                </div>
+
+                <table class="analysis-table sortable-table" id="newItemsTable">
+                    <thead>
+                        <tr>
+                            <!-- COLUMN 1: Bulk selection checkbox -->
+                            <th style="width: 40px; text-align: center;">
+                                <input type="checkbox" class="select-all-checkbox" id="newItemsSelectAllCheckbox"
+                                    onchange="toggleAllItems(this, 'newItems')">
+                            </th>
+                            <!-- COLUMN 2: Copy barcode button -->
+                            <th style="width: 60px; text-align: center; font-size: 0.875rem;">Copy</th>
+                            <!-- COLUMN 3: Item title (sortable) -->
+                            <th class="sortable" data-sort="title" data-type="text">
+                                Title
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <!-- COLUMN 4: Item author (sortable) -->
+                            <th class="sortable" data-sort="author" data-type="text">
+                                Author
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <!-- COLUMN 5: Year (sortable) -->
+                            <th class="sortable" data-sort="year" data-type="number">
+                                Year
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <!-- COLUMN 6: Collection (sortable) -->
+                            <th class="sortable" data-sort="collection" data-type="text">
+                                Collection
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <!-- COLUMN 7: Circulation (sortable) -->
+                            <th class="sortable" data-sort="circulation" data-type="number">
+                                Circulation
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <!-- COLUMN 8: Call Number (sortable) -->
+                            <th class="sortable" data-sort="callNumber" data-type="text">
+                                Call Number
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <!-- COLUMN 9: Branch (sortable) -->
+                            <th class="sortable" data-sort="branch" data-type="text">
+                                Branch
+                                <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </th>
+                            <!-- COLUMN 10: Actions -->
+                            <th style="width: 100px; text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="newItemsTableBody"></tbody>
+                </table>
+                `;
 
                 // Load tracking data first
                 await loadTrackingData();
@@ -12459,75 +12431,61 @@
                     const trackingData = isTracked ? (await getTrackingData(item.barcode)) || {} : {};
 
                     return `
-        <tr data-barcode="${item.barcode}">
-            <!-- COLUMN 1: Checkbox -->
-            <td style="text-align: center;">
-                <input type="checkbox" class="new-items-item-checkbox" value="${item.barcode}">
-            </td>
-            <!-- COLUMN 2: Copy buttons -->
-            <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
-                <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
-                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                    title="Copy title">📄</span>
-                <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
-                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                    title="Copy ID">#️⃣</span>
-            </td>
-            <!-- COLUMN 3: Title (clickable) -->
-            <td onclick="event.stopPropagation(); viewBookDetailsFromNewItems('${item.barcode}')" 
-                style="cursor: pointer; color: #2563eb; font-weight: 500;">
-                ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
-                <strong>${escapeHtml(item.title)}</strong>
-                ${isTracked ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
-            </td>
-            <!-- COLUMN 4: Author -->
-            <td>${escapeHtml(item.author)}</td>
-            <!-- COLUMN 5: Date Added -->
-            <td>${item.year || 'Unknown'}</td>
-            <!-- COLUMN 6: Collection -->
-            <td>${escapeHtml(item.collection)}</td>
-            <!-- COLUMN 7: Circulation -->
-            <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
-            <!-- COLUMN 8: Branch -->
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
-            <!-- COLUMN 9: Actions -->
-            <td style="text-align: center;" onclick="event.stopPropagation();">
-                ${isTracked ?
+    <tr data-barcode="${item.barcode}" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+        <!-- COLUMN 1: Checkbox -->
+        <td style="text-align: center;" onclick="event.stopPropagation();">
+            <input type="checkbox" class="new-items-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('newItems')">
+        </td>
+        <!-- COLUMN 2: Copy buttons -->
+        <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+            <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                title="Copy title">📄</span>
+            <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                title="Copy ID">#️⃣</span>
+        </td>
+        <!-- COLUMN 3: Title (clickable) -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+            ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
+            <strong>${escapeHtml(item.title)}</strong>
+            ${isTracked && trackingData.reason ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
+        </td>
+        <!-- COLUMN 4: Author -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.author)}</td>
+        <!-- COLUMN 5: Year -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${item.year || 'Unknown'}</td>
+        <!-- COLUMN 6: Collection -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.collection)}</td>
+        <!-- COLUMN 7: Circulation -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
+        <!-- COLUMN 8: Call Number -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
+        <!-- COLUMN 9: Branch -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+        <!-- COLUMN 10: Actions -->
+        <td style="text-align: center;" onclick="event.stopPropagation();">
+            ${isTracked ?
                             `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
-                              style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
+                          style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
                             `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'newItems', event)" 
-                              style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
+                          style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
                         }
-            </td>
-        </tr>
-        `;
+        </td>
+    </tr>
+    `;
                 }));
 
                 tableBody.innerHTML = tableRows.join('');
 
                 // Show the section
-                document.getElementById('newItemsSection').style.display = 'block';
+                newItemsSection.style.display = 'block';
 
                 // Setup sorting
                 setupNewItemsTableSorting();
 
                 // Scroll to the section
                 scrollToSection('newItemsSection');
-
-                // Generate mode buttons and set default
-                setTimeout(() => {
-                    generateModeButtons('newItemsModeButtons');
-                    setupNewItemsModeSelector();
-
-                    // Clear all active states first, then set default
-                    const allButtons = document.querySelectorAll('#newItemsTrackingModeSelector .mode-btn');
-                    allButtons.forEach(btn => btn.classList.remove('active'));
-
-                    const defaultButton = document.querySelector('#newItemsTrackingModeSelector .mode-btn[data-mode="monitor-performance"]');
-                    if (defaultButton) {
-                        defaultButton.classList.add('active');
-                    }
-                }, 200);
             }
 
             //===========================================================================
@@ -17831,50 +17789,49 @@
                     const trackingData = isTracked ? (await getTrackingData(item.barcode)) || {} : {};
 
                     return `
-        <tr data-barcode="${item.barcode}">
-            <!-- COLUMN 1: Checkbox -->
-            <td style="text-align: center;">
-                <input type="checkbox" class="high-performers-item-checkbox" value="${item.barcode}">
-            </td>
-            <!-- COLUMN 2: Copy buttons -->
-            <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
-                <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
-                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                    title="Copy title">📄</span>
-                <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
-                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                    title="Copy ID">#️⃣</span>
-            </td>
-            <!-- COLUMN 3: Title (clickable) -->
-            <td onclick="event.stopPropagation(); viewBookDetailsFromHighPerformers('${item.barcode}')" 
-                style="cursor: pointer; color: #2563eb; font-weight: 500;">
-                ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
-                <strong>${escapeHtml(item.title)}</strong>
-                ${isTracked ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
-            </td>
-            <!-- COLUMN 4: Author -->
-            <td>${escapeHtml(item.author)}</td>
-            <!-- COLUMN 5: Circulation -->
-            <td style="font-weight: bold; color: #16a34a;">${item.circulation}</td>
-            <!-- COLUMN 6: Collection -->
-            <td>${escapeHtml(item.collection)}</td>
-            <!-- COLUMN 7: Call Number -->
-            <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-            <!-- COLUMN 8: Year -->
-            <td>${item.year || 'Unknown'}</td>
-            <!-- COLUMN 9: Branch -->
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
-            <!-- COLUMN 10: Actions -->
-            <td style="text-align: center;" onclick="event.stopPropagation();">
-                ${isTracked ?
+    <tr data-barcode="${item.barcode}" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+        <!-- COLUMN 1: Checkbox -->
+        <td style="text-align: center;" onclick="event.stopPropagation();">
+            <input type="checkbox" class="grubby-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('grubby')">
+        </td>
+        <!-- COLUMN 2: Copy buttons -->
+        <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+            <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                title="Copy title">📄</span>
+            <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                title="Copy ID">#️⃣</span>
+        </td>
+        <!-- COLUMN 3: Title (clickable) -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+            ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
+            <strong>${escapeHtml(item.title)}</strong>
+            ${isTracked && trackingData.reason ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
+        </td>
+        <!-- COLUMN 4: Author -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.author)}</td>
+        <!-- COLUMN 5: Circulation -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; font-weight: bold; color: #16a34a;">${item.circulation}</td>
+        <!-- COLUMN 6: Collection -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.collection)}</td>
+        <!-- COLUMN 7: Call Number -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
+        <!-- COLUMN 8: Year -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${item.year || 'Unknown'}</td>
+        <!-- COLUMN 9: Branch -->
+        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+        <!-- COLUMN 10: Actions -->
+        <td style="text-align: center;" onclick="event.stopPropagation();">
+            ${isTracked ?
                             `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
-                              style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
+                          style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
                             `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'highPerformers', event)" 
-                              style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
+                          style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
                         }
-            </td>
-        </tr>
-        `;
+        </td>
+    </tr>
+    `;
                 }));
 
                 tableBody.innerHTML = tableRows.join('');
@@ -18174,7 +18131,7 @@
             //===========================================================================
             // sortNewItemsTable() - Sort new items table
             //===========================================================================
-            function sortNewItemsTable(field, direction) {
+            async function sortNewItemsTable(field, direction) {
                 if (!window.currentNewItems) return;
 
                 // Update sort state
@@ -18184,43 +18141,69 @@
                 const dataType = ['circulation', 'year'].includes(field) ? 'number' : 'text';
                 const sortedData = sortTableData(window.currentNewItems, field, direction, dataType);
 
+                // Load tracking data first
+                await loadTrackingData();
+
                 // Re-render table
                 const tableBody = document.getElementById('newItemsTableBody');
-                tableBody.innerHTML = sortedData.map(item => `
-        <tr data-barcode="${item.barcode}" onclick="viewBookDetailsFromNewItems('${item.barcode}')" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
-            <td style="text-align: center;">
-                <input type="checkbox" class="new-items-item-checkbox" value="${item.barcode}">
-            </td>
-            <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
-                <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)"
-                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;"
-                    title="Copy title">📄</span>
-                <span onclick="copyBarcodeToClipboard('${item.barcode}', event)"
-                    style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;"
-                    title="Copy ID">#️⃣</span>
-            </td>
-            <td onclick="event.stopPropagation(); viewBookDetailsFromNewItems('${item.barcode}')"
-                style="cursor: pointer; color: #2563eb; font-weight: 500;">
-                <strong>${escapeHtml(item.title)}</strong>
-            </td>
-            <td>${escapeHtml(item.author)}</td>
-            <td>${item.year || 'Unknown'}</td>
-            <td>${escapeHtml(item.collection)}</td>
-            <td style="font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
-            <td style="text-align: center;" onclick="event.stopPropagation();">
-                <button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'newItems', event)">Track</button>
-            </td>
-        </tr>
-    `).join('');
+                const tableRows = await Promise.all(sortedData.map(async item => {
+                    const isTracked = await isItemTracked(item.barcode);
+                    const trackingData = isTracked ? (await getTrackingData(item.barcode)) || {} : {};
 
+                    return `
+                    <tr data-barcode="${item.barcode}" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                        <!-- COLUMN 1: Checkbox -->
+                        <td style="text-align: center;" onclick="event.stopPropagation();">
+                            <input type="checkbox" class="new-items-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('newItems')">
+                        </td>
+                        <!-- COLUMN 2: Copy buttons -->
+                        <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                            <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)"
+                                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;"
+                                title="Copy title">📄</span>
+                            <span onclick="copyBarcodeToClipboard('${item.barcode}', event)"
+                                style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;"
+                                title="Copy ID">#️⃣</span>
+                        </td>
+                        <!-- COLUMN 3: Title (clickable) -->
+                        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+                            ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
+                            <strong>${escapeHtml(item.title)}</strong>
+                            ${isTracked && trackingData.reason ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
+                        </td>
+                        <!-- COLUMN 4: Author -->
+                        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.author)}</td>
+                        <!-- COLUMN 5: Year -->
+                        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${item.year || 'Unknown'}</td>
+                        <!-- COLUMN 6: Collection -->
+                        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.collection)}</td>
+                        <!-- COLUMN 7: Circulation -->
+                        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; font-weight: bold; color: ${item.circulation >= 10 ? '#16a34a' : item.circulation >= 5 ? '#d97706' : '#dc2626'};">${item.circulation}</td>
+                        <!-- COLUMN 8: Call Number -->
+                        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
+                        <!-- COLUMN 9: Branch -->
+                        <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+                        <!-- COLUMN 10: Actions -->
+                        <td style="text-align: center;" onclick="event.stopPropagation();">
+                            ${isTracked ?
+                                            `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
+                                        style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
+                                            `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'newItems', event)" 
+                                        style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
+                                        }
+                        </td>
+                    </tr>
+                    `;
+                }));
+
+                tableBody.innerHTML = tableRows.join('');
                 updateSortIcons('newItems');
             }
 
             //===========================================================================
             // sortHighPerformersTable() - Sort high performers table
             //===========================================================================
-            function sortHighPerformersTable(field, direction) {
+            async function sortHighPerformersTable(field, direction) {
                 if (!window.currentHighPerformers) return;
 
                 // Update sort state
@@ -18230,22 +18213,62 @@
                 const dataType = ['circulation', 'year'].includes(field) ? 'number' : 'text';
                 const sortedData = sortTableData(window.currentHighPerformers, field, direction, dataType);
 
+                // Load tracking data first
+                await loadTrackingData();
+
                 // Re-render table
                 const tableBody = document.getElementById('highPerformersTableBody');
-                tableBody.innerHTML = sortedData.map(item => `
-        <tr data-barcode="${item.barcode}">
-            <td onclick="event.stopPropagation(); viewBookDetailsFromHighPerformers('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
-                <strong>${escapeHtml(item.title)}</strong>
-            </td>
-            <td>${escapeHtml(item.author)}</td>
-            <td style="font-weight: bold; color: #16a34a;">${item.circulation}</td>
-            <td>${escapeHtml(item.collection)}</td>
-            <td><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-            <td>${item.year || 'Unknown'}</td>
-            <td style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
-        </tr>
-    `).join('');
+                const tableRows = await Promise.all(sortedData.map(async item => {
+                    const isTracked = await isItemTracked(item.barcode);
+                    const trackingData = isTracked ? (await getTrackingData(item.barcode)) || {} : {};
 
+                    return `
+            <tr data-barcode="${item.barcode}" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                <!-- COLUMN 1: Checkbox -->
+                <td style="text-align: center;" onclick="event.stopPropagation();">
+                    <input type="checkbox" class="grubby-item-checkbox" value="${item.barcode}" onchange="updateTrackSelectedButton('grubby')">
+                </td>
+                <!-- COLUMN 2: Copy buttons -->
+                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                        title="Copy title">📄</span>
+                    <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                        title="Copy ID">#️⃣</span>
+                </td>
+                <!-- COLUMN 3: Title (clickable) -->
+                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">
+                    ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
+                    <strong>${escapeHtml(item.title)}</strong>
+                    ${isTracked && trackingData.reason ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
+                </td>
+                <!-- COLUMN 4: Author -->
+                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.author)}</td>
+                <!-- COLUMN 5: Circulation -->
+                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; font-weight: bold; color: #16a34a;">${item.circulation}</td>
+                <!-- COLUMN 6: Collection -->
+                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.collection)}</td>
+                <!-- COLUMN 7: Call Number -->
+                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
+                <!-- COLUMN 8: Year -->
+                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${item.year || 'Unknown'}</td>
+                <!-- COLUMN 9: Branch -->
+                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+                <!-- COLUMN 10: Actions -->
+                <td style="text-align: center;" onclick="event.stopPropagation();">
+                    ${isTracked ?
+                                    `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
+                                style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
+                                    `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'highPerformers', event)" 
+                                style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
+                                }
+                </td>
+            </tr>
+            `;
+                }));
+
+                tableBody.innerHTML = tableRows.join('');
                 updateSortIcons('highPerformers');
             }
 
@@ -21448,6 +21471,7 @@ The Glenelg Shire Council respectfully acknowledges the traditional lands and wa
                     <div><strong>Collection:</strong> ${escapeHtml(item.collection)}</div>
                     <div><strong>Call Number:</strong> ${escapeHtml(item.callNumber)}</div>
                     <div><strong>Published:</strong> ${item.year || 'Unknown'}</div>
+                    <div><strong>Added to Collection:</strong> ${item.itemCreated || 'Unknown'}</div>
                     <div><strong>Age:</strong> ${ageDisplay}</div>
                     <div><strong>Circulation:</strong> ${item.circulation}</div>
                     <div><strong>Location:</strong> ${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</div>
@@ -21631,7 +21655,7 @@ The Glenelg Shire Council respectfully acknowledges the traditional lands and wa
             </div>
             
             <div style="margin-bottom: 1rem;">
-                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Year Published</label>
+                <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Added to Collection</label>
                 <div style="margin: 0.25rem 0 0 0;">${item.itemCreated || 'Unknown'}</div>
             </div>
             
@@ -21648,7 +21672,7 @@ The Glenelg Shire Council respectfully acknowledges the traditional lands and wa
     </div>
     
     <!-- Additional details row -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem;">
         <div>
             <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Item ID</label>
             <div style="margin: 0.25rem 0 0 0; font-family: monospace; font-size: 0.875rem;">${item.barcode}</div>
@@ -21656,6 +21680,10 @@ The Glenelg Shire Council respectfully acknowledges the traditional lands and wa
         <div>
             <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Age</label>
             <div style="margin: 0.25rem 0 0 0;">${ageDisplay}</div>
+        </div>
+        <div>
+            <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Published</label>
+            <div style="margin: 0.25rem 0 0 0;">${item.year || 'Unknown'}</div>
         </div>
         <div>
             <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Location</label>
