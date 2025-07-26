@@ -21672,7 +21672,7 @@ The Glenelg Shire Council respectfully acknowledges the traditional lands and wa
     </div>
     
     <!-- Additional details row -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem;">
         <div>
             <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Item ID</label>
             <div style="margin: 0.25rem 0 0 0; font-family: monospace; font-size: 0.875rem;">${item.barcode}</div>
@@ -21684,6 +21684,10 @@ The Glenelg Shire Council respectfully acknowledges the traditional lands and wa
         <div>
             <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Published</label>
             <div style="margin: 0.25rem 0 0 0;">${item.year || 'Unknown'}</div>
+        </div>
+        <div>
+            <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Last Activity</label>
+            <div style="margin: 0.25rem 0 0 0;">${formatActivityDate(item.lastActivity)}</div>
         </div>
         <div>
             <label style="font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">Location</label>
