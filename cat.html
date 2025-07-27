@@ -17007,7 +17007,7 @@
                 const searchInput = document.getElementById('searchInput');
 
                 searchInput.addEventListener('input', (e) => {
-                    const term = e.target.value;
+                    const term = e.target.value.trim(); // ADD .trim() here
 
                     // Update clear button visibility
                     updateSearchClearButton(e.target);
@@ -21190,7 +21190,7 @@ The Glenelg Shire Council respectfully acknowledges the traditional lands and wa
             const trackingInput = document.getElementById('trackingSearchInput');
             if (trackingInput) {
                 trackingInput.addEventListener('input', e => {
-                    const term = e.target.value;
+                    const term = e.target.value.trim();
 
                     // Update clear button visibility
                     updateSearchClearButton(e.target);
