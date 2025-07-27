@@ -4060,6 +4060,8 @@
             let availableBranches = [];
             let currentBranchFilter = '';
             let currentSampleDataLabel = null; // Store the label from GitHub sample data
+            let searchTimeout = null;
+            let lastInputTime = 0;
 
             // Sample data configuration
             const GITHUB_REPO = 'denismcdonald/denismcdonald.github.io';
@@ -17006,29 +17008,44 @@
                 const fileInput = document.getElementById('fileInput');
                 const searchInput = document.getElementById('searchInput');
 
-                searchInput.addEventListener('input', (e) => {
-                    const term = e.target.value.trim(); // ADD .trim() here
+            // Replace the existing searchInput.addEventListener('input', ...) with this:
+            searchInput.addEventListener('input', (e) => {
+    const currentTime = Date.now();
+    const timeSinceLastInput = currentTime - lastInputTime;
+    lastInputTime = currentTime;
+    
+    const rawTerm = e.target.value;
+    const term = rawTerm.trim();
+    
+    // Clear any existing timeout
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+    
+    // Update clear button visibility immediately
+    updateSearchClearButton(e.target);
 
-                    // Update clear button visibility
-                    updateSearchClearButton(e.target);
+    // Clear results immediately if search term is too short
+    if (!term || term.length < 2) {
+        const searchResults = document.getElementById('searchResults');
+        const noResults = document.getElementById('noResults');
 
-                    // Clear results immediately if search term is too short
-                    if (!term || term.length < 2) {
-                        const searchResults = document.getElementById('searchResults');
-                        const noResults = document.getElementById('noResults');
+        if (searchResults) searchResults.style.display = 'none';
+        if (noResults) noResults.style.display = 'none';
+        tableSortStates.search = { field: null, direction: 'asc' };
+        updateSortIcons('search');
+        return;
+    }
 
-                        if (searchResults) searchResults.style.display = 'none';
-                        if (noResults) noResults.style.display = 'none';
-                        // Reset sort state when clearing search
-                        tableSortStates.search = { field: null, direction: 'asc' };
-                        updateSortIcons('search');
-                        return;
-                    }
-
-                    // Instant search - no debounce!
-                    const results = performSearch(term);
-                    displaySearchResults(results);
-                });
+    // If input is happening very rapidly (likely barcode scanner), use debounce
+    // Otherwise search immediately for manual typing
+    const delay = timeSinceLastInput < 50 ? 150 : 0;
+    
+    searchTimeout = setTimeout(() => {
+        const results = performSearch(term);
+        displaySearchResults(results);
+    }, delay);
+});
 
                 // Setup sort event listeners for table headers
                 setupSortEventListeners();
