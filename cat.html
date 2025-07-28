@@ -4062,6 +4062,7 @@
             let currentSampleDataLabel = null; // Store the label from GitHub sample data
             let searchTimeout = null;
             let lastInputTime = 0;
+            let currentSearchId = 0;
 
             // Sample data configuration
             const GITHUB_REPO = 'denismcdonald/denismcdonald.github.io';
@@ -7509,72 +7510,87 @@
                 });
             }
 
-            //===========================================================================
-            // renderSearchResults() - Render search results in table format with pagination
-            //===========================================================================
-            async function renderSearchResults(results) {
-                const resultsBody = document.getElementById('searchResultsBody');
-                const endIndex = Math.min(displayedResultsCount + RESULTS_PER_PAGE, results.length);
-                const resultsToShow = results.slice(displayedResultsCount, endIndex);
-
-                // If this is the first batch, clear the table
-                if (displayedResultsCount === 0) {
-                    resultsBody.innerHTML = '';
-                }
-
-                // Enhanced version with tracking status
-                const newRows = await Promise.all(resultsToShow.map(async (book, index) => {
-                    // Check if item is tracked
-                    const isTracked = await isItemTracked(book.barcode);
-                    const trackingData = isTracked ? await getTrackingData(book.barcode) : null;
-
-                    return `
-            <tr data-barcode="${escapeHtml(book.barcode)}" style="cursor: pointer;" ${isTracked ? 'class="tracked-row"' : ''}>
-                <td style="text-align: center;" onclick="event.stopPropagation();">
-                    <input type="checkbox" class="item-checkbox search-item-checkbox" 
-                        value="${book.barcode}" onchange="updateTrackSelectedButton('search')">
-                </td>
-                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
-                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(book.title)}', event)" 
-                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                        title="Copy title">📄</span>
-                    <span onclick="copyBarcodeToClipboard('${book.barcode}', event)" 
-                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                        title="Copy ID">#️⃣</span>
-                </td>
-                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">
-                    ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
-                    <strong>${escapeHtml(book.title)}</strong>
-                    <br><span style="font-size: 0.8em; color: #6b7280;">${book.author ? escapeHtml(book.author) : '<em>No Author Found</em>'}</span>
-                    ${isTracked ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
-                </td>
-                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.collection)}</td>
-                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.year || 'Unknown Year')}</td>
-                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${(() => {
-                            const age = getItemAge(book.itemCreated);
-                            return age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
-                        })()}</td>
-                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${book.circulation}</td>
-                <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</td>
-                <td class="actions-column">
-                    ${isTracked ?
-                            `<button class="untrack-btn" onclick="handleUntrackItem('${book.barcode}', event)">Untrack</button>` :
-                            `<button class="track-btn" onclick="handleTrackItem('${book.barcode}', 'search', event)">Track</button>`
-                        }
-                </td>
-            </tr>
-        `;
-                }));
-
-                resultsBody.insertAdjacentHTML('beforeend', newRows.join(''));
-
-                // Update displayed count
-                displayedResultsCount = endIndex;
-
-                // Update search info and load more button
-                updateSearchInfo(results);
-                updateLoadMoreButton(results);
+        //===========================================================================
+        // renderSearchResults() - Render search results in table format with pagination
+        //===========================================================================
+        async function renderSearchResults(results, searchId = currentSearchId) {
+            // Early exit if this search has been superseded
+            if (searchId !== currentSearchId) {
+                return;
             }
+            
+            const resultsBody = document.getElementById('searchResultsBody');
+            const endIndex = Math.min(displayedResultsCount + RESULTS_PER_PAGE, results.length);
+            const resultsToShow = results.slice(displayedResultsCount, endIndex);
+
+            // If this is the first batch, clear the table
+            if (displayedResultsCount === 0) {
+                resultsBody.innerHTML = '';
+            }
+
+            // Check again after clearing (async operations might have completed)
+            if (searchId !== currentSearchId) {
+                return;
+            }
+
+            // Enhanced version with tracking status
+            const newRows = await Promise.all(resultsToShow.map(async (book, index) => {
+                // Check if item is tracked
+                const isTracked = await isItemTracked(book.barcode);
+                const trackingData = isTracked ? await getTrackingData(book.barcode) : null;
+
+                return `
+                <tr data-barcode="${escapeHtml(book.barcode)}" style="cursor: pointer;" ${isTracked ? 'class="tracked-row"' : ''}>
+                    <td style="text-align: center;" onclick="event.stopPropagation();">
+                        <input type="checkbox" class="item-checkbox search-item-checkbox" 
+                            value="${book.barcode}" onchange="updateTrackSelectedButton('search')">
+                    </td>
+                    <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                        <span onclick="copyTitleToClipboard('${escapeForJavaScript(book.title)}', event)" 
+                            style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                            title="Copy title">📄</span>
+                        <span onclick="copyBarcodeToClipboard('${book.barcode}', event)" 
+                            style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                            title="Copy ID">#️⃣</span>
+                    </td>
+                    <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">
+                        ${isTracked ? '<span class="tracking-indicator">📌</span>' : ''}
+                        <strong>${escapeHtml(book.title)}</strong>
+                        <br><span style="font-size: 0.8em; color: #6b7280;">${book.author ? escapeHtml(book.author) : '<em>No Author Found</em>'}</span>
+                        ${isTracked ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
+                    </td>
+                    <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.collection)}</td>
+                    <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.year || 'Unknown Year')}</td>
+                    <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${(() => {
+                                const age = getItemAge(book.itemCreated);
+                                return age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+                            })()}</td>
+                    <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${book.circulation}</td>
+                    <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</td>
+                    <td class="actions-column">
+                        ${isTracked ?
+                                `<button class="untrack-btn" onclick="handleUntrackItem('${book.barcode}', event)">Untrack</button>` :
+                                `<button class="track-btn" onclick="handleTrackItem('${book.barcode}', 'search', event)">Track</button>`
+                            }
+                    </td>
+                </tr>
+            `;
+            }));
+
+            // Final check before inserting results
+            if (searchId !== currentSearchId) {
+                return;
+            }
+
+            resultsBody.insertAdjacentHTML('beforeend', newRows.join(''));
+
+            // Update displayed count
+            displayedResultsCount = endIndex;
+
+            // Update search info and load more button
+            updateSearchInfo(results);
+            updateLoadMoreButton(results);
+        }
 
             //===========================================================================
             // updateSearchInfo() - Update search information display
@@ -11508,7 +11524,7 @@
             //===========================================================================
             // displaySearchResults
             //===========================================================================
-            async function displaySearchResults(results) {
+            async function displaySearchResults(results, searchId = currentSearchId) {
                 const searchResultsDiv = document.getElementById('searchResults');
                 const noResults = document.getElementById('noResults');
                 const resultCount = document.getElementById('resultCount');
@@ -11545,7 +11561,7 @@
                 resultCount.textContent = results.length;
 
                 // Render initial batch of sorted results
-                await renderSearchResults(allSearchResults);
+                await renderSearchResults(allSearchResults, currentSearchId);
             }
 
 
@@ -17008,19 +17024,21 @@
                 const fileInput = document.getElementById('fileInput');
                 const searchInput = document.getElementById('searchInput');
 
-            // Replace the existing searchInput.addEventListener('input', ...) with this:
+            // FIXED FOR BARCODE SCANNING ISSUE (where multiple results were being returned)
             searchInput.addEventListener('input', (e) => {
     const currentTime = Date.now();
     const timeSinceLastInput = currentTime - lastInputTime;
     lastInputTime = currentTime;
     
-    const rawTerm = e.target.value;
-    const term = rawTerm.trim();
+    const term = e.target.value.trim();
     
     // Clear any existing timeout
     if (searchTimeout) {
         clearTimeout(searchTimeout);
     }
+    
+    // Increment search ID immediately to cancel any pending operations
+    currentSearchId++;
     
     // Update clear button visibility immediately
     updateSearchClearButton(e.target);
@@ -17037,11 +17055,18 @@
         return;
     }
 
+    // Store the search ID for this specific search
+    const thisSearchId = currentSearchId;
+    
     // If input is happening very rapidly (likely barcode scanner), use debounce
-    // Otherwise search immediately for manual typing
     const delay = timeSinceLastInput < 50 ? 150 : 0;
     
     searchTimeout = setTimeout(() => {
+        // Double-check this is still the current search
+        if (thisSearchId !== currentSearchId) {
+            return;
+        }
+        
         const results = performSearch(term);
         displaySearchResults(results);
     }, delay);
