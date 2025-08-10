@@ -1698,6 +1698,9 @@
         #resetSelectedRotationsBtn,
         #grubbyUntrackSelectedBtn,
         #deadUntrackSelectedBtn,
+        #newItemsUntrackSelectedBtn,
+        #newItemsUntrackAllBtn,
+        #deadUntrackAllBtn,
         .btn-danger {
             background-color: #d34949;
             color: white;
@@ -1713,8 +1716,11 @@
         #untrackAllSearchBtn:hover,
         #untrackAllTrackingBtn:hover,
         #resetSelectedRotationsBtn:hover,
-        #grubbyUntrackSelectedBtn,
-        #deadUntrackSelectedBtn {
+        #grubbyUntrackSelectedBtn:hover,
+        #deadUntrackSelectedBtn:hover,
+        #newItemsUntrackSelectedBtn:hover,
+        #newItemsUntrackAllBtn:hover,
+        #deadUntrackAllBtn:hover {
             background-color: #ad3c3c;
         }
 
@@ -1728,7 +1734,8 @@
         #changeReasonSelectedBtn:disabled,
         #untrackTrackingSelectedBtn:disabled,
         #grubbyUntrackSelectedBtn:disabled,
-        #deadUntrackSelectedBtn:disabled {
+        #deadUntrackSelectedBtn:disabled,
+        #newItemsUntrackSelectedBtn:disabled {
             background-color: #9ca3af !important;
             cursor: not-allowed;
         }
@@ -2488,14 +2495,17 @@
                     </div>
                 </div>
                 <!-- Mode Selector for High Performers -->
-                <div class="tracking-mode-selector" id="highPerformersTrackingModeSelector" style="margin-bottom: 1rem;">
+                <div class="tracking-mode-selector" id="highPerformersTrackingModeSelector"
+                    style="margin-bottom: 1rem;">
                     <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
                     <div class="mode-buttons" id="highPerformersModeButtons"
                         style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                         <button class="mode-btn active" data-mode="monitor-performance"
                             style="background: #2563eb; color: white;">Monitor Performance</button>
-                        <button class="mode-btn" data-mode="weeding-candidate" style="border-color: #dc2626;">Weeding Candidate</button>
-                        <button class="mode-btn" data-mode="replacement-candidate" style="border-color: #d97706;">Replacement
+                        <button class="mode-btn" data-mode="weeding-candidate" style="border-color: #dc2626;">Weeding
+                            Candidate</button>
+                        <button class="mode-btn" data-mode="replacement-candidate"
+                            style="border-color: #d97706;">Replacement
                             Candidate</button>
                         <button class="mode-btn" data-mode="general-monitoring" style="border-color: #059669;">General
                             Monitoring</button>
@@ -2503,15 +2513,15 @@
                 </div>
                 <!-- Bulk Actions for High Performers -->
                 <div class="bulk-actions" id="highPerformersBulkActions" style="margin-bottom: 1rem;">
-                    <button class="bulk-track-btn" id="highPerformersTrackSelectedBtn" onclick="bulkTrackSelected('highPerformers')"
-                        disabled>
+                    <button class="bulk-track-btn" id="highPerformersTrackSelectedBtn"
+                        onclick="bulkTrackSelected('highPerformers')" disabled>
                         Track Selected (0)
                     </button>
                     <button class="bulk-track-btn" onclick="bulkTrackAll('highPerformers')">
                         Track All
                     </button>
-                    <button class="bulk-track-btn" id="highPerformersUntrackSelectedBtn" onclick="bulkUntrackSelected('highPerformers')"
-                        disabled>
+                    <button class="bulk-track-btn" id="highPerformersUntrackSelectedBtn"
+                        onclick="bulkUntrackSelected('highPerformers')" disabled>
                         Untrack Selected (0)
                     </button>
                     <button class="bulk-track-btn" onclick="bulkUntrackAll('highPerformers')">
@@ -2521,13 +2531,15 @@
                     <button id="exportAllHighPerformersBtn" class="btn btn-secondary" onclick="exportHighPerformers()">
                         📊 Export All
                     </button>
-                    <button id="exportTrackedHighPerformersBtn" class="btn btn-secondary" onclick="exportTrackedHighPerformers()">
+                    <button id="exportTrackedHighPerformersBtn" class="btn btn-secondary"
+                        onclick="exportTrackedHighPerformers()">
                         📈 Export Tracked
                     </button>
                 </div>
-                
+
                 <!-- Mode Selector for High Performers -->
-                <div class="tracking-mode-selector" id="highPerformersTrackingModeSelector" style="margin-bottom: 1rem;">
+                <div class="tracking-mode-selector" id="highPerformersTrackingModeSelector"
+                    style="margin-bottom: 1rem;">
                     <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
                     <div class="mode-buttons" id="highPerformersModeButtons"
                         style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -2549,49 +2561,56 @@
                             <th class="sortable" data-sort="title" data-type="text">
                                 Title
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <!-- COLUMN 4: Item author (sortable) -->
                             <th class="sortable" data-sort="author" data-type="text">
                                 Author
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <!-- COLUMN 5: Circulation count (sortable) -->
                             <th class="sortable" data-sort="circulation" data-type="number">
                                 Circulation
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <!-- COLUMN 6: Collection (sortable) -->
                             <th class="sortable" data-sort="collection" data-type="text">
                                 Collection
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <!-- COLUMN 7: Call Number (sortable) -->
                             <th class="sortable" data-sort="callNumber" data-type="text">
                                 Call Number
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <!-- COLUMN 8: Year (sortable) -->
                             <th class="sortable" data-sort="year" data-type="number">
                                 Year
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <!-- COLUMN 9: Branch (sortable) -->
                             <th class="sortable" data-sort="branch" data-type="text">
                                 Branch
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <!-- COLUMN 10: Actions -->
@@ -2745,31 +2764,35 @@
                 <!-- Mode Selector for Grubby Items -->
                 <div class="tracking-mode-selector" id="grubbyTrackingModeSelector" style="margin-bottom: 1rem;">
                     <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                    <div class="mode-buttons" id="grubbyModeButtons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <div class="mode-buttons" id="grubbyModeButtons"
+                        style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                         <!-- Populated by generateModeButtons() -->
                     </div>
                 </div>
-                
-                <!-- Bulk Actions for Grubby Items -->
-                <div class="bulk-actions"
-                    style="margin-bottom: 1rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                        <button class="bulk-track-btn" id="grubbyTrackSelectedBtn" onclick="bulkTrackSelected('grubby')" disabled>
-                            Track Selected (0)
-                        </button>
-                        <button class="bulk-track-btn" id="grubbyUntrackSelectedBtn" onclick="bulkUntrackSelected('grubby')" disabled>
-                            Untrack Selected (0)
-                        </button>
-                        <button class="bulk-track-btn" onclick="bulkTrackAll('grubby')">
-                            Track All
-                        </button>
-                        <button class="bulk-track-btn" onclick="bulkUntrackAll('grubby')" style="background: #dc2626;">
-                            Untrack All
-                        </button>
-                        <button class="btn btn-secondary" onclick="exportGrubbyItems()">📊 Export All</button>
-                        <button class="btn btn-secondary" onclick="exportGrubbyItemsTracked()">📌 Export Tracked</button>
-                    </div>
+
+                <!-- NEW: Bulk Actions for Grubby Items -->
+                <div class="bulk-actions" id="grubbyItemsBulkActions">
+                    <button class="bulk-track-btn" id="grubbyTrackSelectedBtn" onclick="bulkTrackSelected('grubby')" disabled>
+                        Track Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" id="grubbyUntrackSelectedBtn" onclick="bulkUntrackSelected('grubby')">
+                        Untrack Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkTrackAll('grubby')">
+                        Track All
+                    </button>
+                    <button class="bulk-track-btn" id="grubbyUntrackAllBtn" onclick="bulkUntrackAll('grubby')">
+                        Untrack All
+                    </button>
+                    <!-- Export Buttons -->
+                    <button id="exportAllGrubbyBtn" class="btn btn-secondary" onclick="exportGrubbyItems()">
+                        📊 Export All
+                    </button>
+                    <button id="exportTrackedGrubbyBtn" class="btn btn-secondary" onclick="exportGrubbyItemsTracked()">
+                        📈 Export Tracked
+                    </button>
                 </div>
+
                 <table class="analysis-table sortable-table" id="grubbyTable">
                     <thead>
                         <tr>
@@ -2781,43 +2804,50 @@
                             <th class="sortable" data-sort="title" data-type="text">
                                 Title
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="author" data-type="text">
                                 Author
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="circulation" data-type="number">
                                 Circulation
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="itemCreated" data-type="text">
                                 Date Added
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="collection" data-type="text">
                                 Collection
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="callNumber" data-type="text">
                                 Call Number
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th class="sortable" data-sort="branch" data-type="text">
                                 Branch
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
                             <th style="width: 100px; text-align: center;">Actions</th>
@@ -2833,8 +2863,8 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                     <div style="display: flex; align-items: center; gap: 1rem;">
                         <h3>Dead Items (Items with No Recent Activity)</h3>
-                        <button id="clearDeadSortBtn" class="btn btn-secondary clear-sort-btn" onclick="clearTableSort('dead')"
-                            style="display: none;">
+                        <button id="clearDeadSortBtn" class="btn btn-secondary clear-sort-btn"
+                            onclick="clearTableSort('dead')" style="display: none;">
                             Clear Sort
                         </button>
                     </div>
@@ -2848,34 +2878,37 @@
                 <p style="font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem;">
                     Items that haven't had any activity (borrowing, renewal, etc.) for the specified time period.
                 </p>
-            
+
                 <!-- Mode Selector for Dead Items -->
                 <div class="tracking-mode-selector" id="deadTrackingModeSelector" style="margin-bottom: 1rem;">
                     <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
-                    <div class="mode-buttons" id="deadModeButtons" style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <div class="mode-buttons" id="deadModeButtons"
+                        style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
                         <!-- Populated by generateModeButtons() -->
                     </div>
                 </div>
-            
+
                 <!-- Bulk Actions for Dead Items -->
-                <div class="bulk-actions"
-                    style="margin-bottom: 1rem; padding: 1rem; background: #f8fafc; border-radius: 0.5rem; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                        <button class="bulk-track-btn" id="deadTrackSelectedBtn" onclick="bulkTrackSelected('dead')" disabled>
-                            Track Selected (0)
-                        </button>
-                        <button class="bulk-track-btn" id="deadUntrackSelectedBtn" onclick="bulkUntrackSelected('dead')" disabled>
-                            Untrack Selected (0)
-                        </button>
-                        <button class="bulk-track-btn" onclick="bulkTrackAll('dead')">
-                            Track All
-                        </button>
-                        <button class="bulk-track-btn" onclick="bulkUntrackAll('dead')" style="background: #dc2626;">
-                            Untrack All
-                        </button>
-                        <button class="btn btn-secondary" onclick="exportDeadItems()">📊 Export All</button>
-                        <button class="btn btn-secondary" onclick="exportDeadItemsTracked()">📌 Export Tracked</button>
-                    </div>
+                <div class="bulk-actions" id="deadItemsBulkActions">
+                    <button class="bulk-track-btn" id="deadTrackSelectedBtn" onclick="bulkTrackSelected('dead')" disabled>
+                        Track Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" id="deadUntrackSelectedBtn" onclick="bulkUntrackSelected('dead')">
+                        Untrack Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkTrackAll('dead')">
+                        Track All
+                    </button>
+                    <button class="bulk-track-btn" id="deadUntrackAllBtn" onclick="bulkUntrackAll('dead')">
+                        Untrack All
+                    </button>
+                    <!-- Export Buttons -->
+                    <button id="exportAllDeadBtn" class="btn btn-secondary" onclick="exportDeadItems()">
+                        📊 Export All
+                    </button>
+                    <button id="exportTrackedDeadBtn" class="btn btn-secondary" onclick="exportDeadItemsTracked()">
+                        📈 Export Tracked
+                    </button>
                 </div>
                 <table class="analysis-table sortable-table" id="deadTable">
                     <thead>
@@ -2915,14 +2948,14 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
-                            <th class="sortable" data-sort="callNumber" data-type="text">
-                                Call Number
+                            <th class="sortable" data-sort="lastActivity" data-type="date">
+                                Last Activity
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                                 </svg>
                             </th>
-                            <th class="sortable" data-sort="lastActivity" data-type="date">
-                                Last Activity
+                            <th class="sortable" data-sort="branch" data-type="text">
+                                Branch
                                 <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                                 </svg>
@@ -4211,6 +4244,7 @@
                 2025: [
                     { value: 'June-2025', label: 'June 2025' },
                     { value: 'mid-July-2025', label: 'mid-July 2025' },
+                    { value: 'July-2025', label: 'July 2025' },
                     { value: 'Test Third', label: 'Test Third' },
                     { value: 'Test Fourth', label: 'Test Fourth' }
                     // Add more months as you upload them
@@ -5544,7 +5578,7 @@
                     if (newItemsRow) {
                         tableType = 'newItems';
                     }
-                    
+
                     const grubbyRow = document.querySelector(`#grubbyTableBody tr[data-barcode="${barcode}"]`);
                     if (grubbyRow) {
                         tableType = 'grubby';
@@ -5598,7 +5632,7 @@
                     } else if (tableType === 'grubby') {
                         await updateGrubbyRowTracking(barcode);
                     } else if (tableType === 'dead') await updateDeadRowTracking(barcode);
-                
+
                     updateTrackSelectedButton(tableType);
 
                     // Show success notification
@@ -6123,6 +6157,9 @@
                 } else if (tableType === 'newItems') {
                     modeSelectorId = '#newItemsTrackingModeSelector';
                     dataArray = window.currentNewItems || [];
+                } else if (tableType === 'newItems') {
+                    modeSelectorId = '#newItemsTrackingModeSelector';
+                    dataArray = window.currentNewItems;
                 }
 
                 if (!dataArray || dataArray.length === 0) {
@@ -6168,7 +6205,7 @@
                     } else if (tableType === 'dead') {
                         await renderDeadTable();
                     } else if (tableType === 'newItems') {
-                        await renderNewItemsTable();
+                        await showNewItems();
                     }
                 }
             }
@@ -6187,6 +6224,10 @@
                     case 'weeding':
                         checkboxSelector = '.weeding-item-checkbox:checked';
                         modeSelector = '#weedingTrackingModeSelector .mode-btn.active';
+                        break;
+                    case 'newItems':
+                        checkboxSelector = '.new-items-item-checkbox:checked';
+                        modeSelector = '#newItemsTrackingModeSelector .mode-btn.active';
                         break;
                     case 'chartModal':
                         checkboxSelector = '.chart-modal-item-checkbox:checked';
@@ -6247,6 +6288,7 @@
                             else if (tableType === 'authorDetails') await updateAuthorDetailsRowTracking(barcode);
                             else if (tableType === 'grubby') await updateGrubbyRowTracking(barcode);
                             else if (tableType === 'dead') await updateDeadRowTracking(barcode);
+                            else if (tableType === 'newItems') await updateNewItemsRowTracking(barcode);
                         } catch (err) {
                             console.error(`Error tracking ${barcode}:`, err);
                         }
@@ -6272,6 +6314,9 @@
                         break;
                     case 'weeding':
                         checkboxSelector = '.weeding-item-checkbox:checked';
+                        break;
+                    case 'newItems':
+                        checkboxSelector = '.new-items-item-checkbox:checked';
                         break;
                     case 'chartModal':
                         checkboxSelector = '.chart-modal-item-checkbox:checked';
@@ -6383,6 +6428,12 @@
                                 await updateWeedingRowTracking(barcode);
                             }
                             break;
+                        case 'newItems':
+                            // update only the affected rows, so checkboxes stay put
+                            for (const barcode of barcodes) {
+                                await updateNewItemsRowTracking(barcode);
+                            }
+                            break;
                         case 'chartModal':
                             await refreshChartModalDisplay();
                             break;
@@ -6394,9 +6445,6 @@
                             break;
                         case 'tracking':
                             await refreshTrackingTableDisplay();
-                            break;
-                        case 'newItems':
-                            checkboxSelector = '.new-items-item-checkbox:checked';
                             break;
                     }
 
@@ -6460,7 +6508,7 @@
                     dataArray = deadItemsData;
                     confirmMessage = `Untrack all visible dead items?`;
                 } else if (tableType === 'newItems') {
-                    dataArray = window.currentNewItems || [];
+                    dataArray = window.currentNewItems;
                     confirmMessage = `Untrack all visible new items?`;
                 }
 
@@ -6505,7 +6553,7 @@
                     } else if (tableType === 'dead') {
                         await renderDeadTable();
                     } else if (tableType === 'newItems') {
-                        await renderNewItemsTable();
+                        await showNewItems();
                     }
                 }
             }
@@ -6618,35 +6666,6 @@
                 }
             }
 
-        //===========================================================================
-            // setupNewItemsModeSelector() - Make new items mode selector buttons work
-            //===========================================================================
-            function setupNewItemsModeSelector() {
-                const modeButtons = document.querySelectorAll('#newItemsTrackingModeSelector .mode-btn');
-                if (modeButtons.length === 0) return; // Exit if no buttons found
-
-                modeButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        // Remove active class from all buttons
-                        modeButtons.forEach(btn => btn.classList.remove('active'));
-                        // Add active class to clicked button
-                        this.classList.add('active');
-                        // Store the selected mode
-                        localStorage.setItem('newItemsTrackingMode', this.getAttribute('data-mode'));
-                    });
-                });
-
-                // Set default or restore previously selected mode
-                const savedMode = localStorage.getItem('newItemsTrackingMode');
-                const defaultMode = 'monitor-performance'; // Default for new items
-                const modeToUse = savedMode || defaultMode;
-
-                const buttonToActivate = document.querySelector(`#newItemsTrackingModeSelector .mode-btn[data-mode="${modeToUse}"]`);
-                if (buttonToActivate) {
-                    buttonToActivate.classList.add('active');
-                }
-            }
-
             //===========================================================================
             // setupCollectionModeSelector() - Make collection mode selector buttons work
             //===========================================================================
@@ -6731,6 +6750,45 @@
                     if (savedMode) {
                         localStorage.setItem('weedingTrackingMode', modeToUse);
                     }
+                }
+            }
+
+            //===========================================================================
+            // setupNewItemsModeSelector() - Make new items mode selector buttons work
+            //===========================================================================
+            function setupNewItemsModeSelector() {
+                const modeButtons = document.querySelectorAll('#newItemsTrackingModeSelector .mode-btn');
+                if (modeButtons.length === 0) return; // Exit if no buttons found
+
+                modeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        // Remove active class from all buttons
+                        modeButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            btn.style.background = '';
+                            btn.style.color = '';
+                        });
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        this.style.background = '#2563eb';
+                        this.style.color = 'white';
+                        // DON'T store in localStorage for newItems - only remember within session
+                        window.newItemsTrackingMode = this.getAttribute('data-mode');
+                    });
+                });
+
+                // ALWAYS default to 'monitor-performance' (don't use localStorage)
+                const defaultMode = 'monitor-performance';
+
+                // Use session-stored mode if available, otherwise default
+                const modeToUse = window.newItemsTrackingMode || defaultMode;
+
+                const buttonToActivate = document.querySelector(`#newItemsTrackingModeSelector .mode-btn[data-mode="${modeToUse}"]`);
+                if (buttonToActivate) {
+                    buttonToActivate.classList.add('active');
+                    buttonToActivate.style.background = '#2563eb';
+                    buttonToActivate.style.color = 'white';
+                    window.newItemsTrackingMode = modeToUse;
                 }
             }
 
@@ -7510,36 +7568,36 @@
                 });
             }
 
-        //===========================================================================
-        // renderSearchResults() - Render search results in table format with pagination
-        //===========================================================================
-        async function renderSearchResults(results, searchId = currentSearchId) {
-            // Early exit if this search has been superseded
-            if (searchId !== currentSearchId) {
-                return;
-            }
-            
-            const resultsBody = document.getElementById('searchResultsBody');
-            const endIndex = Math.min(displayedResultsCount + RESULTS_PER_PAGE, results.length);
-            const resultsToShow = results.slice(displayedResultsCount, endIndex);
+            //===========================================================================
+            // renderSearchResults() - Render search results in table format with pagination
+            //===========================================================================
+            async function renderSearchResults(results, searchId = currentSearchId) {
+                // Early exit if this search has been superseded
+                if (searchId !== currentSearchId) {
+                    return;
+                }
 
-            // If this is the first batch, clear the table
-            if (displayedResultsCount === 0) {
-                resultsBody.innerHTML = '';
-            }
+                const resultsBody = document.getElementById('searchResultsBody');
+                const endIndex = Math.min(displayedResultsCount + RESULTS_PER_PAGE, results.length);
+                const resultsToShow = results.slice(displayedResultsCount, endIndex);
 
-            // Check again after clearing (async operations might have completed)
-            if (searchId !== currentSearchId) {
-                return;
-            }
+                // If this is the first batch, clear the table
+                if (displayedResultsCount === 0) {
+                    resultsBody.innerHTML = '';
+                }
 
-            // Enhanced version with tracking status
-            const newRows = await Promise.all(resultsToShow.map(async (book, index) => {
-                // Check if item is tracked
-                const isTracked = await isItemTracked(book.barcode);
-                const trackingData = isTracked ? await getTrackingData(book.barcode) : null;
+                // Check again after clearing (async operations might have completed)
+                if (searchId !== currentSearchId) {
+                    return;
+                }
 
-                return `
+                // Enhanced version with tracking status
+                const newRows = await Promise.all(resultsToShow.map(async (book, index) => {
+                    // Check if item is tracked
+                    const isTracked = await isItemTracked(book.barcode);
+                    const trackingData = isTracked ? await getTrackingData(book.barcode) : null;
+
+                    return `
                 <tr data-barcode="${escapeHtml(book.barcode)}" style="cursor: pointer;" ${isTracked ? 'class="tracked-row"' : ''}>
                     <td style="text-align: center;" onclick="event.stopPropagation();">
                         <input type="checkbox" class="item-checkbox search-item-checkbox" 
@@ -7562,35 +7620,35 @@
                     <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.collection)}</td>
                     <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${escapeHtml(book.year || 'Unknown Year')}</td>
                     <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${(() => {
-                                const age = getItemAge(book.itemCreated);
-                                return age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
-                            })()}</td>
+                            const age = getItemAge(book.itemCreated);
+                            return age >= 0 ? (age === 0 ? '< 1 year' : `${age} years`) : 'Unknown';
+                        })()}</td>
                     <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')">${book.circulation}</td>
                     <td onclick="selectBookFromSearchResults('${escapeHtml(book.barcode)}')" style="color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(book.branch || 'Unknown'))}</td>
                     <td class="actions-column">
                         ${isTracked ?
-                                `<button class="untrack-btn" onclick="handleUntrackItem('${book.barcode}', event)">Untrack</button>` :
-                                `<button class="track-btn" onclick="handleTrackItem('${book.barcode}', 'search', event)">Track</button>`
-                            }
+                            `<button class="untrack-btn" onclick="handleUntrackItem('${book.barcode}', event)">Untrack</button>` :
+                            `<button class="track-btn" onclick="handleTrackItem('${book.barcode}', 'search', event)">Track</button>`
+                        }
                     </td>
                 </tr>
             `;
-            }));
+                }));
 
-            // Final check before inserting results
-            if (searchId !== currentSearchId) {
-                return;
+                // Final check before inserting results
+                if (searchId !== currentSearchId) {
+                    return;
+                }
+
+                resultsBody.insertAdjacentHTML('beforeend', newRows.join(''));
+
+                // Update displayed count
+                displayedResultsCount = endIndex;
+
+                // Update search info and load more button
+                updateSearchInfo(results);
+                updateLoadMoreButton(results);
             }
-
-            resultsBody.insertAdjacentHTML('beforeend', newRows.join(''));
-
-            // Update displayed count
-            displayedResultsCount = endIndex;
-
-            // Update search info and load more button
-            updateSearchInfo(results);
-            updateLoadMoreButton(results);
-        }
 
             //===========================================================================
             // updateSearchInfo() - Update search information display
@@ -12348,21 +12406,51 @@
                         <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.count}</div>
                         <div style="font-size: 0.875rem; color: #6b7280;">${newItemsAnalysis.percentageOfCollection}% of collection</div>
                     </div>
-                    <div style="background: #f0f9ff; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #0284c7;">
-                        <div style="font-weight: bold; color: #0284c7;">Total Circulation</div>
-                        <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.totalCirculation}</div>
-                        <div style="font-size: 0.875rem; color: #6b7280;">All new items combined</div>
-                    </div>
-                    <div style="background: #fef3c7; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #d97706;">
+                    <div style="background: #fef3c7; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid #f59e0b;">
                         <div style="font-weight: bold; color: #d97706;">Average Circulation</div>
-                        <div style="font-size: 1.5rem; font-weight: bold;">${Math.round(newItemsAnalysis.totalCirculation / newItemsAnalysis.count)}</div>
-                        <div style="font-size: 0.875rem; color: #6b7280;">Per new item</div>
+                        <div style="font-size: 1.5rem; font-weight: bold;">${newItemsAnalysis.averageCirculation}</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">per new item</div>
                     </div>
                     <div style="background: ${newItemsAnalysis.topPerformer ? '#e0e7ff' : '#f3f4f6'}; padding: 1rem; border-radius: 0.5rem; border-left: 4px solid ${newItemsAnalysis.topPerformer ? '#3730a3' : '#9ca3af'};">
                         <div style="font-weight: bold; color: ${newItemsAnalysis.topPerformer ? '#3730a3' : '#6b7280'};">Top Performer</div>
                         <div style="font-size: 1.25rem; font-weight: bold;">${newItemsAnalysis.topPerformer ? newItemsAnalysis.topPerformer.circulation : 'N/A'}</div>
                         <div style="font-size: 0.875rem; color: #6b7280;">${newItemsAnalysis.topPerformer ? escapeHtml(newItemsAnalysis.topPerformer.title.substring(0, 30)) + '...' : 'No circulation data'}</div>
                     </div>
+                </div>
+
+                <!-- NEW: Tracking Mode Selector -->
+                <div id="newItemsTrackingModeSelector" class="tracking-mode-selector"
+                    style="margin-bottom: 1rem; display: block;">
+                    <label style="font-weight: 500; margin-right: 1rem;">Track items for:</label>
+                    <div class="mode-buttons" id="newItemsModeButtons"
+                        style="display: inline-flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <!-- Populated by generateModeButtons() -->
+                    </div>
+                </div>
+
+                <!-- NEW: Bulk Actions -->
+                <div class="bulk-actions" id="newItemsBulkActions">
+                    <button class="bulk-track-btn" id="newItemsTrackSelectedBtn" onclick="bulkTrackSelected('newItems')"
+                        disabled>
+                        Track Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" id="newItemsUntrackSelectedBtn" onclick="bulkUntrackSelected('newItems')">
+                        Untrack Selected (0)
+                    </button>
+                    <button class="bulk-track-btn" onclick="bulkTrackAll('newItems')">
+                        Track All
+                    </button>
+                    <button class="bulk-track-btn" id="newItemsUntrackAllBtn" onclick="bulkUntrackAll('newItems')">
+                        Untrack All
+                    </button>
+                    <!-- Export Buttons -->
+                    <button id="exportAllNewItemsBtn" class="btn btn-secondary" onclick="exportNewItems()">
+                        📊 Export All
+                    </button>
+                    <button id="exportTrackedNewItemsBtn" class="btn btn-secondary"
+                        onclick="exportTrackedNewItems()">
+                        📈 Export Tracked
+                    </button>
                 </div>
 
                 <table class="analysis-table sortable-table" id="newItemsTable">
@@ -12502,6 +12590,24 @@
                 // Setup sorting
                 setupNewItemsTableSorting();
 
+                // Setup sorting
+                setupNewItemsTableSorting();
+
+                // NEW: Setup tracking mode selector and bulk actions
+                setTimeout(() => {
+                    // Generate mode buttons for new items
+                    generateModeButtons('newItemsModeButtons');
+
+                    // Setup mode selector event listeners
+                    setupNewItemsModeSelector();
+
+                    // Initialize all tracking mode selectors
+                    initAllTrackingModeSelectors();
+
+                    // Update button states
+                    updateTrackSelectedButton('newItems');
+                }, 100);
+
                 // Scroll to the section
                 scrollToSection('newItemsSection');
             }
@@ -12542,6 +12648,53 @@
                 const filename = `new-items-analysis-${today}.xlsx`;
 
                 createExcelFile(data, headers, filename, 'New Items');
+            }
+
+            //===========================================================================
+            // exportTrackedNewItems() - Export only tracked items from new items
+            //===========================================================================
+            async function exportTrackedNewItems() {
+                if (!window.currentNewItems || window.currentNewItems.length === 0) {
+                    alert('No new items to export');
+                    return;
+                }
+
+                // Filter for only tracked items
+                const trackedItems = [];
+                for (const item of window.currentNewItems) {
+                    const isTracked = await isItemTracked(item.barcode);
+                    if (isTracked) {
+                        const trackingData = await getTrackingData(item.barcode);
+                        trackedItems.push({ ...item, trackingReason: trackingData.reason });
+                    }
+                }
+
+                if (trackedItems.length === 0) {
+                    alert('No tracked items found in new items');
+                    return;
+                }
+
+                const headers = ['Title', 'Author', 'Year', 'Collection', 'Circulation', 'Call Number', 'Branch', 'Tracking Reason'];
+
+                // Create data rows including tracking reason
+                const data = trackedItems.map(item => [
+                    item.title || '',
+                    item.author || '',
+                    item.year || item.itemCreated || '',
+                    item.collection || '',
+                    item.circulation || 0,
+                    item.callNumber || '',
+                    item.branch || '',
+                    formatTrackingReason(item.trackingReason)
+                ]);
+
+                // Create filename with timestamp
+                const now = new Date();
+                const timestamp = now.toISOString().split('T')[0];
+                const filename = `tracked-new-items-${timestamp}.xlsx`;
+
+                createExcelFile(data, headers, filename, 'Tracked New Items');
+                showStatus(`Exported ${trackedItems.length} tracked new items to ${filename}`, 'success');
             }
 
             //===========================================================================
@@ -12951,9 +13104,12 @@
                 // Calculate grubby items
                 const grubbyThreshold = parseInt(document.getElementById('grubbyThreshold').value);
                 const grubbyItems = filteredData.filter(item => item.circulation >= grubbyThreshold);
-                const grubbyCount = grubbyItems.length;
+                const filteredGrubbyItemsForCount = grubbyItems.filter(item =>
+                    (!collectionFilter || item.collection === collectionFilter)
+                );
+                const grubbyCount = filteredGrubbyItemsForCount.length;
                 const veryOld = candidates.filter(c => getItemAge(c.itemCreated) >= 15).length;
-                
+
                 // Calculate dead items with collection filtering
                 const deadThreshold = parseInt(document.getElementById('deadThreshold').value);
                 const allDeadItems = filteredData.filter(item => isItemDead(item, deadThreshold));
@@ -13017,7 +13173,7 @@
                 );
 
                 // Sort by circulation (highest first)
-                grubbyItems.sort((a, b) => b.circulation - a.circulation);
+                filteredGrubbyItems.sort((a, b) => b.circulation - a.circulation);
 
                 grubbyItemsData = filteredGrubbyItems;
                 grubbyOffset = 0;
@@ -13077,8 +13233,16 @@
                         { label: '51+ circulations', min: 51, max: Infinity }
                     ];
 
+                    let filteredData = getFilteredData();
+
+                    // Apply collection filter if one is selected
+                    const collectionFilter = document.getElementById('weedingCollectionFilter').value;
+                    if (collectionFilter) {
+                        filteredData = filteredData.filter(item => item.collection === collectionFilter);
+                    }
+
                     const data = ranges.map(range => {
-                        return libraryData.filter(item =>
+                        return filteredData.filter(item =>
                             item.circulation >= range.min && item.circulation <= range.max
                         ).length;
                     });
@@ -13092,7 +13256,7 @@
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; font-size: 0.875rem;">
                             ${ranges.map((range, index) => {
                         const count = data[index];
-                        const percentage = Math.round((count / libraryData.length) * 100);
+                        const percentage = Math.round((count / filteredData.length) * 100);
                         return `<div><strong>${range.label}:</strong> ${count.toLocaleString()} (${percentage}%)</div>`;
                     }).join('')}
                         </div>
@@ -13104,6 +13268,15 @@
                 // Destroy existing chart if it exists
                 if (window.circulationChartInstance) {
                     window.circulationChartInstance.destroy();
+                }
+
+                // Calculate filtered data first
+                let filteredData = getFilteredData();
+
+                // Apply collection filter if one is selected
+                const collectionFilter = document.getElementById('weedingCollectionFilter').value;
+                if (collectionFilter) {
+                    filteredData = filteredData.filter(item => item.collection === collectionFilter);
                 }
 
                 // Create circulation ranges
@@ -13118,7 +13291,7 @@
                 ];
 
                 const data = ranges.map(range => {
-                    return libraryData.filter(item =>
+                    return filteredData.filter(item =>
                         item.circulation >= range.min && item.circulation <= range.max
                     ).length;
                 });
@@ -13127,6 +13300,8 @@
                     '#dc2626', '#ea580c', '#ca8a04', '#16a34a',
                     '#0891b2', '#2563eb', '#7c3aed'
                 ];
+
+                const totalItems = filteredData.length;
 
                 window.circulationChartInstance = new Chart(ctx, {
                     type: 'bar',
@@ -13150,7 +13325,7 @@
                             tooltip: {
                                 callbacks: {
                                     label: function (context) {
-                                        const percentage = Math.round((context.parsed.y / libraryData.length) * 100);
+                                        const percentage = Math.round((context.parsed.y / totalItems) * 100);
                                         return `${context.parsed.y.toLocaleString()} items (${percentage}%)`;
                                     }
                                 }
@@ -13182,6 +13357,26 @@
             // showGrubbyItems() - Show and scroll to grubby items section
             //===========================================================================
             async function showGrubbyItems() {
+                // First, ensure grubby data is populated
+                const filteredData = getFilteredData();
+                const grubbyThreshold = parseInt(document.getElementById('grubbyThreshold').value);
+                const collectionFilter = document.getElementById('weedingCollectionFilter').value;
+
+                // Get grubby items (same logic as weeding analysis)
+                const grubbyItems = filteredData.filter(item => item.circulation >= grubbyThreshold);
+
+                // Apply collection filter
+                const filteredGrubbyItems = grubbyItems.filter(item =>
+                    (!collectionFilter || item.collection === collectionFilter)
+                );
+
+                // Sort by circulation (highest first)
+                filteredGrubbyItems.sort((a, b) => b.circulation - a.circulation);
+
+                // Populate the global array
+                grubbyItemsData = filteredGrubbyItems;
+                grubbyOffset = 0;
+
                 // Show the section
                 document.getElementById('grubbyItemsSection').style.display = 'block';
 
@@ -13198,6 +13393,15 @@
                     if (weedingBtn) {
                         weedingBtn.click();
                     }
+
+                    // Show and setup bulk actions
+                    const bulkActions = document.getElementById('grubbyItemsBulkActions');
+                    if (bulkActions) {
+                        bulkActions.style.display = 'flex';
+                    }
+
+                    // Update button states
+                    updateTrackSelectedButton('grubby');
                 }, 100);
 
                 // Setup sorting for grubby items table
@@ -13280,7 +13484,7 @@
                 renderGrubbyTable();
             }
 
-        //===========================================================================
+            //===========================================================================
             // showDeadItems() - Show and scroll to dead items section
             //===========================================================================
             async function showDeadItems() {
@@ -13324,48 +13528,45 @@
                     const lastActivityDisplay = formatActivityDate(item.lastActivity);
 
                     return `
-            <tr class="${isTracked ? 'tracked-row' : ''}" data-barcode="${item.barcode}" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
-                <!-- COLUMN 1: Checkbox -->
-                <td style="text-align: center;" onclick="event.stopPropagation();">
-                    <input type="checkbox" class="dead-item-checkbox" value="${item.barcode}" 
-                        onchange="updateTrackSelectedButton('dead')">
-                </td>
-                <!-- COLUMN 2: Copy buttons -->
-                <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
-                    <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
-                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                        title="Copy title">📄</span>
-                    <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
-                        style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
-                        title="Copy ID">#️⃣</span>
-                </td>
-                <!-- COLUMN 3: Title -->
-                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">
-                    ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
-                    <strong>${escapeHtml(item.title)}</strong>
-                    ${isTracked && trackingData.reason ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
-                </td>
-                <!-- COLUMN 4: Author -->
-                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.author)}</td>
-                <!-- COLUMN 5: Circulation -->
-                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; font-weight: bold; color: ${item.circulation === 0 ? '#dc2626' : '#16a34a'};">${item.circulation}</td>
-                <!-- COLUMN 6: Date Added -->
-                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(dateAddedDisplay)}</td>
-                <!-- COLUMN 7: Collection -->
-                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.collection)}</td>
-                <!-- COLUMN 8: Call Number -->
-                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;"><code style="font-size: 0.75rem;">${escapeHtml(item.callNumber)}</code></td>
-                <!-- COLUMN 9: Last Activity -->
-                <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${lastActivityDisplay}</td>
-                <!-- COLUMN 10: Actions -->
-                <td style="text-align: center;" onclick="event.stopPropagation();">
-                    ${isTracked ?
-                                            `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` :
-                                            `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'dead', event)">Track</button>`
-                    }
-                </td>
-            </tr>
-        `;
+                <tr class="${isTracked ? 'tracked-row' : ''}" data-barcode="${item.barcode}" style="cursor: pointer;" onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor=''">
+                    <!-- COLUMN 1: Checkbox -->
+                    <td style="text-align: center;" onclick="event.stopPropagation();">
+                        <input type="checkbox" class="dead-item-checkbox" value="${item.barcode}" 
+                            onchange="updateTrackSelectedButton('dead')">
+                    </td>
+                    <!-- COLUMN 2: Copy buttons -->
+                    <td style="text-align: center; padding: 0.5rem 0.25rem; white-space: nowrap; min-width: 60px;" onclick="event.stopPropagation();">
+                        <span onclick="copyTitleToClipboard('${escapeForJavaScript(item.title)}', event)" 
+                            style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                            title="Copy title">📄</span>
+                        <span onclick="copyBarcodeToClipboard('${item.barcode}', event)" 
+                            style="cursor: pointer; color: #6b7280; font-size: 0.85rem; display: inline-block; width: 20px; text-align: center;" 
+                            title="Copy ID">#️⃣</span>
+                    </td>
+                    <!-- COLUMN 3: Title -->
+                    <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">
+                        ${isTracked ? '<span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>' : ''}
+                        <strong>${escapeHtml(item.title)}</strong>
+                        ${isTracked && trackingData.reason ? `<br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>` : ''}
+                    </td>
+                    <!-- COLUMN 4: Author -->
+                    <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.author)}</td>
+                    <!-- COLUMN 5: Circulation -->
+                    <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; font-weight: bold; color: ${item.circulation === 0 ? '#dc2626' : '#16a34a'};">${item.circulation}</td>
+                    <!-- COLUMN 6: Date Added -->
+                    <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(dateAddedDisplay)}</td>
+                    <!-- COLUMN 7: Collection -->
+                    <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${escapeHtml(item.collection)}</td>
+                    <!-- COLUMN 8: Last Activity -->
+                    <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer;">${lastActivityDisplay}</td>
+                    <!-- COLUMN 9: Branch -->
+                    <td onclick="showTrackingItemModal('${item.barcode}')" style="cursor: pointer; color: #2563eb; font-weight: 500;">${escapeHtml(formatBranchName(item.branch || 'Unknown'))}</td>
+                    <!-- COLUMN 10: Actions -->
+                    <td style="text-align: center;" onclick="event.stopPropagation();">
+                        ${isTracked ? `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)">Untrack</button>` : `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'dead', event)">Track</button>`}
+                    </td>
+                </tr>
+            `;
                 }));
 
                 tableBody.innerHTML = tableRows.join('');
@@ -13530,7 +13731,7 @@
                     return;
                 }
 
-                const headers = ['Title', 'Author', 'Circulation', 'Year', 'Collection', 'Call Number', 'Last Activity', 'Branch'];
+                const headers = ['Title', 'Author', 'Circulation', 'Year', 'Collection', 'Last Activity', 'Branch'];
 
                 const data = deadItemsData.map(item => {
                     const lastActivityDisplay = formatActivityDate(item.lastActivity);
@@ -13541,7 +13742,6 @@
                         item.circulation || 0,
                         item.itemCreated || '',
                         item.collection || '',
-                        item.callNumber || '',
                         lastActivityDisplay,
                         item.branch || ''
                     ];
@@ -13560,7 +13760,7 @@
                 createExcelFile(data, headers, filename, 'Dead Items');
             }
 
-        //===========================================================================
+            //===========================================================================
             // exportDeadItemsTracked() - Export tracked dead items to Excel
             //===========================================================================
             async function exportDeadItemsTracked() {
@@ -13684,69 +13884,69 @@
             }
 
             //===========================================================================
-                // updateDeadRowTracking() - Update tracking status for a specific dead row (DEBUG)
-                //===========================================================================
-                async function updateDeadRowTracking(barcode) {
-                    console.log(`🔍 updateDeadRowTracking called for ${barcode}`);
+            // updateDeadRowTracking() - Update tracking status for a specific dead row (DEBUG)
+            //===========================================================================
+            async function updateDeadRowTracking(barcode) {
+                console.log(`🔍 updateDeadRowTracking called for ${barcode}`);
 
-                    // Force refresh the tracking cache
-                    trackingDataLoaded = false;
-                    trackedItemsCache.clear();
-                    await loadTrackingData();
+                // Force refresh the tracking cache
+                trackingDataLoaded = false;
+                trackedItemsCache.clear();
+                await loadTrackingData();
 
-                    const row = document.querySelector(`#deadTableBody tr[data-barcode="${barcode}"]`);
-                    console.log(`🔍 Found dead row:`, row);
+                const row = document.querySelector(`#deadTableBody tr[data-barcode="${barcode}"]`);
+                console.log(`🔍 Found dead row:`, row);
 
-                    if (!row) {
-                        console.log(`🔍 Dead row not found, re-rendering entire table`);
-                        await renderDeadTable();
-                        return;
-                    }
+                if (!row) {
+                    console.log(`🔍 Dead row not found, re-rendering entire table`);
+                    await renderDeadTable();
+                    return;
+                }
 
-                    // Check current tracking status
-                    const isTracked = await isItemTracked(barcode);
-                    console.log(`🔍 Dead item isTracked: ${isTracked}`);
+                // Check current tracking status
+                const isTracked = await isItemTracked(barcode);
+                console.log(`🔍 Dead item isTracked: ${isTracked}`);
 
-                    const trackingData = isTracked ? (await getTrackingData(barcode)) || {} : {};
-                    console.log(`🔍 Dead trackingData:`, trackingData);
+                const trackingData = isTracked ? (await getTrackingData(barcode)) || {} : {};
+                console.log(`🔍 Dead trackingData:`, trackingData);
 
-                    // Update the title cell with tracking indicator (Column 3)
-                    const titleCell = row.cells[2]; // Title is the 3rd column (0-indexed)
-                    const titleElement = titleCell.querySelector('strong');
-                    const title = titleElement ? titleElement.textContent : 'Unknown';
-                    console.log(`🔍 Dead title cell before:`, titleCell.innerHTML);
+                // Update the title cell with tracking indicator (Column 3)
+                const titleCell = row.cells[2]; // Title is the 3rd column (0-indexed)
+                const titleElement = titleCell.querySelector('strong');
+                const title = titleElement ? titleElement.textContent : 'Unknown';
+                console.log(`🔍 Dead title cell before:`, titleCell.innerHTML);
 
-                    if (isTracked) {
-                        titleCell.innerHTML = `
+                if (isTracked) {
+                    titleCell.innerHTML = `
                         <span class="tracking-indicator" style="color: #16a34a; margin-right: 4px;">📌</span>
                         <strong>${escapeHtml(title)}</strong>
                         <br><span class="tracking-reason">${formatTrackingReason(trackingData.reason)}</span>
                     `;
-                    } else {
-                        titleCell.innerHTML = `<strong>${escapeHtml(title)}</strong>`;
-                    }
-                    console.log(`🔍 Dead title cell after:`, titleCell.innerHTML);
-
-                    // Update the actions cell (Column 10 - last column)
-                    const actionsCell = row.cells[row.cells.length - 1];
-                    console.log(`🔍 Dead actions cell before:`, actionsCell.innerHTML);
-
-                    if (isTracked) {
-                        actionsCell.innerHTML = `<button class="untrack-btn" onclick="handleUntrackItem('${barcode}', event)">Untrack</button>`;
-                    } else {
-                        actionsCell.innerHTML = `<button class="track-btn" onclick="handleTrackItem('${barcode}', 'dead', event)">Track</button>`;
-                    }
-                    console.log(`🔍 Dead actions cell after:`, actionsCell.innerHTML);
-
-                    // Update row styling
-                    if (isTracked) {
-                        row.classList.add('tracked-row');
-                    } else {
-                        row.classList.remove('tracked-row');
-                    }
-
-                    console.log(`🔍 updateDeadRowTracking completed for ${barcode}`);
+                } else {
+                    titleCell.innerHTML = `<strong>${escapeHtml(title)}</strong>`;
                 }
+                console.log(`🔍 Dead title cell after:`, titleCell.innerHTML);
+
+                // Update the actions cell (Column 10 - last column)
+                const actionsCell = row.cells[row.cells.length - 1];
+                console.log(`🔍 Dead actions cell before:`, actionsCell.innerHTML);
+
+                if (isTracked) {
+                    actionsCell.innerHTML = `<button class="untrack-btn" onclick="handleUntrackItem('${barcode}', event)">Untrack</button>`;
+                } else {
+                    actionsCell.innerHTML = `<button class="track-btn" onclick="handleTrackItem('${barcode}', 'dead', event)">Track</button>`;
+                }
+                console.log(`🔍 Dead actions cell after:`, actionsCell.innerHTML);
+
+                // Update row styling
+                if (isTracked) {
+                    row.classList.add('tracked-row');
+                } else {
+                    row.classList.remove('tracked-row');
+                }
+
+                console.log(`🔍 updateDeadRowTracking completed for ${barcode}`);
+            }
 
             //===========================================================================
             // updateAgeCirculationChart() - Update chart if section is open
@@ -13978,7 +14178,7 @@
                 document.getElementById('grubbyItemsSection').style.display = 'none';
             }
 
-        //===========================================================================
+            //===========================================================================
             // parseActivityDate() - Parse various date formats from "Item Last Activity Date"
             //===========================================================================
             function parseActivityDate(dateString) {
@@ -16942,6 +17142,7 @@
                 localStorage.removeItem('weedingTrackingMode');
                 localStorage.removeItem('authorDetailsTrackingMode');
                 localStorage.removeItem('chartModalTrackingMode');
+                localStorage.removeItem('newItemsTrackingMode');
 
                 console.log('✅ Tracking mode defaults reset for new session');
             }
@@ -17024,53 +17225,53 @@
                 const fileInput = document.getElementById('fileInput');
                 const searchInput = document.getElementById('searchInput');
 
-            // FIXED FOR BARCODE SCANNING ISSUE (where multiple results were being returned)
-            searchInput.addEventListener('input', (e) => {
-    const currentTime = Date.now();
-    const timeSinceLastInput = currentTime - lastInputTime;
-    lastInputTime = currentTime;
-    
-    const term = e.target.value.trim();
-    
-    // Clear any existing timeout
-    if (searchTimeout) {
-        clearTimeout(searchTimeout);
-    }
-    
-    // Increment search ID immediately to cancel any pending operations
-    currentSearchId++;
-    
-    // Update clear button visibility immediately
-    updateSearchClearButton(e.target);
+                // FIXED FOR BARCODE SCANNING ISSUE (where multiple results were being returned)
+                searchInput.addEventListener('input', (e) => {
+                    const currentTime = Date.now();
+                    const timeSinceLastInput = currentTime - lastInputTime;
+                    lastInputTime = currentTime;
 
-    // Clear results immediately if search term is too short
-    if (!term || term.length < 2) {
-        const searchResults = document.getElementById('searchResults');
-        const noResults = document.getElementById('noResults');
+                    const term = e.target.value.trim();
 
-        if (searchResults) searchResults.style.display = 'none';
-        if (noResults) noResults.style.display = 'none';
-        tableSortStates.search = { field: null, direction: 'asc' };
-        updateSortIcons('search');
-        return;
-    }
+                    // Clear any existing timeout
+                    if (searchTimeout) {
+                        clearTimeout(searchTimeout);
+                    }
 
-    // Store the search ID for this specific search
-    const thisSearchId = currentSearchId;
-    
-    // If input is happening very rapidly (likely barcode scanner), use debounce
-    const delay = timeSinceLastInput < 50 ? 150 : 0;
-    
-    searchTimeout = setTimeout(() => {
-        // Double-check this is still the current search
-        if (thisSearchId !== currentSearchId) {
-            return;
-        }
-        
-        const results = performSearch(term);
-        displaySearchResults(results);
-    }, delay);
-});
+                    // Increment search ID immediately to cancel any pending operations
+                    currentSearchId++;
+
+                    // Update clear button visibility immediately
+                    updateSearchClearButton(e.target);
+
+                    // Clear results immediately if search term is too short
+                    if (!term || term.length < 2) {
+                        const searchResults = document.getElementById('searchResults');
+                        const noResults = document.getElementById('noResults');
+
+                        if (searchResults) searchResults.style.display = 'none';
+                        if (noResults) noResults.style.display = 'none';
+                        tableSortStates.search = { field: null, direction: 'asc' };
+                        updateSortIcons('search');
+                        return;
+                    }
+
+                    // Store the search ID for this specific search
+                    const thisSearchId = currentSearchId;
+
+                    // If input is happening very rapidly (likely barcode scanner), use debounce
+                    const delay = timeSinceLastInput < 50 ? 150 : 0;
+
+                    searchTimeout = setTimeout(() => {
+                        // Double-check this is still the current search
+                        if (thisSearchId !== currentSearchId) {
+                            return;
+                        }
+
+                        const results = performSearch(term);
+                        displaySearchResults(results);
+                    }, delay);
+                });
 
                 // Setup sort event listeners for table headers
                 setupSortEventListeners();
@@ -18228,11 +18429,11 @@
                         <!-- COLUMN 10: Actions -->
                         <td style="text-align: center;" onclick="event.stopPropagation();">
                             ${isTracked ?
-                                            `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
+                            `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
                                         style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
-                                            `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'newItems', event)" 
+                            `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'newItems', event)" 
                                         style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
-                                        }
+                        }
                         </td>
                     </tr>
                     `;
@@ -18300,11 +18501,11 @@
                 <!-- COLUMN 10: Actions -->
                 <td style="text-align: center;" onclick="event.stopPropagation();">
                     ${isTracked ?
-                                    `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
+                            `<button class="untrack-btn" onclick="handleUntrackItem('${item.barcode}', event)" 
                                 style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Untrack</button>` :
-                                    `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'highPerformers', event)" 
+                            `<button class="track-btn" onclick="handleTrackItem('${item.barcode}', 'highPerformers', event)" 
                                 style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">Track</button>`
-                                }
+                        }
                 </td>
             </tr>
             `;
@@ -20691,19 +20892,24 @@
                     // ✅ FIXED: Added tracking reason column back to headers
                     const headers = ['Title', 'Author', 'Year', 'Collection', 'Call Number', 'Circulation', 'Branch', 'Tracking Reason', 'Date Added', 'Notes'];
 
-                    // ✅ FIXED: Added tracking reason to data rows
-                    const data = filteredItems.map(item => [
-                        item.title || '',
-                        item.author || '',
-                        item.year || '',
-                        item.collection || '',
-                        item.callNumber || '',
-                        item.circulation || 0,
-                        item.branch || '',
-                        formatTrackingReason(item.reason) || '',  // ✅ Added this back
-                        new Date(item.dateAdded).toLocaleDateString() || '',
-                        item.notes || ''
-                    ]);
+                    // ✅ FIXED: Look up full details from current libraryData
+                    const data = filteredItems.map(item => {
+                        // Find the item in current library data to get full details
+                        const libraryItem = libraryData.find(libItem => libItem.barcode === item.barcode);
+
+                        return [
+                            item.title || '',
+                            item.author || '',
+                            libraryItem?.year || libraryItem?.itemCreated || '',
+                            libraryItem?.collection || '',
+                            libraryItem?.callNumber || '',
+                            libraryItem?.circulation || 0,
+                            libraryItem?.branch || '',
+                            formatTrackingReason(item.reason) || '',
+                            new Date(item.dateAdded).toLocaleDateString() || '',
+                            item.notes || ''
+                        ];
+                    });
 
                     // Create filename with reason and timestamp
                     const today = new Date().toISOString().split('T')[0];
@@ -21168,7 +21374,16 @@ Please find the attached pick list for ${itemCount} library items to be taken of
 
 Kind regards,
 
-Kirsten`;
+Kirsten Jones
+Library Collections and Resources Officer
+Glenelg Libraries
+32 Bentinck St, Portland VIC
+Phone: 03 5522 2385
+Email: kjones@glenelg.vic.gov.au
+
+Organisational Values | Respect | Integrity | Teamwork | Service Excellence | Innovation
+
+The Glenelg Shire Council respectfully acknowledges the traditional lands and waters of the Gunditjmara people, Bunganditj people, Jardwadjali people and their respective cultural herituses. Council embraces diversity and is committed to fostering an inclusive community.`;
 
                 // Encode the email components for URL
                 const encodedTo = encodeURIComponent(config.emailTo);
@@ -21776,7 +21991,7 @@ Kirsten`;
                     { selector: '#chartItemsModal .tracking-mode-selector', key: 'chartModalTrackingMode', default: 'monitor-performance' },
                     { selector: '#searchTrackingModeSelector', key: 'searchTrackingMode', default: 'monitor-performance' },
                     { selector: '#trackingTabModeSelector', key: 'trackingTabMode', default: 'monitor-performance' },
-                    { selector: '#trackingModeSelector', key: 'trackingMode', default: 'monitor-performance' }
+                    { selector: '#trackingModeSelector', key: 'trackingMode', default: 'monitor-performance' },
                 ];
 
                 configs.forEach(({ selector, key, default: defMode }) => {
